@@ -1,4 +1,4 @@
-import type { MDCParseOptions, MDCRoot } from "../types"
+import type { MDCParseOptions, MDCRoot, Toc } from "../types"
 import { unified } from 'unified'
 import remarkParse from "remark-parse"
 import remark2rehype from 'remark-rehype'
@@ -8,10 +8,12 @@ import { useProcessorPlugins } from "./utils/plugins"
 import { compileHast } from "./compiler"
 import { defaults } from './options'
 import { rehypeShiki } from "./shiki"
+import { generateToc } from "./toc"
 
 export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   const options = defu(opts, defaults)
 
+  // Extract front matter data
   const { content, data } = await parseFrontMatter(md)
 
   const processor = unified()
@@ -38,12 +40,24 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   // Apply compiler
   processor.use(compileHast)
 
-  const astTree = await processor.process({ value: content, data })
-  Object.assign(data, astTree?.data || {})
+  // Start processing stream
+  const processedFile = await processor.process({ value: content, data })
+
+  const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+  // Update data with processor data
+  Object.assign(data, processedFile?.data || {})
+
+  // Generate toc if it is not disabled in front-matter
+  let toc: Toc | undefined
+  if (data.toc !== false) {
+    const tocOption = defu(data.toc || {}, options.toc)
+    toc = generateToc(result.body, tocOption)
+  }
 
   return {
     data,
-    toc: [],
-    body: astTree.result as MDCRoot
+    body: result.body,
+    excerpt: result.excerpt,
+    toc
   }
 }

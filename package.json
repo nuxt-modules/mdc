@@ -11,7 +11,10 @@
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
-    "./runtime": "./dist/runtime/index.mjs"
+    "./runtime": "./dist/runtime/index.mjs",
+    "./dist/runtime": "./dist/runtime/index.mjs",
+    "./runtime/*": "./dist/runtime/*.mjs",
+    "./dist/runtime/*": "./dist/runtime/*.mjs"
   },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
@@ -30,7 +33,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.5.2",
+    "@nuxt/kit": "latest",
     "detab": "^3.0.2",
     "github-slugger": "^2.0.0",
     "hast-util-to-string": "^2.0.0",
@@ -48,22 +51,24 @@
     "scule": "^1.0.0",
     "shiki-es": "^0.14.0",
     "unified": "^10.1.2",
-    "unist-builder": "^3.0.1"
+    "unist-builder": "^4.0.0",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.1.1",
     "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "^3.5.2",
-    "@nuxt/test-utils": "^3.5.1",
+    "@nuxt/schema": "^3.6.2",
+    "@nuxt/test-utils": "^3.6.2",
     "@nuxthq/ui": "^2.5.0",
     "@types/mdurl": "^1.0.2",
-    "@types/node": "^18",
-    "changelogen": "^0.5.3",
-    "eslint": "^8.42.0",
-    "nuxt": "^3.5.1",
+    "@types/node": "^20",
+    "changelogen": "^0.5.4",
+    "eslint": "^8.44.0",
+    "nuxt": "^3.6.2",
     "rehype": "^12.0.1",
-    "vitest": "^0.31.4"
+    "release-it": "^16.1.0",
+    "vitest": "^0.33.0"
   },
   "packageManager": "pnpm@8.6.5",
   "release-it": {

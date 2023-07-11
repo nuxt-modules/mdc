@@ -82,6 +82,20 @@ export function compileHast(this: any) {
 
   
   this.Compiler = (tree: Root) => {
-    return compileToJSON(tree)
+    const body = compileToJSON(tree)
+
+    let excerpt = undefined
+    const excerptIndex = tree.children.findIndex(node => node.type === 'comment' && node.value?.trim() === 'more')
+    if (excerptIndex !== -1) {
+      excerpt = compileToJSON({
+        type: 'root',
+        children: tree.children.slice(0, excerptIndex)
+      })
+    }
+    
+    return {
+      body,
+      excerpt
+    }
   }
 }

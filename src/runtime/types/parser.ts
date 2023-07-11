@@ -14,13 +14,23 @@ export interface RehypePlugin {
 export interface MDCParseOptions {
   remark?: {
     plugins?: Record<string, false | RemarkPlugin>
-  },
+  }
+
   rehype?: {
     options?: RehypeOption,
     plugins?: Record<string, false | RehypePlugin>
-  },
+  }
+
   highlight?: {
     theme?: Theme
     highlighter?: Highlighter
   } | false
+
+  toc?: {
+    /**
+     * Maximum heading depth to include in the table of contents.
+     */
+    depth?: number
+    searchDepth?: number
+  }
 }

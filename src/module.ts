@@ -30,8 +30,16 @@ export default defineNuxtModule<ModuleOptions>({
       }
     }
 
+    nuxt.hook('vite:extendConfig', (viteConfig) => {
+      viteConfig.optimizeDeps?.include?.push(
+        'is-buffer', 'debug', 'flat', 'mdurl', 'node-emoji', 'extend', 'hast-util-raw'
+      )
+    })
+
     // Add imports template
-    addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options })
+    nuxt.options.alias['#mdc-imports'] = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true }).dst
+    nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
+    nuxt.options.nitro.alias['#mdc-imports'] = nuxt.options.alias['#mdc-imports']
 
     // Add components
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })

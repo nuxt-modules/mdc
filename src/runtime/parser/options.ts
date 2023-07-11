@@ -7,7 +7,7 @@ import rehypeSortAttributes from "rehype-sort-attributes"
 import rehypeRaw from "rehype-raw"
 import type { MDCParseOptions } from '../types'
 // @ts-ignore
-import { remarkPlugins, rehypePlugins, highlight } from '#build/mdc-imports'
+import { remarkPlugins, rehypePlugins, highlight } from '#mdc-imports'
 
 export const defaults: MDCParseOptions = {
   remark: {
