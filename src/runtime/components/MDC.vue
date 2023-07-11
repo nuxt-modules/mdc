@@ -5,7 +5,7 @@
       :body="data?.body"
     >
       <MDCRenderer
-        :value="data?.body"
+        :body="data?.body"
         :data="data?.data"
       />
     </slot>

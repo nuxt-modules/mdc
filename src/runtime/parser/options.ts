@@ -45,5 +45,9 @@ export const defaults: MDCParseOptions = {
       ...rehypePlugins
     }
   },
-  highlight
+  highlight,
+  toc: {
+    searchDepth: 2,
+    depth: 2
+  }
 }

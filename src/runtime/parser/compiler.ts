@@ -91,6 +91,14 @@ export function compileHast(this: any) {
         type: 'root',
         children: tree.children.slice(0, excerptIndex)
       })
+
+      // Include styles if excerpt contains code block
+      if (excerpt.children.find(node => node.type === 'element' && node.tag === 'code')) {
+        const lastChild = body.children[body.children.length - 1]
+        if (lastChild.type === 'element' && lastChild.tag === 'style') {
+          excerpt.children.push(lastChild)
+        }
+      }
     }
     
     return {

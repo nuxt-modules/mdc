@@ -1,4 +1,4 @@
-import type { MDCParseOptions, MDCRoot, Toc } from "../types"
+import type { MDCElement, MDCParseOptions, MDCRoot, Toc } from "../types"
 import { unified } from 'unified'
 import remarkParse from "remark-parse"
 import remark2rehype from 'remark-rehype'
@@ -9,12 +9,13 @@ import { compileHast } from "./compiler"
 import { defaults } from './options'
 import { rehypeShiki } from "./shiki"
 import { generateToc } from "./toc"
+import { nodeTextContent } from "../utils/node"
 
 export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   const options = defu(opts, defaults)
 
   // Extract front matter data
-  const { content, data } = await parseFrontMatter(md)
+  const { content, data: frontmatter } = await parseFrontMatter(md)
 
   const processor = unified()
 
@@ -41,11 +42,16 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   processor.use(compileHast)
 
   // Start processing stream
-  const processedFile = await processor.process({ value: content, data })
+  const processedFile = await processor.process({ value: content, data: frontmatter })
 
   const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+
   // Update data with processor data
-  Object.assign(data, processedFile?.data || {})
+  const data = Object.assign(
+    contentHeading(result.body),
+    frontmatter,
+    processedFile?.data || {}
+  )
 
   // Generate toc if it is not disabled in front-matter
   let toc: Toc | undefined
@@ -59,5 +65,43 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     body: result.body,
     excerpt: result.excerpt,
     toc
+  }
+}
+
+
+export function contentHeading (body: MDCRoot) {
+  let title = ''
+  let description = ''
+  const children = body.children
+    // top level `text` and `hr` can be ignored
+    .filter(node => node.type !== 'text' && node.tag !== 'hr')
+
+  if (children.length && (children[0] as MDCElement).tag === 'h1') {
+    /**
+     * Remove node
+     */
+    const node = children.shift()!
+
+    /**
+     * Generate title
+     */
+    title = nodeTextContent(node)
+  }
+
+  if (children.length && (children[0] as MDCElement).tag === 'p') {
+    /**
+     * Remove node
+     */
+    const node = children.shift()!
+
+    /**
+     * Generate description
+     */
+    description = nodeTextContent(node)
+  }
+
+  return {
+    title,
+    description
   }
 }
