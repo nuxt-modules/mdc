@@ -34,7 +34,7 @@ const md = `\
 it('XSS', async () => {
     const { data, body } = await parseMarkdown(md)
 
-    expect(Object.keys(data)).toHaveLength(0)    
+    expect(Object.keys(data)).toHaveLength(2)    
     
     for (const node of (body.children[0] as MDCElement).children) {
       const props = (node as MDCElement).props || {}

@@ -17,7 +17,7 @@ const md = `
 it('Heading id', async () => {
     const { data, body } = await parseMarkdown(md)
 
-    expect(Object.keys(data)).toHaveLength(0)
+    expect(Object.keys(data)).toHaveLength(2)
     
     expect(body.children).toMatchObject([
       { props: { id: 'hello'} },

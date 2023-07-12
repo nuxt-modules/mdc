@@ -11,7 +11,7 @@ describe('Single Block Compoennt', () => {
   it('', async() => {
     const { data, body } = await parseMarkdown(md)
 
-    expect(Object.keys(data)).toHaveLength(0)
+    expect(Object.keys(data)).toHaveLength(2)
 
     expect(body.children).toHaveLength(1)
     expect(body.children[0]).toMatchObject({
