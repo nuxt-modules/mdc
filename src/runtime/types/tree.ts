@@ -16,3 +16,5 @@ export type MDCRoot = {
   type: 'root'
   children: Array<MDCNode>
 }
+
+export interface MDCData extends Record<string, any> {}

@@ -1,4 +1,4 @@
-import type { MDCElement, MDCParseOptions, MDCRoot, Toc } from "../types"
+import type { MDCData, MDCElement, MDCParseOptions, MDCRoot, Toc } from "../types"
 import { unified } from 'unified'
 import remarkParse from "remark-parse"
 import remark2rehype from 'remark-rehype'
@@ -47,7 +47,7 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
   // Update data with processor data
-  const data = Object.assign(
+  const data: MDCData = Object.assign(
     contentHeading(result.body),
     frontmatter,
     processedFile?.data || {}

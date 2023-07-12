@@ -6,10 +6,7 @@ import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import { useRoute, useRuntimeConfig } from '#app'
 import htmlTags from '../parser/utils/html-tags-list'
-import type { MDCElement, MDCNode, MDCRoot } from '../types'
-
-type ParsedContentMeta = any
-type ParsedContent = any
+import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../types'
 
 type CreateElement = typeof h
 
@@ -32,7 +29,7 @@ export default defineComponent({
      * Content to render
      */
     body: {
-      type: Object,
+      type: Object as PropType<MDCRoot>,
       required: true
     },
     data: {
@@ -70,8 +67,6 @@ export default defineComponent({
   },
   async setup (props) {
     const { mdc } = useRuntimeConfig().public
-    // TODO
-    const debug = process.dev //|| useContentPreview().isEnabled()
 
     const tags = {
       ...(mdc.components.prose && props.prose !== false ? proseComponentMap : {}),
@@ -82,7 +77,7 @@ export default defineComponent({
 
     await resolveContentComponents(props.body, { tags })
 
-    return { debug, tags }
+    return { tags }
   },
   render (ctx: any) {
     const { tags, tag, body, data } = ctx
@@ -102,8 +97,7 @@ export default defineComponent({
       component as any,
       {
         ...meta.component?.props,
-        ...this.$attrs,
-        // 'data-content-id': debug ? value._id : undefined
+        ...this.$attrs
       },
       renderSlots(body, h, meta, meta)
     )
@@ -113,7 +107,7 @@ export default defineComponent({
 /**
  * Render a markdown node
  */
-function renderNode (node: MDCNode, h: CreateElement, documentMeta: ParsedContentMeta, parentScope: any = {}): VNode {
+function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   /**
    * Render Text node
    */
@@ -159,7 +153,7 @@ function renderToText (node: MDCNode): string {
   return `<${node.tag}>${node.children?.map(renderToText).join('') || ''}</${node.tag}>`
 }
 
-function renderBinding (node: MDCElement, h: CreateElement, documentMeta: ParsedContentMeta, parentScope: any = {}): VNode {
+function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   const data = {
     ...parentScope,
     $route: () => useRoute(),
@@ -185,7 +179,7 @@ function renderBinding (node: MDCElement, h: CreateElement, documentMeta: Parsed
 /**
  * Create slots from `node` template children.
  */
-function renderSlots (node: MDCNode, h: CreateElement, documentMeta: ParsedContentMeta, parentProps: any): Record<string, () => VNode[]> {
+function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
   const children: MDCNode[] = (node as MDCElement).children || []
 
   const slotNodes: Record<string, MDCNode[]> = children.reduce((data, node) => {
@@ -223,7 +217,7 @@ function renderSlots (node: MDCNode, h: CreateElement, documentMeta: ParsedConte
 /**
  * Create component data from node props.
  */
-function propsToData (node: MDCElement, documentMeta: ParsedContentMeta) {
+function propsToData (node: MDCElement, documentMeta: MDCData) {
   const { tag = '', props = {} } = node
   return Object.keys(props).reduce(function (data, key) {
     // Ignore internal `__ignoreMap` prop.
@@ -268,7 +262,7 @@ function propsToData (node: MDCElement, documentMeta: ParsedContentMeta) {
 /**
  * Handle `v-model`
  */
-function propsToDataRxModel (key: string, value: any, data: any, documentMeta: ParsedContentMeta) {
+function propsToDataRxModel (key: string, value: any, data: any, documentMeta: MDCData) {
   // Model modifiers
   const number = (d: any) => +d
   const trim = (d: any) => d.trim()
@@ -297,7 +291,7 @@ function propsToDataRxModel (key: string, value: any, data: any, documentMeta: P
 /**
  * Handle object binding `v-bind`
  */
-function propsToDataVBind (_key: string, value: any, data: any, documentMeta: ParsedContentMeta) {
+function propsToDataVBind (_key: string, value: any, data: any, documentMeta: MDCData) {
   const val = evalInContext(value, documentMeta)
   data = Object.assign(data, val)
   return data
@@ -306,7 +300,7 @@ function propsToDataVBind (_key: string, value: any, data: any, documentMeta: Pa
 /**
  * Handle `v-on` and `@`
  */
-function propsToDataRxOn (key: string, value: any, data: any, documentMeta: ParsedContentMeta) {
+function propsToDataRxOn (key: string, value: any, data: any, documentMeta: MDCData) {
   key = key.replace(rxOn, '')
   data.on = data.on || {}
   data.on[key] = () => evalInContext(value, documentMeta)
@@ -316,7 +310,7 @@ function propsToDataRxOn (key: string, value: any, data: any, documentMeta: Pars
 /**
  * Handle single binding `v-bind:` and `:`
  */
-function propsToDataRxBind (key: string, value: any, data: any, documentMeta: ParsedContentMeta) {
+function propsToDataRxBind (key: string, value: any, data: any, documentMeta: MDCData) {
   key = key.replace(rxBind, '')
   data[key] = evalInContext(value, documentMeta)
   return data
@@ -389,7 +383,7 @@ function mergeTextNodes (nodes: Array<VNode>) {
   return mergedNodes
 }
 
-async function resolveContentComponents (body: ParsedContent['body'], meta: Record<string, any>) {
+async function resolveContentComponents (body: MDCRoot, meta: Record<string, any>) {
   const components = Array.from(new Set(loadComponents(body, meta)))
   await Promise.all(components.map(async (c) => {
     if ((c as any)?.render || (c as any)?.ssrRender) {
