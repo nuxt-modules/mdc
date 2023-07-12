@@ -57,9 +57,20 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
       tree.children.push({
         type: 'element',
         tagName: 'style',
-        children: [{ type: 'text', value: styles.join('') }],
+        children: [{ type: 'text', value: cleanCSS(styles.join('')) }],
         properties: {}
       })
     }
   }
+}
+
+const cleanCSS = (css: string) => {
+  const styles = css
+    .split('}')
+    .filter(s => Boolean(s.trim()))
+    .map(s => s.trim() + '}')
+
+  return Array
+    .from(new Set(styles))
+    .join('')
 }
