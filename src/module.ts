@@ -2,6 +2,7 @@ import { defineNuxtModule, addComponent, createResolver, addServerHandler, addTe
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates';
 import type { ModuleOptions } from './types';
+import { defu } from 'defu'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -21,14 +22,12 @@ export default defineNuxtModule<ModuleOptions>({
   async setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    nuxt.options.runtimeConfig.public = {
-      mdc: {
-        components: {
-          prose: options.components!.prose!,
-          map: options.components!.map!
-        }
+    nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
+      components: {
+        prose: options.components!.prose!,
+        map: options.components!.map!
       }
-    }
+    })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
       viteConfig.optimizeDeps?.include?.push(
