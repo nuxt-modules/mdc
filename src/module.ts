@@ -3,6 +3,7 @@ import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates';
 import type { ModuleOptions } from './types';
 import { defu } from 'defu'
+import { registerMDCSlotTransformer } from './utils/vue-mdc-slot';
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -65,6 +66,8 @@ export default defineNuxtModule<ModuleOptions>({
         })
       }
     }
+
+    registerMDCSlotTransformer(resolver)
   }
 })
 
