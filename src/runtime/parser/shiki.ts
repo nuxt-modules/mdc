@@ -32,25 +32,22 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
     const tasks: Promise<void>[] = []
     const styles: string[] = []
     visit(
-      tree as any,
-      (node) => node.type === 'element' && (node as Element).tagName === 'code' && !!(node as Element).properties!.language,
+      tree,
+      node => (node as Element).tagName === 'pre' && !!(node as Element).properties?.language,
       (node) => {
         const _node = node as Element
-        const t = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!)
+        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!)
           .then(({ tree, className, style }) => {
-            let parent = _node
-            if ((_node.children[0] as Element).tagName === 'pre') {
-              parent = _node.children[0] as Element
-            }
-            parent.children = tree
-            parent.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
+            _node.children = tree
+            _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
             
             styles.push(style)
           })
 
-        tasks.push(t)
+        tasks.push(task)
       }
     )
+
     if (tasks.length) { 
       await Promise.all(tasks)
 

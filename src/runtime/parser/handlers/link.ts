@@ -1,24 +1,24 @@
-import type { H } from 'mdast-util-to-hast'
-import { all } from 'mdast-util-to-hast'
-import type { MdastContent } from 'mdast-util-to-hast/lib'
+import { type State } from 'mdast-util-to-hast'
+import { type Element, type Properties } from 'hast'
+import { type Link } from 'mdast'
+import { normalizeUri } from 'micromark-util-sanitize-uri'
 
-type Node = MdastContent & {
-  title: string
-  url: string
-  attributes?: any
-  tagName: string
-  children?: Node[]
-}
-
-export default function link (h: H, node: Node) {
-  const props: any = {
-    ...((node.attributes || {}) as object),
-    href: node.url
+export default function link (state: State, node: Link & { attributes?: Properties}) {
+  const properties: Properties = {
+    ...((node.attributes || {})),
+    href: normalizeUri(node.url)
   }
 
   if (node.title !== null && node.title !== undefined) {
-    props.title = node.title
+    properties.title = node.title
   }
 
-  return h(node, 'a', props, all(h, node))
+  const result: Element = {
+    type: 'element',
+    tagName: 'a',
+    properties,
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
 }

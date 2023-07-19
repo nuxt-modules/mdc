@@ -20,7 +20,7 @@ const rxBind = /^:|^v-bind:/
 const rxModel = /^v-model/
 const nativeInputs = ['select', 'textarea', 'input']
 
-const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code-inline', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr'].map(t => [t, `prose-${t}`]))
+const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code', 'pre', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr'].map(t => [t, `prose-${t}`]))
 
 export default defineComponent({
   name: 'MDCRenderer',

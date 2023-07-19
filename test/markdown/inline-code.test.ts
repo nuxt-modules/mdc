@@ -10,5 +10,5 @@ it('Html `<code>` should render as inline code', async () => {
   
   expect(body).toHaveProperty('type', 'root')
   expect(body).toHaveProperty('children[0].tag', 'p')
-  expect(body).toHaveProperty('children[0].children[0].tag', 'code-inline')
+  expect(body).toHaveProperty('children[0].children[0].tag', 'code')
 })

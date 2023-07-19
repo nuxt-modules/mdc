@@ -22,31 +22,24 @@ it('Simple code block', async () => {
           {
             "children": [
               {
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "class C {
+                "type": "text",
+                "value": "class C {
       private name: string = \\"foo\\"
     }
     ",
-                  },
-                ],
-                "props": {
-                  "__ignoreMap": "",
-                  "className": [
-                    "language-ts",
-                  ],
-                },
-                "tag": "code",
-                "type": "element",
               },
             ],
-            "props": {},
-            "tag": "pre",
+            "props": {
+              "__ignoreMap": "",
+            },
+            "tag": "code",
             "type": "element",
           },
         ],
         "props": {
+          "className": [
+            "language-ts",
+          ],
           "code": "class C {
       private name: string = \\"foo\\"
     }
@@ -56,7 +49,7 @@ it('Simple code block', async () => {
           "language": "ts",
           "meta": "",
         },
-        "tag": "code",
+        "tag": "pre",
         "type": "element",
       },
     ]

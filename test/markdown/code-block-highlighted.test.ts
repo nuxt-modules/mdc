@@ -26,62 +26,12 @@ it('Highlighted code block', async () => {
               {
                 "children": [
                   {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "class",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-857441",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "C",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-806137",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " {
-    ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
+                    "type": "text",
+                    "value": "class",
                   },
                 ],
                 "props": {
-                  "class": "line",
-                  "line": 1,
+                  "class": "ct-857441",
                 },
                 "tag": "span",
                 "type": "element",
@@ -89,153 +39,12 @@ it('Highlighted code block', async () => {
               {
                 "children": [
                   {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "  ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "private",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-857441",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "name",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-657843",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": ":",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-857441",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "string",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-533739",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "=",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-857441",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": " ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
-                  },
-                  {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "\\"foo\\"
-    ",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-244866",
-                    },
-                    "tag": "span",
-                    "type": "element",
+                    "type": "text",
+                    "value": " ",
                   },
                 ],
                 "props": {
-                  "class": "line",
-                  "line": 2,
+                  "class": "ct-767297",
                 },
                 "tag": "span",
                 "type": "element",
@@ -243,35 +52,218 @@ it('Highlighted code block', async () => {
               {
                 "children": [
                   {
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "}",
-                      },
-                    ],
-                    "props": {
-                      "class": "ct-767297",
-                    },
-                    "tag": "span",
-                    "type": "element",
+                    "type": "text",
+                    "value": "C",
                   },
                 ],
                 "props": {
-                  "class": "line",
-                  "line": 3,
+                  "class": "ct-806137",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": " {
+    ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
                 },
                 "tag": "span",
                 "type": "element",
               },
             ],
             "props": {
-              "className": "github-dark",
+              "class": "line",
+              "line": 1,
             },
-            "tag": "pre",
+            "tag": "span",
+            "type": "element",
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "  ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "private",
+                  },
+                ],
+                "props": {
+                  "class": "ct-857441",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": " ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "name",
+                  },
+                ],
+                "props": {
+                  "class": "ct-657843",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": ":",
+                  },
+                ],
+                "props": {
+                  "class": "ct-857441",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": " ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "string",
+                  },
+                ],
+                "props": {
+                  "class": "ct-533739",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": " ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "=",
+                  },
+                ],
+                "props": {
+                  "class": "ct-857441",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": " ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "\\"foo\\"
+    ",
+                  },
+                ],
+                "props": {
+                  "class": "ct-244866",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+            ],
+            "props": {
+              "class": "line",
+              "line": 2,
+            },
+            "tag": "span",
+            "type": "element",
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "}",
+                  },
+                ],
+                "props": {
+                  "class": "ct-767297",
+                },
+                "tag": "span",
+                "type": "element",
+              },
+            ],
+            "props": {
+              "class": "line",
+              "line": 3,
+            },
+            "tag": "span",
             "type": "element",
           },
         ],
         "props": {
+          "className": "language-ts github-dark",
           "code": "class C {
       private name: string = \\"foo\\"
     }
@@ -281,7 +273,7 @@ it('Highlighted code block', async () => {
           "language": "ts",
           "meta": "",
         },
-        "tag": "code",
+        "tag": "pre",
         "type": "element",
       },
       {
