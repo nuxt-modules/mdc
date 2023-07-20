@@ -1,5 +1,5 @@
 import type { RootContent, Root } from '../types/hast'
-import type { MDCNode, MDCRoot } from "../types"
+import type { MDCNode, MDCRoot } from '../types'
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
 import { validateProps } from './utils/props'

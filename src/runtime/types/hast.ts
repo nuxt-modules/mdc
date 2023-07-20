@@ -8,7 +8,7 @@
 //                 Remco Haszing <https://github.com/remcohaszing>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-import type { Data as UnistData, Literal as UnistLiteral, Node as UnistNode, Parent as UnistParent } from './unist';
+import type { Data as UnistData, Literal as UnistLiteral, Node as UnistNode, Parent as UnistParent } from './unist'
 
 // ## Interfaces
 

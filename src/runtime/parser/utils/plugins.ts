@@ -1,5 +1,5 @@
-import { Processor } from "remark-rehype/lib";
-import { MDCParseOptions, RehypePlugin, RemarkPlugin } from "../../types";
+import { Processor } from 'remark-rehype/lib'
+import { MDCParseOptions, RehypePlugin, RemarkPlugin } from '../../types'
 
 export const useProcessorPlugins = async (processor: Processor, plugins: Exclude<MDCParseOptions['rehype'] | MDCParseOptions['remark'], undefined>['plugins'] = {}) => {
   const toUse = Object.entries(plugins).filter(p => p[1] !== false) as Array<[string, RemarkPlugin | RehypePlugin]>

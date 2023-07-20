@@ -1,15 +1,15 @@
-import type { MDCData, MDCElement, MDCParseOptions, MDCRoot, Toc } from "../types"
+import type { MDCData, MDCElement, MDCParseOptions, MDCRoot, Toc } from '../types'
 import { unified } from 'unified'
-import remarkParse from "remark-parse"
+import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import remarkMDC, { parseFrontMatter } from 'remark-mdc'
 import { defu } from 'defu'
-import { useProcessorPlugins } from "./utils/plugins"
-import { compileHast } from "./compiler"
+import { useProcessorPlugins } from './utils/plugins'
+import { compileHast } from './compiler'
 import { defaults } from './options'
-import { rehypeShiki } from "./shiki"
-import { generateToc } from "./toc"
-import { nodeTextContent } from "../utils/node"
+import { rehypeShiki } from './shiki'
+import { generateToc } from './toc'
+import { nodeTextContent } from '../utils/node'
 
 export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   const options = defu(opts, defaults)

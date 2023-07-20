@@ -1,8 +1,8 @@
 import { vi } from 'vitest'
-import { parseMarkdown as _parseMarkDown } from "../../src/runtime/parser"
+import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import { MDCParseOptions } from '../../src/runtime/types'
 import { Theme, TokenStyleMap } from '../../src/runtime/shiki/types'
-import { useShikiHighlighter } from "../../src/runtime/shiki/highlighter"
+import { useShikiHighlighter } from '../../src/runtime/shiki/highlighter'
 
 vi.mock('#mdc-imports', () => {
   return {

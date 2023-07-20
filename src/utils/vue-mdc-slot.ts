@@ -1,9 +1,9 @@
 import { RENDER_SLOT, type NodeTransform, type ElementNode } from '@vue/compiler-core'
-import { type Resolver, extendViteConfig } from "@nuxt/kit";
+import { type Resolver, extendViteConfig } from '@nuxt/kit'
 
 export const registerMDCSlotTransformer = (resolver: Resolver) => {
     extendViteConfig((config) => {
-    const compilerOptions = (config as any).vue.template.compilerOptions;
+    const compilerOptions = (config as any).vue.template.compilerOptions
 
     config.plugins = config.plugins || []
     config.plugins!.push({
@@ -11,7 +11,7 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
       enforce: 'post',
       transform(code) {
         if (code.includes('_renderMDCSlot')) {
-          return `import { renderSlot as _renderMDCSlot } from '${resolver.resolve("./runtime/utils/slot")}';\n${code}`
+          return `import { renderSlot as _renderMDCSlot } from '${resolver.resolve('./runtime/utils/slot')}';\n${code}`
         }
       }
     })
@@ -23,17 +23,17 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
             context.nodeTransforms.find(nt => nt.name === 'ssrTransformSlotOutlet') :
             context.nodeTransforms.find(nt => nt.name === 'transformSlotOutlet')
 
-          return () => {              
+          return () => {
             node.tag = 'slot'
             node.type = 1
             node.tagType = 2
-            
+
             transform?.(node, context)
-            
+
             const codegen = context.ssr ? (node as any).ssrCodegenNode : node.codegenNode
             codegen.arguments.unshift(codegen.callee === RENDER_SLOT ? '_renderSlot' : '_ssrRenderSlot')
             codegen.callee = '_renderMDCSlot'
-          } 
+          }
         }
 
         if (context.nodeTransforms[0].name !== 'viteMDCSlot') {

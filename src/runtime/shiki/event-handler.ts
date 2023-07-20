@@ -1,7 +1,7 @@
-import type { Lang } from "shiki-es"
-import { eventHandler, getQuery } from "h3"
-import { useShikiHighlighter } from "./highlighter"
-import type { Theme, TokenStyleMap } from "./types"
+import type { Lang } from 'shiki-es'
+import { eventHandler, getQuery } from 'h3'
+import { useShikiHighlighter } from './highlighter'
+import type { Theme, TokenStyleMap } from './types'
 
 export default eventHandler(async (event) => {
   const { code, lang, theme: themeString } = getQuery(event)

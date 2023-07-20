@@ -2,9 +2,9 @@ import handlers from './handlers'
 import remarkEmoji from 'remark-emoji'
 import remarkGFM  from 'remark-gfm'
 import rehypeExternalLinks from 'rehype-external-links'
-import rehypeSortAttributeValues from "rehype-sort-attribute-values"
-import rehypeSortAttributes from "rehype-sort-attributes"
-import rehypeRaw from "rehype-raw"
+import rehypeSortAttributeValues from 'rehype-sort-attribute-values'
+import rehypeSortAttributes from 'rehype-sort-attributes'
+import rehypeRaw from 'rehype-raw'
 import type { MDCParseOptions } from '../types'
 // @ts-ignore
 import { remarkPlugins, rehypePlugins, highlight } from '#mdc-imports'

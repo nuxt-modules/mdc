@@ -1,5 +1,5 @@
-import { expect, it } from "vitest"
-import { parseMarkdown } from "../utils/parser"
+import { expect, it } from 'vitest'
+import { parseMarkdown } from '../utils/parser'
 
 const md = `
 \`\`\`ts

@@ -1,4 +1,4 @@
-import type { Theme } from "./runtime/shiki/types"
+import type { Theme } from './runtime/shiki/types'
 
 export interface UnistPlugin {
   src?: string

@@ -1,9 +1,9 @@
 import { defineNuxtModule, addComponent, createResolver, addServerHandler, addTemplate } from '@nuxt/kit'
 import fs from 'fs'
-import { mdcImportTemplate } from './utils/templates';
-import type { ModuleOptions } from './types';
+import { mdcImportTemplate } from './utils/templates'
+import type { ModuleOptions } from './types'
 import { defu } from 'defu'
-import { registerMDCSlotTransformer } from './utils/vue-mdc-slot';
+import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -45,7 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })
     addComponent({ name: 'MDCRenderer', filePath: resolver.resolve('./runtime/components/MDCRenderer') })
     addComponent({ name: 'MDCSlot', filePath: resolver.resolve('./runtime/components/MDCSlot') })
-    
+
     // Add server handlers
     addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
 
@@ -53,7 +53,7 @@ export default defineNuxtModule<ModuleOptions>({
     const _layers = [...nuxt.options._layers].reverse()
     for (const layer of _layers) {
       const srcDir = layer.config.srcDir
-      const globalComponents = resolver.resolve(srcDir, 'components/content')
+      const globalComponents = resolver.resolve(srcDir, 'components/mdc')
       const dirStat = await fs.promises.stat(globalComponents).catch(() => null)
       if (dirStat && dirStat.isDirectory()) {
         nuxt.hook('components:dirs', (dirs) => {
