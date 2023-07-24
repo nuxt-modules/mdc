@@ -13,6 +13,10 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
         if (code.includes('_renderMDCSlot')) {
           return `import { renderSlot as _renderMDCSlot } from '${resolver.resolve('./runtime/utils/slot')}';\n${code}`
         }
+
+        if (code.includes('_ssrRenderMDCSlot')) {
+          return `import { ssrRenderSlot as _ssrRenderMDCSlot } from '${resolver.resolve('./runtime/utils/ssrSlot')}';\n${code}`
+        }
       }
     })
 
@@ -31,9 +35,8 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
             transform?.(node, context)
 
             const codegen = context.ssr ? (node as any).ssrCodegenNode : node.codegenNode
-            codegen.arguments.unshift(codegen.callee === RENDER_SLOT ? '_renderSlot' : '_ssrRenderSlot')
-            codegen.callee = '_renderMDCSlot'
-          }
+            codegen.callee = codegen.callee === RENDER_SLOT ? '_renderMDCSlot' : '_ssrRenderMDCSlot'
+          } 
         }
 
         if (context.nodeTransforms[0].name !== 'viteMDCSlot') {
