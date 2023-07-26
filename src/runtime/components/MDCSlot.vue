@@ -10,12 +10,9 @@ export default defineComponent({
   name: 'MDCSlot',
   functional: true,
   props: {
-    /**
-      * A slot name or function
-     */
-    use: {
-      type: Function,
-      default: undefined
+    name: {
+      type: String,
+      default: 'default'
     },
     /**
      * Tags to unwrap separated by spaces
@@ -24,7 +21,15 @@ export default defineComponent({
     unwrap: {
       type: [Boolean, String],
       default: false
-    }
+    },
+    /**
+      * VNode to render
+      * This is only useful for render functions
+     */
+     use: {
+      type: Function,
+      default: undefined
+    },
   },
   setup (props) {
     const { parent } = getCurrentInstance()!
