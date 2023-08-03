@@ -38,9 +38,14 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
         const _node = node as Element
         const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!)
           .then(({ tree, className, style }) => {
-            _node.children = tree
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
-            
+
+            if ((_node.children[0] as Element)?.tagName === 'code') {
+              (_node.children[0] as Element).children = tree
+            } else {
+              _node.children = tree
+            }
+
             styles.push(style)
           })
 
