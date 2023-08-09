@@ -11,11 +11,17 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
       enforce: 'post',
       transform(code) {
         if (code.includes('_renderMDCSlot')) {
-          return `import { renderSlot as _renderMDCSlot } from '${resolver.resolve('./runtime/utils/slot')}';\n${code}`
+          return {
+            code: `import { renderSlot as _renderMDCSlot } from '${resolver.resolve('./runtime/utils/slot')}';\n${code}`,
+            map: { mappings: '' }
+          }
         }
 
         if (code.includes('_ssrRenderMDCSlot')) {
-          return `import { ssrRenderSlot as _ssrRenderMDCSlot } from '${resolver.resolve('./runtime/utils/ssrSlot')}';\n${code}`
+          return {
+            code: `import { ssrRenderSlot as _ssrRenderMDCSlot } from '${resolver.resolve('./runtime/utils/ssrSlot')}';\n${code}`,
+            map: { mappings: '' }
+          }
         }
       }
     })
