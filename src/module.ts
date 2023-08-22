@@ -32,7 +32,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
       viteConfig.optimizeDeps?.include?.push(
-        'is-buffer', 'debug', 'flat', 'mdurl', 'node-emoji', 'extend', 'hast-util-raw'
+        'is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw'
       )
     })
 

@@ -4,7 +4,7 @@ import { MDCParseOptions } from '../../src/runtime/types'
 import { Theme, TokenStyleMap } from '../../src/runtime/shiki/types'
 import { useShikiHighlighter } from '../../src/runtime/shiki/highlighter'
 
-vi.mock('#mdc-imports', () => {
+vi.mock('#build/mdc-imports.mjs', () => {
   return {
     remarkPlugins: {},
     rehypePlugins: {},
