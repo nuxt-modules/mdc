@@ -1046,7 +1046,7 @@ packages:
       '@nuxt-themes/elements': 0.9.4(postcss@8.4.27)(rollup@3.27.1)(vue@3.3.4)
       '@nuxt-themes/tokens': 1.9.1(postcss@8.4.27)(rollup@3.27.1)(vue@3.3.4)
       '@nuxt-themes/typography': 0.11.0(postcss@8.4.27)(rollup@3.27.1)(vue@3.3.4)
-      '@nuxt/content': /@nuxt/content-edge@2.7.2-28197541.2e5c7f7(rollup@3.27.1)(vue@3.3.4)
+      '@nuxt/content': /@nuxt/content-edge@2.7.2-28213119.71ed34f(rollup@3.27.1)(vue@3.3.4)
       '@nuxthq/studio': 0.13.4(rollup@3.27.1)
       '@vueuse/nuxt': 10.3.0(nuxt@3.6.5)(rollup@3.27.1)(vue@3.3.4)
     transitivePeerDependencies:
@@ -1117,8 +1117,8 @@ packages:
       - vue
     dev: true
 
-  /@nuxt/content-edge@2.7.2-28197541.2e5c7f7(rollup@3.27.1)(vue@3.3.4):
-    resolution: {integrity: sha512-BQYOGqyrFuD2Ue9Q4GqRewpVa6mO7RW7lMJydM88Dv3rN9V8Cokn2Vy9DBzCNvtobG9KMj3EaA8xgBi9cLICOQ==}
+  /@nuxt/content-edge@2.7.2-28213119.71ed34f(rollup@3.27.1)(vue@3.3.4):
+    resolution: {integrity: sha512-Sggb9bK/0pvxzlbb6jCTvHUkkpNEYLkBJ7nrEb5wEbD3dZheAzcG25FsOlkdFrNunnHZRHH++kKJClKRjKDblw==}
     dependencies:
       '@nuxt/kit': 3.6.5(rollup@3.27.1)
       '@vueuse/head': 1.3.1(vue@3.3.4)

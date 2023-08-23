@@ -1,7 +1,6 @@
 {
-  "name": "docus-starter",
+  "name": "nuxt-mdc-docs",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
