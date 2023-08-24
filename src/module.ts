@@ -1,4 +1,4 @@
-import { defineNuxtModule, addComponent, createResolver, addServerHandler, addTemplate } from '@nuxt/kit'
+import { defineNuxtModule, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate } from '@nuxt/kit'
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
@@ -15,6 +15,13 @@ export default defineNuxtModule<ModuleOptions>({
     remarkPlugins: {},
     rehypePlugins: {},
     highlight: false,
+    headings: {
+      anchorLinks: {
+        h2: true,
+        h3: true,
+        h4: true
+      }
+    },
     components: {
       prose: true,
       map: {}
@@ -27,7 +34,8 @@ export default defineNuxtModule<ModuleOptions>({
       components: {
         prose: options.components!.prose!,
         map: options.components!.map!
-      }
+      },
+      headings: options.headings!
     })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
@@ -45,6 +53,16 @@ export default defineNuxtModule<ModuleOptions>({
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })
     addComponent({ name: 'MDCRenderer', filePath: resolver.resolve('./runtime/components/MDCRenderer') })
     addComponent({ name: 'MDCSlot', filePath: resolver.resolve('./runtime/components/MDCSlot') })
+
+    // Register prose components
+    if (options.components?.prose) {
+      addComponentsDir({
+        path: resolver.resolve('./runtime/components/prose'),
+        pathPrefix: false,
+        prefix: '',
+        global: true
+      })
+    }
 
     // Add server handlers
     addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
@@ -78,6 +96,7 @@ declare module '@nuxt/schema' {
         prose: boolean
         map: Record<string, string>
       }
+      headings: ModuleOptions['headings']
     }
   }
 
@@ -90,6 +109,7 @@ declare module '@nuxt/schema' {
             map: Record<string, string>
           }
         }
+        headings: ModuleOptions['headings']
       }
     }
   }
