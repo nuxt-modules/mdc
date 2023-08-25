@@ -1,0 +1,1 @@
+import{l as _,b as t,c as n,a0 as r}from"./entry.7719cdbc.js";const o={};function s(e,c){return t(),n("tr",null,[r(e.$slots,"default",{},void 0,!0)])}const d=_(o,[["render",s],["__scopeId","data-v-0070b0ef"]]);export{d as default};
