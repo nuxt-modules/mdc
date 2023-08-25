@@ -12,12 +12,12 @@
     "@nuxt/content": "npm:@nuxt/content-edge@latest"
   },
   "devDependencies": {
-    "@nuxt-themes/docus": "^1.13.1",
-    "@nuxt/devtools": "^0.6.7",
+    "@nuxt-themes/docus": "^1.14.6",
+    "@nuxt/devtools": "^0.8.0",
     "@nuxt/eslint-config": "^0.1.1",
     "@nuxtjs/plausible": "^0.2.1",
-    "@types/node": "^20.4.0",
-    "eslint": "^8.44.0",
+    "@types/node": "^20.5.6",
+    "eslint": "^8.47.0",
     "nuxt": "^3.6.5"
   }
 }

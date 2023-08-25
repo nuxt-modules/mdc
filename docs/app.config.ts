@@ -41,6 +41,6 @@ export default defineAppConfig({
       title: 'Nuxt MDC'
     },
 
-    titleTemplate: '%s · Nuxt MDC'
+    titleTemplate: 'Nuxt MDC'
   }
 })
