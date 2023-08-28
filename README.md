@@ -1,14 +1,28 @@
 # Nuxt MDC
 
-MDC supercharges regular Markdown to write documents interacting deeply with any Vue component.
+MDC supercharges regular Markdown to write documents interacting deeply with any Vue component. MDC stands for MarkDown Components.
+
+## Features
+
+- Mix Markdown syntax with HTML tags or Vue components
+- Unwrap any generated content (ex: `<p>` added by each Markdown paragraph)
+- Use Vue components with named slots
+- Support inline components
+- Add attributes and classes to inline HTML tags
+
+Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
 
 ## Install
 
 ```bash
-# Using Yarn
-yarn add --dev @nuxtjs/mdc
-# Using NPM
+# Using npm
 npm install --save-dev @nuxtjs/mdc
+
+# Using yarn
+yarn add --dev @nuxtjs/mdc
+
+# Using pnpm
+pnpm add --dev @nuxtjs/mdc
 ```
 
 Then, add `@nuxtjs/mdc` to the modules section of your `nuxt.config.ts`
