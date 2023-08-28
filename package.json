@@ -54,7 +54,7 @@
     "rehype-sort-attributes": "^4.0.0",
     "remark-emoji": "^4.0.0",
     "remark-gfm": "^3.0.1",
-    "remark-mdc": "^1.2.0",
+    "remark-mdc": "^2.0.0",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "scule": "^1.0.0",
