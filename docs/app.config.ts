@@ -6,7 +6,7 @@ export default defineAppConfig({
 
     socials: {
       twitter: 'nuxt_js',
-      github: 'nuxtlabs/nuxt-mdc',
+      github: 'nuxt-modules/mdc',
       nuxt: {
         label: 'Nuxt',
         icon: 'simple-icons:nuxtdotjs',
@@ -17,8 +17,8 @@ export default defineAppConfig({
     github: {
       dir: 'docs/content',
       branch: 'main',
-      repo: 'nuxt-mdc',
-      owner: 'nuxtlabs',
+      repo: 'mdc',
+      owner: 'nuxt-modules',
       edit: true
     },
 

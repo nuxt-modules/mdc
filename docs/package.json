@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-mdc-docs",
+  "name": "@nuxtjs/mdc-docs",
   "version": "0.1.0",
   "scripts": {
     "dev": "nuxi dev",

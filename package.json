@@ -2,7 +2,7 @@
   "name": "@nuxtjs/mdc",
   "version": "0.0.1",
   "description": "Nuxt MDC module",
-  "repository": "nuxtlabs/nuxt-mdc",
+  "repository": "nuxt-modules/mdc",
   "license": "MIT",
   "type": "module",
   "exports": {
