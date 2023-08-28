@@ -53,7 +53,7 @@ Render MDC content with `<MDC>` component:
 
 ```html
 <template>
-  <MDC :value="md"  tag="article" />
+  <MDC :value="md" tag="article" />
 </template>
 
 <script setup lang="ts">
