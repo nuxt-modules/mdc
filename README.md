@@ -6,16 +6,16 @@ MDC supercharges regular Markdown to write documents interacting deeply with any
 
 ```bash
 # Using Yarn
-yarn add --dev remark-mdc
+yarn add --dev @nuxtjs/mdc
 # Using NPM
-npm install --save-dev remark-mdc
+npm install --save-dev @nuxtjs/mdc
 ```
 
-Then, add `nuxt-mdc` to the modules section of your `nuxt.config.ts`
+Then, add `@nuxtjs/mdc` to the modules section of your `nuxt.config.ts`
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  modules: ['nuxt-mdc']
+  modules: ['@nuxtjs/mdc']
 })
 ```
 
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 Parse MDC content in any environment:
 
 ```ts [parse-mdc.ts]
-import { parseMarkdown } from 'nuxt-mdc/runtime'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 async function main(mdc: string) {
   const ast = await parseMarkdown(mdc)

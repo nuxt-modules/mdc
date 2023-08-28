@@ -7,7 +7,7 @@ import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-mdc',
+    name: '@nuxtjs/mdc',
     configKey: 'mdc'
   },
   // Default configuration options of the Nuxt module

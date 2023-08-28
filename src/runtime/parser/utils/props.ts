@@ -31,7 +31,7 @@ export const validateProps = (props?: Record<string, any>) => {
 
       if (!isValid) {
         // eslint-disable-next-line no-console
-        console.warn(`[nuxt-mdc] removing unsafe attribute: ${name}="${value}"`)
+        console.warn(`[@nuxtjs/mdc] removing unsafe attribute: ${name}="${value}"`)
       }
 
       return isValid

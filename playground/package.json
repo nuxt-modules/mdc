@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "nuxt-mdc-playground",
+  "name": "@nuxtjs/mdc-playground",
   "type": "module",
   "scripts": {
     "dev": "nuxi dev",

@@ -5,7 +5,7 @@ import type { HighlighterOptions, Theme, HighlightThemedToken, HighlightThemedTo
 import type { ElementContent, Element } from '../types/hast'
 
 // Re-create logger locally as utils cannot be imported from here
-const logger = consola.withTag('nuxt-mdc')
+const logger = consola.withTag('@nuxtjs/mdc')
 
 /**
  * Resolve Shiki compatible lang from string.
