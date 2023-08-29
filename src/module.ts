@@ -1,4 +1,4 @@
-import { defineNuxtModule, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate } from '@nuxt/kit'
+import { defineNuxtModule, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports } from '@nuxt/kit'
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
@@ -53,6 +53,9 @@ export default defineNuxtModule<ModuleOptions>({
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })
     addComponent({ name: 'MDCRenderer', filePath: resolver.resolve('./runtime/components/MDCRenderer') })
     addComponent({ name: 'MDCSlot', filePath: resolver.resolve('./runtime/components/MDCSlot') })
+
+    // Add composables
+    addImports({ from: resolver.resolve('./runtime/utils/node'), name: 'flatUnwrap', as: 'unwrapSlot' })
 
     // Register prose components
     if (options.components?.prose) {
