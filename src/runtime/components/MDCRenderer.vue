@@ -161,7 +161,6 @@ function renderToText (node: MDCNode): string {
 }
 
 function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}, vars: any = {}): VNode {
-  console.log(vars.value);
   const data = {
     ...parentScope,
     $route: () => useRoute(),
