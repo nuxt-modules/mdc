@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.1...v0.1.2)
+
+### 🚀 Enhancements
+
+- Expose `unwrapSlot` ([#7](https://github.com/nuxt-modules/mdc/pull/7))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.1.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/0.1.0...v0.1.1)
