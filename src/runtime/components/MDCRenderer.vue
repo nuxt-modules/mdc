@@ -87,7 +87,7 @@ export default defineComponent({
     return { tags }
   },
   render (ctx: any) {
-    const { tags, tag, body, data } = ctx
+    const { tags, tag, body, data, vars } = ctx
 
     if (!body) {
       return null
@@ -106,7 +106,7 @@ export default defineComponent({
         ...meta.component?.props,
         ...this.$attrs
       },
-      renderSlots(body, h, meta, meta)
+      renderSlots(body, h, meta, meta, vars)
     )
   }
 })
@@ -161,6 +161,7 @@ function renderToText (node: MDCNode): string {
 }
 
 function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}, vars: any = {}): VNode {
+  console.log(vars.value);
   const data = {
     ...parentScope,
     $route: () => useRoute(),
