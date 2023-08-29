@@ -1,4 +1,11 @@
+![Nuxt MDC](https://github.com/nuxt-modules/mdc/assets/904724/ce6aa142-0820-4bcc-988c-a926cf03f0a5)
+
 # Nuxt MDC
+
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+[![Nuxt][nuxt-src]][nuxt-href]
 
 MDC supercharges regular Markdown to write documents interacting deeply with any Vue component. MDC stands for MarkDown Components.
 
@@ -65,7 +72,6 @@ Hello MDC
 </script>
 ```
 
-
 ## 💻 Development
 
 - Clone repository
@@ -76,3 +82,17 @@ Hello MDC
 ## License
 
 [MIT](./LICENSE) - Made with 💚
+
+
+<!-- Badges -->
+[npm-version-src]: https://img.shields.io/npm/v/@nuxtjs/mdc/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/@nuxtjs/mdc
+
+[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxtjs/mdc.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/@nuxtjs/mdc
+
+[license-src]: https://img.shields.io/github/license/nuxt-modules/mdc.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://github.com/nuxt-modules/mdc/blob/main/LICENSE
+
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
+[nuxt-href]: https://nuxt.com
