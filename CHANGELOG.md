@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v0.1.4
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.3...v0.1.4)
+
+### 🩹 Fixes
+
+- **MDCSlot:** Do not unwrap Comment nodes ([fa45aa8](https://github.com/nuxt-modules/mdc/commit/fa45aa8))
+- **slot-transformer:** Drop plugin in favor of context imports ([f941516](https://github.com/nuxt-modules/mdc/commit/f941516))
+- **MDC:** Use raw content as `useAsyncData` key in `<MDC>` ([400e0de](https://github.com/nuxt-modules/mdc/commit/400e0de))
+- **MDCSlot:** Do not merge non-text vnodes ([82a5ff1](https://github.com/nuxt-modules/mdc/commit/82a5ff1))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.1.3
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.2...v0.1.3)
