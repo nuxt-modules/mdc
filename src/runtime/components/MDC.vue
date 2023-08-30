@@ -28,7 +28,7 @@ const props = defineProps({
   }
 })
 
-const { data, refresh } = await useAsyncData(async () => await parseMarkdown(props.value, { highlight: {}}))
+const { data, refresh } = await useAsyncData(props.value, async () => await parseMarkdown(props.value, { highlight: {}}))
 
 watch(() => props.value, () => {
   refresh()
