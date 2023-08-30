@@ -65,13 +65,13 @@ export function nodeTextContent (node: VNode | MDCNode): string {
   }
 
   if (isText(node)) {
-    return (node as VNode).children as string || (node as MDCText).value!
+    return (node as VNode).children as string || (node as MDCText).value! || ""
   }
 
   // Walk through node children
   const children = nodeChildren(node as MDCElement)
   if (Array.isArray(children)) {
-    return children.map(nodeTextContent).join('')
+    return children.map(nodeTextContent).filter(Boolean).join('')
   }
 
   // Return empty string for non-text nodes without any children
