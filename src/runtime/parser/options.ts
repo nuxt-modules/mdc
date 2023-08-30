@@ -23,6 +23,7 @@ export const defaults: MDCParseOptions = {
   },
   rehype: {
     options: {
+      // @ts-ignore
       handlers,
       allowDangerousHtml: true
     },

@@ -17,9 +17,12 @@ export default defineNuxtModule<ModuleOptions>({
     highlight: false,
     headings: {
       anchorLinks: {
+        h1: false,
         h2: true,
         h3: true,
-        h4: true
+        h4: true,
+        h5: false,
+        h6: false
       }
     },
     components: {

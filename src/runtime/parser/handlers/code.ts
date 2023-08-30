@@ -18,7 +18,10 @@ export default (state: State, node: Code) => {
   }
 
   if (node.meta) {
-    result.data = { meta: node.meta }
+    result.data = {
+      // @ts-ignore
+      meta: node.meta
+    }
   }
 
   state.patch(node, result)
