@@ -1,4 +1,4 @@
-import type { VNode } from 'vue'
+import { Comment, type VNode } from 'vue'
 import type { MDCElement, MDCNode, MDCText } from '../types'
 
 /**
@@ -117,7 +117,7 @@ function _flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode> {
 export function flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode | string> {
   return _flatUnwrap(vnodes, tags)
     .reduce((acc, item) => {
-      if (typeof item.children === 'string') {
+      if (typeof item.children === 'string' && item.type !== Comment) {
         if (typeof acc[acc.length - 1] === 'string') {
           acc[acc.length - 1] += item.children
         } else {
