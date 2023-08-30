@@ -1,4 +1,4 @@
-import { Comment, type VNode } from 'vue'
+import { Text, type VNode } from 'vue'
 import type { MDCElement, MDCNode, MDCText } from '../types'
 
 /**
@@ -32,7 +32,7 @@ export function isTag (vnode: VNode | MDCNode, tag: string | symbol): boolean {
  * Check if virtual node is text node
  */
 export function isText (vnode: VNode | MDCNode): boolean {
-  return isTag(vnode, 'text') || typeof (vnode as VNode).children === 'string'
+  return isTag(vnode, "text") || isTag(vnode, Text);
 }
 
 /**
@@ -117,11 +117,11 @@ function _flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode> {
 export function flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode | string> {
   return _flatUnwrap(vnodes, tags)
     .reduce((acc, item) => {
-      if (typeof item.children === 'string' && item.type !== Comment) {
+      if (isText(item)) {
         if (typeof acc[acc.length - 1] === 'string') {
-          acc[acc.length - 1] += item.children
+          acc[acc.length - 1] += item.children as string
         } else {
-          acc.push(item.children)
+          acc.push(item.children as string)
         }
       } else {
         acc.push(item)
