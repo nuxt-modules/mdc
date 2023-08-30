@@ -1,4 +1,4 @@
-import { defineNuxtModule, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports } from '@nuxt/kit'
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
@@ -69,6 +69,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add server handlers
     addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+
+    extendViteConfig((config) => {
+      config.optimizeDeps = config.optimizeDeps || {}
+      config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
+      config.optimizeDeps.exclude.push('@nuxtjs/mdc')
+    })
 
     // Register user global components
     const _layers = [...nuxt.options._layers].reverse()
