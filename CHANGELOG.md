@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.1.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.2...v0.1.3)
+
+### 🩹 Fixes
+
+- Exclude `@nuxtjs/mdc` from vite optimization ([ac3cd57](https://github.com/nuxt-modules/mdc/commit/ac3cd57))
+- Typecheck ([f65b3e9](https://github.com/nuxt-modules/mdc/commit/f65b3e9))
+- **types:** Undefined check ([edbc6b0](https://github.com/nuxt-modules/mdc/commit/edbc6b0))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.1.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.1...v0.1.2)
