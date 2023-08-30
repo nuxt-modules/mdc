@@ -32,7 +32,7 @@ export function isTag (vnode: VNode | MDCNode, tag: string | symbol): boolean {
  * Check if virtual node is text node
  */
 export function isText (vnode: VNode | MDCNode): boolean {
-  return isTag(vnode, "text") || isTag(vnode, Text);
+  return isTag(vnode, 'text') || isTag(vnode, Text)
 }
 
 /**
