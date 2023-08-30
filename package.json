@@ -43,7 +43,7 @@
     "destr": "^2.0.1",
     "detab": "^3.0.2",
     "github-slugger": "^2.0.0",
-    "hast-util-to-string": "^2.0.0",
+    "hast-util-to-string": "^3.0.0",
     "mdast-util-to-hast": "^13.0.2",
     "micromark-util-sanitize-uri": "^2.0.0",
     "property-information": "^6.2.0",
