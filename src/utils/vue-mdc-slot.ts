@@ -21,10 +21,14 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
             const codegen = context.ssr ? (node as any).ssrCodegenNode : node.codegenNode
             codegen.callee = codegen.callee === RENDER_SLOT ? '_renderMDCSlot' : '_ssrRenderMDCSlot'
 
-            context.imports.push({
-              exp: context.ssr ? '{ ssrRenderSlot as _ssrRenderMDCSlot }' : '{ renderSlot as _renderMDCSlot }',
-              path: resolver.resolve(`./runtime/utils/${context.ssr ? 'ssrSlot' : 'slot'}`)
-            })
+
+            const importExp = context.ssr ? '{ ssrRenderSlot as _ssrRenderMDCSlot }' : '{ renderSlot as _renderMDCSlot }'
+            if (!context.imports.some(i => String(i.exp) === importExp)) {
+              context.imports.push({
+                exp: importExp,
+                path: resolver.resolve(`./runtime/utils/${context.ssr ? 'ssrSlot' : 'slot'}`)
+              })
+            }
           } 
         }
 
