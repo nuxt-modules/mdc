@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.1.6
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.5...v0.1.6)
+
+### 🩹 Fixes
+
+- Remark/rehype plugin options ([911eea3](https://github.com/nuxt-modules/mdc/commit/911eea3))
+- **slot-transformer:** Prevent context conflict ([61291ff](https://github.com/nuxt-modules/mdc/commit/61291ff))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.1.5
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.4...v0.1.5)
