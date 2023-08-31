@@ -13,9 +13,10 @@
 </template>
 
 <script setup lang="ts">
+import { hash } from 'ohash'
 import { useAsyncData } from 'nuxt/app'
 import { parseMarkdown } from '../parser'
-import { watch } from 'vue'
+import { watch, computed } from 'vue'
 
 const props = defineProps({
   tag: {
@@ -28,7 +29,9 @@ const props = defineProps({
   }
 })
 
-const { data, refresh } = await useAsyncData(props.value, async () => await parseMarkdown(props.value, { highlight: {}}))
+const key = computed(() => hash(props.value))
+
+const { data, refresh } = await useAsyncData(key.value, async () => await parseMarkdown(props.value, { highlight: {}}))
 
 watch(() => props.value, () => {
   refresh()
