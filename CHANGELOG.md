@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.5
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.4...v0.1.5)
+
+### 🩹 Fixes
+
+- **MDC:** Reduce key size ([3c324d0](https://github.com/nuxt-modules/mdc/commit/3c324d0))
+- **slot-transformer:** Prevent duplicate import renderer ([654be0f](https://github.com/nuxt-modules/mdc/commit/654be0f))
+
+### 🏡 Chore
+
+- Upgrade deps ([c5978a1](https://github.com/nuxt-modules/mdc/commit/c5978a1))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.1.4
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.3...v0.1.4)
