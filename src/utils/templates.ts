@@ -42,7 +42,7 @@ function processUnistPlugins (plugins: Record<string, UnistPlugin>) {
   Object.entries(plugins).forEach(([name, plugin]) => {
     imports.push(`import ${pascalCase(name)} from '${name}'`)
     if (Object.keys(plugin).length) {
-      definitions.push(`  '${name}': { instance: ${pascalCase(name)}, ...(${JSON.stringify(plugin)}) },`)
+      definitions.push(`  '${name}': { instance: ${pascalCase(name)}, options: ${JSON.stringify(plugin)} },`)
     } else {
       definitions.push(`  '${name}': { instance: ${pascalCase(name)} },`)
     }
