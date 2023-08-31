@@ -1,4 +1,4 @@
-import { RENDER_SLOT, type NodeTransform, type ElementNode } from '@vue/compiler-core'
+import { type NodeTransform, type ElementNode } from '@vue/compiler-core'
 import { type Resolver, extendViteConfig } from '@nuxt/kit'
 
 export const registerMDCSlotTransformer = (resolver: Resolver) => {
@@ -19,8 +19,7 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
             transform?.(node, context)
 
             const codegen = context.ssr ? (node as any).ssrCodegenNode : node.codegenNode
-            codegen.callee = codegen.callee === RENDER_SLOT ? '_renderMDCSlot' : '_ssrRenderMDCSlot'
-
+            codegen.callee = context.ssr ? '_ssrRenderMDCSlot' : '_renderMDCSlot'
 
             const importExp = context.ssr ? '{ ssrRenderSlot as _ssrRenderMDCSlot }' : '{ renderSlot as _renderMDCSlot }'
             if (!context.imports.some(i => String(i.exp) === importExp)) {
