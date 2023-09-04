@@ -17,10 +17,10 @@ export default (state: State, node: Code) => {
     children: [{ type: 'text', value }]
   }
 
-  if (node.meta) {
+  if (meta) {
     result.data = {
       // @ts-ignore
-      meta: node.meta
+      meta
     }
   }
 
@@ -35,8 +35,8 @@ export default (state: State, node: Code) => {
     code: value
   }
 
-  if (node.lang) {
-    properties.className = ['language-' + node.lang]
+  if (language) {
+    properties.className = ['language-' + language]
   }
 
   // Create `<pre>`.
