@@ -27,7 +27,7 @@ const resolveTheme = (theme: string | Record<string, string>): Record<string, Sh
       default: theme
     }
   }
-  
+
   return Object.entries(theme).reduce((acc, [key, value]) => {
     acc[key] = BUNDLED_THEMES.find(t => t === value)!
     return acc
@@ -122,7 +122,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     }
 
     // Highlight code
-    const coloredTokens = Object.entries(theme).map(([key, theme]) => {      
+    const coloredTokens = Object.entries(theme).map(([key, theme]) => {
       const tokens = highlighter.codeToThemedTokens(code, lang, theme, { includeExplanation: false })
         .map(line => line.map(token => ({
           content: token.content,
@@ -159,7 +159,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     const { highlights = [], styleMap = {} } = opts || {}
 
     const className = Object.values(themeMap).map(th => th.name).join('_').replace('.', '')
-    
+
     styleMap[className] = {
       style: Object.entries(themeMap).reduce((acc, [key, th]) => {
         acc[key] = {
@@ -170,7 +170,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       }, {} as Record<string, any>),
       className: className,
     }
-    
+
 
     const tree: Array<Element> = tokens.map((line, lineIndex) => {
       // Add line break to all lines except last
