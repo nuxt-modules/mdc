@@ -47,7 +47,7 @@ export function compileHast(this: any) {
       }
 
       // Generate id for headings
-      if (node.tagName.startsWith('h')) {
+      if (node.tagName?.match(/^h\d$/)) {
         node.properties = node.properties || {}
         node.properties.id = String(node.properties?.id || slugs.slug(toString(node as any)))
           .replace(/-+/g, '-')
