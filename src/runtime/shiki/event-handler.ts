@@ -4,14 +4,14 @@ import { useShikiHighlighter } from './highlighter'
 import type { Theme, TokenStyleMap } from './types'
 
 export default eventHandler(async (event) => {
-  const { code, lang, theme: themeString } = getQuery(event)
+  const { code, lang, theme: themeString } = getQuery(event) // where are the highlights?
   const theme = JSON.parse(themeString as string)
 
   const shikiHighlighter = useShikiHighlighter({})
 
   const styleMap: TokenStyleMap = {}
 
-  const {tree, className } = await shikiHighlighter.getHighlightedAST(code as string, lang as Lang, theme as Theme, { styleMap })
+  const {tree, className } = await shikiHighlighter.getHighlightedAST(code as string, lang as Lang, theme as Theme, { styleMap }) // missing highlights in options
 
   return {
     tree,
