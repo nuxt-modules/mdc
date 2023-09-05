@@ -20,7 +20,7 @@ const defaults: RehypeShikiOption = {
         code,
         lang,
         theme: JSON.stringify(theme),
-        highlights,
+        highlights: JSON.stringify(highlights)
       }
     })
   }
@@ -37,7 +37,7 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
       node => (node as Element).tagName === 'pre' && !!(node as Element).properties?.language,
       (node) => {
         const _node = node as Element
-        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!, _node.properties!.highlights as number[])
+        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!, (_node.properties!.highlights ?? []) as number[])
           .then(({ tree, className, style }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
 
