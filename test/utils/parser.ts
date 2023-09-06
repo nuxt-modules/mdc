@@ -17,12 +17,12 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
     options.highlight = options.highlight || {}
     options.highlight.theme = options.highlight.theme || 'github-light'
 
-    options.highlight.highlighter = async (code: string, lang: string, theme: Theme) => {
+    options.highlight.highlighter = async (code: string, lang: string, theme: Theme, highlights) => {
       const shikiHighlighter = useShikiHighlighter({})
 
       const styleMap: TokenStyleMap = {}
 
-      const { tree, className } = await shikiHighlighter.getHighlightedAST(code as string, lang as any, theme as Theme, { styleMap })
+      const { tree, className } = await shikiHighlighter.getHighlightedAST(code as string, lang as any, theme as Theme, { styleMap, highlights })
 
       return {
         tree,
