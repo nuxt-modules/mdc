@@ -32,16 +32,12 @@ export default defineComponent({
       type: Object as PropType<MDCRoot>,
       required: true
     },
+    /**
+     * Document meta data
+     */
     data: {
       type: Object,
       default: () => ({})
-    },
-    /**
-     * Render only the excerpt
-     */
-    excerpt: {
-      type: Boolean,
-      default: false
     },
     /**
      * Root tag to use for rendering
