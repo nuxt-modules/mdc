@@ -3,10 +3,16 @@ export default defineNuxtConfig({
     '@nuxthq/ui',
     '../src/module'
   ],
+  // ssr: false,
   mdc: {
     highlight: {
-      theme: 'github-dark'
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark'
+      }
     }
   },
-  devtools: { enabled: true }
+  devtools: {
+    enabled: true
+  }
 })
