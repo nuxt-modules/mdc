@@ -84,7 +84,7 @@ export function nodeTextContent (node: VNode | MDCNode): string {
  * @param tags list of tags to unwrap
  * @returns
  */
-export function unwrap (vnode: VNode, tags = ['p']): VNode | VNode[] {
+export function unwrap (vnode: VNode, tags = []): VNode | VNode[] {
   if (Array.isArray(vnode)) {
     return vnode.flatMap(node => unwrap(node, tags))
   }
@@ -102,19 +102,18 @@ export function unwrap (vnode: VNode, tags = ['p']): VNode | VNode[] {
   return result
 }
 
-function _flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode> {
+function _flatUnwrap (vnodes: VNode | VNode[], tags = []): Array<VNode> {
   vnodes = Array.isArray(vnodes) ? vnodes : [vnodes]
-
-  if (!tags.length) {
-    return vnodes
-  }
 
   return vnodes
     .flatMap(vnode => _flatUnwrap(unwrap(vnode, [tags[0]]), tags.slice(1)))
     .filter(vnode => !(isText(vnode) && nodeTextContent(vnode).trim() === ''))
 }
 
-export function flatUnwrap (vnodes: VNode | VNode[], tags = ['p']): Array<VNode | string> {
+export function flatUnwrap (vnodes: VNode | VNode[], tags = []): Array<VNode | string> | VNode {
+  if (!tags.length) {
+    return vnodes
+  }
   return _flatUnwrap(vnodes, tags)
     .reduce((acc, item) => {
       if (isText(item)) {
