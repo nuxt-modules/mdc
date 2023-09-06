@@ -18,7 +18,7 @@ export interface HighlightParams {
 
 export interface HighlighterOptions {
   styleMap: TokenStyleMap
-  highlights: Array<number>
+  highlights: number[]
 }
 
 export interface HighlightThemedToken {
@@ -31,4 +31,4 @@ export interface HighlightThemedTokenLine {
   tokens: HighlightThemedToken[]
 }
 
-export type Highlighter = (code: string, lang: string, theme: Theme) => Promise<{ tree: Element[], className: string, style: string }>
+export type Highlighter = (code: string, lang: string, theme: Theme, highlights: number[]) => Promise<{ tree: Element[], className: string, style: string }>

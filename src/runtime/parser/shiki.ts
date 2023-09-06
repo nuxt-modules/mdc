@@ -11,15 +11,16 @@ interface RehypeShikiOption {
 
 const defaults: RehypeShikiOption = {
   theme: {
-    default: 'github-dark',
-    dark: 'github-light'
+    default: 'github-light',
+    dark: 'github-dark'
   },
-  highlighter: (code, lang, theme) => {
+  highlighter: (code, lang, theme, highlights) => {
     return $fetch('/api/_mdc/highlight', {
       params: {
         code,
         lang,
-        theme: JSON.stringify(theme)
+        theme: JSON.stringify(theme),
+        highlights: JSON.stringify(highlights)
       }
     })
   }
@@ -36,7 +37,7 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
       node => (node as Element).tagName === 'pre' && !!(node as Element).properties?.language,
       (node) => {
         const _node = node as Element
-        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!)
+        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!, (_node.properties!.highlights ?? []) as number[])
           .then(({ tree, className, style }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
 

@@ -11,7 +11,7 @@ export function parseThematicBlock (lang: string) {
     return {
       language: undefined,
       highlights: undefined,
-      fileName: undefined,
+      filename: undefined,
       meta: undefined
     }
   }

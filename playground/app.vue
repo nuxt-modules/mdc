@@ -31,7 +31,7 @@ name: Sam
 
 Simple paragraph
 
-\`\`\`typescript
+\`\`\`typescript[filename]{1-3,5}meta
 const a = 6;
 \`\`\`
 `)
