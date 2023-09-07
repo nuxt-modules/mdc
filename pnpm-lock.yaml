@@ -81,8 +81,8 @@ dependencies:
     specifier: ^1.0.0
     version: 1.0.0
   shikiji:
-    specifier: ^0.6.6
-    version: 0.6.6
+    specifier: ^0.6.8
+    version: 0.6.8
   ufo:
     specifier: ^1.3.0
     version: 1.3.0
@@ -9802,8 +9802,8 @@ packages:
       rechoir: 0.6.2
     dev: true
 
-  /shikiji@0.6.6:
-    resolution: {integrity: sha512-l9/mbXakfVl85gNd4wdQyvpiZN6qZiWVffGc8M2WpPeByS8aCJPAKZu38m89acosxQMbWvcFEKUMF8KvswYKGw==}
+  /shikiji@0.6.8:
+    resolution: {integrity: sha512-K0axxNAdB9KvLUflU7QoLC7p6i2p1R2MFG0eP+iclbjtuEZqng99jHcg3VJL0GWRO67yozTICnykjo1HjOzdkg==}
     dependencies:
       hast-util-to-html: 9.0.0
     dev: false

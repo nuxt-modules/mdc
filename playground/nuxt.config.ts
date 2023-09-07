@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       theme: {
-        default: 'github-light',
-        dark: 'github-dark'
+        default: 'vitesse-light',
+        dark: 'material-theme-palenight',
       }
     }
   },
