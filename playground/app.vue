@@ -12,6 +12,7 @@
     >
       <h1>{{ data?.name }}</h1>
       <MDCRenderer
+        tag="div"
         :body="body"
         :data="data"
         :prose="false"
@@ -21,9 +22,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useDark, useLocalStorage } from '@vueuse/core'
 
-const md = ref(`---
+useDark()
+
+const key = 'nuxt-mdc-playground-code'
+const md = useLocalStorage(key,
+`---
 name: Sam
 ---
 
@@ -31,8 +36,26 @@ name: Sam
 
 Simple paragraph
 
-\`\`\`typescript[filename]{1-3,5}meta
-const a = 6;
+\`\`\`typescript[filename]{1,3-5}meta
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+
+async function main(mdc: string) {
+  const ast = await parseMarkdown(mdc)
+
+  // Do your magic with parsed AST tree
+
+  return ast
+}
 \`\`\`
 `)
 </script>
+
+<style>
+.line {
+  display: block;
+}
+.line.highlight {
+  width: 100%;
+  background-color: #8882;
+}
+</style>

@@ -26,9 +26,9 @@ const defaults: RehypeShikiOption = {
   }
 }
 
-export function rehypeShiki (opts: RehypeShikiOption = {}) {
+export function rehypeShiki(opts: RehypeShikiOption = {}) {
   const options = defu(opts, defaults)
-  
+
   return async (tree: Root) => {
     const tasks: Promise<void>[] = []
     const styles: string[] = []
@@ -37,9 +37,15 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
       node => (node as Element).tagName === 'pre' && !!(node as Element).properties?.language,
       (node) => {
         const _node = node as Element
-        const task = options.highlighter!(toString(node as any), _node.properties!.language as string, options.theme!, (_node.properties!.highlights ?? []) as number[])
-          .then(({ tree, className, style }) => {
+        const task = options.highlighter!(
+          toString(node as any),
+          _node.properties!.language as string,
+          options.theme!,
+          (_node.properties!.highlights ?? []) as number[]
+        )
+          .then(({ tree, className, style, inlineStyle }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
+            _node.properties!.style = ((_node.properties!.style || '') + ' ' + inlineStyle).trim()
 
             if ((_node.children[0] as Element)?.tagName === 'code') {
               (_node.children[0] as Element).children = tree
@@ -47,14 +53,15 @@ export function rehypeShiki (opts: RehypeShikiOption = {}) {
               _node.children = tree
             }
 
-            styles.push(style)
+            if (style)
+              styles.push(style)
           })
 
         tasks.push(task)
       }
     )
 
-    if (tasks.length) { 
+    if (tasks.length) {
       await Promise.all(tasks)
 
       tree.children.push({
