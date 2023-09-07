@@ -7,7 +7,7 @@ import { defu } from 'defu'
 import { useProcessorPlugins } from './utils/plugins'
 import { compileHast } from './compiler'
 import { defaults } from './options'
-import { rehypeShiki } from './shiki'
+import { rehypeShiki } from '../shiki'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 

@@ -2,7 +2,9 @@ import type { Root, Element } from '../types/hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
 import { defu } from 'defu'
-import type { Highlighter, Theme } from '../shiki/types'
+import type { Highlighter, Theme, TokenStyleMap } from './types'
+import { useShikiHighlighter } from './highlighter'
+import { type Lang } from 'shiki-es'
 
 interface RehypeShikiOption {
   theme?: Theme
@@ -14,15 +16,19 @@ const defaults: RehypeShikiOption = {
     default: 'github-light',
     dark: 'github-dark'
   },
-  highlighter: (code, lang, theme, highlights) => {
-    return $fetch('/api/_mdc/highlight', {
-      params: {
-        code,
-        lang,
-        theme: JSON.stringify(theme),
-        highlights: JSON.stringify(highlights)
-      }
-    })
+  highlighter: async (code, lang, theme, highlights) => {
+    const shikiHighlighter = useShikiHighlighter({})
+
+    const styleMap: TokenStyleMap = {}
+
+    const { tree, className } = await shikiHighlighter.getHighlightedAST(code as string, lang as Lang, theme as Theme, { styleMap, highlights })
+
+    return {
+      tree,
+      className,
+      style: shikiHighlighter.generateStyles(styleMap),
+      styleMap
+    }
   }
 }
 
