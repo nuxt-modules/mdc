@@ -1,10 +1,10 @@
 import { getHighlighter, ThemeInput, Highlighter, BuiltinLanguage, BuiltinTheme } from 'shikiji'
-import { consola } from 'consola'
+// import { consola } from 'consola'
 import type { HighlightResult, HighlighterOptions, Theme } from './types'
 import { Element } from '../types/hast'
 
 // Re-create logger locally as utils cannot be imported from here
-const logger = consola.withTag('@nuxtjs/mdc')
+// const logger = consola.withTag('@nuxtjs/mdc')
 
 export const useShikiHighlighter = createSingleton((opts?: any) => {
   // Grab highlighter config from publicRuntimeConfig

@@ -24,7 +24,7 @@
 <script setup>
 import { useDark, useLocalStorage } from '@vueuse/core'
 
-const isDark = useDark()
+useDark()
 
 const key = 'nuxt-mdc-playground-code'
 const md = useLocalStorage(key,
