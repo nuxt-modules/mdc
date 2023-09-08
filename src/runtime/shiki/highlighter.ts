@@ -62,7 +62,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       await highlighter.loadLanguage(lang)
     }
 
-    const root = highlighter.codeToHast(code, {
+    const root = highlighter.codeToHast(code.trimEnd(), {
       lang,
       themes: themesObject,
       defaultColor: 'default',
