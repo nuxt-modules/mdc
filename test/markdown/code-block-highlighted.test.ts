@@ -183,15 +183,6 @@ it('Highlighted code block', async () => {
                 "tag": "span",
                 "type": "element",
               },
-              {
-                "children": [],
-                "props": {
-                  "class": "line",
-                  "line": 4,
-                },
-                "tag": "span",
-                "type": "element",
-              },
             ],
             "props": {
               "__ignoreMap": "",
