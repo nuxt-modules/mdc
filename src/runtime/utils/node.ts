@@ -1,4 +1,4 @@
-import { type VNode } from 'vue'
+import type { VNode } from 'vue'
 import type { MDCElement, MDCNode, MDCText } from '../types'
 
 /**
@@ -84,7 +84,7 @@ export function nodeTextContent (node: VNode | MDCNode): string {
  * @param tags list of tags to unwrap
  * @returns
  */
-export function unwrap (vnode: VNode, tags = []): VNode | VNode[] {
+export function unwrap (vnode: VNode, tags: string[] = []): VNode | VNode[] {
   if (Array.isArray(vnode)) {
     return vnode.flatMap(node => unwrap(node, tags))
   }
@@ -102,19 +102,28 @@ export function unwrap (vnode: VNode, tags = []): VNode | VNode[] {
   return result
 }
 
-function _flatUnwrap (vnodes: VNode | VNode[], tags = []): Array<VNode> {
+function _flatUnwrap (vnodes: VNode | VNode[], tags: string[] = []): Array<VNode> {
   vnodes = Array.isArray(vnodes) ? vnodes : [vnodes]
+
+  if (!tags.length) {
+    return vnodes
+  }
 
   return vnodes
     .flatMap(vnode => _flatUnwrap(unwrap(vnode, [tags[0]]), tags.slice(1)))
     .filter(vnode => !(isText(vnode) && nodeTextContent(vnode).trim() === ''))
 }
 
-export function flatUnwrap (vnodes: VNode | VNode[], tags = []): Array<VNode | string> | VNode {
+export function flatUnwrap (vnodes: VNode | VNode[], tags: string | string[] = []): Array<VNode | string> | VNode {
+  if (typeof tags === 'string') {
+    tags = tags.split(',').map(tag => tag.trim()).filter(Boolean)
+  }
+  
   if (!tags.length) {
     return vnodes
   }
-  return _flatUnwrap(vnodes, tags)
+
+  return _flatUnwrap(vnodes, tags as unknown as string[])
     .reduce((acc, item) => {
       if (isText(item)) {
         if (typeof acc[acc.length - 1] === 'string') {
