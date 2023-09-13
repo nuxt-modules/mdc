@@ -20,7 +20,7 @@ export default lazyEventHandler(async () => {
   return eventHandler(async (event) => {
     const { code, lang, theme: themeString, highlights: highlightsString } = getQuery(event)
     const theme = JSON.parse(themeString as string)
-    const highlights = JSON.parse(highlightsString as string) as number[]
+    const highlights = highlightsString ? JSON.parse(highlightsString as string) as number[] : undefined
 
     return await shiki.getHighlightedAST(code as string, lang as BuiltinLanguage, theme as BuiltinTheme, { highlights })
   })
