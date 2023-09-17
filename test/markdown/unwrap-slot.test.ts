@@ -5,7 +5,7 @@ const vnodes = [{__v_isVNode:true,__v_skip:true,type:'p',props:{},key:null,ref:n
 
 it('Unwrap tags', async () => {
   const withoutUnwrap = flatUnwrap(vnodes as any)
-  
+
   expect((withoutUnwrap as any)[0]).toHaveProperty('type', 'p')
   expect((withoutUnwrap as any)[0].children[0]).toHaveProperty('children', 'I am an alert!')
 

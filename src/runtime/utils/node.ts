@@ -118,7 +118,7 @@ export function flatUnwrap (vnodes: VNode | VNode[], tags: string | string[] = [
   if (typeof tags === 'string') {
     tags = tags.split(',').map(tag => tag.trim()).filter(Boolean)
   }
-  
+
   if (!tags.length) {
     return vnodes
   }
