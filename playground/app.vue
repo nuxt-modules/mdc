@@ -36,7 +36,7 @@ name: Sam
 
 Simple paragraph
 
-Inline code: \`const codeInline: string = 'highlighted code inline'\`{language="ts"}
+Inline code: \`const codeInline: string = 'highlighted code inline'\`{lang="ts"}
 
 Code block:
 \`\`\`typescript[filename]{1,3-5}meta
