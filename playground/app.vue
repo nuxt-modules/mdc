@@ -34,6 +34,8 @@ name: Sam
 
 # Simple
 
+\`const codeInline: string = 'highlighted code inline'\`{language="ts"}
+
 Simple paragraph
 
 \`\`\`typescript[filename]{1,3-5}meta

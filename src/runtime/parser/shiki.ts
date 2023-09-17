@@ -34,7 +34,7 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
     const styles: string[] = []
     visit(
       tree,
-      node => (node as Element).tagName === 'pre' && !!(node as Element).properties?.language,
+      node => ['pre', 'code'].includes((node as Element).tagName) && !!(node as Element).properties?.language,
       (node) => {
         const _node = node as Element
         const task = options.highlighter!(
@@ -50,7 +50,7 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
             if ((_node.children[0] as Element)?.tagName === 'code') {
               (_node.children[0] as Element).children = tree
             } else {
-              _node.children = tree
+              _node.children = tree[0].children
             }
 
             if (style)
