@@ -3,7 +3,7 @@ import { type Element, type Text, type Properties } from 'hast'
 import { type InlineCode } from 'mdast'
 
 export default function inlineCode (state: State, node: InlineCode & { attributes?: Properties }) {
-  const lang = node.attributes?.language ?? node.attributes?.lang
+  const language = node.attributes?.language || node.attributes?.lang
   const text: Text = { type: 'text', value: node.value.replace(/\r?\n|\r/g, ' ') }
   state.patch(node, text)
 
@@ -14,10 +14,16 @@ export default function inlineCode (state: State, node: InlineCode & { attribute
     children: [text]
   }
 
-  if (lang) {
-    result.properties.language = lang
+  const classes = (result.properties.class as string || '').split(' ')
+
+  if (language) {
+    result.properties.language = language
     delete result.properties.lang
+
+    classes.push('language-' + language)
   }
+
+  result.properties.className = classes.join(' ')
 
   state.patch(node, result)
   return state.applyData(node, result)
