@@ -34,10 +34,11 @@ name: Sam
 
 # Simple
 
-\`const codeInline: string = 'highlighted code inline'\`{language="ts"}
-
 Simple paragraph
 
+Inline code: \`const codeInline: string = 'highlighted code inline'\`{language="ts"}
+
+Code block:
 \`\`\`typescript[filename]{1,3-5}meta
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
