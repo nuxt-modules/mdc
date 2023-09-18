@@ -7,7 +7,7 @@ const md = `
 # <a href="#xx" /> Foo
 ## C. Great
 ## 1. Introduction
-## ending space
+## ending space 
 ### Slash - in - Title
 ### -Starting dash
 ### Ending dash-
