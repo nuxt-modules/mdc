@@ -15,6 +15,7 @@ export default function inlineCode (state: State, node: InlineCode & { attribute
   }
 
   const classes = (result.properties.class as string || '').split(' ')
+  delete result.properties.class
 
   if (language) {
     result.properties.language = language
