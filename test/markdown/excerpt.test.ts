@@ -13,7 +13,7 @@ Baz
 
 it('Excerpt', async () => {
   const { excerpt } = await parseMarkdown(md)
-    
+
   expect(excerpt).toHaveProperty('type', 'root')
   expect(excerpt).toHaveProperty('children[0].tag', 'h1')
   expect(excerpt).toHaveProperty('children[1].tag', 'p')

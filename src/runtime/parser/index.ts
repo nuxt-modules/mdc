@@ -18,7 +18,7 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
   const options = defu(opts, {
-    remark: { plugins: moduleOptions.remarkPlugins }, 
+    remark: { plugins: moduleOptions.remarkPlugins },
     rehype: { plugins: moduleOptions.rehypePlugins },
     highlight: moduleOptions.highlight,
   }, defaults)
@@ -76,7 +76,6 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     toc
   }
 }
-
 
 export function contentHeading (body: MDCRoot) {
   let title = ''

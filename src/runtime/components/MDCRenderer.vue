@@ -399,7 +399,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
     }
 
     const renderTag: string = (typeof (node as MDCElement).props?.__ignoreMap === 'undefined' && documentMeta.tags[tag]) || tag
-    
+
     const components: string[] = []
     if (node.type !== 'root' && !htmlTags.includes(renderTag as any)) {
       components.push(renderTag)

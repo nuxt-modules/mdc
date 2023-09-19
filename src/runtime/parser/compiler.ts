@@ -5,7 +5,7 @@ import Slugger from 'github-slugger'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any) {
-  // Create new slugger for each Tree to generate 
+  // Create new slugger for each Tree to generate
   const slugs = new Slugger()
 
   function compileToJSON(node: Root): MDCRoot;
@@ -80,7 +80,6 @@ export function compileHast(this: any) {
     return null
   }
 
-  
   this.Compiler = (tree: Root) => {
     const body = compileToJSON(tree)
 
@@ -100,7 +99,7 @@ export function compileHast(this: any) {
         }
       }
     }
-    
+
     return {
       body,
       excerpt
