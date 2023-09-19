@@ -4,6 +4,7 @@ import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
+import { pathToFileURL } from 'url'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -48,7 +49,8 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // Add imports template
-    nuxt.options.alias['#mdc-imports'] = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true }).dst
+    const { dst: templatePath } = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true })
+    nuxt.options.alias['#mdc-imports'] = pathToFileURL(templatePath).href
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.nitro.alias['#mdc-imports'] = nuxt.options.alias['#mdc-imports']
 
