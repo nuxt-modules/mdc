@@ -380,6 +380,10 @@ function mergeTextNodes (nodes: Array<VNode>) {
 }
 
 async function resolveContentComponents (body: MDCRoot, meta: Record<string, any>) {
+  if (!body) {
+    return
+  }
+  
   const components = Array.from(new Set(loadComponents(body, meta)))
   await Promise.all(components.map(async (c) => {
     if ((c as any)?.render || (c as any)?.ssrRender) {
