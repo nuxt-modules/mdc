@@ -50,7 +50,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add imports template
     const { dst: templatePath } = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true })
-    nuxt.options.alias['#mdc-imports'] = pathToFileURL(templatePath).href
+    nuxt.options.alias['#mdc-imports'] = process.env.NODE_ENV === 'development'
+      ? pathToFileURL(templatePath).href
+      : templatePath
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.nitro.alias['#mdc-imports'] = nuxt.options.alias['#mdc-imports']
 
