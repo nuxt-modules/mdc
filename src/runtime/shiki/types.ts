@@ -1,14 +1,9 @@
 import type { Element } from '../types/hast'
-import type { Theme as ShikiTheme, IThemedToken } from 'shiki-es'
+import type { BuiltinTheme, ThemedToken } from 'shikiji'
 
-export type Theme = ShikiTheme | Record<string, ShikiTheme>
+export type Theme = BuiltinTheme | Record<string, BuiltinTheme>
 
-export type HighlightThemedTokenStyle = Pick<IThemedToken, 'color' | 'fontStyle'> & { background?: string }
-
-export type TokenStyleMap = Record<string, { 
-  style: Record<string, HighlightThemedTokenStyle>
-  className: string
-}>
+export type HighlightThemedTokenStyle = Pick<ThemedToken, 'color' | 'fontStyle'> & { background?: string }
 
 export interface HighlightParams {
   code: string
@@ -17,8 +12,7 @@ export interface HighlightParams {
 }
 
 export interface HighlighterOptions {
-  styleMap: TokenStyleMap
-  highlights: Array<number>
+  highlights: number[]
 }
 
 export interface HighlightThemedToken {
@@ -31,4 +25,11 @@ export interface HighlightThemedTokenLine {
   tokens: HighlightThemedToken[]
 }
 
-export type Highlighter = (code: string, lang: string, theme: Theme) => Promise<{ tree: Element[], className: string, style: string }>
+export interface HighlightResult {
+  tree: Element[],
+  className: string,
+  style: string,
+  inlineStyle: string,
+}
+
+export type Highlighter = (code: string, lang: string, theme: Theme, highlights: number[]) => Promise<HighlightResult>

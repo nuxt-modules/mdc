@@ -1,38 +1,10 @@
-import { getHighlighter, BUNDLED_LANGUAGES, BUNDLED_THEMES, Lang, Theme as ShikiTheme, Highlighter, FontStyle, IThemeRegistration } from 'shiki-es'
-import { consola } from 'consola'
-import mdcTMLanguage from './mdc.tmLanguage'
-import type { HighlighterOptions, Theme, HighlightThemedToken, HighlightThemedTokenLine, TokenStyleMap, HighlightThemedTokenStyle } from './types'
-import type { ElementContent, Element } from '../types/hast'
+import { getHighlighter, ThemeInput, Highlighter, BuiltinLanguage, BuiltinTheme } from 'shikiji'
+// import { consola } from 'consola'
+import type { HighlightResult, HighlighterOptions, Theme } from './types'
+import { Element } from '../types/hast'
 
 // Re-create logger locally as utils cannot be imported from here
-const logger = consola.withTag('@nuxtjs/mdc')
-
-/**
- * Resolve Shiki compatible lang from string.
- *
- * Used to resolve lang from both languages id's and aliases.
- */
-const resolveLang = (lang: string) =>
-  (BUNDLED_LANGUAGES.find(l => l.id === lang || l.aliases?.includes(lang)))
-
-/**
- * Resolve Shiki compatible theme from string.
- */
-const resolveTheme = (theme: string | Record<string, string>): Record<string, ShikiTheme> | undefined => {
-  if (!theme) {
-    return
-  }
-  if (typeof theme === 'string') {
-    theme = {
-      default: theme
-    }
-  }
-  
-  return Object.entries(theme).reduce((acc, [key, value]) => {
-    acc[key] = BUNDLED_THEMES.find(t => t === value)!
-    return acc
-  }, {} as Record<string, ShikiTheme>)
-}
+// const logger = consola.withTag('@nuxtjs/mdc')
 
 export const useShikiHighlighter = createSingleton((opts?: any) => {
   // Grab highlighter config from publicRuntimeConfig
@@ -43,7 +15,9 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     if (!promise) {
       // Initialize highlighter with defaults
       promise = getHighlighter({
-        theme: (theme as any)?.default || theme || 'dark-plus',
+        themes: [
+          ((theme as any)?.default || theme || 'dark-plus') as BuiltinTheme,
+        ],
         langs: [
           ...(preload || []),
           'diff',
@@ -56,21 +30,15 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
           'md',
           'yaml',
           'vue',
-          {
-            id: 'md',
-            scopeName: 'text.markdown.mdc',
-            path: 'mdc.tmLanguage.json',
-            aliases: ['markdown', 'md', 'mdc'],
-            grammar: mdcTMLanguage
-          }
+          'mdc'
         ] as any[]
       }).then((highlighter) => {
         // Load all themes on-demand
-        const themes = Object.values(typeof theme === 'string' ? { default: theme } : (theme || {}))
+        const themes = Object.values(typeof theme === 'string' ? { default: theme } : (theme || {})) as ThemeInput[]
 
         if (themes.length) {
           return Promise
-            .all(themes.map(theme => highlighter.loadTheme(theme as IThemeRegistration)))
+            .all(themes.map(theme => highlighter.loadTheme(theme)))
             .then(() => highlighter)
         }
         return highlighter
@@ -79,295 +47,65 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     return promise
   }
 
-  const splitCodeToLines = (code: string) => {
-    const lines = code.split(/\r\n|\r|\n/)
-    return [...lines.map((line: string) => [{ content: line }])]
-  }
-
-  const getHighlightedTokens = async (code: string, lang: Lang, theme: Theme) => {
+  const getHighlightedAST = async (code: string, lang: BuiltinLanguage, theme: Theme, opts?: Partial<HighlighterOptions>): Promise<HighlightResult> => {
     const highlighter = await getShikiHighlighter()
-    // Remove trailing carriage returns
-    code = code.replace(/\n+$/, '')
-    // Resolve lang & theme (i.e check if shiki supports them)
-    lang = (resolveLang(lang || '')?.id || lang) as Lang
-    theme = resolveTheme(theme || '') || { default: highlighter.getTheme() as any as ShikiTheme }
+    const { highlights = [] } = opts || {}
 
-    // Load supported theme on-demand
-    const newThemes = Object.values(theme).filter(t => !highlighter.getLoadedThemes().includes(t))
-    if (newThemes.length) {
-      await Promise.all(newThemes.map(highlighter.loadTheme))
+    const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
+    const themeNames = Object.values(themesObject) as BuiltinTheme[]
+
+    if (themeNames.length) {
+      await Promise.all(themeNames.map(theme => highlighter.loadTheme(theme)))
     }
 
-    const result = {
-      code,
+    if (lang && !highlighter.getLoadedLanguages().includes(lang)) {
+      await highlighter.loadLanguage(lang)
+    }
+
+    const root = highlighter.codeToHast(code.trimEnd(), {
       lang,
-      theme: Object.fromEntries(Object.entries(theme).map(([n, t]) => ([n, highlighter.getTheme(t)]))),
-      tokens: splitCodeToLines(code)
-    }
-    // Skip highlight if lang is not supported
-    if (!lang) {
-      return result
-    }
-
-    // Load supported language on-demand
-    if (!highlighter.getLoadedLanguages().includes(lang)) {
-      const languageRegistration = resolveLang(lang)
-
-      if (languageRegistration) {
-        await highlighter.loadLanguage(languageRegistration)
-      } else {
-        logger.warn(`Language '${lang}' is not supported by shiki. Skipping highlight.`)
-        return result
-      }
-    }
-
-    // Highlight code
-    const coloredTokens = Object.entries(theme).map(([key, theme]) => {      
-      const tokens = highlighter.codeToThemedTokens(code, lang, theme, { includeExplanation: false })
-        .map(line => line.map(token => ({
-          content: token.content,
-          style: {
-            [key]: { color: token.color, fontStyle: token.fontStyle }
+      themes: themesObject,
+      defaultColor: 'default',
+      transforms: {
+        line(node, line) {
+          node.properties ||= {}
+          if (highlights.includes(line)) {
+            node.properties.class = (node.properties.class || '') + ' highlight'
           }
-        })))
-      return {
-        key,
-        theme,
-        tokens
-      }
-    })
-
-    const highlightedCode: HighlightThemedToken[][] = []
-    for (const line in coloredTokens[0].tokens) {
-      highlightedCode[line] = coloredTokens.reduce((acc, color) => {
-        return mergeLines({
-          key: coloredTokens[0].key,
-          tokens: acc
-        }, {
-          key: color.key,
-          tokens: color.tokens[line]
-        })
-      }, coloredTokens[0].tokens[line] as HighlightThemedToken[])
-    }
-
-    result.tokens = highlightedCode
-    return result
-  }
-
-  const getHighlightedAST = async (code: string, lang: Lang, theme: Theme, opts?: Partial<HighlighterOptions>) => {
-    const { tokens, theme: themeMap } = await getHighlightedTokens(code, lang, theme)
-    const { highlights = [], styleMap = {} } = opts || {}
-
-    const className = Object.values(themeMap).map(th => th.name).join('_').replace('.', '')
-    
-    styleMap[className] = {
-      style: Object.entries(themeMap).reduce((acc, [key, th]) => {
-        acc[key] = {
-          background: th.bg,
-          color: th.fg
-        }
-        return acc
-      }, {} as Record<string, any>),
-      className: className,
-    }
-    
-
-    const tree: Array<Element> = tokens.map((line, lineIndex) => {
-      // Add line break to all lines except last
-      if (lineIndex !== tokens.length - 1) {
-        // Add line break to empty lines
-        if (line.length === 0) {
-          line.push({ content: '' })
-        }
-        line[line.length - 1].content += '\n'
-      }
-
-      return {
-        type: 'element',
-        tagName: 'span',
-        properties: {
-          class: ['line', highlights.includes(lineIndex + 1) ? 'highlight' : ''].join(' ').trim(),
-          line: lineIndex + 1
+          node.properties.line = line
         },
-        children: line.map(tokenSpan)
       }
     })
 
-    return {
-      tree,
-      className
-    }
+    const preEl = root.children[0] as Element
+    const codeEl = preEl.children[0] as Element
 
-    function getSpanProps (token: HighlightThemedToken) {
-      if (!token.style) {
-        return {}
-      }
-      // TODO: generate unique key for style
-      // Or simply using `JSON.stringify(token.style)` would be easier to understand,
-      // but not sure about the impact on performance
-      const key = Object.values(token.style).map(themeStyle => Object.values(themeStyle).join('')).join('')
-      if (!styleMap[key]) {
-        styleMap[key] = {
-          style: token.style,
-          // Using the hash value of the style as the className,
-          // ensure that the className remains stable over multiple compilations,
-          // which facilitates content caching.
-          className: 'ct-' + hash(key)
-        }
-      }
-      return { class: styleMap[key].className }
-    }
-
-    function tokenSpan (token: HighlightThemedToken): ElementContent {
-      return {
-        type: 'element',
-        tagName: 'span',
-        properties: getSpanProps(token),
-        children: [{ type: 'text', value: token.content }]
-      }
-    }
-  }
-
-  const getHighlightedCode = async (code: string, lang: Lang, theme: Theme, opts?: Partial<HighlighterOptions>) => {
-    const styleMap = opts?.styleMap || {}
-    const highlights = opts?.highlights || []
-    const { tree, className } = await getHighlightedAST(code, lang, theme, { styleMap, highlights })
-
-    function renderNode (node: any) {
-      if (node.type === 'text') {
-        return node.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      }
-      const children = node.children.map(renderNode).join('')
-      return `<${node.tag} class="${node.props.class}">${children}</${node.tag}>`
-    }
+    const style = Object.keys(themesObject)
+      .filter(color => color !== 'default')
+      .map(color => [
+        `html.${color} .shiki,`,
+        `html.${color} .shiki span {`,
+        `color: var(--shiki-${color}) !important;`,
+        `background: var(--shiki-${color}-bg) !important;`,
+        `font-style: var(--shiki-${color}-font-style) !important;`,
+        `font-weight: var(--shiki-${color}-font-weight) !important;`,
+        `text-decoration: var(--shiki-${color}-text-decoration) !important;`,
+        '}'
+      ].join(''))
+      .join('\n')
 
     return {
-      code: tree.map(renderNode).join(''),
-      className,
-      styles: generateStyles(styleMap)
+      tree: codeEl.children as Element[],
+      className: preEl.properties.class as string,
+      inlineStyle: preEl.properties.style  as string,
+      style,
     }
-  }
-
-  const generateStyles = (styleMap: TokenStyleMap) => {
-    const styles: string[] = []
-    for (const styleToken of Object.values(styleMap)) {
-      const defaultStyle = styleToken.style.default
-      const hasColor = !!defaultStyle?.color
-      const hasBold = isBold(defaultStyle)
-      const hasItalic = isItalic(defaultStyle)
-      const hasUnderline = isUnderline(defaultStyle)
-      const themeStyles = Object.entries(styleToken.style).map(([variant, style]) => {
-        const styleText = [
-          // If the default theme has a style, but the current theme does not have one,
-          // we need to override to reset style
-          ['color', style.color || (hasColor ? 'unset' : '')],
-          ['font-weight', isBold(style) ? 'bold' : hasBold ? 'unset' : ''],
-          ['font-style', isItalic(style) ? 'italic' : hasItalic ? 'unset' : ''],
-          ['text-decoration', isUnderline(style) ? 'bold' : hasUnderline ? 'unset' : ''],
-          ['background', style.background || '']
-        ]
-          .filter(kv => kv[1])
-          .map(kv => kv.join(':') + ';')
-          .join('')
-        return { variant, styleText }
-      })
-
-      const defaultThemeStyle = themeStyles.find(themeStyle => themeStyle.variant === 'default')
-      themeStyles.forEach((themeStyle) => {
-        if (themeStyle.variant === 'default') {
-          styles.push(`.${styleToken.className}{${themeStyle.styleText}}`)
-        } else if (themeStyle.styleText !== defaultThemeStyle?.styleText) {
-          // Skip if same as default theme
-          styles.push(`.${themeStyle.variant} .${styleToken.className}{${themeStyle.styleText}}`)
-        }
-      })
-    }
-    return styles.join('\n')
   }
 
   return {
-    getHighlightedTokens,
     getHighlightedAST,
-    getHighlightedCode,
-    generateStyles
   }
 })
-
-function mergeLines (line1: HighlightThemedTokenLine, line2: HighlightThemedTokenLine) {
-  const mergedTokens: HighlightThemedToken[] = []
-
-  const right = {
-    key: line1.key,
-    tokens: line1.tokens.slice()
-  }
-  const left = {
-    key: line2.key,
-    tokens: line2.tokens.slice()
-  }
-  let index = 0
-  while (index < right.tokens.length) {
-    const rightToken = right.tokens[index]
-    const leftToken = left.tokens[index]
-
-    if (rightToken.content === leftToken.content) {
-      mergedTokens.push({
-        content: rightToken.content,
-        style: {
-          ...right.tokens[index].style,
-          ...left.tokens[index].style
-        }
-      })
-      index += 1
-      continue
-    }
-
-    if (rightToken.content.startsWith(leftToken.content)) {
-      const nextRightToken = {
-        ...rightToken,
-        content: rightToken.content.slice(leftToken.content.length)
-      }
-      rightToken.content = leftToken.content
-      right.tokens.splice(index + 1, 0, nextRightToken)
-      continue
-    }
-
-    if (leftToken.content.startsWith(rightToken.content)) {
-      const nextLeftToken = {
-        ...leftToken,
-        content: leftToken.content.slice(rightToken.content.length)
-      }
-      leftToken.content = rightToken.content
-      left.tokens.splice(index + 1, 0, nextLeftToken)
-      continue
-    }
-
-    throw new Error('Unexpected token')
-  }
-  return mergedTokens
-}
-
-function isBold (style?: HighlightThemedTokenStyle) {
-  return style && style.fontStyle === FontStyle.Bold
-}
-
-function isItalic (style?: HighlightThemedTokenStyle) {
-  return style && style.fontStyle === FontStyle.Italic
-}
-
-function isUnderline (style?: HighlightThemedTokenStyle) {
-  return style && style.fontStyle === FontStyle.Underline
-}
-
-/**
- * An insecure but simple and fast hash method.
- * https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0?permalink_comment_id=4261728#gistcomment-4261728
- */
-function hash (str: string) {
-  return Array.from(str)
-    .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0)
-    .toString()
-    .slice(-6)
-}
 
 function createSingleton<T, Params extends Array<any>>(fn: (...arg: Params) => T) {
   let instance: T | undefined
