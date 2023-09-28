@@ -18,9 +18,9 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
   const options = defu(opts, {
-    remark: { plugins: moduleOptions.remarkPlugins },
-    rehype: { plugins: moduleOptions.rehypePlugins },
-    highlight: moduleOptions.highlight,
+    remark: { plugins: moduleOptions?.remarkPlugins },
+    rehype: { plugins: moduleOptions?.rehypePlugins },
+    highlight: moduleOptions?.highlight,
   }, defaults)
 
   // Extract front matter data
