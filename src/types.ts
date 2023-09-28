@@ -11,7 +11,7 @@ export interface ModuleOptions {
 
   highlight?: {
     theme?: Theme
-    highlighter?: string 
+    highlighter?: string
   } | false
 
   headings?: {

@@ -1,28 +1,10 @@
 import type { Element } from '../types/hast'
-import type { BuiltinTheme, ThemedToken } from 'shikiji'
+import type { BuiltinTheme } from 'shikiji'
 
 export type Theme = BuiltinTheme | Record<string, BuiltinTheme>
 
-export type HighlightThemedTokenStyle = Pick<ThemedToken, 'color' | 'fontStyle'> & { background?: string }
-
-export interface HighlightParams {
-  code: string
-  lang: string
-  theme: Theme
-}
-
 export interface HighlighterOptions {
   highlights: number[]
-}
-
-export interface HighlightThemedToken {
-  content: string
-  style?: Record<string, HighlightThemedTokenStyle>
-}
-
-export interface HighlightThemedTokenLine {
-  key: string
-  tokens: HighlightThemedToken[]
 }
 
 export interface HighlightResult {
