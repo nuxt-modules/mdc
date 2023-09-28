@@ -2,8 +2,11 @@ import type { BuiltinLanguage, BuiltinTheme } from 'shikiji'
 import { loadWasm } from 'shikiji'
 import { eventHandler, getQuery, lazyEventHandler } from 'h3'
 import { useShikiHighlighter } from './highlighter'
+import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(async () => {
+  const { highlight } = useRuntimeConfig().mdc
+  
   try {
     // try loading `.wasm` directly, for cloudflare workers
     // @ts-expect-error
@@ -15,7 +18,7 @@ export default lazyEventHandler(async () => {
     await loadWasm({ data: await import('shikiji/wasm').then(r => r.getWasmInlined()).then(r => r.data) })
   }
 
-  const shiki = useShikiHighlighter({})
+  const shiki = useShikiHighlighter(highlight)
 
   return eventHandler(async (event) => {
     const { code, lang, theme: themeString, highlights: highlightsString } = getQuery(event)

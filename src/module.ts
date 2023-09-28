@@ -5,6 +5,7 @@ import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { pathToFileURL } from 'url'
+import type { Theme } from './runtime/shiki/types'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -40,6 +41,13 @@ export default defineNuxtModule<ModuleOptions>({
         map: options.components!.map!
       },
       headings: options.headings!
+    })
+    nuxt.options.runtimeConfig.mdc = defu(nuxt.options.runtimeConfig.mdc, {
+      highlight: options.highlight ? {
+        theme: options.highlight!.theme,
+        preload: options.highlight!.preload,
+        wrapperStyle: options.highlight!.wrapperStyle
+      } : {}
     })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
@@ -93,7 +101,7 @@ export default defineNuxtModule<ModuleOptions>({
       const globalComponents = resolver.resolve(srcDir, 'components/mdc')
       const dirStat = await fs.promises.stat(globalComponents).catch(() => null)
       if (dirStat && dirStat.isDirectory()) {
-        nuxt.hook('components:dirs', (dirs) => {
+        nuxt.hook('components:dirs', (dirs: any[]) => {
           dirs.unshift({
             path: globalComponents,
             global: true,
@@ -109,6 +117,15 @@ export default defineNuxtModule<ModuleOptions>({
 })
 
 declare module '@nuxt/schema' {
+  interface RuntimeConfig {
+    mdc: {
+      highlight: {
+        theme?: Theme
+        preload?: string[]
+        wrapperStyle?: boolean | string
+      }
+    }
+  }
   interface PublicRuntimeConfig {
     mdc: {
       components: {

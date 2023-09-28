@@ -9,7 +9,10 @@ export default defineNuxtConfig({
       theme: {
         default: 'vitesse-light',
         dark: 'material-theme-palenight',
-      }
+      },
+      preload: [
+        'sql'
+      ]
     }
   },
   devtools: {

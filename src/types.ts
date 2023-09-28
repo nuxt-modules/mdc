@@ -10,8 +10,21 @@ export interface ModuleOptions {
   rehypePlugins?: Record<string, UnistPlugin>
 
   highlight?: {
-    theme?: Theme
     highlighter?: string
+    /**
+     * Default theme that will be used for highlighting code blocks.
+     */
+    theme?: Theme
+    /**
+     * Preloaded languages that will be available for highlighting code blocks.
+     */
+    preload?: string[]
+    /**
+     * Inject background color to code block wrapper
+     * 
+     * @default false
+     */
+    wrapperStyle?: boolean | string
   } | false
 
   headings?: {
