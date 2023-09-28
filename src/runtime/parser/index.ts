@@ -7,7 +7,7 @@ import { defu } from 'defu'
 import { useProcessorPlugins } from './utils/plugins'
 import { compileHast } from './compiler'
 import { defaults } from './options'
-import { rehypeShiki } from './shiki'
+import { rehypeShiki } from '../shiki'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 
@@ -18,9 +18,9 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
   const options = defu(opts, {
-    remark: { plugins: moduleOptions.remarkPlugins },
-    rehype: { plugins: moduleOptions.rehypePlugins },
-    highlight: moduleOptions.highlight,
+    remark: { plugins: moduleOptions?.remarkPlugins },
+    rehype: { plugins: moduleOptions?.rehypePlugins },
+    highlight: moduleOptions?.highlight,
   }, defaults)
 
   // Extract front matter data

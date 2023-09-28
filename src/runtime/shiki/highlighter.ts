@@ -1,14 +1,10 @@
-import { getHighlighter, ThemeInput, Highlighter, BuiltinLanguage, BuiltinTheme } from 'shikiji'
-// import { consola } from 'consola'
+import { getHighlighter, type ThemeInput, type Highlighter, type BuiltinLanguage, type BuiltinTheme } from 'shikiji'
 import type { HighlightResult, HighlighterOptions, Theme } from './types'
-import { Element } from '../types/hast'
-
-// Re-create logger locally as utils cannot be imported from here
-// const logger = consola.withTag('@nuxtjs/mdc')
+import type { Element } from '../types/hast'
 
 export const useShikiHighlighter = createSingleton((opts?: any) => {
   // Grab highlighter config from publicRuntimeConfig
-  const { theme, preload } = opts || {}
+  const { theme, preload, wrapperStyle } = opts || {}
 
   let promise: Promise<Highlighter> | undefined
   const getShikiHighlighter = () => {
@@ -80,10 +76,14 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     const preEl = root.children[0] as Element
     const codeEl = preEl.children[0] as Element
 
+    preEl.properties.style = wrapperStyle ?
+      (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) :
+      ''
+
     const style = Object.keys(themesObject)
       .filter(color => color !== 'default')
       .map(color => [
-        `html.${color} .shiki,`,
+        wrapperStyle ? `html.${color} .shiki,` : '',
         `html.${color} .shiki span {`,
         `color: var(--shiki-${color}) !important;`,
         `background: var(--shiki-${color}-bg) !important;`,
@@ -91,7 +91,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         `font-weight: var(--shiki-${color}-font-weight) !important;`,
         `text-decoration: var(--shiki-${color}-text-decoration) !important;`,
         '}'
-      ].join(''))
+      ].join('').trim())
       .join('\n')
 
     return {

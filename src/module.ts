@@ -5,6 +5,7 @@ import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { pathToFileURL } from 'url'
+import type { Theme } from './runtime/shiki/types'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -41,6 +42,13 @@ export default defineNuxtModule<ModuleOptions>({
       },
       headings: options.headings!
     })
+    nuxt.options.runtimeConfig.mdc = defu(nuxt.options.runtimeConfig.mdc, {
+      highlight: options.highlight ? {
+        theme: options.highlight!.theme!,
+        preload: options.highlight!.preload!,
+        wrapperStyle: options.highlight!.wrapperStyle!
+      } : {}
+    })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
       viteConfig.optimizeDeps?.include?.push(
@@ -50,9 +58,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add imports template
     const { dst: templatePath } = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true })
-    nuxt.options.alias['#mdc-imports'] = process.env.NODE_ENV === 'development'
-      ? pathToFileURL(templatePath).href
-      : templatePath
+    nuxt.options.alias['#mdc-imports'] = process.env.NODE_ENV === 'development' ? pathToFileURL(templatePath).href : templatePath
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.nitro.alias['#mdc-imports'] = nuxt.options.alias['#mdc-imports']
 
@@ -75,10 +81,12 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Enable wasm for shikiji
-    nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
-    nuxt.options.nitro.experimental.wasm = true
-    // Add server handlers
-    addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+    if (options.highlight) {
+      nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
+      nuxt.options.nitro.experimental.wasm = true
+      // Add server handlers
+      addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+    }
 
     extendViteConfig((config) => {
       config.optimizeDeps = config.optimizeDeps || {}
@@ -93,7 +101,7 @@ export default defineNuxtModule<ModuleOptions>({
       const globalComponents = resolver.resolve(srcDir, 'components/mdc')
       const dirStat = await fs.promises.stat(globalComponents).catch(() => null)
       if (dirStat && dirStat.isDirectory()) {
-        nuxt.hook('components:dirs', (dirs) => {
+        nuxt.hook('components:dirs', (dirs: any[]) => {
           dirs.unshift({
             path: globalComponents,
             global: true,
@@ -109,6 +117,15 @@ export default defineNuxtModule<ModuleOptions>({
 })
 
 declare module '@nuxt/schema' {
+  interface RuntimeConfig {
+    mdc: {
+      highlight: {
+        theme?: Theme
+        preload?: string[]
+        wrapperStyle?: boolean | string
+      }
+    }
+  }
   interface PublicRuntimeConfig {
     mdc: {
       components: {

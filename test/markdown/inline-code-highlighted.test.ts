@@ -107,7 +107,7 @@ it('', async () => {
                 "props": {
                   "className": "language-ts shiki shiki-themes github-dark",
                   "language": "ts",
-                  "style": "background-color:#24292e;color:#e1e4e8",
+                  "style": "",
                 },
                 "tag": "code",
                 "type": "element",

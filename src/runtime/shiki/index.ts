@@ -2,7 +2,7 @@ import type { Root, Element } from '../types/hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
 import { defu } from 'defu'
-import type { Highlighter, Theme } from '../shiki/types'
+import type { Highlighter, Theme } from './types'
 
 interface RehypeShikiOption {
   theme?: Theme
