@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.0...v0.2.1)
+
+### 🚀 Enhancements
+
+- **shiki:** Control wrapper styles & preload languages ([#56](https://github.com/nuxt-modules/mdc/pull/56))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.2.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.1.6...v0.2.0)
