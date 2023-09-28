@@ -81,10 +81,12 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Enable wasm for shikiji
-    nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
-    nuxt.options.nitro.experimental.wasm = true
-    // Add server handlers
-    addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+    if (options.highlight) {
+      nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
+      nuxt.options.nitro.experimental.wasm = true
+      // Add server handlers
+      addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+    }
 
     extendViteConfig((config) => {
       config.optimizeDeps = config.optimizeDeps || {}
