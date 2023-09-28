@@ -201,7 +201,7 @@ it('Highlighted code block', async () => {
           "highlights": undefined,
           "language": "ts",
           "meta": "",
-          "style": "background-color:#24292e;color:#e1e4e8",
+          "style": "",
         },
         "tag": "pre",
         "type": "element",
