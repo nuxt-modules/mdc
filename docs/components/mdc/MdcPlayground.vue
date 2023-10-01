@@ -38,11 +38,11 @@ Try me
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); 
-  height: 400px; 
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  height: 400px;
   border: 1px solid;
   overflow: hidden;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
 }
 .wrapper > article {
   overflow: scroll;

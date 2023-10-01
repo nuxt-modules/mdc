@@ -13,7 +13,7 @@ async function main () {
   if (!workspace.packages.length) {
     workspace.packages.push(workspace.workspacePkg)
   }
-  
+
   for (const pkg of workspace.packages.filter(p => !p.data.private)) {
     const newVersion = inc(pkg.data.version, bumpType || 'patch')
     workspace.setVersion(pkg.data.name, `${newVersion}-${date}.${commit}`, {

@@ -32,16 +32,12 @@ export default defineComponent({
       type: Object as PropType<MDCRoot>,
       required: true
     },
+    /**
+     * Document meta data
+     */
     data: {
       type: Object,
       default: () => ({})
-    },
-    /**
-     * Render only the excerpt
-     */
-    excerpt: {
-      type: Boolean,
-      default: false
     },
     /**
      * Root tag to use for rendering
@@ -392,6 +388,10 @@ function mergeTextNodes (nodes: Array<VNode>) {
 }
 
 async function resolveContentComponents (body: MDCRoot, meta: Record<string, any>) {
+  if (!body) {
+    return
+  }
+  
   const components = Array.from(new Set(loadComponents(body, meta)))
   await Promise.all(components.map(async (c) => {
     if ((c as any)?.render || (c as any)?.ssrRender) {

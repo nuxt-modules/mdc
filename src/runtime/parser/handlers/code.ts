@@ -17,8 +17,11 @@ export default (state: State, node: Code) => {
     children: [{ type: 'text', value }]
   }
 
-  if (node.meta) {
-    result.data = { meta: node.meta }
+  if (meta) {
+    result.data = {
+      // @ts-ignore
+      meta
+    }
   }
 
   state.patch(node, result)
@@ -32,8 +35,8 @@ export default (state: State, node: Code) => {
     code: value
   }
 
-  if (node.lang) {
-    properties.className = ['language-' + node.lang]
+  if (language) {
+    properties.className = ['language-' + language]
   }
 
   // Create `<pre>`.

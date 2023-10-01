@@ -4,7 +4,7 @@ import { parseMarkdown } from '../utils/parser'
 const md = `
 hello
 
-  
+
 
 world
 `.trim()

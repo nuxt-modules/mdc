@@ -9,6 +9,10 @@
 
 MDC supercharges regular Markdown to write documents interacting deeply with any Vue component. MDC stands for MarkDown Components.
 
+- [✨ &nbsp;Release Notes](https://github.com/nuxt-modules/mdc/releases)
+- [🏀 &nbsp;Online Playground](https://stackblitz.com/github/nuxt-modules/mdc?file=playground%2Fapp.vue)
+- [🧩 &nbsp;VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Nuxt.mdc)
+
 ## Features
 
 - Mix Markdown syntax with HTML tags or Vue components
@@ -82,7 +86,6 @@ Hello MDC
 ## License
 
 [MIT](./LICENSE) - Made with 💚
-
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/@nuxtjs/mdc/latest.svg?style=flat&colorA=18181B&colorB=28CF8D

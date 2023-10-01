@@ -6,8 +6,6 @@ import rehypeSortAttributeValues from 'rehype-sort-attribute-values'
 import rehypeSortAttributes from 'rehype-sort-attributes'
 import rehypeRaw from 'rehype-raw'
 import type { MDCParseOptions } from '../types'
-// @ts-ignore
-import { remarkPlugins, rehypePlugins, highlight } from '#mdc-imports'
 
 export const defaults: MDCParseOptions = {
   remark: {
@@ -17,12 +15,12 @@ export const defaults: MDCParseOptions = {
       },
       'remark-gfm': {
         instance: remarkGFM
-      },
-      ...remarkPlugins
+      }
     }
   },
   rehype: {
     options: {
+      // @ts-ignore
       handlers,
       allowDangerousHtml: true
     },
@@ -41,11 +39,10 @@ export const defaults: MDCParseOptions = {
         options: {
           passThrough: ['element']
         }
-      },
-      ...rehypePlugins
+      }
     }
   },
-  highlight,
+  highlight: false,
   toc: {
     searchDepth: 2,
     depth: 2

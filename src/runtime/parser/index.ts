@@ -7,12 +7,21 @@ import { defu } from 'defu'
 import { useProcessorPlugins } from './utils/plugins'
 import { compileHast } from './compiler'
 import { defaults } from './options'
-import { rehypeShiki } from './shiki'
+import { rehypeShiki } from '../shiki'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 
+let moduleOptions: any
 export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
-  const options = defu(opts, defaults)
+  if (!moduleOptions) {
+    // @ts-ignore
+    moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
+  }
+  const options = defu(opts, {
+    remark: { plugins: moduleOptions?.remarkPlugins },
+    rehype: { plugins: moduleOptions?.rehypePlugins },
+    highlight: moduleOptions?.highlight,
+  }, defaults)
 
   // Extract front matter data
   const { content, data: frontmatter } = await parseFrontMatter(md)
@@ -20,23 +29,23 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   const processor = unified()
 
   // Use `remark-parse` plugin to parse markdown input
-  processor.use(remarkParse)
+  processor.use(remarkParse as any)
 
   // Use `remark-mdc` plugin to parse mdc syntax
   processor.use(remarkMDC)
 
   // Apply custom plugins to extend remark capabilities
-  await useProcessorPlugins(processor, options.remark?.plugins)
+  await useProcessorPlugins(processor as any, options.remark?.plugins)
 
   // Turns markdown into HTML to support rehype
-  processor.use(remark2rehype, options.rehype?.options)
+  processor.use(remark2rehype as any, (options.rehype as any)?.options)
 
   if (options.highlight) {
     processor.use(rehypeShiki, options.highlight)
   }
 
   // Apply custom plguins to extend rehybe capabilities
-  await useProcessorPlugins(processor, options.rehype?.plugins)
+  await useProcessorPlugins(processor as any, options.rehype?.plugins)
 
   // Apply compiler
   processor.use(compileHast)
@@ -67,7 +76,6 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     toc
   }
 }
-
 
 export function contentHeading (body: MDCRoot) {
   let title = ''
