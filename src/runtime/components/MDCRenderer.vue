@@ -168,8 +168,9 @@ function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCDat
     }
     return {}
   }, data)
+  const defaultValue = node.props?.defaultValue;
 
-  return h(Text, value)
+  return h(Text, value ?? defaultValue ?? '')
 }
 
 /**
