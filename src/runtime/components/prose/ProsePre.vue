@@ -34,6 +34,8 @@ defineProps({
 <style>
 pre code .line {
   display: block;
-  min-height: 1rem;
+}
+pre code .line:empty::before {
+  content: "\200b";
 }
 </style>

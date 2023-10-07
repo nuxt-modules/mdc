@@ -59,6 +59,9 @@ async function main(mdc: string) {
 }
 .line.highlight {
   width: 100%;
-  background-color: #8882;
+  background-color: #8882 !important;
+}
+.line:empty::before {
+  content: "\200b";
 }
 </style>
