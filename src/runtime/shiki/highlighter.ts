@@ -85,11 +85,11 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       .map(color => [
         wrapperStyle ? `html.${color} .shiki,` : '',
         `html.${color} .shiki span {`,
-        `color: var(--shiki-${color}) !important;`,
-        `background: var(--shiki-${color}-bg) !important;`,
-        `font-style: var(--shiki-${color}-font-style) !important;`,
-        `font-weight: var(--shiki-${color}-font-weight) !important;`,
-        `text-decoration: var(--shiki-${color}-text-decoration) !important;`,
+        `color: var(--shiki-${color});`,
+        `background: var(--shiki-${color}-bg);`,
+        `font-style: var(--shiki-${color}-font-style);`,
+        `font-weight: var(--shiki-${color}-font-weight);`,
+        `text-decoration: var(--shiki-${color}-text-decoration);`,
         '}'
       ].join('').trim())
       .join('\n')
