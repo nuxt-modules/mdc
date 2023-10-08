@@ -33,7 +33,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -46,7 +46,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#B392F0",
+                      "style": "--shiki-default:#B392F0",
                     },
                     "tag": "span",
                     "type": "element",
@@ -59,7 +59,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#E1E4E8",
+                      "style": "--shiki-default:#E1E4E8",
                     },
                     "tag": "span",
                     "type": "element",
@@ -82,7 +82,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -95,7 +95,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#FFAB70",
+                      "style": "--shiki-default:#FFAB70",
                     },
                     "tag": "span",
                     "type": "element",
@@ -108,7 +108,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -121,7 +121,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#79B8FF",
+                      "style": "--shiki-default:#79B8FF",
                     },
                     "tag": "span",
                     "type": "element",
@@ -134,7 +134,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -147,7 +147,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#9ECBFF",
+                      "style": "--shiki-default:#9ECBFF",
                     },
                     "tag": "span",
                     "type": "element",
@@ -170,7 +170,7 @@ it('Highlighted code block', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#E1E4E8",
+                      "style": "--shiki-default:#E1E4E8",
                     },
                     "tag": "span",
                     "type": "element",
@@ -210,7 +210,7 @@ it('Highlighted code block', async () => {
         "children": [
           {
             "type": "text",
-            "value": "",
+            "value": "html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}",
           },
         ],
         "props": {},
