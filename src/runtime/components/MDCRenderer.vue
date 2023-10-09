@@ -59,7 +59,14 @@ export default defineComponent({
     components: {
       type: Object as PropType<Record<string, string | DefineComponent<any, any, any>>>,
       default: () => ({})
-    }
+    },
+    /**
+     * External vars binding to use for rendering.
+     */
+    vars: {
+      type: Object,
+      default: () => ({})
+    },
   },
   async setup (props) {
     const { mdc } = useRuntimeConfig().public
@@ -76,7 +83,7 @@ export default defineComponent({
     return { tags }
   },
   render (ctx: any) {
-    const { tags, tag, body, data } = ctx
+    const { tags, tag, body, data, vars } = ctx
 
     if (!body) {
       return null
@@ -95,7 +102,7 @@ export default defineComponent({
         ...meta.component?.props,
         ...this.$attrs
       },
-      renderSlots(body, h, meta, meta)
+      renderSlots(body, h, meta, meta, vars)
     )
   }
 })
@@ -103,7 +110,7 @@ export default defineComponent({
 /**
  * Render a markdown node
  */
-function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}, vars: any = {}): VNode {
   /**
    * Render Text node
    */
@@ -120,7 +127,7 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
   const renderTag: string = (typeof node.props?.__ignoreMap === 'undefined' && documentMeta.tags[originalTag]) || originalTag
 
   if (node.tag === 'binding') {
-    return renderBinding(node, h, documentMeta, parentScope)
+    return renderBinding(node, h, documentMeta, parentScope, vars)
   }
 
   const component = resolveVueComponent(renderTag)
@@ -133,7 +140,7 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
   return h(
     component as any,
     props,
-    renderSlots(node, h, documentMeta, { ...parentScope, ...props })
+    renderSlots(node, h, documentMeta, { ...parentScope, ...props }, vars)
   )
 }
 
@@ -149,12 +156,13 @@ function renderToText (node: MDCNode): string {
   return `<${node.tag}>${node.children?.map(renderToText).join('') || ''}</${node.tag}>`
 }
 
-function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}, vars: any = {}): VNode {
   const data = {
     ...parentScope,
     $route: () => useRoute(),
     $document: documentMeta,
-    $doc: documentMeta
+    $doc: documentMeta,
+    $vars: vars
   }
   const splitter = /\.|\[(\d+)\]/
   const keys: string[] = node.props?.value.trim().split(splitter).filter(Boolean)
@@ -168,14 +176,15 @@ function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCDat
     }
     return {}
   }, data)
+  const defaultValue = node.props?.defaultValue
 
-  return h(Text, value)
+  return h(Text, value ?? defaultValue ?? '')
 }
 
 /**
  * Create slots from `node` template children.
  */
-function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
+function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any, vars: any): Record<string, () => VNode[]> {
   const children: MDCNode[] = (node as MDCElement).children || []
 
   const slotNodes: Record<string, MDCNode[]> = children.reduce((data, node) => {
@@ -200,7 +209,7 @@ function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, pa
     if (!children.length) { return slots }
 
     slots[name] = () => {
-      const vNodes = children.map(child => renderNode(child, h, documentMeta, parentProps))
+      const vNodes = children.map(child => renderNode(child, h, documentMeta, parentProps, vars))
       return mergeTextNodes(vNodes)
     }
 
