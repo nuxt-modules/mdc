@@ -33,7 +33,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -46,7 +46,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#79B8FF",
+                      "style": "--shiki-default:#79B8FF",
                     },
                     "tag": "span",
                     "type": "element",
@@ -59,7 +59,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -72,7 +72,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#79B8FF",
+                      "style": "--shiki-default:#79B8FF",
                     },
                     "tag": "span",
                     "type": "element",
@@ -85,7 +85,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#F97583",
+                      "style": "--shiki-default:#F97583",
                     },
                     "tag": "span",
                     "type": "element",
@@ -98,7 +98,7 @@ it('', async () => {
                       },
                     ],
                     "props": {
-                      "style": "color:#9ECBFF",
+                      "style": "--shiki-default:#9ECBFF",
                     },
                     "tag": "span",
                     "type": "element",
@@ -121,7 +121,7 @@ it('', async () => {
             "children": [
               {
                 "type": "text",
-                "value": "",
+                "value": "html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}",
               },
             ],
             "props": {},
