@@ -1,4 +1,4 @@
-import type { Element } from '../types/hast'
+import type { Element, Text } from '../types/hast'
 import type { BuiltinTheme } from 'shikiji'
 
 export type Theme = BuiltinTheme | Record<string, BuiltinTheme>
@@ -8,7 +8,7 @@ export interface HighlighterOptions {
 }
 
 export interface HighlightResult {
-  tree: Element[],
+  tree: (Element | Text)[],
   className: string,
   style: string,
   inlineStyle: string,
