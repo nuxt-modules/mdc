@@ -6,17 +6,16 @@
     />
     <MDC
       v-slot="{ data, body }"
-      tag="article"
       :value="md"
-      class="p-4"
     >
-      <h1>{{ data?.name }}</h1>
-      <MDCRenderer
-        tag="div"
-        :body="body"
-        :data="data"
-        :prose="false"
-      />
+      <article class="p-4">
+        <h1>{{ data?.name }}</h1>
+        <MDCRenderer
+          :body="body"
+          :data="data"
+          :prose="false"
+        />
+      </article>
     </MDC>
   </div>
 </template>

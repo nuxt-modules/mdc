@@ -1,17 +1,17 @@
 <template>
-  <component :is="tag">
-    <slot
+  <slot
+    :data="data?.data"
+    :body="data?.body"
+    :toc="data?.toc"
+    :excerpt="data?.excerpt"
+  >
+    <MDCRenderer
+      :tag="tag"
+      :class="class"
+      :body="excerpt ? data?.excerpt : data?.body"
       :data="data?.data"
-      :body="data?.body"
-      :toc="data?.toc"
-      :excerpt="data?.excerpt"
-    >
-      <MDCRenderer
-        :body="excerpt ? data?.excerpt : data?.body"
-        :data="data?.data"
-      />
-    </slot>
-  </component>
+    />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -46,6 +46,13 @@ const props = defineProps({
   parserOptions: {
     type: Object as PropType<MDCParseOptions>,
     default: () => ({})
+  },
+  /**
+   * Class to be applied to the root element
+   */
+  class: {
+    type: [String, Array, Object],
+    default: ''
   }
 })
 
