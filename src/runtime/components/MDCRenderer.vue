@@ -1,7 +1,7 @@
 <script lang="ts">
 import { h, resolveComponent, Text, defineComponent, toRaw } from 'vue'
 import destr from 'destr'
-import { pascalCase } from 'scule'
+import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import { useRoute, useRuntimeConfig } from '#app'
@@ -117,7 +117,7 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
 
   const originalTag = node.tag!
   // `_ignoreMap` is an special prop to disables tag-mapper
-  const renderTag: string = (typeof node.props?.__ignoreMap === 'undefined' && documentMeta.tags[originalTag]) || originalTag
+  const renderTag: string = findMappedTag(node as MDCElement, documentMeta.tags)
 
   if (node.tag === 'binding') {
     return renderBinding(node, h, documentMeta, parentScope)
@@ -389,7 +389,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
     if ((c as any)?.render || (c as any)?.ssrRender) {
       return
     }
-    const resolvedComponent = resolveComponent(c) as any
+    const resolvedComponent = resolveVueComponent(c) as any
     if (resolvedComponent?.__asyncLoader && !resolvedComponent.__asyncResolved) {
       await resolvedComponent.__asyncLoader()
     }
@@ -402,7 +402,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
       return []
     }
 
-    const renderTag: string = (typeof (node as MDCElement).props?.__ignoreMap === 'undefined' && documentMeta.tags[tag]) || tag
+    const renderTag: string = findMappedTag(node as MDCElement, documentMeta.tags)
 
     const components: string[] = []
     if (node.type !== 'root' && !htmlTags.includes(renderTag as any)) {
@@ -413,5 +413,16 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
     }
     return components
   }
+}
+
+function findMappedTag (node: MDCElement, tags: Record<string, string>) {
+  const tag = node.tag
+  
+  if (!tag || typeof (node as MDCElement).props?.__ignoreMap !== 'undefined') {
+    return tag
+  }
+
+  return tags[tag] || tags[pascalCase(tag)] || tags[kebabCase(node.tag)] || tag
+
 }
 </script>

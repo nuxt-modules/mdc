@@ -44,62 +44,73 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
   }
 
   const getHighlightedAST = async (code: string, lang: BuiltinLanguage, theme: Theme, opts?: Partial<HighlighterOptions>): Promise<HighlightResult> => {
-    const highlighter = await getShikiHighlighter()
-    const { highlights = [] } = opts || {}
+    try {
+      const highlighter = await getShikiHighlighter()
+      const { highlights = [] } = opts || {}
 
-    const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
-    const themeNames = Object.values(themesObject) as BuiltinTheme[]
+      const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
+      const themeNames = Object.values(themesObject) as BuiltinTheme[]
 
-    if (themeNames.length) {
-      await Promise.all(themeNames.map(theme => highlighter.loadTheme(theme)))
-    }
-
-    if (lang && !highlighter.getLoadedLanguages().includes(lang)) {
-      await highlighter.loadLanguage(lang)
-    }
-
-    const root = highlighter.codeToHast(code.trimEnd(), {
-      lang,
-      themes: themesObject,
-      defaultColor: false,
-      transforms: {
-        line(node, line) {
-          node.properties ||= {}
-          if (highlights.includes(line)) {
-            node.properties.class = (node.properties.class || '') + ' highlight'
-          }
-          node.properties.line = line
-        },
+      if (themeNames.length) {
+        await Promise.all(themeNames.map(theme => highlighter.loadTheme(theme)))
       }
-    })
 
-    const preEl = root.children[0] as Element
-    const codeEl = preEl.children[0] as Element
+      if (lang && !highlighter.getLoadedLanguages().includes(lang)) {
+        await highlighter.loadLanguage(lang)
+      }
 
-    preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
-
-    const style = Object.keys(themesObject)
-      .map(color => {
-        const colorScheme = color !== 'default' ? `.${color}` : ''
-        return [
-          wrapperStyle ? `html${colorScheme} .shiki,` : '',
-          `html${colorScheme} .shiki span {`,
-          `color: var(--shiki-${color});`,
-          `background: var(--shiki-${color}-bg);`,
-          `font-style: var(--shiki-${color}-font-style);`,
-          `font-weight: var(--shiki-${color}-font-weight);`,
-          `text-decoration: var(--shiki-${color}-text-decoration);`,
-          '}'
-        ].join('').trim()
+      const root = highlighter.codeToHast(code.trimEnd(), {
+        lang,
+        themes: themesObject,
+        defaultColor: false,
+        transforms: {
+          line(node, line) {
+            node.properties ||= {}
+            if (highlights.includes(line)) {
+              node.properties.class = (node.properties.class || '') + ' highlight'
+            }
+            node.properties.line = line
+          },
+        }
       })
-      .join('\n')
 
-    return {
-      tree: codeEl.children as Element[],
-      className: preEl.properties.class as string,
-      inlineStyle: preEl.properties.style  as string,
-      style,
+      const preEl = root.children[0] as Element
+      const codeEl = preEl.children[0] as Element
+
+      preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
+
+      const style = Object.keys(themesObject)
+        .map(color => {
+          const colorScheme = color !== 'default' ? `.${color}` : ''
+          return [
+            wrapperStyle ? `html${colorScheme} .shiki,` : '',
+            `html${colorScheme} .shiki span {`,
+            `color: var(--shiki-${color});`,
+            `background: var(--shiki-${color}-bg);`,
+            `font-style: var(--shiki-${color}-font-style);`,
+            `font-weight: var(--shiki-${color}-font-weight);`,
+            `text-decoration: var(--shiki-${color}-text-decoration);`,
+            '}'
+          ].join('').trim()
+        })
+        .join('\n')
+
+      return {
+        tree: codeEl.children as Element[],
+        className: preEl.properties.class as string,
+        inlineStyle: preEl.properties.style  as string,
+        style,
+      }
+    } catch (error: any) {
+      console.warn('[@nuxtjs/mdc] Failed to highlight code block', error.message)
+      return {
+        tree: [{ type: 'text', value: code }],
+        className: '',
+        inlineStyle: '',
+        style: ''
+      }
     }
+  
   }
 
   return {
