@@ -7,7 +7,7 @@
   >
     <MDCRenderer
       :tag="tag"
-      :class="class"
+      :class="props.class"
       :body="excerpt ? data?.excerpt : data?.body"
       :data="data?.data"
     />
