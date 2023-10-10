@@ -43,7 +43,7 @@ export default defineComponent({
      * Root tag to use for rendering
      */
     tag: {
-      type: String,
+      type: [String, Boolean],
       default: undefined
     },
     /**
@@ -85,18 +85,14 @@ export default defineComponent({
     const meta = { ...data, tags }
 
     // Resolve root component
-    let component: string | ConcreteComponent = tag || meta.component?.name || meta.component || 'div'
-    component = resolveVueComponent(component as string)
+    const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
 
+    const childrenRendrer = renderSlots(body, h, meta, meta)
+    
     // Return Vue component
-    return h(
-      component as any,
-      {
-        ...meta.component?.props,
-        ...this.$attrs
-      },
-      renderSlots(body, h, meta, meta)
-    )
+    return component
+      ? h(component as any, { ...meta.component?.props, ...this.$attrs }, childrenRendrer)
+      : childrenRendrer.default?.()
   }
 })
 
