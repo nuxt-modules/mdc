@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.2.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.1...v0.2.2)
+
+### 🚀 Enhancements
+
+- Add default value to variable binding ([#59](https://github.com/nuxt-modules/mdc/pull/59))
+- **MDCRenderer:** Controll wrapper node rendering ([#65](https://github.com/nuxt-modules/mdc/pull/65))
+
+### 🩹 Fixes
+
+- **highlighter:** Fallback to raw code in case of exception ([426c4b9](https://github.com/nuxt-modules/mdc/commit/426c4b9))
+- **MDCRenderer:** Check for both kebabCase and pascalCase in tags map ([4bbc240](https://github.com/nuxt-modules/mdc/commit/4bbc240))
+- Drop !important css rules from code highlighting ([#61](https://github.com/nuxt-modules/mdc/pull/61))
+
+### 🏡 Chore
+
+- Update package json ([4754726](https://github.com/nuxt-modules/mdc/commit/4754726))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Maxime Pauvert ([@maximepvrt](http://github.com/maximepvrt))
+- Nobkd
+
 ## v0.2.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.0...v0.2.1)
