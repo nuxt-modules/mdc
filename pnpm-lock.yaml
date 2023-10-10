@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@nuxt/kit':
-    specifier: latest
+    specifier: ^3.7.4
     version: 3.7.4(rollup@3.29.4)
   '@types/hast':
     specifier: ^3.0.1
