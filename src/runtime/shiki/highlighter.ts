@@ -83,8 +83,8 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         .map(color => {
           const colorScheme = color !== 'default' ? `.${color}` : ''
           return [
-            wrapperStyle ? `html${colorScheme} .shiki,` : '',
-            `html${colorScheme} .shiki span {`,
+            wrapperStyle ? `${colorScheme} .shiki,` : '',
+            `${colorScheme} .shiki span {`,
             `color: var(--shiki-${color});`,
             `background: var(--shiki-${color}-bg);`,
             `font-style: var(--shiki-${color}-font-style);`,
@@ -110,7 +110,6 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         style: ''
       }
     }
-  
   }
 
   return {
