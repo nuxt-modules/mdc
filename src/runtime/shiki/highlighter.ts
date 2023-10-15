@@ -70,6 +70,14 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
               node.properties.class = (node.properties.class || '') + ' highlight'
             }
             node.properties.line = line
+
+            // Add newline to end of lines
+            const last = node.children.at(-1)
+            if (last?.type === 'element' && last.tagName === 'span') {
+              const text = last.children.at(-1)
+              if (text?.type === 'text' && text.value)
+                text.value += '\n'
+            }
           },
         }
       })
@@ -110,7 +118,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         style: ''
       }
     }
-  
+
   }
 
   return {

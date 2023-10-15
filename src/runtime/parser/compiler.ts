@@ -68,7 +68,7 @@ export function compileHast(this: any) {
       }
     }
 
-    // Kepp none new line text nodes
+    // Keep non-newline text nodes
     if (node.type === 'text' && node.value !== '\n') {
       return {
         type: 'text',
