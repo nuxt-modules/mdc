@@ -382,8 +382,8 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
   }
   
   const components = Array.from(new Set(loadComponents(body, meta)))
-  await Promise.all(components.map(async (c) => {
-    if ((c as any)?.render || (c as any)?.ssrRender) {
+  await Promise.all(components.map(async (c: any) => {
+    if (c?.render || c?.ssrRender || c?.__ssrInlineRender) {
       return
     }
     const resolvedComponent = resolveVueComponent(c) as any
