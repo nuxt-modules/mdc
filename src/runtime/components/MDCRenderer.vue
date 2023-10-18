@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, resolveComponent, Text, defineComponent, toRaw } from 'vue'
+import { h, resolveComponent, Text, defineComponent, toRaw, computed } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
@@ -71,12 +71,20 @@ export default defineComponent({
       ...props.components
     }
 
+    const contentKey = computed(() => {
+      const components = props.body.children
+      .map(n => (n as any).tag || n.type)
+      .filter(t => !htmlTags.includes(t))
+
+      return Array.from(new Set(components)).sort().join('.')
+    })
+
     await resolveContentComponents(props.body, { tags })
 
-    return { tags }
+    return { tags, contentKey }
   },
   render (ctx: any) {
-    const { tags, tag, body, data } = ctx
+    const { tags, tag, body, data, contentKey } = ctx
 
     if (!body) {
       return null
@@ -91,7 +99,7 @@ export default defineComponent({
     
     // Return Vue component
     return component
-      ? h(component as any, { ...meta.component?.props, ...this.$attrs }, childrenRendrer)
+      ? h(component as any, { ...meta.component?.props, ...this.$attrs, key: contentKey }, childrenRendrer)
       : childrenRendrer.default?.()
   }
 })
