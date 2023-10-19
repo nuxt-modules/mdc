@@ -72,7 +72,7 @@ export default defineComponent({
     }
 
     const contentKey = computed(() => {
-      const components = props.body.children
+      const components = (props.body?.children || [])
       .map(n => (n as any).tag || n.type)
       .filter(t => !htmlTags.includes(t))
 

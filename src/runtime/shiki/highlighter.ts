@@ -79,11 +79,23 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
 
       preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
 
-      const style = Object.keys(themesObject)
-        .map(color => {
+      const styles: string[] = []
+      Object.keys(themesObject)
+        .forEach(color => {
           const colorScheme = color !== 'default' ? `.${color}` : ''
-          return [
+          
+          styles.push(
             wrapperStyle ? `${colorScheme} .shiki,` : '',
+            `.${color} > .shiki span {`,
+            `color: var(--shiki-${color});`,
+            `background: var(--shiki-${color}-bg);`,
+            `font-style: var(--shiki-${color}-font-style);`,
+            `font-weight: var(--shiki-${color}-font-weight);`,
+            `text-decoration: var(--shiki-${color}-text-decoration);`,
+            '}'
+          )
+
+          styles.unshift(
             `${colorScheme} .shiki span {`,
             `color: var(--shiki-${color});`,
             `background: var(--shiki-${color}-bg);`,
@@ -91,15 +103,14 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
             `font-weight: var(--shiki-${color}-font-weight);`,
             `text-decoration: var(--shiki-${color}-text-decoration);`,
             '}'
-          ].join('').trim()
+          )
         })
-        .join('\n')
 
       return {
         tree: codeEl.children as Element[],
         className: preEl.properties.class as string,
         inlineStyle: preEl.properties.style  as string,
-        style,
+        style: styles.join(''),
       }
     } catch (error: any) {
       console.warn('[@nuxtjs/mdc] Failed to highlight code block', error.message)
