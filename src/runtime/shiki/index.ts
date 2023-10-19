@@ -1,7 +1,6 @@
 import type { Root, Element } from '../types/hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import { defu } from 'defu'
 import type { Highlighter, Theme } from './types'
 
 interface RehypeShikiOption {
@@ -27,7 +26,7 @@ const defaults: RehypeShikiOption = {
 }
 
 export function rehypeShiki(opts: RehypeShikiOption = {}) {
-  const options = defu(opts, defaults)
+  const options = { ...defaults, ...opts }
 
   return async (tree: Root) => {
     const tasks: Promise<void>[] = []
