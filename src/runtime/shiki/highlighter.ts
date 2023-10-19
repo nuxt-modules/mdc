@@ -86,7 +86,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
           
           styles.push(
             wrapperStyle ? `${colorScheme} .shiki,` : '',
-            `.${color} > .shiki span {`,
+            `html .${color} .shiki span {`,
             `color: var(--shiki-${color});`,
             `background: var(--shiki-${color}-bg);`,
             `font-style: var(--shiki-${color}-font-style);`,
@@ -96,7 +96,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
           )
 
           styles.unshift(
-            `${colorScheme} .shiki span {`,
+            `html${colorScheme} .shiki span {`,
             `color: var(--shiki-${color});`,
             `background: var(--shiki-${color}-bg);`,
             `font-style: var(--shiki-${color}-font-style);`,
