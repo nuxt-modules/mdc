@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.2.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.2...v0.2.3)
+
+### 🚀 Enhancements
+
+- **shiki:** Remove `html` from `.shiki` css selector ([#67](https://github.com/nuxt-modules/mdc/pull/67))
+
+### 🩹 Fixes
+
+- **MDCRenderer:** Check for `__ssrInlineRender` to detect component ([d8a1b9c](https://github.com/nuxt-modules/mdc/commit/d8a1b9c))
+- **MDCRenderer:** Rerender components when new components adds to content ([9599aef](https://github.com/nuxt-modules/mdc/commit/9599aef))
+- **highlighter:** Allow multiple themes inside a page ([6a44c2d](https://github.com/nuxt-modules/mdc/commit/6a44c2d))
+- Improve highlighter styles ([3901502](https://github.com/nuxt-modules/mdc/commit/3901502))
+- Add line break to end of each code block line ([#62](https://github.com/nuxt-modules/mdc/pull/62))
+
+### ❤️ Contributors
+
+- Nobkd 
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Benjamin Canac ([@benjamincanac](http://github.com/benjamincanac))
+
 ## v0.2.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.1...v0.2.2)
