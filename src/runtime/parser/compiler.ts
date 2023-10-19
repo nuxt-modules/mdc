@@ -8,13 +8,13 @@ export function compileHast(this: any) {
   // Create new slugger for each Tree to generate
   const slugs = new Slugger()
 
-  function compileToJSON(node: Root): MDCRoot;
-  function compileToJSON(node: RootContent): MDCNode;
-  function compileToJSON (node: Root | RootContent): MDCNode | MDCRoot | null {
+  function compileToJSON(node: Root, parent?: Root | RootContent): MDCRoot;
+  function compileToJSON(node: RootContent, parent?: Root | RootContent): MDCNode;
+  function compileToJSON (node: Root | RootContent, parent?: Root | RootContent): MDCNode | MDCRoot | null {
     if (node.type === 'root') {
       return {
         type: 'root',
-        children: node.children.map(compileToJSON).filter(Boolean)
+        children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
       }
     }
 
@@ -64,15 +64,17 @@ export function compileHast(this: any) {
         type: 'element',
         tag: node.tagName,
         props: validateProps(node.properties),
-        children: node.children.map(compileToJSON).filter(Boolean)
+        children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
       }
     }
 
-    // Kepp none new line text nodes
-    if (node.type === 'text' && node.value !== '\n') {
-      return {
-        type: 'text',
-        value: node.value
+    // Keep non-newline text nodes
+    if (node.type === 'text') {
+      if (node.value !== '\n' || (parent as any)?.properties?.emptyLinePlaceholder) {
+        return {
+          type: 'text',
+          value: node.value
+        }
       }
     }
 

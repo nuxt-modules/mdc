@@ -70,6 +70,25 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
               node.properties.class = (node.properties.class || '') + ' highlight'
             }
             node.properties.line = line
+
+            // Add newline to end of lines
+            if (node.children.length === 0) {
+              node.children.push({
+                type: 'element',
+                tagName: 'span',
+                properties: {
+                  emptyLinePlaceholder: true
+                },
+                children: [{ type: 'text', value: '' }]
+              })
+            }
+            const last = node.children.at(-1)
+            if (last?.type === 'element' && last.tagName === 'span') {
+              const text = last.children.at(-1)
+              
+              if (text?.type === 'text')
+                text.value += '\n'
+            }
           },
         }
       })

@@ -55,7 +55,8 @@ it('Highlighted code block', async () => {
                     "children": [
                       {
                         "type": "text",
-                        "value": " {",
+                        "value": " {
+    ",
                       },
                     ],
                     "props": {
@@ -143,7 +144,8 @@ it('Highlighted code block', async () => {
                     "children": [
                       {
                         "type": "text",
-                        "value": " \\"foo\\"",
+                        "value": " \\"foo\\"
+    ",
                       },
                     ],
                     "props": {
@@ -166,7 +168,8 @@ it('Highlighted code block', async () => {
                     "children": [
                       {
                         "type": "text",
-                        "value": "}",
+                        "value": "}
+    ",
                       },
                     ],
                     "props": {
