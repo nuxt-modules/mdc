@@ -20,7 +20,7 @@ const rxBind = /^:|^v-bind:/
 const rxModel = /^v-model/
 const nativeInputs = ['select', 'textarea', 'input']
 
-const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code', 'pre', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr'].map(t => [t, `prose-${t}`]))
+const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code', 'pre', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr', 'script'].map(t => [t, `prose-${t}`]))
 
 export default defineComponent({
   name: 'MDCRenderer',
@@ -96,7 +96,7 @@ export default defineComponent({
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
 
     const childrenRendrer = renderSlots(body, h, meta, meta)
-    
+
     // Return Vue component
     return component
       ? h(component as any, { ...meta.component?.props, ...this.$attrs, key: contentKey }, childrenRendrer)
@@ -115,9 +115,9 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
     return h(Text, node.value)
   }
 
-  if (node.tag === 'script') {
-    return h(Text, renderToText(node))
-  }
+  // if (node.tag === 'script') {
+  //   return h(Text, renderToText(node))
+  // }
 
   const originalTag = node.tag!
   // `_ignoreMap` is an special prop to disables tag-mapper
@@ -388,7 +388,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
   if (!body) {
     return
   }
-  
+
   const components = Array.from(new Set(loadComponents(body, meta)))
   await Promise.all(components.map(async (c: any) => {
     if (c?.render || c?.ssrRender || c?.__ssrInlineRender) {
@@ -422,7 +422,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
 
 function findMappedTag (node: MDCElement, tags: Record<string, string>) {
   const tag = node.tag
-  
+
   if (!tag || typeof (node as MDCElement).props?.__ignoreMap !== 'undefined') {
     return tag
   }
