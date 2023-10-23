@@ -19,7 +19,7 @@ import { hash } from 'ohash'
 import { useAsyncData } from 'nuxt/app'
 import { parseMarkdown } from '../parser'
 import { watch, computed, type PropType } from 'vue'
-import { MDCParseOptions } from '../types'
+import type { MDCParseOptions } from '../types'
 
 const props = defineProps({
   tag: {
