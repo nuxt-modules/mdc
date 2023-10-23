@@ -1,6 +1,6 @@
 import { type State } from 'mdast-util-to-hast'
-import { type Element, type Properties } from 'hast'
-import { type Code } from 'mdast'
+import type { Element, Properties } from 'hast'
+import type { Code } from 'mdast'
 import { detab } from 'detab'
 import { parseThematicBlock } from './utils'
 
