@@ -35,7 +35,7 @@ name: Sam
 
 Simple paragraph
 
-Inline code: \`const codeInline: string = 'highlighted code inline'\`{lang="ts"}
+Inline code \`const codeInline: string = 'highlighted code inline'\`{lang="ts"} can be contained in paragraphs.
 
 Code block:
 \`\`\`typescript[filename]{1,3-5}meta
@@ -59,8 +59,5 @@ async function main(mdc: string) {
 .line.highlight {
   width: 100%;
   background-color: #8882 !important;
-}
-.line:empty::before {
-  content: "\200b";
 }
 </style>

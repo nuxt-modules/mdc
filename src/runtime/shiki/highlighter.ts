@@ -85,7 +85,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
             const last = node.children.at(-1)
             if (last?.type === 'element' && last.tagName === 'span') {
               const text = last.children.at(-1)
-              
+
               if (text?.type === 'text')
                 text.value += '\n'
             }
@@ -102,7 +102,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       Object.keys(themesObject)
         .forEach(color => {
           const colorScheme = color !== 'default' ? `.${color}` : ''
-          
+
           styles.push(
             wrapperStyle ? `${colorScheme} .shiki,` : '',
             `html .${color} .shiki span {`,
