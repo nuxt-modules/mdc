@@ -1,6 +1,6 @@
 import { type State } from 'mdast-util-to-hast'
-import { type Element, type Text, type Properties } from 'hast'
-import { type InlineCode } from 'mdast'
+import type { Element, Text, Properties } from 'hast'
+import type { InlineCode } from 'mdast'
 
 export default function inlineCode (state: State, node: InlineCode & { attributes?: Properties }) {
   const language = node.attributes?.language || node.attributes?.lang

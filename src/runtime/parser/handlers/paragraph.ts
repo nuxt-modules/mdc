@@ -1,6 +1,6 @@
 import { type State } from 'mdast-util-to-hast'
-import { type Element } from 'hast'
-import { type Paragraph } from 'mdast'
+import type { Element } from 'hast'
+import type { Paragraph } from 'mdast'
 import { kebabCase } from 'scule'
 import htmlTags from '../utils/html-tags-list'
 import { getTagName } from './utils'
