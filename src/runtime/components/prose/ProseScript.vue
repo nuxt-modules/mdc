@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is possibly dangerous, you should implement your own <ProseCode>ProseScript</ProseCode> element.
+    Rendering the <ProseCode>script</ProseCode> element is dangerous and is disabled by default. Consider implementing your own <ProseCode>ProseScript</ProseCode> element to have control over script rendering.
   </div>
 </template>
 
