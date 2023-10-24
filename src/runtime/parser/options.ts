@@ -1,6 +1,7 @@
 import handlers from './handlers'
 import remarkEmoji from 'remark-emoji'
 import remarkGFM  from 'remark-gfm'
+import remarkMDC from 'remark-mdc'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeSortAttributeValues from 'rehype-sort-attribute-values'
 import rehypeSortAttributes from 'rehype-sort-attributes'
@@ -10,6 +11,9 @@ import type { MDCParseOptions } from '../types'
 export const defaults: MDCParseOptions = {
   remark: {
     plugins: {
+      'remark-mdc': {
+        instance: remarkMDC,
+      },
       'remark-emoji': {
         instance: remarkEmoji
       },

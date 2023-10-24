@@ -2,7 +2,7 @@ import type { MDCData, MDCElement, MDCParseOptions, MDCRoot, Toc } from '../type
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
-import remarkMDC, { parseFrontMatter } from 'remark-mdc'
+import { parseFrontMatter } from 'remark-mdc'
 import { defu } from 'defu'
 import { useProcessorPlugins } from './utils/plugins'
 import { compileHast } from './compiler'
@@ -30,9 +30,6 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
 
   // Use `remark-parse` plugin to parse markdown input
   processor.use(remarkParse as any)
-
-  // Use `remark-mdc` plugin to parse mdc syntax
-  processor.use(remarkMDC)
 
   // Apply custom plugins to extend remark capabilities
   await useProcessorPlugins(processor as any, options.remark?.plugins)
