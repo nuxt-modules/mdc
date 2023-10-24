@@ -115,10 +115,6 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
     return h(Text, node.value)
   }
 
-  // if (node.tag === 'script') {
-  //   return h(Text, renderToText(node))
-  // }
-
   const originalTag = node.tag!
   // `_ignoreMap` is an special prop to disables tag-mapper
   const renderTag: string = findMappedTag(node as MDCElement, documentMeta.tags)
@@ -139,18 +135,6 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
     props,
     renderSlots(node, h, documentMeta, { ...parentScope, ...props })
   )
-}
-
-function renderToText (node: MDCNode): string {
-  if (node.type === 'text') {
-    return node.value!
-  }
-
-  if (!node.children?.length) {
-    return `<${node.tag}>`
-  }
-
-  return `<${node.tag}>${node.children?.map(renderToText).join('') || ''}</${node.tag}>`
 }
 
 function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
