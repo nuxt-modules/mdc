@@ -1,7 +1,7 @@
 import type { Root, Element } from '../types/hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import type { Highlighter, Theme } from './types'
+import type { HighlightResult, Highlighter, Theme } from './types'
 
 interface RehypeShikiOption {
   theme?: Theme
@@ -13,15 +13,30 @@ const defaults: RehypeShikiOption = {
     default: 'github-light',
     dark: 'github-dark'
   },
-  highlighter: (code, lang, theme, highlights) => {
-    return $fetch('/api/_mdc/highlight', {
-      params: {
-        code,
-        lang,
-        theme: JSON.stringify(theme),
-        highlights: JSON.stringify(highlights)
+  async highlighter (code, lang, theme, highlights) {
+    if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
+      return import('./highlighter').then(({ useShikiHighlighter }) => {
+        return useShikiHighlighter().getHighlightedAST(code, lang as any, theme, { highlights })
+      })
+    }
+
+    try {
+      return await $fetch('/api/_mdc/highlight', {
+        params: {
+          code,
+          lang,
+          theme: JSON.stringify(theme),
+          highlights: JSON.stringify(highlights)
+        }
+      })
+    } catch (e: any) {
+      if (process.browser && e?.response?.status === 404) {
+        window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
+        return this.highlighter?.(code, lang, theme, highlights)!
       }
-    })
+    }
+
+    return Promise.resolve({ tree: [{ type: 'text', value: code }], className: '', style: '' } as HighlightResult)
   }
 }
 
@@ -49,7 +64,7 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
             if ((_node.children[0] as Element)?.tagName === 'code') {
               (_node.children[0] as Element).children = tree
             } else {
-              _node.children = tree[0].children
+              _node.children = (tree[0] as any).children || tree[0]
             }
 
             if (style)
