@@ -72,8 +72,8 @@ dependencies:
     specifier: ^2.1.0
     version: 2.1.0
   remark-parse:
-    specifier: ^10.0.2
-    version: 10.0.2
+    specifier: ^11.0.0
+    version: 11.0.0
   remark-rehype:
     specifier: ^10.1.0
     version: 10.1.0
@@ -9364,12 +9364,13 @@ packages:
       - supports-color
     dev: false
 
-  /remark-parse@10.0.2:
-    resolution: {integrity: sha512-3ydxgHa/ZQzG8LvC7jTXccARYDcRld3VfcgIIFs7bI6vbRSxJJmzgLEIIoYKyrfhaY+ujuWaf/PJiMZXoiCXgw==}
+  /remark-parse@11.0.0:
+    resolution: {integrity: sha512-FCxlKLNGknS5ba/1lmpYijMUzX2esxW5xQqjWxw2eHFfS2MSdaHVINFmhjo+qN1WhZhNimq0dZATN9pH0IDrpA==}
     dependencies:
-      '@types/mdast': 3.0.14
-      mdast-util-from-markdown: 1.3.1
-      unified: 10.1.2
+      '@types/mdast': 4.0.2
+      mdast-util-from-markdown: 2.0.0
+      micromark-util-types: 2.0.0
+      unified: 11.0.3
     transitivePeerDependencies:
       - supports-color
     dev: false
