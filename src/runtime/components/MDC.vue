@@ -23,7 +23,7 @@ import type { MDCParseOptions } from '../types'
 
 const props = defineProps({
   tag: {
-    type: String,
+    type: [String, Boolean],
     default: 'div'
   },
   /**
