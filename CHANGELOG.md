@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v0.2.4
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.3...v0.2.4)
+
+### 🚀 Enhancements
+
+- Add title and description on markdown returned type ([#80](https://github.com/nuxt-modules/mdc/pull/80))
+- Add script render in mdc ([#74](https://github.com/nuxt-modules/mdc/pull/74))
+
+### 🩹 Fixes
+
+- Import types with `type` keyword ([#78](https://github.com/nuxt-modules/mdc/pull/78))
+- Respect plugins options type ([e744cd3](https://github.com/nuxt-modules/mdc/commit/e744cd3))
+- **shiki:** Fallback inline highlighter on static runtime ([64bda39](https://github.com/nuxt-modules/mdc/commit/64bda39))
+
+### 🏡 Chore
+
+- **code block:** Drop empty line styles ([#71](https://github.com/nuxt-modules/mdc/pull/71))
+- Upgrade remark-mdc ([b4d0c2e](https://github.com/nuxt-modules/mdc/commit/b4d0c2e))
+
+### ❤️ Contributors
+
+- Natanael Dos Santos Feitosa 
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Nobkd 
+- Andrei Hudalla 
+- Estéban ([@Barbapapazes](http://github.com/Barbapapazes))
+
 ## v0.2.3
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.2...v0.2.3)
