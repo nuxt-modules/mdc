@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.5
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.4...v0.2.5)
+
+### 🩹 Fixes
+
+- **MDC:** `tag` prop type ([b6e6ba2](https://github.com/nuxt-modules/mdc/commit/b6e6ba2))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.2.4
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.3...v0.2.4)
