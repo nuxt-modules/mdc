@@ -6,9 +6,10 @@
     :excerpt="data?.excerpt"
   >
     <MDCRenderer
+      v-if="body"
       :tag="tag"
       :class="props.class"
-      :body="excerpt ? data?.excerpt : data?.body"
+      :body="body"
       :data="data?.data"
     />
   </slot>
@@ -64,6 +65,8 @@ const { data, refresh } = await useAsyncData(key.value, async () => {
   }
   return await parseMarkdown(props.value, props.parserOptions)
 })
+
+const body = computed(() => props.excerpt ? data.value?.excerpt : data.value?.body)
 
 watch(() => props.value, () => {
   refresh()
