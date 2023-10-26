@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.2.6
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.5...v0.2.6)
+
+### 🩹 Fixes
+
+- Do not render script warning in production ([ffbd13a](https://github.com/nuxt-modules/mdc/commit/ffbd13a))
+- Typecheck ([fffbce6](https://github.com/nuxt-modules/mdc/commit/fffbce6))
+- **MDC:** Props mistmatch ([0bfafcd](https://github.com/nuxt-modules/mdc/commit/0bfafcd))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.2.5
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.4...v0.2.5)
