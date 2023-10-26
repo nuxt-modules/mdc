@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 import { parseMarkdown } from '../utils/parser'
-import { MDCElement } from '../../src/runtime/types'
+import type { MDCElement } from '../../src/runtime/types'
 import { validateProp } from '../../src/runtime/parser/utils/props'
 
 const md = `\

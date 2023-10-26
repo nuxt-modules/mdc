@@ -42,6 +42,8 @@ export default defineNuxtModule<ModuleOptions>({
       },
       headings: options.headings!
     })
+
+    // @ts-ignore
     nuxt.options.runtimeConfig.mdc = defu(nuxt.options.runtimeConfig.mdc, {
       highlight: options.highlight ? {
         theme: options.highlight!.theme!,

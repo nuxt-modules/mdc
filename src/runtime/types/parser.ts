@@ -1,5 +1,5 @@
 import type { Options as RehypeOption } from 'remark-rehype'
-import { Theme, Highlighter } from '../shiki/types'
+import type { Theme, Highlighter } from '../shiki/types'
 
 export interface RemarkPlugin {
   instance?: any
