@@ -94,8 +94,7 @@ it('', async () => {
                     "children": [
                       {
                         "type": "text",
-                        "value": " 'highlighted code inline'
-      ",
+                        "value": " 'highlighted code inline'",
                       },
                     ],
                     "props": {
