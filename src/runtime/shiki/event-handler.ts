@@ -6,7 +6,9 @@ import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(async () => {
   const { highlight } = useRuntimeConfig().mdc
-  
+
+  console.log(highlight)
+
   try {
     // try loading `.wasm` directly, for cloudflare workers
     // @ts-expect-error
@@ -25,6 +27,7 @@ export default lazyEventHandler(async () => {
     const theme = JSON.parse(themeString as string)
     const highlights = highlightsString ? JSON.parse(highlightsString as string) as number[] : undefined
 
+    console.log('event-handler.lang', lang)
     return await shiki.getHighlightedAST(code as string, lang as BuiltinLanguage, theme as BuiltinTheme, { highlights })
   })
 })

@@ -8,20 +8,11 @@ export default defineNuxtConfig({
     highlight: {
       theme: {
         default: 'vitesse-light',
-        dark: 'material-theme-palenight',
+        // dark: 'material-theme-palenight',
       },
-      preload: [
-        'sql'
-      ]
-    },
-    remarkPlugins: {
-      'remark-mdc': {
-        options: {
-          experimental: {
-            autoUnwrap: true
-          }
-        }
-      }
+      // preload: [
+      //   'sql'
+      // ]
     }
   },
   devtools: {

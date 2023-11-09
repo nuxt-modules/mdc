@@ -1,4 +1,5 @@
-import { getHighlighter, type ThemeInput, type Highlighter, type BuiltinLanguage, type BuiltinTheme } from 'shikiji'
+import { type ThemeInput, type Highlighter, type BuiltinLanguage, type BuiltinTheme} from 'shikiji'
+import { HighlighterCore, getHighlighterCore } from 'shikiji/core'
 import type { HighlightResult, HighlighterOptions, Theme } from './types'
 import type { Element } from '../types/hast'
 
@@ -6,39 +7,40 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
   // Grab highlighter config from publicRuntimeConfig
   const { theme, preload, wrapperStyle } = opts || {}
 
-  let promise: Promise<Highlighter> | undefined
+  let promise: Promise<HighlighterCore> | undefined
   const getShikiHighlighter = () => {
     if (!promise) {
       // Initialize highlighter with defaults
-      promise = getHighlighter({
+      promise = getHighlighterCore({
         themes: [
-          ((theme as any)?.default || theme || 'dark-plus') as BuiltinTheme,
+          // ((theme as any)?.default || theme || 'dark-plus') as BuiltinTheme,
         ],
         langs: [
           ...(preload || []),
-          'diff',
-          'json',
-          'js',
-          'ts',
-          'css',
-          'shell',
-          'html',
-          'md',
-          'yaml',
-          'vue',
-          'mdc'
+          // 'diff',
+          // 'json',
+          // 'js',
+          // 'ts',
+          // 'css',
+          // 'shell',
+          // 'html',
+          // 'md',
+          // 'yaml',
+          // 'vue',
+          // 'mdc'
         ] as any[]
-      }).then((highlighter) => {
-        // Load all themes on-demand
-        const themes = Object.values(typeof theme === 'string' ? { default: theme } : (theme || {})) as ThemeInput[]
-
-        if (themes.length) {
-          return Promise
-            .all(themes.map(theme => highlighter.loadTheme(theme)))
-            .then(() => highlighter)
-        }
-        return highlighter
       })
+      // .then((highlighter) => {
+      //   // Load all themes on-demand
+      //   const themes = Object.values(typeof theme === 'string' ? { default: theme } : (theme || {})) as ThemeInput[]
+
+      //   if (themes.length) {
+      //     return Promise
+      //       .all(themes.map(theme => highlighter.loadTheme(theme)))
+      //       .then(() => highlighter)
+      //   }
+      //   return highlighter
+      // })
     }
     return promise
   }
@@ -52,11 +54,12 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       const themeNames = Object.values(themesObject) as BuiltinTheme[]
 
       if (themeNames.length) {
-        await Promise.all(themeNames.map(theme => highlighter.loadTheme(theme)))
+        await Promise.all(themeNames.map(theme => highlighter.loadTheme(import(`shikiji/themes/${theme}.mjs`))))
       }
 
+      console.log('lang', lang)
       if (lang && !highlighter.getLoadedLanguages().includes(lang)) {
-        await highlighter.loadLanguage(lang)
+        // await highlighter.loadLanguage(bundledLanguages[lang]())
       }
 
       const root = highlighter.codeToHast(code.trimEnd(), {
@@ -135,6 +138,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         style: styles.join(''),
       }
     } catch (error: any) {
+      console.error(error)
       console.warn('[@nuxtjs/mdc] Failed to highlight code block', error.message)
       return {
         tree: [{ type: 'text', value: code }],
