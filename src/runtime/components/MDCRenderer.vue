@@ -4,7 +4,7 @@ import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
-import { useRoute, useRuntimeConfig } from '#app'
+import { useRoute, useRuntimeConfig } from '#imports'
 import htmlTags from '../parser/utils/html-tags-list'
 import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../types'
 
