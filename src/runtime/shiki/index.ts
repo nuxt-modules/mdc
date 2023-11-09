@@ -39,7 +39,7 @@ const defaults: RehypeShikiOption = {
     return Promise.resolve({ tree: [{ type: 'text', value: code }], className: '', style: '' } as HighlightResult)
   }
 }
-
+export default rehypeShiki
 export function rehypeShiki(opts: RehypeShikiOption = {}) {
   const options = { ...defaults, ...opts }
 

@@ -58,6 +58,18 @@ export default defineNuxtModule<ModuleOptions>({
       )
     })
 
+    // Enable wasm for shikiji
+    if (options.highlight) {
+      nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
+      nuxt.options.nitro.experimental.wasm = true
+      // Add server handlers
+      addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
+
+      options.rehypePlugins = options.rehypePlugins || {}
+      options.rehypePlugins.highlight = options.rehypePlugins.highlight || {}
+      options.rehypePlugins.highlight.src = options.rehypePlugins.highlight.src || resolver.resolve('./runtime/shiki/index')
+    }
+
     // Add imports template
     const { dst: templatePath } = addTemplate({ filename: 'mdc-imports.mjs', getContents: mdcImportTemplate, options, write: true })
     nuxt.options.alias['#mdc-imports'] = process.env.NODE_ENV === 'development' ? pathToFileURL(templatePath).href : templatePath
@@ -80,14 +92,6 @@ export default defineNuxtModule<ModuleOptions>({
         prefix: '',
         global: true
       })
-    }
-
-    // Enable wasm for shikiji
-    if (options.highlight) {
-      nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
-      nuxt.options.nitro.experimental.wasm = true
-      // Add server handlers
-      addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
     }
 
     extendViteConfig((config) => {

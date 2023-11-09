@@ -7,7 +7,6 @@ import { defu } from 'defu'
 import { useProcessorPlugins } from './utils/plugins'
 import { compileHast } from './compiler'
 import { defaults } from './options'
-import { rehypeShiki } from '../shiki'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 
@@ -23,6 +22,11 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     highlight: moduleOptions?.highlight,
   }, defaults)
 
+  if (options.rehype?.plugins?.highlight) {
+    options.rehype.plugins.highlight.options = options.highlight || {}
+  }
+  
+
   // Extract front matter data
   const { content, data: frontmatter } = await parseFrontMatter(md)
 
@@ -36,10 +40,6 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
 
   // Turns markdown into HTML to support rehype
   processor.use(remark2rehype as any, (options.rehype as any)?.options)
-
-  if (options.highlight) {
-    processor.use(rehypeShiki, options.highlight)
-  }
 
   // Apply custom plguins to extend rehybe capabilities
   await useProcessorPlugins(processor as any, options.rehype?.plugins)
