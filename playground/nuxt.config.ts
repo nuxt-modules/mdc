@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       theme: {
-        default: 'vitesse-light',
+        // default: 'vitesse-light',
         // dark: 'material-theme-palenight',
       },
       // preload: [
