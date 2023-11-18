@@ -81,7 +81,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
 
             // Add newline to end of lines if needed
             if (code?.includes('\n')) {
-              // Add newline for empty lines; If no language is defined: Empty lines are represented by a span containing a span containing an empty text node
+              // Set newline for empty lines
               if (node.children.length === 0 || (
                 node.children.length === 1 && node.children[0].type === 'element' &&
                 node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
@@ -93,8 +93,9 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
                   properties: {
                     emptyLinePlaceholder: true
                   },
-                  children: [{ type: 'text', value: '' }]
+                  children: [{ type: 'text', value: '\n' }]
                 }]
+                return
               }
 
               // Add newline to end of lines
