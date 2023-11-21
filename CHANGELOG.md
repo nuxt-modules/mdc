@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.2.7
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.6...v0.2.7)
+
+### 🩹 Fixes
+
+- **shiki:** Do not add new line to single line codes ([a09c9dc](https://github.com/nuxt-modules/mdc/commit/a09c9dc))
+- **highlight:** Do not include shiki in bundle when highlight is disabled ([7cb2b9d](https://github.com/nuxt-modules/mdc/commit/7cb2b9d))
+- Import nuxt composables from #imports ([#90](https://github.com/nuxt-modules/mdc/pull/90))
+- Update scule to match latest one as nuxt ([47a3659](https://github.com/nuxt-modules/mdc/commit/47a3659))
+
+### ✅ Tests
+
+- Update inline highlighting ([2e7dcdb](https://github.com/nuxt-modules/mdc/commit/2e7dcdb))
+
+### ❤️ Contributors
+
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Daniel Roe <daniel@roe.dev>
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.2.6
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.5...v0.2.6)
