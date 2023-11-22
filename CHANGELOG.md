@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.2.8
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.7...v0.2.8)
+
+### 🩹 Fixes
+
+- **shiki:** Resolve rehype plugin with extension ([5d0f634](https://github.com/nuxt-modules/mdc/commit/5d0f634))
+
+### 🏡 Chore
+
+- Update deps and playground ([8976c1d](https://github.com/nuxt-modules/mdc/commit/8976c1d))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+
 ## v0.2.7
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.6...v0.2.7)
