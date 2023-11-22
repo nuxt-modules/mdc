@@ -8,8 +8,10 @@
       v-slot="{ data, body }"
       :value="md"
     >
-      <article class="p-4">
-        <h1>{{ data?.name }}</h1>
+      <article class="p-4 prose">
+        <h1 v-if="data?.title">
+          {{ data.title }}
+        </h1>
         <MDCRenderer
           :body="body"
           :data="data"
@@ -28,7 +30,7 @@ useDark()
 const key = 'nuxt-mdc-playground-code'
 const md = useLocalStorage(key,
 `---
-name: Sam
+title: Sam
 ---
 
 # Simple

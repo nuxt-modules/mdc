@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   modules: [
-    '@nuxthq/ui',
+    '@nuxt/ui',
     '../src/module'
   ],
   // ssr: false,
