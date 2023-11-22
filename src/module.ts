@@ -67,7 +67,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       options.rehypePlugins = options.rehypePlugins || {}
       options.rehypePlugins.highlight = options.rehypePlugins.highlight || {}
-      options.rehypePlugins.highlight.src = options.rehypePlugins.highlight.src || resolver.resolve('./runtime/shiki/index')
+      options.rehypePlugins.highlight.src = options.rehypePlugins.highlight.src || await resolver.resolvePath('./runtime/shiki/index')
     }
 
     // Add imports template
