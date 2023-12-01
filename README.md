@@ -46,93 +46,42 @@ export default defineNuxtConfig({
 
 That's it! You can start writing and rendering markdown files ✨
 
-## Parsing Markdown
-
-Nuxt MDC exposes a handy helper to parse MDC files. You can import the `parseMarkdown` function from `@nuxtjs/mdc/runtime` and use it to parse markdown files written with MDC syntax.
-
-### Node.js
-
-```ts [/server/api/parse-mdc.ts]
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-
-export default eventHandler(async () => {
-  const mdc = [
-    '# Hello MDC',
-    '',
-    '::alert',
-    'This is an Alert',
-    '::'
-  ].join('\n')
-
-  const ast = await parseMarkdown(mdc)
-
-  return ast
-})
-```
-
-### Browser
-
-The `parseMarkdown` function is a universal helper, and you can also use it in the browser, for example inside a Vue component.
-
-```vue [mdc-test.vue]
-<template>
-  <div>This is a test</div>
-</template>
-
-<script setup lang="ts">
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-
-const props = defineProps({
-  md: {
-    type: String,
-    default: () => '::alert\nMissing markdown input\n::'
-  }
-})
-
-const ast = await parseMarkdown(props.md)
-</script>
-```
-
-### Options
-
-The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts)).
-
-| Name | Default | Description |
-| --  | -- | -- |
-| `remark.plugins` | `{}` | Register / Configure parser's remark plugins. |
-| `rehype.options` | `{}` | Configure `remark-rehype` options.  |
-| `rehype.plugins` | `{}` | Register / Configure parser's rehype plugins. |
-| `highlight` | `false` | Control whether code blocks should highlight or not. You can also provide a custom highlighter.  |
-| `toc.depth` | `2` | Maximum heading depth to include in the table of contents.  |
-| `toc.searchDepth` | `2` | Maximum depth of nested tags to search for heading. |
-
-Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts).
-
-## Rendering (Vue)
+## Rendering
 
 `@nuxtjs/mdc` exposes three components to render markdown files.
+
+### `<MDC>`
+
+Using `<MDC>`, you can parse and render markdown contents right inside your components/pages. This component takes raw markdown, parses it using the `parseMarkdown` function, and then renders it with `<MDCRenderer>`.
+
+```html
+<script setup lang="ts">
+const md = `
+::alert
+Hello MDC
+::
+`
+</script>
+
+<template>
+  <MDC :value="md"  tag="article" />
+</template>
+```
 
 ### `<MDCRenderer>`
 
 This component will take the result of [`parseMarkdown`](#parsing-markdown) function and render the contents. For example, this is an extended version of the sample code in the [Browser section](#browser) which uses `MDCRenderer` to render the parsed markdown.
 
 ```html [mdc-test.vue]
-<template>
-  <MDCRenderer :body="ast.body" :data="ast.data" />
-</template>
-
 <script setup lang="ts">
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
-const props = defineProps({
-  md: {
-    type: String,
-    default: () => '::alert\nMissing markdown input\n::'
-  }
-})
-
-const ast = await parseMarkdown(props.md)
+const ast = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
 </script>
+
+<template>
+  <MDCRenderer :body="ast.body" :data="ast.data" />
+</template>
 ```
 
 ### `<MDCSlot>`
@@ -163,24 +112,6 @@ It is the default behavior of markdown to wrap every text inside a paragraph. MD
     <MDCSlot unwrap="p" />
   </div>
 </template>
-```
-
-### `<MDC>`
-
-Using `<MDC>`, you can parse and render markdown contents right inside your components/pages. This component takes raw markdown, parses it using the `parseMarkdown` function, and then renders it with `<MDCRenderer>`.
-
-```html
-<template>
-  <MDC :value="md"  tag="article" />
-</template>
-
-<script setup lang="ts">
-const md = `
-::alert
-Hello MDC
-::
-`
-</script>
 ```
 
 ### Prose Components
@@ -232,11 +163,67 @@ Here is the list of available prose components:
 | `em` | `<ProseEm>` | [ProseEm.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseEm.vue) | Emphasis |
 | `strong` | `<ProseStrong>` | [ProseStrong.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseStrong.vue) | Strong |
 
+## Parsing Markdown
+
+Nuxt MDC exposes a handy helper to parse MDC files. You can import the `parseMarkdown` function from `@nuxtjs/mdc/runtime` and use it to parse markdown files written with MDC syntax.
+
+### Node.js
+
+```ts
+// server/api/parse-mdc.ts
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+
+export default eventHandler(async () => {
+  const mdc = [
+    '# Hello MDC',
+    '',
+    '::alert',
+    'This is an Alert',
+    '::'
+  ].join('\n')
+
+  const ast = await parseMarkdown(mdc)
+
+  return ast
+})
+```
+
+### Browser
+
+The `parseMarkdown` function is a universal helper, and you can also use it in the browser, for example inside a Vue component.
+
+```vue
+<script setup lang="ts">
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+
+const ast = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
+</script>
+
+<template>
+  <MDCRenderer :body="ast.body" :data="ast.data" />
+</template>
+```
+
+### Options
+
+The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts)).
+
+| Name | Default | Description |
+| --  | -- | -- |
+| `remark.plugins` | `{}` | Register / Configure parser's remark plugins. |
+| `rehype.options` | `{}` | Configure `remark-rehype` options.  |
+| `rehype.plugins` | `{}` | Register / Configure parser's rehype plugins. |
+| `highlight` | `false` | Control whether code blocks should highlight or not. You can also provide a custom highlighter.  |
+| `toc.depth` | `2` | Maximum heading depth to include in the table of contents.  |
+| `toc.searchDepth` | `2` | Maximum depth of nested tags to search for heading. |
+
+Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts).
+
 ## Configurations
 
 You can configure the module by providing the `mdc` property in your `nuxt.config.js`; here are the default options:
 
-```ts [nuxt.config.js]
+```ts
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
