@@ -64,9 +64,11 @@ Hello MDC
 </script>
 
 <template>
-  <MDC :value="md"  tag="article" />
+  <MDC :value="md" tag="article" />
 </template>
 ```
+
+Note that `::alert` will use the `components/global/Alert.vue` component.
 
 ### `<MDCRenderer>`
 
