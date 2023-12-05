@@ -56,7 +56,15 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
       }
 
       if (lang && !highlighter.getLoadedLanguages().includes(lang)) {
-        await highlighter.loadLanguage(lang)
+        try {
+          await highlighter.loadLanguage(lang)
+        } catch (error: any) {
+          if (highlights.length) {
+            console.warn('[@nuxtjs/mdc] Defaulting to no language to be able to highlight lines:', error.message)
+            // @ts-ignore
+            lang = ''
+          } else throw error
+        }
       }
 
       const root = highlighter.codeToHast(code.trimEnd(), {
@@ -73,17 +81,24 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
 
             // Add newline to end of lines if needed
             if (code?.includes('\n')) {
-              // Add newline to end of lines
-              if (node.children.length === 0) {
-                node.children.push({
+              // Set newline for empty lines
+              if (node.children.length === 0 || (
+                node.children.length === 1 && node.children[0].type === 'element' &&
+                node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
+                node.children[0].children[0].value === ''
+              )) {
+                node.children = [{
                   type: 'element',
                   tagName: 'span',
                   properties: {
                     emptyLinePlaceholder: true
                   },
-                  children: [{ type: 'text', value: '' }]
-                })
+                  children: [{ type: 'text', value: '\n' }]
+                }]
+                return
               }
+
+              // Add newline to end of lines
               const last = node.children.at(-1)
               if (last?.type === 'element' && last.tagName === 'span') {
                 const text = last.children.at(-1)
@@ -135,7 +150,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         style: styles.join(''),
       }
     } catch (error: any) {
-      console.warn('[@nuxtjs/mdc] Failed to highlight code block', error.message)
+      console.warn('[@nuxtjs/mdc] Failed to highlight code block:', error.message)
       return {
         tree: [{ type: 'text', value: code }],
         className: '',
