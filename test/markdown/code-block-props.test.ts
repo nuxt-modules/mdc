@@ -26,7 +26,7 @@ it('Code block with Props', async () => {
               {
                 "type": "text",
                 "value": "class C {
-      private name: string = \\"foo\\"
+      private name: string = "foo"
     }
 
     const c = new C()
@@ -45,7 +45,7 @@ it('Code block with Props', async () => {
             "language-ts",
           ],
           "code": "class C {
-      private name: string = \\"foo\\"
+      private name: string = "foo"
     }
 
     const c = new C()
