@@ -57,9 +57,10 @@ export default defineNuxtModule<ModuleOptions>({
 
       viteConfig.optimizeDeps ||= {}
       viteConfig.optimizeDeps.include ||= []
+      const list = viteConfig.optimizeDeps.include
       optimizeList.forEach((pkg) => {
-        if (!viteConfig.optimizeDeps.include.includes(pkg)) {
-          viteConfig.optimizeDeps.include.push(pkg)
+        if (!list.includes(pkg)) {
+          list.push(pkg)
         }
       })
     })
