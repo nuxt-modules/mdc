@@ -53,9 +53,15 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
-      viteConfig.optimizeDeps?.include?.push(
-        'is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw'
-      )
+      const optimizeList = ['is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
+
+      viteConfig.optimizeDeps ||= {}
+      viteConfig.optimizeDeps.include ||= []
+      optimizeList.forEach((pkg) => {
+        if (!viteConfig.optimizeDeps.include.includes(pkg)) {
+          viteConfig.optimizeDeps.include.push(pkg)
+        }
+      })
     })
 
     // Enable wasm for shikiji
