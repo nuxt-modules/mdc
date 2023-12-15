@@ -1,6 +1,43 @@
 # Changelog
 
 
+## v0.2.9
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.8...v0.2.9)
+
+### 🚀 Enhancements
+
+- **highlighter:** Support text/unknown/no language line highlights ([#100](https://github.com/nuxt-modules/mdc/pull/100))
+- Auto import `parseMarkdown` ([5182df2](https://github.com/nuxt-modules/mdc/commit/5182df2))
+
+### 🩹 Fixes
+
+- Only append new entry to `optimizeDeps` on `vite:extendConfig` ([#111](https://github.com/nuxt-modules/mdc/pull/111))
+
+### 📖 Documentation
+
+- Update README.md ([f74d225](https://github.com/nuxt-modules/mdc/commit/f74d225))
+- Improve readme ([d5010b5](https://github.com/nuxt-modules/mdc/commit/d5010b5))
+- Update ([ba4ea56](https://github.com/nuxt-modules/mdc/commit/ba4ea56))
+
+### 🏡 Chore
+
+- Use module-builder stub mode for more accurate types ([#107](https://github.com/nuxt-modules/mdc/pull/107))
+- Update prepack script ([de0b2bf](https://github.com/nuxt-modules/mdc/commit/de0b2bf))
+
+### 🤖 CI
+
+- Fix release job conditional ([#103](https://github.com/nuxt-modules/mdc/pull/103))
+
+### ❤️ Contributors
+
+- Anthony Fu <anthonyfu117@hotmail.com>
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Nobkd 
+- Bobbie Goede <bobbiegoede@gmail.com>
+- Daniel Roe <daniel@roe.dev>
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+
 ## v0.2.8
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.7...v0.2.8)
