@@ -19,6 +19,6 @@ it('Highlighted code block', async () => {
   expect(body).toHaveProperty('type', 'root')
   expect(body.children).toHaveLength(2)
   expect((body.children[0] as any).props?.highlights).toEqual([2,3])
-  expect((body.children[0] as any).children[0].children[1].props).haveOwnProperty('class', 'line highlight')
-  expect((body.children[0] as any).children[0].children[2].props).haveOwnProperty('class', 'line highlight')
+  expect((body.children[0] as any).children[0].children[1].props.class).toEqual(['line', 'highlight'])
+  expect((body.children[0] as any).children[0].children[2].props.class).toEqual(['line', 'highlight'])
 })

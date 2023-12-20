@@ -1,6 +1,5 @@
 import type { Root, Element } from '../types/hast'
 import { visit } from 'unist-util-visit'
-import { addClassToHast } from 'shikiji-core'
 import { toString } from 'hast-util-to-string'
 import type { HighlightResult, Highlighter, Theme } from './types'
 
@@ -59,7 +58,7 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
           (_node.properties!.highlights ?? []) as number[]
         )
           .then(({ tree, className, style, inlineStyle }) => {
-            addClassToHast(_node, className)
+            _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
             _node.properties!.style = ((_node.properties!.style || '') + ' ' + inlineStyle).trim()
 
             if ((_node.children[0] as Element)?.tagName === 'code') {

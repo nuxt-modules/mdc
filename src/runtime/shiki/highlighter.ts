@@ -92,6 +92,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
             line(node, line) {
               if (highlights.includes(line))
                 addClassToHast(node, 'highlight')
+              node.properties.line = line
             }
           },
           {
