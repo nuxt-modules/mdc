@@ -57,6 +57,7 @@ async function main(mdc: string) {
 <style>
 pre {
   padding: 1em 0 !important;
+  --tw-prose-pre-bg: #8881 !important;
 }
 .line {
   display: block;
@@ -64,7 +65,7 @@ pre {
 }
 .line.highlight {
   width: 100%;
-  background-color: #8882 !important;
+  background-color: #8881 !important;
 }
 .line.diff.remove {
   background-color: rgba(194, 58, 58, 0.3) !important;
