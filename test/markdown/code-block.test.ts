@@ -24,7 +24,7 @@ it('Simple code block', async () => {
               {
                 "type": "text",
                 "value": "class C {
-      private name: string = \\"foo\\"
+      private name: string = "foo"
     }
     ",
               },
@@ -41,11 +41,9 @@ it('Simple code block', async () => {
             "language-ts",
           ],
           "code": "class C {
-      private name: string = \\"foo\\"
+      private name: string = "foo"
     }
     ",
-          "filename": undefined,
-          "highlights": undefined,
           "language": "ts",
           "meta": "",
         },

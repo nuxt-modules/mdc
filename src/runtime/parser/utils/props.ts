@@ -21,11 +21,11 @@ export const validateProp = (attribute: string, value: string) => {
   return true
 }
 
-export const validateProps = (props?: Record<string, any>) => {
+export const validateProps = (type: string, props?: Record<string, any>) => {
   if (!props) {
     return {}
   }
-  return Object.fromEntries(
+  props = Object.fromEntries(
     Object.entries(props).filter(([name, value]) => {
       const isValid = validateProp(name, value)
 
@@ -37,4 +37,12 @@ export const validateProps = (props?: Record<string, any>) => {
       return isValid
     })
   )
+
+  if (type === 'pre') {
+    if (typeof props.highlights === 'string') {
+      props.highlights = props.highlights.split(' ').map(i => parseInt(i))
+    }
+  }
+
+  return props
 }

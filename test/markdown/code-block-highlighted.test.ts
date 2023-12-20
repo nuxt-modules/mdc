@@ -144,7 +144,7 @@ it('Highlighted code block', async () => {
                     "children": [
                       {
                         "type": "text",
-                        "value": " \\"foo\\"
+                        "value": " "foo"
     ",
                       },
                     ],
@@ -197,11 +197,9 @@ it('Highlighted code block', async () => {
         "props": {
           "className": "language-ts shiki shiki-themes github-dark",
           "code": "class C {
-      private name: string = \\"foo\\"
+      private name: string = "foo"
     }
     ",
-          "filename": undefined,
-          "highlights": undefined,
           "language": "ts",
           "meta": "",
           "style": "",
