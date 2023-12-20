@@ -45,21 +45,41 @@ import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 async function main(mdc: string) {
   const ast = await parseMarkdown(mdc)
-
   // Do your magic with parsed AST tree
 
-  return ast
+  return ast // [!code ++]
+  return ast // [!code --]
 }
 \`\`\`
 `)
 </script>
 
 <style>
+pre {
+  padding: 1em 0 !important;
+}
 .line {
   display: block;
+  padding: 0 1rem;
 }
 .line.highlight {
   width: 100%;
   background-color: #8882 !important;
+}
+.line.diff.remove {
+  background-color: rgba(194, 58, 58, 0.3) !important;
+}
+.line.diff.add {
+  background-color: rgba(46, 141, 46, 0.3) !important;
+}
+.line.diff.remove::before {
+  content: '-';
+  color: #c23a3a;
+  position: absolute;
+}
+.line.diff.add::before {
+  content: '+';
+  color: #23b73c;
+  position: absolute;
 }
 </style>
