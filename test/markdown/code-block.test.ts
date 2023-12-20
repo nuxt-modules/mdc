@@ -44,8 +44,6 @@ it('Simple code block', async () => {
       private name: string = "foo"
     }
     ",
-          "filename": undefined,
-          "highlights": undefined,
           "language": "ts",
           "meta": "",
         },

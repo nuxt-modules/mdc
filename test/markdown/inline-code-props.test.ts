@@ -11,7 +11,7 @@ it('', async () => {
     expect(body).toHaveProperty('type', 'root')
     expect(body).toHaveProperty('children[0].tag', 'p')
     expect(body).toHaveProperty('children[0].children[0].tag', 'code')
-    expect(body).toHaveProperty('children[0].children[0].props.className', 'class-name-1 class-name-2')
+    expect(body).toHaveProperty('children[0].children[0].props.className', ['class-name-1', 'class-name-2'])
     expect(body).toMatchInlineSnapshot(`
       {
         "children": [
@@ -25,7 +25,10 @@ it('', async () => {
                   },
                 ],
                 "props": {
-                  "className": "class-name-1 class-name-2",
+                  "className": [
+                    "class-name-1",
+                    "class-name-2",
+                  ],
                 },
                 "tag": "code",
                 "type": "element",

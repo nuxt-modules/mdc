@@ -63,7 +63,7 @@ export function compileHast(this: any) {
       return {
         type: 'element',
         tag: node.tagName,
-        props: validateProps(node.properties),
+        props: validateProps(node.tagName, node.properties),
         children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
       }
     }

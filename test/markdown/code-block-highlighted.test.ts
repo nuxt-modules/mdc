@@ -200,8 +200,6 @@ it('Highlighted code block', async () => {
       private name: string = "foo"
     }
     ",
-          "filename": undefined,
-          "highlights": undefined,
           "language": "ts",
           "meta": "",
           "style": "",
