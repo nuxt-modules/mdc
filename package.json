@@ -1,6 +1,6 @@
 {
   "name": "@nuxtjs/mdc",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Nuxt MDC module",
   "repository": "nuxt-modules/mdc",
   "license": "MIT",
@@ -22,8 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxi prepare playground; nuxt-module-build",
-    "build": "nuxi prepare playground; nuxt-module-build build",
+    "prepack": "nuxt-module-build prepare; nuxt-module-build",
+    "build": "nuxt-module-build prepare; nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -81,7 +81,7 @@
     "release-it": "^17.0.1",
     "vitest": "^1.1.0"
   },
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.12.1",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): release v${version}"

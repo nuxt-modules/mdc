@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
@@ -53,9 +53,16 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
-      viteConfig.optimizeDeps?.include?.push(
-        'is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw'
-      )
+      const optimizeList = ['is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
+
+      viteConfig.optimizeDeps ||= {}
+      viteConfig.optimizeDeps.include ||= []
+      const list = viteConfig.optimizeDeps.include
+      optimizeList.forEach((pkg) => {
+        if (!list.includes(pkg)) {
+          list.push(pkg)
+        }
+      })
     })
 
     // Enable wasm for shikiji
@@ -83,6 +90,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add composables
     addImports({ from: resolver.resolve('./runtime/utils/node'), name: 'flatUnwrap', as: 'unwrapSlot' })
+
+    // Add parser
+    addImports({ from: resolver.resolve('./runtime/parser'), name: 'parseMarkdown', as: 'parseMarkdown' })
+    addServerImports([{ from: resolver.resolve('./runtime/parser'), name: 'parseMarkdown', as: 'parseMarkdown' }])
 
     // Register prose components
     if (options.components?.prose) {

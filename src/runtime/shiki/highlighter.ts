@@ -71,7 +71,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         lang,
         themes: themesObject,
         defaultColor: false,
-        transforms: {
+        transformers: [{
           line(node, line) {
             node.properties ||= {}
             if (highlights.includes(line)) {
@@ -108,7 +108,7 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
               }
             }
           },
-        }
+        }]
       })
 
       const preEl = root.children[0] as Element
