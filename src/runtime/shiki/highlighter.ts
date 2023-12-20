@@ -164,7 +164,9 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
 
       return {
         tree: codeEl.children as Element[],
-        className: preEl.properties.class as string,
+        className: Array.isArray(preEl.properties.class)
+          ? preEl.properties.class.join(' ')
+          : preEl.properties.class as string,
         inlineStyle: preEl.properties.style as string,
         style: styles.join(''),
       }
