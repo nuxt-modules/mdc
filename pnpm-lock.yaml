@@ -81,8 +81,8 @@ dependencies:
     specifier: ^1.1.1
     version: 1.1.1
   shikiji:
-    specifier: ^0.9.9
-    version: 0.9.9
+    specifier: ^0.9.10
+    version: 0.9.10
   shikiji-transformers:
     specifier: ^0.9.10
     version: 0.9.10
@@ -9231,10 +9231,6 @@ packages:
     resolution: {integrity: sha512-s+aC66Fh343wpm7VyQTg+htdHM/tUb8R+yxdAdUpCtKkRWbSBIpqQ3xTSNjbCTnGv10xsT164SW0r1VV1N6ToA==}
     dev: false
 
-  /shikiji-core@0.9.9:
-    resolution: {integrity: sha512-qu5Qq7Co6JIMY312J9Ek6WYjXieeyJT/fIqmkcjF4MdnMNlUnhSqPo8/42g5UdPgdyTCwijS7Nhg8DfLSLodkg==}
-    dev: false
-
   /shikiji-transformers@0.9.10:
     resolution: {integrity: sha512-qK/7dudmgdwUHHKrFGTsuSrOrvAj+uKPeyipc+TuDRGtCwSwnviQRW/zI1YFkQdwVjz3s2FM+T2kQ6mvPWZWvQ==}
     dependencies:
@@ -9245,12 +9241,6 @@ packages:
     resolution: {integrity: sha512-tqnoSWWb7NailWJ/72Bgi8Z5O+ul71SJ5EhXbfHprZg67RGwck5eVyv5Uv4pso06ZuzNpUabRTyyFKHN/Ea9Mw==}
     dependencies:
       shikiji-core: 0.9.10
-    dev: false
-
-  /shikiji@0.9.9:
-    resolution: {integrity: sha512-/S3unr/0mZTstNOuAmNDEufeimtqeQb8lXvPMLsYfDvqyfmG6334bO2xmDzD0kfxH2y8gnFgSWAJpdEzksmYXg==}
-    dependencies:
-      shikiji-core: 0.9.9
     dev: false
 
   /side-channel@1.0.4:
