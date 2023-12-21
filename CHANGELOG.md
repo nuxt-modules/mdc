@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.9...v0.3.0)
+
+### 🚀 Enhancements
+
+- Syntax highlighter support notations ([#117](https://github.com/nuxt-modules/mdc/pull/117))
+
+### 🩹 Fixes
+
+- **shiki:** Remove deprecated transforms ([63076df](https://github.com/nuxt-modules/mdc/commit/63076df))
+
+### ❤️ Contributors
+
+- Anthony Fu <anthonyfu117@hotmail.com>
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.2.9
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.8...v0.2.9)
