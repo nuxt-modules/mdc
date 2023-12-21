@@ -1,6 +1,13 @@
-import { getHighlighter, type ThemeInput, type Highlighter, type BuiltinLanguage, type BuiltinTheme } from 'shikiji'
+import { getHighlighter, addClassToHast } from 'shikiji'
 import type { HighlightResult, HighlighterOptions, Theme } from './types'
 import type { Element } from '../types/hast'
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from 'shikiji-transformers'
+import type { ShikijiTransformer, ThemeInput, Highlighter, BuiltinLanguage, BuiltinTheme } from 'shikiji'
 
 export const useShikiHighlighter = createSingleton((opts?: any) => {
   // Grab highlighter config from publicRuntimeConfig
@@ -43,6 +50,13 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
     return promise
   }
 
+  const transformers: ShikijiTransformer[] = [
+    transformerNotationDiff(),
+    transformerNotationFocus(),
+    transformerNotationHighlight(),
+    transformerNotationErrorLevel(),
+  ]
+
   const getHighlightedAST = async (code: string, lang: BuiltinLanguage, theme: Theme, opts?: Partial<HighlighterOptions>): Promise<HighlightResult> => {
     try {
       const highlighter = await getShikiHighlighter()
@@ -71,44 +85,49 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         lang,
         themes: themesObject,
         defaultColor: false,
-        transformers: [{
-          line(node, line) {
-            node.properties ||= {}
-            if (highlights.includes(line)) {
-              node.properties.class = (node.properties.class || '') + ' highlight'
-            }
-            node.properties.line = line
-
-            // Add newline to end of lines if needed
-            if (code?.includes('\n')) {
-              // Set newline for empty lines
-              if (node.children.length === 0 || (
-                node.children.length === 1 && node.children[0].type === 'element' &&
-                node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
-                node.children[0].children[0].value === ''
-              )) {
-                node.children = [{
-                  type: 'element',
-                  tagName: 'span',
-                  properties: {
-                    emptyLinePlaceholder: true
-                  },
-                  children: [{ type: 'text', value: '\n' }]
-                }]
-                return
-              }
-
-              // Add newline to end of lines
-              const last = node.children.at(-1)
-              if (last?.type === 'element' && last.tagName === 'span') {
-                const text = last.children.at(-1)
-
-                if (text?.type === 'text')
-                  text.value += '\n'
-              }
+        transformers: [
+          ...transformers,
+          {
+            name: 'mdc:highlight',
+            line(node, line) {
+              if (highlights.includes(line))
+                addClassToHast(node, 'highlight')
+              node.properties.line = line
             }
           },
-        }]
+          {
+            name: 'mdc:newline',
+            line(node) {
+              // Add newline to end of lines if needed
+              if (code?.includes('\n')) {
+                // Set newline for empty lines
+                if (node.children.length === 0 || (
+                  node.children.length === 1 && node.children[0].type === 'element' &&
+                  node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
+                  node.children[0].children[0].value === ''
+                )) {
+                  node.children = [{
+                    type: 'element',
+                    tagName: 'span',
+                    properties: {
+                      emptyLinePlaceholder: true
+                    },
+                    children: [{ type: 'text', value: '\n' }]
+                  }]
+                  return
+                }
+
+                // Add newline to end of lines
+                const last = node.children.at(-1)
+                if (last?.type === 'element' && last.tagName === 'span') {
+                  const text = last.children.at(-1)
+
+                  if (text?.type === 'text')
+                    text.value += '\n'
+                }
+              }
+            },
+          }]
       })
 
       const preEl = root.children[0] as Element
@@ -145,8 +164,10 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
 
       return {
         tree: codeEl.children as Element[],
-        className: preEl.properties.class as string,
-        inlineStyle: preEl.properties.style  as string,
+        className: Array.isArray(preEl.properties.class)
+          ? preEl.properties.class.join(' ')
+          : preEl.properties.class as string,
+        inlineStyle: preEl.properties.style as string,
         style: styles.join(''),
       }
     } catch (error: any) {

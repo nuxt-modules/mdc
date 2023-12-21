@@ -6,7 +6,7 @@ import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(async () => {
   const { highlight } = useRuntimeConfig().mdc
-  
+
   try {
     // try loading `.wasm` directly, for cloudflare workers
     // @ts-expect-error
