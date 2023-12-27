@@ -28,9 +28,7 @@ import { useDark, useLocalStorage } from '@vueuse/core'
 
 useDark()
 
-const key = 'nuxt-mdc-playground-code'
-const md = useLocalStorage(key,
-`---
+const sample = `---
 title: Sam
 ---
 
@@ -57,9 +55,15 @@ async function main(mdc: string) {
 import { ref } from '@vue/reactivity'
 
 const count = ref(0)
-//            ^?
+//       ^?
 \`\`\`
-`)
+`
+
+const key = 'nuxt-mdc-playground-code'
+const md = useLocalStorage(key, sample)
+
+if (!md.value)
+  md.value = sample
 </script>
 
 <style>
