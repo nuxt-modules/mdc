@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import 'shikiji-twoslash/style-rich.css'
 import { useDark, useLocalStorage } from '@vueuse/core'
 
 useDark()
@@ -50,6 +51,13 @@ async function main(mdc: string) {
   return ast // [!code ++]
   return ast // [!code --]
 }
+\`\`\`
+
+\`\`\`ts twoslash
+import { ref } from '@vue/reactivity'
+
+const count = ref(0)
+//            ^?
 \`\`\`
 `)
 </script>

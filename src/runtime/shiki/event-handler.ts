@@ -1,6 +1,6 @@
 import type { BuiltinLanguage, BuiltinTheme } from 'shikiji'
 import { loadWasm } from 'shikiji'
-import { eventHandler, getQuery, lazyEventHandler } from 'h3'
+import { getQuery, lazyEventHandler, eventHandler } from 'h3'
 import { useShikiHighlighter } from './highlighter'
 import { useRuntimeConfig } from '#imports'
 
@@ -21,10 +21,18 @@ export default lazyEventHandler(async () => {
   const shiki = useShikiHighlighter(highlight)
 
   return eventHandler(async (event) => {
-    const { code, lang, theme: themeString, highlights: highlightsString } = getQuery(event)
+    const { code, lang, theme: themeString, highlights: highlightsString, twoslash } = getQuery(event)
     const theme = JSON.parse(themeString as string)
     const highlights = highlightsString ? JSON.parse(highlightsString as string) as number[] : undefined
 
-    return await shiki.getHighlightedAST(code as string, lang as BuiltinLanguage, theme as BuiltinTheme, { highlights })
+    return await shiki.getHighlightedAST(
+      code as string,
+      lang as BuiltinLanguage,
+      theme as BuiltinTheme,
+      {
+        highlights,
+        twoslash: !!twoslash && twoslash !== 'false'
+      }
+    )
   })
 })

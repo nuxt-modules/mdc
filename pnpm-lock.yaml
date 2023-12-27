@@ -81,11 +81,17 @@ dependencies:
     specifier: ^1.1.1
     version: 1.1.1
   shikiji:
-    specifier: ^0.9.10
-    version: 0.9.10
+    specifier: ^0.9.12
+    version: 0.9.12
   shikiji-transformers:
-    specifier: ^0.9.10
-    version: 0.9.10
+    specifier: ^0.9.12
+    version: 0.9.12
+  shikiji-twoslash:
+    specifier: ^0.9.12
+    version: 0.9.12(typescript@5.3.3)
+  twoslash-cdn:
+    specifier: ^0.0.2
+    version: 0.0.2
   ufo:
     specifier: ^1.3.2
     version: 1.3.2
@@ -2474,6 +2480,13 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
+  /@types/lz-string@1.5.0:
+    resolution: {integrity: sha512-s84fKOrzqqNCAPljhVyC5TjAo6BH4jKHw9NRNFNiRUY5QSgZCmVm5XILlWbisiKl+0OcS7eWihmKGS5akc2iQw==}
+    deprecated: This is a stub types definition. lz-string provides its own type definitions, so you do not need this installed.
+    dependencies:
+      lz-string: 1.5.0
+    dev: false
+
   /@types/mdast@4.0.3:
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
     dependencies:
@@ -2642,6 +2655,36 @@ packages:
       '@typescript-eslint/types': 6.15.0
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@typescript/ata@0.9.4(typescript@5.3.3):
+    resolution: {integrity: sha512-PaJ16WouPV/SaA+c0tnOKIqYq24+m93ipl/e0Dkxuianer+ibc5b0/6ZgfCFF8J7QEp57dySMSP9nWOFaCfJnw==}
+    peerDependencies:
+      typescript: ^4.4.4
+    dependencies:
+      typescript: 5.3.3
+    dev: false
+
+  /@typescript/twoslash@3.2.4(typescript@5.3.3):
+    resolution: {integrity: sha512-/TCIOuPQaKltzUUT1qJo6mplYwjbAxkaSFvkeZD3FeFt3Ovt+HJi8xisu8rcLyDRmM3VJ0+jAx+AAICwn4Zlhw==}
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@types/lz-string': 1.5.0
+      '@typescript/vfs': 1.5.0
+      debug: 4.3.4
+      lz-string: 1.5.0
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@typescript/vfs@1.5.0:
+    resolution: {integrity: sha512-AJS307bPgbsZZ9ggCT3wwpg3VbTKMFNHfaY/uF0ahSkYYrPF2dSSKDNIDIQAHm9qJqbLvCsSJH7yN4Vs/CsMMg==}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -6483,6 +6526,11 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
+    dev: false
+
   /macos-release@3.2.0:
     resolution: {integrity: sha512-fSErXALFNsnowREYZ49XCdOHF8wOPWuFOGQrAhP7x5J/BqQv+B02cNsTykGpDgRVx43EKg++6ANmTaGTtW+hUA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -9227,20 +9275,30 @@ packages:
       rechoir: 0.6.2
     dev: true
 
-  /shikiji-core@0.9.10:
-    resolution: {integrity: sha512-s+aC66Fh343wpm7VyQTg+htdHM/tUb8R+yxdAdUpCtKkRWbSBIpqQ3xTSNjbCTnGv10xsT164SW0r1VV1N6ToA==}
+  /shikiji-core@0.9.12:
+    resolution: {integrity: sha512-AYsAtsbZuq0FPT3mdskNMa+yxD5VwXrFC2sH7R2ELmncVGNYvSzR6Zlfq8iEzINq7/kKL5prtt81UFzFWTTbxQ==}
     dev: false
 
-  /shikiji-transformers@0.9.10:
-    resolution: {integrity: sha512-qK/7dudmgdwUHHKrFGTsuSrOrvAj+uKPeyipc+TuDRGtCwSwnviQRW/zI1YFkQdwVjz3s2FM+T2kQ6mvPWZWvQ==}
+  /shikiji-transformers@0.9.12:
+    resolution: {integrity: sha512-ge+47j4MLTbKAnTnhTTolD9DKGW2Fhp80MV7Tb2E+p4HsJixu4slq2SDV/eFR34iH/egtyi/cjGMD8vJbNLBUA==}
     dependencies:
-      shikiji: 0.9.10
+      shikiji: 0.9.12
     dev: false
 
-  /shikiji@0.9.10:
-    resolution: {integrity: sha512-tqnoSWWb7NailWJ/72Bgi8Z5O+ul71SJ5EhXbfHprZg67RGwck5eVyv5Uv4pso06ZuzNpUabRTyyFKHN/Ea9Mw==}
+  /shikiji-twoslash@0.9.12(typescript@5.3.3):
+    resolution: {integrity: sha512-KeTK4cAsDH9NE+gG2iFgVShpz19RgzbBC+Cy0WMmUM3ivqciqhlQ/6QeskBVF7SZeopQq6xF5iIyTEPDqtZ8/w==}
     dependencies:
-      shikiji-core: 0.9.10
+      '@typescript/twoslash': 3.2.4(typescript@5.3.3)
+      shikiji-core: 0.9.12
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: false
+
+  /shikiji@0.9.12:
+    resolution: {integrity: sha512-jYbulSGcPKYKu2uFZOSg4lgrF7s9s8/ITFzRvczE6633wypMjnnTcRnG/mCFe6v1Dbov7bRCMsXVINBUD2FV9w==}
+    dependencies:
+      shikiji-core: 0.9.12
     dev: false
 
   /side-channel@1.0.4:
@@ -9850,6 +9908,23 @@ packages:
       - supports-color
     dev: true
 
+  /twoslash-cdn@0.0.2:
+    resolution: {integrity: sha512-2dbt0tXS24tfqr5KSvtfABPA8RbS7i2ygK3zZf1DTeSmznDj1w5V/AxGSZU69sLalcgg/ubxes0/QbB00ViCdw==}
+    peerDependencies:
+      unstorage: ^1.10.1
+    peerDependenciesMeta:
+      unstorage:
+        optional: true
+    dependencies:
+      '@typescript/ata': 0.9.4(typescript@5.3.3)
+      '@typescript/twoslash': 3.2.4(typescript@5.3.3)
+      '@typescript/vfs': 1.5.0
+      lz-string: 1.5.0
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -9943,7 +10018,6 @@ packages:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /ufo@1.3.2:
     resolution: {integrity: sha512-o+ORpgGwaYQXgqGDwd+hkS4PuZ3QnmqMMxRuajK/a38L6fTpcE5GPIfrf+L/KemFzfUpeUQc1rRS1iDBozvnFA==}

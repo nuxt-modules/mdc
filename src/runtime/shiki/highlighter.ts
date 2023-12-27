@@ -86,6 +86,11 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         themes: themesObject,
         defaultColor: false,
         transformers: [
+          ...opts?.twoslash ? [
+            await import('./twoslash')
+              .then(r => r.prepare(code))
+              .then(r => r.transformer)
+          ] : [],
           ...transformers,
           {
             name: 'mdc:highlight',
@@ -127,7 +132,8 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
                 }
               }
             },
-          }]
+          },
+        ]
       })
 
       const preEl = root.children[0] as Element

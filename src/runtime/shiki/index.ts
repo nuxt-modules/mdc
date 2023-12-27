@@ -13,10 +13,18 @@ const defaults: RehypeShikiOption = {
     default: 'github-light',
     dark: 'github-dark'
   },
-  async highlighter (code, lang, theme, highlights) {
+  async highlighter(code, lang, theme, highlights, meta) {
     if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
       return import('./highlighter').then(({ useShikiHighlighter }) => {
-        return useShikiHighlighter().getHighlightedAST(code, lang as any, theme, { highlights })
+        return useShikiHighlighter().getHighlightedAST(
+          code,
+          lang as any,
+          theme,
+          {
+            highlights,
+            twoslash: meta?.includes('twoslash')
+          }
+        )
       })
     }
 
@@ -26,13 +34,14 @@ const defaults: RehypeShikiOption = {
           code,
           lang,
           theme: JSON.stringify(theme),
-          highlights: JSON.stringify(highlights)
+          highlights: JSON.stringify(highlights),
+          twoslash: meta?.includes('twoslash')
         }
       })
     } catch (e: any) {
       if (process.browser && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
-        return this.highlighter?.(code, lang, theme, highlights)!
+        return this.highlighter?.(code, lang, theme, highlights, meta)!
       }
     }
 
@@ -55,7 +64,8 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
           toString(node as any),
           _node.properties!.language as string,
           options.theme!,
-          (_node.properties!.highlights ?? []) as number[]
+          (_node.properties!.highlights ?? []) as number[],
+          _node.properties.meta as string
         )
           .then(({ tree, className, style, inlineStyle }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
