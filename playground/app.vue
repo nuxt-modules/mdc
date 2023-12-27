@@ -67,6 +67,9 @@ pre {
   padding: 1em 0 !important;
   --tw-prose-pre-bg: #8881 !important;
 }
+.twoslash {
+  --twoslash-popup-bg: #222 !important;
+}
 .line {
   display: block;
   padding: 0 1rem;
