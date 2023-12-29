@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
 import fs from 'fs'
 import { mdcImportTemplate } from './utils/templates'
 import type { ModuleOptions } from './types'
@@ -65,10 +65,24 @@ export default defineNuxtModule<ModuleOptions>({
       })
     })
 
-    // Enable wasm for shikiji
     if (options.highlight) {
-      nuxt.options.nitro.experimental = nuxt.options.nitro.experimental || {}
-      nuxt.options.nitro.experimental.wasm = true
+      // Enable unwasm for shikiji
+      nuxt.hook('ready', () => {
+        const nitro = useNitro()
+        if (!nitro.options.experimental.wasm) {
+          nitro.options.externals = nitro.options.externals || {}
+          nitro.options.externals.inline = nitro.options.externals.inline || []
+          nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
+          nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
+            const { rollup: unwasm } = await import('unwasm/plugin')
+            rollupConfig.plugins = rollupConfig.plugins || []
+            ;(rollupConfig.plugins as any[]).push(unwasm({
+              ...nitro.options.wasm as any,
+            }))
+          })
+        }
+      })
+
       // Add server handlers
       addServerHandler({ route: '/api/_mdc/highlight', handler: resolver.resolve('./runtime/shiki/event-handler') })
 
