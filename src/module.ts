@@ -69,7 +69,7 @@ export default defineNuxtModule<ModuleOptions>({
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
         const nitro = useNitro()
-        if (!nitro.options.experimental.wasm) {
+        if (!nitro.options.experimental?.wasm) {
           nitro.options.externals = nitro.options.externals || {}
           nitro.options.externals.inline = nitro.options.externals.inline || []
           nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
