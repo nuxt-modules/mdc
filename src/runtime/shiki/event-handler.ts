@@ -7,16 +7,11 @@ import { useRuntimeConfig } from '#imports'
 export default lazyEventHandler(async () => {
   const { highlight } = useRuntimeConfig().mdc
 
-  try {
-    // try loading `.wasm` directly, for cloudflare workers
-    // @ts-expect-error
-    const wasm = await import('shikiji/onig.wasm').then(r => r.default)
-    await loadWasm(async obj => WebAssembly.instantiate(wasm, obj))
-  }
-  catch {
-    // otherwise fallback to base64 inlined wasm
-    await loadWasm({ data: await import('shikiji/wasm').then(r => r.getWasmInlined()).then(r => r.data) })
-  }
+  await loadWasm((imports) =>
+    import('shikiji/onig.wasm' as string)
+      .then((mod: any) => mod.default(imports))
+      .then((exports) => ({ exports }))
+  )
 
   const shiki = useShikiHighlighter(highlight)
 
