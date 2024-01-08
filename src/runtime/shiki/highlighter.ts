@@ -86,6 +86,11 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
         themes: themesObject,
         defaultColor: false,
         transformers: [
+          ...opts?.twoslash ? [
+            await import('./twoslash')
+              .then(r => r.prepare(code))
+              .then(r => r.transformer)
+          ] : [],
           ...transformers,
           {
             name: 'mdc:highlight',
@@ -127,7 +132,8 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
                 }
               }
             },
-          }]
+          },
+        ]
       })
 
       const preEl = root.children[0] as Element
@@ -144,17 +150,23 @@ export const useShikiHighlighter = createSingleton((opts?: any) => {
             wrapperStyle ? `${colorScheme} .shiki,` : '',
             `html .${color} .shiki span {`,
             `color: var(--shiki-${color});`,
-            `background: var(--shiki-${color}-bg);`,
             `font-style: var(--shiki-${color}-font-style);`,
             `font-weight: var(--shiki-${color}-font-weight);`,
             `text-decoration: var(--shiki-${color}-text-decoration);`,
             '}'
           )
 
+          if (wrapperStyle) {
+            styles.push(
+              `${colorScheme} .shiki {`,
+              `background: var(--shiki-${color}-bg);`,
+              '}'
+            )
+          }
+
           styles.unshift(
             `html${colorScheme} .shiki span {`,
             `color: var(--shiki-${color});`,
-            `background: var(--shiki-${color}-bg);`,
             `font-style: var(--shiki-${color}-font-style);`,
             `font-weight: var(--shiki-${color}-font-weight);`,
             `text-decoration: var(--shiki-${color}-text-decoration);`,

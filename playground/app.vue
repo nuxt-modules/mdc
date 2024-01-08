@@ -23,13 +23,12 @@
 </template>
 
 <script setup>
+import 'shikiji-twoslash/style-rich.css'
 import { useDark, useLocalStorage } from '@vueuse/core'
 
 useDark()
 
-const key = 'nuxt-mdc-playground-code'
-const md = useLocalStorage(key,
-`---
+const sample = `---
 title: Sam
 ---
 
@@ -51,13 +50,29 @@ async function main(mdc: string) {
   return ast // [!code --]
 }
 \`\`\`
-`)
+
+\`\`\`ts twoslash
+import { ref } from '@vue/reactivity'
+
+const count = ref(0)
+//       ^?
+\`\`\`
+`
+
+const key = 'nuxt-mdc-playground-code'
+const md = useLocalStorage(key, sample)
+
+if (!md.value)
+  md.value = sample
 </script>
 
 <style>
 pre {
   padding: 1em 0 !important;
   --tw-prose-pre-bg: #8881 !important;
+}
+.twoslash {
+  --twoslash-popup-bg: #222 !important;
 }
 .line {
   display: block;

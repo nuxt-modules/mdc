@@ -5,6 +5,7 @@ export type Theme = BuiltinTheme | Record<string, BuiltinTheme>
 
 export interface HighlighterOptions {
   highlights: number[]
+  twoslash?: boolean
 }
 
 export interface HighlightResult {
@@ -14,4 +15,4 @@ export interface HighlightResult {
   inlineStyle: string,
 }
 
-export type Highlighter = (code: string, lang: string, theme: Theme, highlights: number[]) => Promise<HighlightResult>
+export type Highlighter = (code: string, lang: string, theme: Theme, highlights: number[], meta?: string) => Promise<HighlightResult>
