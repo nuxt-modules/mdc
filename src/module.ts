@@ -53,7 +53,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     nuxt.hook('vite:extendConfig', (viteConfig) => {
-      const optimizeList = ['is-buffer', 'debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
+      const optimizeList = ['debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
 
       viteConfig.optimizeDeps ||= {}
       viteConfig.optimizeDeps.include ||= []
