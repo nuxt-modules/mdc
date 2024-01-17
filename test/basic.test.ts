@@ -5,6 +5,7 @@ import { setup, $fetch } from '@nuxt/test-utils'
 describe('ssr', async () => {
   await setup({
     rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url)),
+    server: true
   })
 
   it('render vue component from component-map', async () => {
