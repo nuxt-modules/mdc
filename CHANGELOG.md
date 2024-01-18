@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.3.0...v0.3.1)
+
+### 🚀 Enhancements
+
+- Enable wasm with unwasm for highlighter ([#122](https://github.com/nuxt-modules/mdc/pull/122))
+
+### 🩹 Fixes
+
+- Remove `is-buffer` from optimize deps ([#123](https://github.com/nuxt-modules/mdc/pull/123))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.3.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.2.9...v0.3.0)
