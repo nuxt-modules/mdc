@@ -1,5 +1,5 @@
 import type { Options as RehypeOption } from 'remark-rehype'
-import type { Theme, Highlighter } from '../shiki/types'
+import type { MdcThemeOptions, Highlighter } from '../highlighter/types'
 
 export interface RemarkPlugin {
   instance?: any
@@ -22,7 +22,7 @@ export interface MDCParseOptions {
   }
 
   highlight?: {
-    theme?: Theme
+    theme?: MdcThemeOptions
     highlighter?: Highlighter
   } | false
 

@@ -9,31 +9,40 @@ import { compileHast } from './compiler'
 import { defaults } from './options'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
+import { getMdcConfigs } from '#mdc-configs'
 
-let moduleOptions: any
+// TODO: maybe cache the processors in a way
+
+let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
+  const configs = await getMdcConfigs()
   if (!moduleOptions) {
-    // @ts-ignore
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
   const options = defu(opts, {
     remark: { plugins: moduleOptions?.remarkPlugins },
     rehype: { plugins: moduleOptions?.rehypePlugins },
     highlight: moduleOptions?.highlight,
-  }, defaults)
+  }, defaults) as MDCParseOptions
 
   if (options.rehype?.plugins?.highlight) {
     options.rehype.plugins.highlight.options = options.highlight || {}
   }
-  
 
-  // Extract front matter data
-  const { content, data: frontmatter } = await parseFrontMatter(md)
+  let processor = unified()
 
-  const processor = unified()
+  // mdc.config.ts hooks
+  for (const config of configs) {
+    processor = await config.unified?.pre?.(processor) || processor
+  }
 
   // Use `remark-parse` plugin to parse markdown input
   processor.use(remarkParse as any)
+
+  // mdc.config.ts hooks
+  for (const config of configs) {
+    processor = await config.unified?.remark?.(processor) || processor
+  }
 
   // Apply custom plugins to extend remark capabilities
   await useProcessorPlugins(processor as any, options.remark?.plugins)
@@ -41,11 +50,24 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   // Turns markdown into HTML to support rehype
   processor.use(remark2rehype as any, (options.rehype as any)?.options)
 
-  // Apply custom plguins to extend rehybe capabilities
+  // mdc.config.ts hooks
+  for (const config of configs) {
+    processor = await config.unified?.rehype?.(processor) || processor
+  }
+
+  // Apply custom plugins to extend rehype capabilities
   await useProcessorPlugins(processor as any, options.rehype?.plugins)
 
   // Apply compiler
   processor.use(compileHast)
+
+  // mdc.config.ts hooks
+  for (const config of configs) {
+    processor = await config.unified?.post?.(processor) || processor
+  }
+
+  // Extract front matter data
+  const { content, data: frontmatter } = await parseFrontMatter(md)
 
   // Start processing stream
   const processedFile = await processor.process({ value: content, data: frontmatter })

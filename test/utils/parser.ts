@@ -1,7 +1,7 @@
 import { vi } from 'vitest'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import type { MDCParseOptions } from '../../src/runtime/types'
-import type { Theme } from '../../src/runtime/shiki/types'
+import type { MdcThemeOptions } from '../../src/runtime/highlighter/types'
 import { useShikiHighlighter } from '../../src/runtime/shiki/highlighter'
 import rehypeShiki from '../../src/runtime/shiki'
 
@@ -18,9 +18,9 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
     options.highlight = options.highlight || {}
     options.highlight.theme = options.highlight.theme || 'github-light'
 
-    options.highlight.highlighter = async (code: string, lang: string, theme: Theme, highlights) => {
+    options.highlight.highlighter = async (code: string, lang: string, theme: MdcThemeOptions, highlights) => {
       const shikiHighlighter = useShikiHighlighter({})
-      return await shikiHighlighter.getHighlightedAST(code as string, lang as any, theme as Theme, { highlights })
+      return await shikiHighlighter.getHighlightedAST(code as string, lang as any, theme as MdcThemeOptions, { highlights })
     }
     options.rehype = options.rehype || {}
     options.rehype.plugins = options.rehype?.plugins || {}

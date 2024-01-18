@@ -36,7 +36,68 @@ export const mdcImportTemplate = async ({ nuxt, options }: any) => {
   ].join('\n')
 }
 
-function processUnistPlugins (plugins: Record<string, UnistPlugin>) {
+export const mdcConfigsTemplate = async ({ options }: any) => {
+  return [
+    'let configs',
+    'export function getMdcConfigs () {',
+    'if (!configs) {',
+    '  configs = Promise.all([',
+    ...options.configs.map((item: string) => `    import('${item}').then(m => m.default),`),
+    '  ])',
+    '}',
+    'return configs',
+    '}'
+  ].join('\n')
+}
+
+export const mdcHighlighterTemplate = async ({ options: { highlighter, shikiPath } }: any) => {
+  if (!highlighter)
+    return 'export default () => { throw new Error(\'[@nuxtjs/mdc] No highlighter specified\') }'
+
+  if (highlighter === 'shiki') {
+    return [
+      'import { langs, themes, options } from \'#mdc-shiki-bundle\'',
+      'import { getMdcConfig } from \'#mdc-configs\'',
+      `import { createShikiHighlighter } from ${JSON.stringify(shikiPath)}`,
+      'export default createShikiHighlighter({ langs, themes, options, getMdcConfigs: getMdcConfig })'
+    ].join('\n')
+  }
+
+  if (highlighter === 'custom') {
+    return [
+      'import { getMdcConfigs } from \'#mdc-configs\'',
+      `export default function (...args) {
+        '  const configs = await getMdcConfigs()`,
+      '  for (const config of configs) {',
+      '    if (config.highlighter) {',
+      '      return config.highlighter(...args)',
+      '    }',
+      '  }',
+      '  throw new Error(\'[@nuxtjs/mdc] No custom highlighter specified\')',
+      '}'
+    ].join('\n')
+  }
+
+  throw new Error(`[@nuxtjs/mdc] Unknown highlighter: ${highlighter}`)
+}
+
+
+
+export const mdcShikijiBundle = async ({ options: { themes, langs, options } }: any) => {
+
+  return [
+    'export const langs = [',
+    ...langs.map((lang: string) => `  import('shikiji/langs/${lang}.mjs'),`),
+    ']',
+    'export const themes = [',
+    ...themes.map((theme: string) => `  import('shikiji/themes/${theme}'),`),
+    ']',
+    'export const options = ' + JSON.stringify(options || '{}'),
+  ].join('\n')
+}
+
+
+function processUnistPlugins(plugins: Record<string, UnistPlugin>) {
   const imports: string[] = []
   const definitions: string[] = []
   Object.entries(plugins).forEach(([name, plugin]) => {
