@@ -56,10 +56,8 @@ export const mdcHighlighterTemplate = async ({ options: { highlighter, shikiPath
 
   if (highlighter === 'shiki') {
     return [
-      'import { langs, themes, options } from \'#mdc-shiki-bundle\'',
-      'import { getMdcConfig } from \'#mdc-configs\'',
-      `import { createShikiHighlighter } from ${JSON.stringify(shikiPath)}`,
-      'export default createShikiHighlighter({ langs, themes, options, getMdcConfigs: getMdcConfig })'
+      'import { highlighter } from ' + JSON.stringify(shikiPath),
+      'export default highlighter'
     ].join('\n')
   }
 

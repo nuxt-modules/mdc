@@ -1,5 +1,5 @@
 import { getHighlighterCore, addClassToHast } from 'shikiji/core'
-import type { HighlighterCore, LanguageInput, ShikijiTransformer, ThemeInput } from 'shikiji'
+import type { HighlighterCore, ShikijiTransformer } from 'shikiji'
 import type { Highlighter } from './types'
 import type { Element } from 'hast'
 import {
@@ -8,154 +8,139 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
 } from 'shikiji-transformers'
-import type { MdcConfig } from '../../config'
+import { langs, themes, options as shikiOptions } from '#mdc-shiki-bundle'
+import { getMdcConfigs } from '#mdc-configs'
 
-export function createShikiHighlighter({
-  langs,
-  themes,
-  options: shikiOptions,
-  getMdcConfigs,
-}: {
-  langs: LanguageInput[],
-  themes: ThemeInput[],
-  options: {
-    wrapperStyle?: string | boolean
-  }
-  getMdcConfigs: () => Promise<MdcConfig[]>,
-}) {
+async function _getShiki() {
+  const shiki = await getHighlighterCore({
+    langs,
+    themes,
+    loadWasm: (imports) => import('shikiji/onig.wasm' as string)
+      .then((mod: any) => mod.default(imports))
+      .then((exports) => ({ exports }))
+  })
 
-  async function _getShiki() {
-    const shiki = await getHighlighterCore({
-      langs,
-      themes,
-      loadWasm: (imports) => import('shikiji/onig.wasm' as string)
-        .then((mod: any) => mod.default(imports))
-        .then((exports) => ({ exports }))
-    })
-
-    const configs = await getMdcConfigs()
-    for (const config of configs) {
-      await config.shikiji?.setup?.(shiki)
-    }
-
-    return shiki
+  const configs = await getMdcConfigs()
+  for (const config of configs) {
+    await config.shikiji?.setup?.(shiki)
   }
 
-  let shiki: Promise<HighlighterCore> | undefined
+  return shiki
+}
 
-  async function getShiki() {
-    if (!shiki) {
-      shiki = _getShiki()
-    }
-    return shiki
+let shiki: Promise<HighlighterCore> | undefined
+
+async function getShiki() {
+  if (!shiki) {
+    shiki = _getShiki()
+  }
+  return shiki
+}
+
+export const highlighter: Highlighter = async (code, lang, theme, options) => {
+  const shiki = await getShiki()
+
+  const transformers: ShikijiTransformer[] = [
+    transformerNotationDiff(),
+    transformerNotationFocus(),
+    transformerNotationHighlight(),
+    transformerNotationErrorLevel(),
+  ]
+
+  for (const config of await getMdcConfigs()) {
+    transformers.push(...(config.shikiji?.transformers || []))
   }
 
-  const highlighter: Highlighter = async (code, lang, theme, options) => {
-    const shiki = await getShiki()
+  const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
 
-    const transformers: ShikijiTransformer[] = [
-      transformerNotationDiff(),
-      transformerNotationFocus(),
-      transformerNotationHighlight(),
-      transformerNotationErrorLevel(),
-    ]
+  const root = shiki.codeToHast(code.trimEnd(), {
+    lang,
+    themes: themesObject,
+    defaultColor: false,
+    transformers: [
+      ...transformers,
+      {
+        name: 'mdc:highlight',
+        line(node, line) {
+          if (options.highlights?.includes(line))
+            addClassToHast(node, 'highlight')
+          node.properties.line = line
+        }
+      },
+      {
+        name: 'mdc:newline',
+        line(node) {
+          // Add newline to end of lines if needed
+          if (code?.includes('\n')) {
+            // Set newline for empty lines
+            if (node.children.length === 0 || (
+              node.children.length === 1 && node.children[0].type === 'element' &&
+              node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
+              node.children[0].children[0].value === ''
+            )) {
+              node.children = [{
+                type: 'element',
+                tagName: 'span',
+                properties: {
+                  emptyLinePlaceholder: true
+                },
+                children: [{ type: 'text', value: '\n' }]
+              }]
+              return
+            }
 
-    for (const config of await getMdcConfigs()) {
-      transformers.push(...(config.shikiji?.transformers || []))
-    }
+            // Add newline to end of lines
+            const last = node.children.at(-1)
+            if (last?.type === 'element' && last.tagName === 'span') {
+              const text = last.children.at(-1)
 
-    const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
-
-    const root = shiki.codeToHast(code.trimEnd(), {
-      lang,
-      themes: themesObject,
-      defaultColor: false,
-      transformers: [
-        ...transformers,
-        {
-          name: 'mdc:highlight',
-          line(node, line) {
-            if (options.highlights?.includes(line))
-              addClassToHast(node, 'highlight')
-            node.properties.line = line
+              if (text?.type === 'text')
+                text.value += '\n'
+            }
           }
         },
-        {
-          name: 'mdc:newline',
-          line(node) {
-            // Add newline to end of lines if needed
-            if (code?.includes('\n')) {
-              // Set newline for empty lines
-              if (node.children.length === 0 || (
-                node.children.length === 1 && node.children[0].type === 'element' &&
-                node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
-                node.children[0].children[0].value === ''
-              )) {
-                node.children = [{
-                  type: 'element',
-                  tagName: 'span',
-                  properties: {
-                    emptyLinePlaceholder: true
-                  },
-                  children: [{ type: 'text', value: '\n' }]
-                }]
-                return
-              }
+      }]
+  })
 
-              // Add newline to end of lines
-              const last = node.children.at(-1)
-              if (last?.type === 'element' && last.tagName === 'span') {
-                const text = last.children.at(-1)
+  const preEl = root.children[0] as Element
+  const codeEl = preEl.children[0] as Element
 
-                if (text?.type === 'text')
-                  text.value += '\n'
-              }
-            }
-          },
-        }]
+  const wrapperStyle = shikiOptions.wrapperStyle
+  preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
+
+  const styles: string[] = []
+  Object.keys(themesObject)
+    .forEach(color => {
+      const colorScheme = color !== 'default' ? `.${color}` : ''
+
+      styles.push(
+        wrapperStyle ? `${colorScheme} .shiki,` : '',
+        `html .${color} .shiki span {`,
+        `color: var(--shiki-${color});`,
+        `background: var(--shiki-${color}-bg);`,
+        `font-style: var(--shiki-${color}-font-style);`,
+        `font-weight: var(--shiki-${color}-font-weight);`,
+        `text-decoration: var(--shiki-${color}-text-decoration);`,
+        '}'
+      )
+
+      styles.unshift(
+        `html${colorScheme} .shiki span {`,
+        `color: var(--shiki-${color});`,
+        `background: var(--shiki-${color}-bg);`,
+        `font-style: var(--shiki-${color}-font-style);`,
+        `font-weight: var(--shiki-${color}-font-weight);`,
+        `text-decoration: var(--shiki-${color}-text-decoration);`,
+        '}'
+      )
     })
 
-    const preEl = root.children[0] as Element
-    const codeEl = preEl.children[0] as Element
-
-    const wrapperStyle = shikiOptions.wrapperStyle
-    preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
-
-    const styles: string[] = []
-    Object.keys(themesObject)
-      .forEach(color => {
-        const colorScheme = color !== 'default' ? `.${color}` : ''
-
-        styles.push(
-          wrapperStyle ? `${colorScheme} .shiki,` : '',
-          `html .${color} .shiki span {`,
-          `color: var(--shiki-${color});`,
-          `background: var(--shiki-${color}-bg);`,
-          `font-style: var(--shiki-${color}-font-style);`,
-          `font-weight: var(--shiki-${color}-font-weight);`,
-          `text-decoration: var(--shiki-${color}-text-decoration);`,
-          '}'
-        )
-
-        styles.unshift(
-          `html${colorScheme} .shiki span {`,
-          `color: var(--shiki-${color});`,
-          `background: var(--shiki-${color}-bg);`,
-          `font-style: var(--shiki-${color}-font-style);`,
-          `font-weight: var(--shiki-${color}-font-weight);`,
-          `text-decoration: var(--shiki-${color}-text-decoration);`,
-          '}'
-        )
-      })
-
-    return {
-      tree: codeEl.children,
-      className: Array.isArray(preEl.properties.class)
-        ? preEl.properties.class.join(' ')
-        : preEl.properties.class as string,
-      inlineStyle: preEl.properties.style as string,
-      style: styles.join(''),
-    }
+  return {
+    tree: codeEl.children,
+    className: Array.isArray(preEl.properties.class)
+      ? preEl.properties.class.join(' ')
+      : preEl.properties.class as string,
+    inlineStyle: preEl.properties.style as string,
+    style: styles.join(''),
   }
-  return highlighter
 }

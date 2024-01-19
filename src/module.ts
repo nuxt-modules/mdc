@@ -7,6 +7,7 @@ import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { pathToFileURL } from 'url'
 import { resolve } from 'pathe'
 import type { MdcThemeOptions } from './runtime/highlighter/types'
+import { useNuxt } from '@nuxt/kit'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -94,6 +95,7 @@ export default defineNuxtModule<ModuleOptions>({
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
         const nitro = useNitro()
+
         if (!nitro.options.experimental?.wasm) {
           nitro.options.externals = nitro.options.externals || {}
           nitro.options.externals.inline = nitro.options.externals.inline || []
@@ -123,6 +125,22 @@ export default defineNuxtModule<ModuleOptions>({
       options.rehypePlugins.highlight.src = options.rehypePlugins.highlight.src || await resolver.resolvePath('./runtime/highlighter/rehype')
     }
 
+    const registerTemplate: typeof addTemplate = (options) => {
+      const nuxt = useNuxt()
+      const name = (options as any).filename.replace(/\.m?js$/, '')
+      const alias = '#' + name
+      const results = addTemplate({
+        ...options as any,
+        write: true,
+      })
+      nuxt.options.alias[alias] = process.env.NODE_ENV === 'development' ? pathToFileURL(results.dst).href : results.dst
+      nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
+      nuxt.options.nitro.alias[alias] = nuxt.options.alias[alias]
+      nuxt.options.nitro.externals?.inline?.push(nuxt.options.alias[alias])
+      return results as any
+    }
+
+
     // mdc.config.ts support
     const mdcConfigs: string[] = []
     for (const layer of nuxt.options._layers) {
@@ -137,17 +155,15 @@ export default defineNuxtModule<ModuleOptions>({
         }
       }
     }
-    const { dst: mdcConfigsPath } = addTemplate({
+    registerTemplate({
       filename: 'mdc-configs.mjs',
       getContents: mdcConfigsTemplate,
       options: { configs: mdcConfigs },
       write: true
     })
-    nuxt.options.alias['#mdc-configs'] = process.env.NODE_ENV === 'development' ? pathToFileURL(mdcConfigsPath).href : mdcConfigsPath
-    nuxt.options.nitro.alias['#mdc-configs'] = nuxt.options.alias['#mdc-configs']
 
     // Add highlighter
-    const { dst: templateHighlighterBundle } = addTemplate({
+    registerTemplate({
       filename: 'mdc-highlighter.mjs',
       getContents: mdcHighlighterTemplate,
       options: {
@@ -156,31 +172,24 @@ export default defineNuxtModule<ModuleOptions>({
       },
       write: true
     })
-    nuxt.options.alias['#mdc-highlighter'] = process.env.NODE_ENV === 'development' ? pathToFileURL(templateHighlighterBundle).href : templateHighlighterBundle
-    nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
-    nuxt.options.nitro.alias['#mdc-highlighter'] = nuxt.options.alias['#mdc-highlighter']
+
+    nuxt.options.nitro.externals?.inline?.push(resolver.resolve('./runtime/highlighter/shiki'))
 
     // Add shiki-bundle
     const themes = typeof options.shiki?.theme === 'string' ? [options.shiki?.theme] : Object.values(options.shiki?.theme || {})
-    const { dst: templateShikiBundle } = addTemplate({
+    registerTemplate({
       filename: 'mdc-shiki-bundle.mjs',
       getContents: mdcShikijiBundle,
       options: { themes, langs: options.shiki?.langs },
       write: true
     })
-    nuxt.options.alias['#mdc-shiki-bundle'] = process.env.NODE_ENV === 'development' ? pathToFileURL(templateShikiBundle).href : templateShikiBundle
-    nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
-    nuxt.options.nitro.alias['#mdc-shiki-bundle'] = nuxt.options.alias['#mdc-shiki-bundle']
 
     // Add imports template
-    const { dst: templatePath } = addTemplate({
+    registerTemplate({
       filename: 'mdc-imports.mjs',
       getContents: mdcImportTemplate,
       options,
     })
-    nuxt.options.alias['#mdc-imports'] = process.env.NODE_ENV === 'development' ? pathToFileURL(templatePath).href : templatePath
-    nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
-    nuxt.options.nitro.alias['#mdc-imports'] = nuxt.options.alias['#mdc-imports']
 
     // Add components
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })
