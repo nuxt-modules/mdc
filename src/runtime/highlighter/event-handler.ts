@@ -2,8 +2,8 @@ import { eventHandler, getQuery } from 'h3'
 import highlighter from '#mdc-highlighter'
 
 export default eventHandler(async (event) => {
-  const { code, lang, theme: themeString, highlights: highlightsString } = getQuery(event)
+  const { code, lang, theme: themeString, options: optionsStr } = getQuery(event)
   const theme = JSON.parse(themeString as string)
-  const highlights = highlightsString ? JSON.parse(highlightsString as string) as number[] : undefined
-  return await highlighter(code, lang, theme, { highlights })
+  const options = optionsStr ? JSON.parse(optionsStr as string) : {}
+  return await highlighter(code, lang, theme, options)
 })

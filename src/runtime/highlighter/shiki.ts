@@ -37,7 +37,7 @@ async function getShiki() {
   return shiki
 }
 
-export const highlighter: Highlighter = async (code, lang, theme, options) => {
+const highlighter: Highlighter = async (code, lang, theme, options = {}) => {
   const shiki = await getShiki()
 
   const transformers: ShikijiTransformer[] = [
@@ -144,3 +144,6 @@ export const highlighter: Highlighter = async (code, lang, theme, options) => {
     style: styles.join(''),
   }
 }
+
+
+export default highlighter

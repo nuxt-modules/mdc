@@ -1,6 +1,8 @@
 import { createResolver } from '@nuxt/kit'
 import type { UnistPlugin } from '../types'
 import { pascalCase } from 'scule'
+import fs from 'fs/promises'
+import { existsSync } from 'fs'
 
 export const mdcImportTemplate = async ({ nuxt, options }: any) => {
   const resolver = createResolver(import.meta.url)
@@ -55,10 +57,14 @@ export const mdcHighlighterTemplate = async ({ options: { highlighter, shikiPath
     return 'export default () => { throw new Error(\'[@nuxtjs/mdc] No highlighter specified\') }'
 
   if (highlighter === 'shiki') {
-    return [
-      'import { highlighter } from ' + JSON.stringify(shikiPath),
-      'export default highlighter'
-    ].join('\n')
+    const file = [
+      shikiPath,
+      shikiPath + '.mjs',
+    ].find((file) => existsSync(file))
+    if (!file)
+      throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
+    const code = await fs.readFile(file, 'utf-8')
+    return code
   }
 
   if (highlighter === 'custom') {
@@ -82,7 +88,6 @@ export const mdcHighlighterTemplate = async ({ options: { highlighter, shikiPath
 
 
 export const mdcShikijiBundle = async ({ options: { themes, langs, options } }: any) => {
-
   return [
     'export const langs = [',
     ...langs.map((lang: string) => `  import('shikiji/langs/${lang}.mjs'),`),

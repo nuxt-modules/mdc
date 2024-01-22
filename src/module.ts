@@ -4,7 +4,6 @@ import { mdcConfigsTemplate, mdcHighlighterTemplate, mdcImportTemplate, mdcShiki
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
-import { pathToFileURL } from 'url'
 import { resolve } from 'pathe'
 import type { MdcThemeOptions } from './runtime/highlighter/types'
 import { useNuxt } from '@nuxt/kit'
@@ -33,20 +32,7 @@ export default defineNuxtModule<ModuleOptions>({
       prose: true,
       map: {}
     },
-    shiki: {
-      langs: [
-        // TODO: support alias resolve
-        'javascript',
-        'typescript',
-        'vue',
-        'css',
-        'html',
-      ],
-      theme: {
-        default: 'github-light',
-        dark: 'github-dark'
-      },
-    }
+    shiki: {}
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -56,9 +42,28 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (options.highlighter) {
       options.shiki ||= {}
-      if (options.highlight)
+      if (options.highlight) {
         options.shiki.wrapperStyle ||= options.highlight?.wrapperStyle
+        options.shiki.theme ||= options.highlight?.theme
+      }
+      options.shiki.theme ||= {
+        default: 'github-light',
+        dark: 'github-dark'
+      }
+      options.shiki.langs ||= [
+        // TODO: support alias resolve
+        'javascript',
+        'typescript',
+        'vue',
+        'css',
+        'html',
+      ]
+
+      if (options.highlight) {
+        options.shiki.langs.push(...options.highlight.preload as any || [])
+      }
     }
+
 
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
@@ -131,12 +136,15 @@ export default defineNuxtModule<ModuleOptions>({
       const alias = '#' + name
       const results = addTemplate({
         ...options as any,
-        write: true,
+        write: true, // Write to disk for Nitro to consume
       })
-      nuxt.options.alias[alias] = process.env.NODE_ENV === 'development' ? pathToFileURL(results.dst).href : results.dst
+      nuxt.options.alias[alias] = results.dst
       nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
       nuxt.options.nitro.alias[alias] = nuxt.options.alias[alias]
-      nuxt.options.nitro.externals?.inline?.push(nuxt.options.alias[alias])
+      nuxt.options.nitro.externals ||= {}
+      nuxt.options.nitro.externals.inline ||= []
+      nuxt.options.nitro.externals.inline.push(nuxt.options.alias[alias])
+      nuxt.options.nitro.externals.inline.push(alias)
       return results as any
     }
 
@@ -159,7 +167,6 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'mdc-configs.mjs',
       getContents: mdcConfigsTemplate,
       options: { configs: mdcConfigs },
-      write: true
     })
 
     // Add highlighter
@@ -168,9 +175,8 @@ export default defineNuxtModule<ModuleOptions>({
       getContents: mdcHighlighterTemplate,
       options: {
         highlighter: options.highlighter,
-        shikiPath: resolver.resolve('./runtime/highlighter/shiki')
+        shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki')
       },
-      write: true
     })
 
     nuxt.options.nitro.externals?.inline?.push(resolver.resolve('./runtime/highlighter/shiki'))

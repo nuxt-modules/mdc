@@ -13,12 +13,10 @@ const defaults: RehypeHighlightOption = {
     default: 'github-light',
     dark: 'github-dark'
   },
-  async highlighter(code, lang, theme, highlights) {
+  async highlighter(code, lang, theme, options) {
     if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
-      return import('#mdc-highlighter').then(h => h.default(code, lang, theme, highlights))
+      return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options))
     }
-
-    console.log({rehypeHighlight})
 
     try {
       return await $fetch('/api/_mdc/highlight', {
@@ -26,13 +24,13 @@ const defaults: RehypeHighlightOption = {
           code,
           lang,
           theme: JSON.stringify(theme),
-          highlights: JSON.stringify(highlights)
+          options: JSON.stringify(options)
         }
       })
     } catch (e: any) {
       if (process.browser && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
-        return this.highlighter?.(code, lang, theme, highlights)!
+        return this.highlighter?.(code, lang, theme, options)!
       }
     }
 
@@ -80,7 +78,7 @@ export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
     if (tasks.length) {
       await Promise.all(tasks)
 
-      tree.children.push({
+      tree.children.unshift({
         type: 'element',
         tagName: 'style',
         children: [{ type: 'text', value: cleanCSS(styles.join('')) }],
