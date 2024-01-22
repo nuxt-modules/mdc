@@ -100,23 +100,23 @@ export default defineNuxtModule<ModuleOptions>({
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
         const nitro = useNitro()
-
-        if (!nitro.options.experimental?.wasm) {
-          nitro.options.externals = nitro.options.externals || {}
-          nitro.options.externals.inline = nitro.options.externals.inline || []
-          nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
-          nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
+        const addWasmSupport = (_nitro: typeof nitro) => {
+          if (nitro.options.experimental?.wasm) { return }
+          _nitro.options.externals = _nitro.options.externals || {}
+          _nitro.options.externals.inline = _nitro.options.externals.inline || []
+          _nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
+          _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
             const { rollup: unwasm } = await import('unwasm/plugin')
             rollupConfig.plugins = rollupConfig.plugins || []
-              ; (rollupConfig.plugins as any[]).push(unwasm({
-                ...nitro.options.wasm as any,
-              }))
+            ;(rollupConfig.plugins as any[]).push(unwasm({
+              ..._nitro.options.wasm as any,
+            }))
           })
         }
-
-        nitro.options.externals.inline ||= []
-        nitro.options.externals.inline.push(resolver.resolve('./runtime/highlighter/event-handler'))
-        nitro.options.externals.inline.push()
+        addWasmSupport(nitro)
+        nitro.hooks.hook('prerender:init', (prerenderer) => {
+          addWasmSupport(prerenderer)
+        })
       })
 
       // Add server handlers

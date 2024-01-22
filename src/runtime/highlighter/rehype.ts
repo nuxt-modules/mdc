@@ -64,7 +64,7 @@ export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
             if ((_node.children[0] as Element)?.tagName === 'code') {
               (_node.children[0] as Element).children = tree
             } else {
-              _node.children = (tree[0] as any).children || tree[0]
+              _node.children = (tree[0] as any).children || tree
             }
 
             if (style)
