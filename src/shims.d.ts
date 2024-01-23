@@ -1,16 +1,6 @@
-
 declare module '#mdc-configs' {
   function getMdcConfigs(): Promise<ModuleOptions[]>
   export { getMdcConfigs }
-}
-
-declare module '#mdc-shiki-bundle' {
-  import type { ShikiRuntimeOptions } from './types'
-
-  const langs: Promise<any>[]
-  const themes: Promise<any>[]
-  const options: ShikiRuntimeOptions
-  export { langs, themes, options }
 }
 
 declare module '#mdc-imports' {
