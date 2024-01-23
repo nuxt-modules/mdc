@@ -4,7 +4,6 @@ import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
-import { useNuxt } from '@nuxt/kit'
 import * as templates from './templates'
 
 export default defineNuxtModule<ModuleOptions>({
@@ -37,7 +36,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver = createResolver(import.meta.url)
 
-    nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
       components: {
         prose: options.components!.prose!,
@@ -46,18 +44,7 @@ export default defineNuxtModule<ModuleOptions>({
       headings: options.headings!
     })
 
-    nuxt.hook('vite:extendConfig', (viteConfig) => {
-      const optimizeList = ['debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
 
-      viteConfig.optimizeDeps ||= {}
-      viteConfig.optimizeDeps.include ||= []
-      const list = viteConfig.optimizeDeps.include
-      optimizeList.forEach((pkg) => {
-        if (!list.includes(pkg)) {
-          list.push(pkg)
-        }
-      })
-    })
 
     if (options.highlight) {
       // Enable unwasm for shikiji
@@ -95,18 +82,19 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     const registerTemplate: typeof addTemplate = (options) => {
-      const nuxt = useNuxt()
       const name = (options as any).filename.replace(/\.m?js$/, '')
       const alias = '#' + name
       const results = addTemplate({
         ...options as any,
         write: true, // Write to disk for Nitro to consume
       })
-      nuxt.options.alias[alias] = results.dst
-      nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
-      nuxt.options.nitro.alias[alias] = nuxt.options.alias[alias]
+
+      nuxt.options.nitro.alias ||= {}
       nuxt.options.nitro.externals ||= {}
       nuxt.options.nitro.externals.inline ||= []
+
+      nuxt.options.alias[alias] = results.dst
+      nuxt.options.nitro.alias[alias] = nuxt.options.alias[alias]
       nuxt.options.nitro.externals.inline.push(nuxt.options.alias[alias])
       nuxt.options.nitro.externals.inline.push(alias)
       return results as any
@@ -126,6 +114,7 @@ export default defineNuxtModule<ModuleOptions>({
         }
       }
     }
+    await nuxt.callHook('mdc:configSources', mdcConfigs)
 
     registerTemplate({
       filename: 'mdc-configs.mjs',
@@ -173,9 +162,27 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     extendViteConfig((config) => {
-      config.optimizeDeps = config.optimizeDeps || {}
-      config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
-      config.optimizeDeps.exclude.push('@nuxtjs/mdc')
+      const include = [
+        'unist-util-visit' // from runtime/highlighter/rehype.ts
+      ]
+      const exclude = [
+        '@nuxtjs/mdc' // package itself, it's a build time module
+      ]
+      config.optimizeDeps ||= {}
+      config.optimizeDeps.exclude ||= []
+      config.optimizeDeps.include ||= []
+
+      for (const pkg of include) {
+        if (!config.optimizeDeps.include.includes(pkg)) {
+          config.optimizeDeps.include.push(pkg)
+        }
+      }
+
+      for (const pkg of exclude) {
+        if (!config.optimizeDeps.exclude.includes(pkg)) {
+          config.optimizeDeps.exclude.push(pkg)
+        }
+      }
     })
 
     // Register user global components
@@ -200,7 +207,34 @@ export default defineNuxtModule<ModuleOptions>({
   }
 })
 
+
+function resolveOptions(options: ModuleOptions) {
+  if (options.highlight !== false) {
+    options.highlight ||= {}
+    options.highlight.highlighter ||= 'shiki'
+    options.highlight.theme ||= {
+      default: 'github-light',
+      dark: 'github-dark'
+    }
+    options.highlight.langs ||= [
+      'js',
+      'ts',
+      'vue',
+      'css',
+      'html',
+    ]
+
+    if (options.highlight.preload) {
+      options.highlight.langs.push(...options.highlight.preload as any || [])
+    }
+  }
+}
+
 declare module '@nuxt/schema' {
+  interface NuxtHooks {
+    'mdc:configSources': (configs: string[]) => void
+  }
+
   interface PublicRuntimeConfig {
     mdc: {
       components: {
@@ -222,28 +256,6 @@ declare module '@nuxt/schema' {
         }
         headings: ModuleOptions['headings']
       }
-    }
-  }
-}
-
-function resolveOptions(options: ModuleOptions) {
-  if (options.highlight !== false) {
-    options.highlight ||= {}
-    options.highlight.highlighter ||= 'shiki'
-    options.highlight.theme ||= {
-      default: 'github-light',
-      dark: 'github-dark'
-    }
-    options.highlight.langs ||= [
-      'js',
-      'ts',
-      'vue',
-      'css',
-      'html',
-    ]
-
-    if (options.highlight.preload) {
-      options.highlight.langs.push(...options.highlight.preload as any || [])
     }
   }
 }
