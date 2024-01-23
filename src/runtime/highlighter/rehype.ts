@@ -78,7 +78,7 @@ export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
     if (tasks.length) {
       await Promise.all(tasks)
 
-      tree.children.unshift({
+      tree.children.push({
         type: 'element',
         tagName: 'style',
         children: [{ type: 'text', value: cleanCSS(styles.join('')) }],

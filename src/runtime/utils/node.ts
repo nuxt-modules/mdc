@@ -8,7 +8,7 @@ export const TEXT_TAGS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']
 
 /**
  * Check virtual node's tag
- * @param vnode Virtuel node from Vue virtual DOM
+ * @param vnode Virtual node from Vue virtual DOM
  * @param tag tag name
  * @returns `true` it the virtual node match the tag
  */

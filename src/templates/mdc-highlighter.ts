@@ -24,7 +24,13 @@ export async function mdcHighlighter({
     if (!file)
       throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
     const code = await fs.readFile(file, 'utf-8')
-    return code
+    return [
+      'import { getMdcConfigs } from \'#mdc-configs\'',
+      'import * as shikiOptions from \'#mdc-shiki-bundle\'',
+      code,
+      'const highlighter = createShikiHighlighter({ ...shikiOptions, getMdcConfigs })',
+      'export default highlighter',
+    ].join('\n')
   }
 
   if (highlighter === 'custom') {

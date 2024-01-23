@@ -1,5 +1,5 @@
 import type { MdcThemeOptions } from './runtime/highlighter/types'
-import type { BundledLanguage } from 'shikiji'
+import type { BundledLanguage, LanguageRegistration } from 'shikiji'
 
 export interface UnistPlugin {
   src?: string
@@ -24,7 +24,7 @@ export interface ModuleOptions {
     /**
      * Builtin languages to be loaded by Shikiji
      */
-    langs?: BundledLanguage[]
+    langs?: (BundledLanguage | LanguageRegistration)[]
     /**
      * Themes to be loaded by Shikiji
      */
