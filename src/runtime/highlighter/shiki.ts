@@ -15,9 +15,7 @@ async function _getShiki() {
   const shiki = await getHighlighterCore({
     langs,
     themes,
-    loadWasm: (imports) => import('shikiji/onig.wasm' as string)
-      .then((mod: any) => mod.default(imports))
-      .then((exports) => ({ exports }))
+    loadWasm: () => import('shikiji/wasm')
   })
 
   const configs = await getMdcConfigs()
