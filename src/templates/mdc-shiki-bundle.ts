@@ -6,7 +6,7 @@ export async function mdcShikijiBundle({ options: { themes, langs, options } }: 
   const langsSet = new Set<string | LanguageRegistration>(langs)
   langs.forEach((lang: string) => {
     if (typeof lang === 'string')
-      // @ts-expect-error TODO: remove
+      // @ts-expect-error TODO: remove this comment when shikiji/types is fixed
       langsSet.add(bundledLanguagesAlias[lang]?.id || lang)
     else
       langsSet.add(lang)

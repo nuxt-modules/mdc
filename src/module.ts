@@ -273,9 +273,8 @@ function resolveOptions(options: ModuleOptions) {
       dark: 'github-dark'
     }
     options.shiki.langs ||= [
-      // TODO: support alias resolve
-      'javascript',
-      'typescript',
+      'js',
+      'ts',
       'vue',
       'css',
       'html',
