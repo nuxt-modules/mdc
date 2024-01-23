@@ -9,10 +9,7 @@ export interface RehypeHighlightOption {
 }
 
 const defaults: RehypeHighlightOption = {
-  theme: {
-    default: 'github-light',
-    dark: 'github-dark'
-  },
+  theme: {},
   async highlighter(code, lang, theme, options) {
     if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
       return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options))

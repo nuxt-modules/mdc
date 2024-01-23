@@ -1,16 +1,20 @@
 import fs from 'fs/promises'
 import { existsSync } from 'fs'
 import type { ModuleOptions } from '@nuxt/schema'
+import type { ShikiModuleOptions } from '../types'
+import type { LanguageRegistration, ThemeRegistration } from 'shikiji/core'
 
 export async function mdcHighlighter({
   options: {
     highlighter,
-    shikiPath
+    shikiPath,
+    shikiOptions
   }
 }: {
   options: {
     highlighter: ModuleOptions['highlighter']
-    shikiPath: string
+    shikiPath: string,
+    shikiOptions: ShikiModuleOptions
   }
 }) {
   if (!highlighter)
@@ -24,11 +28,48 @@ export async function mdcHighlighter({
     if (!file)
       throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
     const code = await fs.readFile(file, 'utf-8')
+
+
+    const { bundledLanguagesInfo } = await import('shikiji/langs')
+
+    const langs = new Set<string | LanguageRegistration>()
+    shikiOptions.langs?.forEach((lang) => {
+      if (typeof lang === 'string') {
+        const id = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang))?.id || lang
+        if (!bundledLanguagesInfo.find(i => i.id === id)) {
+          console.error(`[@nuxtjs/mdc] Could not find shikiji language: ${lang}`)
+          return
+        }
+        langs.add(id)
+      }
+      else
+        langs.add(lang)
+    })
+
+    const themes = typeof shikiOptions?.theme === 'string'
+    ? [shikiOptions?.theme]
+    : Object.values(shikiOptions?.theme || {})
+
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
-      'import * as shikiOptions from \'#mdc-shiki-bundle\'',
       code,
-      'const highlighter = createShikiHighlighter({ ...shikiOptions, getMdcConfigs })',
+
+      'const langs = [',
+      ...Array.from(langs)
+        .map((lang) => typeof lang === 'string'
+          ? `  import('shikiji/langs/${lang}.mjs'),`
+          : '  ' + JSON.stringify(lang) + ','),
+      ']',
+      'const themes = [',
+      ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
+        ? `  import('shikiji/themes/${theme}.mjs'),`
+        : '  ' + JSON.stringify(theme) + ','),
+      ']',
+      'const options = ' + JSON.stringify({
+        theme: shikiOptions.theme,
+        wrapperStyle: shikiOptions.wrapperStyle
+      }),
+      'const highlighter = createShikiHighlighter({ langs, themes, options, getMdcConfigs })',
       'export default highlighter',
     ].join('\n')
   }

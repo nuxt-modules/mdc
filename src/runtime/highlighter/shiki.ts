@@ -9,11 +9,12 @@ import {
   transformerNotationHighlight,
 } from 'shikiji-transformers'
 import type { MdcConfig } from '@nuxtjs/mdc/config'
+import type { ShikiRuntimeOptions } from '~/src/types'
 
 export interface CreateShikiHighlighterOptions {
   langs: LanguageInput[]
   themes: ThemeInput[]
-  options: { wrapperStyle?: string }
+  options: ShikiRuntimeOptions
   getMdcConfigs: () => Promise<MdcConfig[]>
 }
 
@@ -34,6 +35,8 @@ export function createShikiHighlighter({
     for (const config of configs) {
       await config.shikiji?.setup?.(shiki)
     }
+
+    console.log({s: shiki.getLoadedThemes()})
 
     return shiki
   }
@@ -116,7 +119,11 @@ export function createShikiHighlighter({
     const codeEl = preEl.children[0] as Element
 
     const wrapperStyle = shikiOptions.wrapperStyle
-    preEl.properties.style = wrapperStyle ? (typeof wrapperStyle === 'string' ? wrapperStyle : preEl.properties.style) : ''
+    preEl.properties.style = wrapperStyle
+      ? (typeof wrapperStyle === 'string'
+        ? wrapperStyle
+        : preEl.properties.style)
+      : ''
 
     const styles: string[] = []
     Object.keys(themesObject)

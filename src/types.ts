@@ -20,22 +20,7 @@ export interface ModuleOptions {
   /**
    * Shikiji setup Options, only available when `highlighter` is `shiki`.
    */
-  shiki?: {
-    /**
-     * Builtin languages to be loaded by Shikiji
-     */
-    langs?: (BundledLanguage | LanguageRegistration)[]
-    /**
-     * Themes to be loaded by Shikiji
-     */
-    theme?: MdcThemeOptions
-    /**
-     * Inject background color to code block wrapper
-     *
-     * @default false
-     */
-    wrapperStyle?: boolean | string
-  }
+  shiki?: ShikiModuleOptions
 
   /**
    * @deprecated provide the setup in `mdc.config.ts` instead.
@@ -80,3 +65,23 @@ export interface ModuleOptions {
   }
 }
 
+
+export interface ShikiRuntimeOptions {
+  /**
+   * Themes to be loaded by Shikiji
+   */
+  theme?: MdcThemeOptions
+  /**
+   * Inject background color to code block wrapper
+   *
+   * @default false
+   */
+  wrapperStyle?: boolean | string
+}
+
+export interface ShikiModuleOptions extends Pick<ShikiRuntimeOptions, 'theme' | 'wrapperStyle'> {
+  /**
+   * Builtin languages to be bundled loaded by Shikiji
+   */
+  langs?: (BundledLanguage | LanguageRegistration)[]
+}

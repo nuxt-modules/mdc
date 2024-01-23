@@ -5,11 +5,11 @@ declare module '#mdc-configs' {
 }
 
 declare module '#mdc-shiki-bundle' {
+  import type { ShikiRuntimeOptions } from './types'
+
   const langs: Promise<any>[]
   const themes: Promise<any>[]
-  const options: {
-    wrapperStyle?: boolean | string
-  }
+  const options: ShikiRuntimeOptions
   export { langs, themes, options }
 }
 

@@ -1,25 +1,14 @@
-import { createResolver } from '@nuxt/kit'
+
 import type { UnistPlugin } from '../types'
 import { pascalCase } from 'scule'
 
-export async function mdcImports({ nuxt, options }: any) {
-  const resolver = createResolver(import.meta.url)
-
+export async function mdcImports({ options }: any) {
   const imports: string[] = []
   const { imports: remarkImports, definitions: remarkDefinitions } = processUnistPlugins(options.remarkPlugins)
   const { imports: rehypeImports, definitions: rehypeDefinitions } = processUnistPlugins(options.rehypePlugins)
 
-  let highlighter = 'false'
-  if (options.highlight) {
-    highlighter = JSON.stringify(options.highlight)
-    if (options.highlight.highlighter) {
-      const path = await resolver.resolvePath(options.highlight.highlighter, { alias: nuxt.options.alias })
-      imports.push(`import syntaxHighlighter from '${path}'`)
-      highlighter = highlighter.replace(`"${options.highlight.highlighter}"`, 'syntaxHighlighter')
-    }
-  }
-
   return [
+    'import highlight from \'#mdc-highlighter\'',
     ...remarkImports,
     ...rehypeImports,
     ...imports,
@@ -32,7 +21,7 @@ export async function mdcImports({ nuxt, options }: any) {
     ...rehypeDefinitions,
     '}',
     '',
-    `export const highlight = ${highlighter}`
+    'export { highlight }',
   ].join('\n')
 }
 

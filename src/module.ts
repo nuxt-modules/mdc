@@ -1,10 +1,9 @@
 import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
 import fs from 'fs'
-import type { ModuleOptions } from './types'
+import type { ModuleOptions, ShikiRuntimeOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
-import type { MdcThemeOptions } from './runtime/highlighter/types'
 import { useNuxt } from '@nuxt/kit'
 import * as templates from './templates'
 
@@ -37,6 +36,8 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     resolveOptions(options)
 
+    console.dir(options, { depth: 5 })
+
     const resolver = createResolver(import.meta.url)
 
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
@@ -52,7 +53,6 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.mdc = defu(nuxt.options.runtimeConfig.mdc, {
       highlight: options.highlight ? {
         theme: options.highlight!.theme!,
-        preload: options.highlight!.preload!,
         wrapperStyle: options.highlight!.wrapperStyle!
       } : {}
     })
@@ -99,9 +99,11 @@ export default defineNuxtModule<ModuleOptions>({
         handler: resolver.resolve('./runtime/highlighter/event-handler')
       })
 
-      options.rehypePlugins = options.rehypePlugins || {}
-      options.rehypePlugins.highlight = options.rehypePlugins.highlight || {}
-      options.rehypePlugins.highlight.src = options.rehypePlugins.highlight.src || await resolver.resolvePath('./runtime/highlighter/rehype')
+      options.rehypePlugins ||= {}
+      options.rehypePlugins.highlight ||= {}
+      options.rehypePlugins.highlight.src ||= await resolver.resolvePath('./runtime/highlighter/rehype')
+      options.rehypePlugins.highlight.options ||= {}
+      options.rehypePlugins.highlight.options.theme ||= options.shiki?.theme
     }
 
     const registerTemplate: typeof addTemplate = (options) => {
@@ -121,7 +123,6 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.nitro.externals.inline.push(alias)
       return results as any
     }
-
 
     // mdc.config.ts support
     const mdcConfigs: string[] = []
@@ -150,17 +151,9 @@ export default defineNuxtModule<ModuleOptions>({
       getContents: templates.mdcHighlighter,
       options: {
         highlighter: options.highlighter,
-        shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki')
+        shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
+        shikiOptions: options.shiki || {}
       },
-    })
-
-    // Add shiki-bundle
-    const themes = typeof options.shiki?.theme === 'string' ? [options.shiki?.theme] : Object.values(options.shiki?.theme || {})
-    registerTemplate({
-      filename: 'mdc-shiki-bundle.mjs',
-      getContents: templates.mdcShikijiBundle,
-      options: { themes, langs: options.shiki?.langs },
-      write: true
     })
 
     // Add imports template
@@ -223,13 +216,10 @@ export default defineNuxtModule<ModuleOptions>({
 declare module '@nuxt/schema' {
   interface RuntimeConfig {
     mdc: {
-      highlight: {
-        theme?: MdcThemeOptions
-        preload?: string[]
-        wrapperStyle?: boolean | string
-      }
+      highlight: ShikiRuntimeOptions
     }
   }
+
   interface PublicRuntimeConfig {
     mdc: {
       components: {
@@ -268,6 +258,7 @@ function resolveOptions(options: ModuleOptions) {
       options.shiki.wrapperStyle ||= options.highlight?.wrapperStyle
       options.shiki.theme ||= options.highlight?.theme
     }
+
     options.shiki.theme ||= {
       default: 'github-light',
       dark: 'github-dark'
@@ -280,7 +271,7 @@ function resolveOptions(options: ModuleOptions) {
       'html',
     ]
 
-    if (options.highlight) {
+    if (options.highlight && options.highlight.preload) {
       options.shiki.langs.push(...options.highlight.preload as any || [])
     }
   }
