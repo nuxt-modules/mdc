@@ -1,4 +1,3 @@
-
 import type { UnistPlugin } from '../types'
 import { pascalCase } from 'scule'
 
@@ -8,7 +7,6 @@ export async function mdcImports({ options }: any) {
   const { imports: rehypeImports, definitions: rehypeDefinitions } = processUnistPlugins(options.rehypePlugins)
 
   return [
-    'import highlight from \'#mdc-highlighter\'',
     ...remarkImports,
     ...rehypeImports,
     ...imports,
@@ -21,7 +19,10 @@ export async function mdcImports({ options }: any) {
     ...rehypeDefinitions,
     '}',
     '',
-    'export { highlight }',
+    `export const highlight = ${JSON.stringify({
+      theme: options.highlight?.theme,
+      wrapperStyle: options.highlight?.wrapperStyle,
+    })}`
   ].join('\n')
 }
 

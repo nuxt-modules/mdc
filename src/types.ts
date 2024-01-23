@@ -8,43 +8,43 @@ export interface UnistPlugin {
 
 export interface ModuleOptions {
   /**
-   * The highlighter to be used for highlighting code blocks.
-   *
-   * Set to `custom` to provide your own highlighter function.
-   * Set to `shiki` to use the builtin highlighter based on Shiki.
-   *
-   * @default 'shiki'
-   */
-  highlighter?: 'shiki' | 'custom' | false | { path: string }
-
-  /**
-   * Shikiji setup Options, only available when `highlighter` is `shiki`.
-   */
-  shiki?: ShikiModuleOptions
-
-  /**
-   * @deprecated provide the setup in `mdc.config.ts` instead.
+   * A map of remark plugins to be used for processing markdown.
    */
   remarkPlugins?: Record<string, UnistPlugin>
   /**
-   * @deprecated provide the setup in `mdc.config.ts` instead.
+   * A map of remark plugins to be used for processing markdown.
    */
   rehypePlugins?: Record<string, UnistPlugin>
 
   highlight?: {
     /**
-     * @deprecated set `highlighter` to `custom` and provide the function in `mdc.config.ts` instead.
+     * The highlighter to be used for highlighting code blocks.
+     *
+     * Set to `custom` to provide your own highlighter function in `mdc.config.ts`.
+     * Set to `shiki` to use the builtin highlighter based on Shiki.
+     * Or provide the path to your own highlighter module with the default export.
+     *
+     * @default 'shiki'
      */
-    highlighter?: string
+    highlighter?: 'shiki' | 'custom' | string
 
     /**
      * Default theme that will be used for highlighting code blocks.
      */
     theme?: MdcThemeOptions
+
+    /**
+     * Builtin languages to be bundled loaded by Shikiji
+     */
+    langs?: (BundledLanguage | LanguageRegistration)[]
+
     /**
      * Preloaded languages that will be available for highlighting code blocks.
+     *
+     * @deprecated use `langs` instead.
      */
     preload?: string[]
+
     /**
      * Inject background color to code block wrapper
      *
@@ -63,25 +63,4 @@ export interface ModuleOptions {
     prose?: boolean
     map?: Record<string, string>
   }
-}
-
-
-export interface ShikiRuntimeOptions {
-  /**
-   * Themes to be loaded by Shikiji
-   */
-  theme?: MdcThemeOptions
-  /**
-   * Inject background color to code block wrapper
-   *
-   * @default false
-   */
-  wrapperStyle?: boolean | string
-}
-
-export interface ShikiModuleOptions extends Pick<ShikiRuntimeOptions, 'theme' | 'wrapperStyle'> {
-  /**
-   * Builtin languages to be bundled loaded by Shikiji
-   */
-  langs?: (BundledLanguage | LanguageRegistration)[]
 }

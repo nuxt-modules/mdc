@@ -5,15 +5,11 @@ declare module '#mdc-configs' {
 
 declare module '#mdc-imports' {
   import type { RehypePlugin, RemarkPlugin } from './runtime/types'
+  import type { RehypeHighlightOption } from './runtime/highlighter/rehype'
 
   const remarkPlugins: Record<string, false | RemarkPlugin>
   const rehypePlugins: Record<string, false | RehypePlugin>
-  const highlight: {
-    highlighter?: string
-    theme?: Theme
-    preload?: string[]
-    inject?: boolean
-  }
+  const highlight: RehypeHighlightOption
   export { remarkPlugins, rehypePlugins, highlight }
 }
 

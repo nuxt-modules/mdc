@@ -1,6 +1,6 @@
 import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
 import fs from 'fs'
-import type { ModuleOptions, ShikiRuntimeOptions } from './types'
+import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
@@ -31,7 +31,6 @@ export default defineNuxtModule<ModuleOptions>({
       prose: true,
       map: {}
     },
-    shiki: {}
   },
   async setup(options, nuxt) {
     resolveOptions(options)
@@ -49,14 +48,6 @@ export default defineNuxtModule<ModuleOptions>({
       headings: options.headings!
     })
 
-    // @ts-ignore TODO: we may not need this anymore
-    nuxt.options.runtimeConfig.mdc = defu(nuxt.options.runtimeConfig.mdc, {
-      highlight: options.highlight ? {
-        theme: options.highlight!.theme!,
-        wrapperStyle: options.highlight!.wrapperStyle!
-      } : {}
-    })
-
     nuxt.hook('vite:extendConfig', (viteConfig) => {
       const optimizeList = ['debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
 
@@ -70,7 +61,7 @@ export default defineNuxtModule<ModuleOptions>({
       })
     })
 
-    if (options.highlighter) {
+    if (options.highlight) {
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
         const nitro = useNitro()
@@ -103,7 +94,6 @@ export default defineNuxtModule<ModuleOptions>({
       options.rehypePlugins.highlight ||= {}
       options.rehypePlugins.highlight.src ||= await resolver.resolvePath('./runtime/highlighter/rehype')
       options.rehypePlugins.highlight.options ||= {}
-      options.rehypePlugins.highlight.options.theme ||= options.shiki?.theme
     }
 
     const registerTemplate: typeof addTemplate = (options) => {
@@ -150,9 +140,8 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'mdc-highlighter.mjs',
       getContents: templates.mdcHighlighter,
       options: {
-        highlighter: options.highlighter,
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
-        shikiOptions: options.shiki || {}
+        options: options.highlight,
       },
     })
 
@@ -214,12 +203,6 @@ export default defineNuxtModule<ModuleOptions>({
 })
 
 declare module '@nuxt/schema' {
-  interface RuntimeConfig {
-    mdc: {
-      highlight: ShikiRuntimeOptions
-    }
-  }
-
   interface PublicRuntimeConfig {
     mdc: {
       components: {
@@ -246,24 +229,14 @@ declare module '@nuxt/schema' {
 }
 
 function resolveOptions(options: ModuleOptions) {
-  if (options.highlighter == null)
-    options.highlighter = options.highlight === false ? false : 'shiki'
-
-  if (typeof options.highlight !== 'boolean' && options.highlight?.highlighter)
-    options.highlighter ??= { path: options.highlight?.highlighter }
-
-  if (options.highlighter) {
-    options.shiki ||= {}
-    if (options.highlight) {
-      options.shiki.wrapperStyle ||= options.highlight?.wrapperStyle
-      options.shiki.theme ||= options.highlight?.theme
-    }
-
-    options.shiki.theme ||= {
+  if (options.highlight !== false) {
+    options.highlight ||= {}
+    options.highlight.highlighter ||= 'shiki'
+    options.highlight.theme ||= {
       default: 'github-light',
       dark: 'github-dark'
     }
-    options.shiki.langs ||= [
+    options.highlight.langs ||= [
       'js',
       'ts',
       'vue',
@@ -271,8 +244,8 @@ function resolveOptions(options: ModuleOptions) {
       'html',
     ]
 
-    if (options.highlight && options.highlight.preload) {
-      options.shiki.langs.push(...options.highlight.preload as any || [])
+    if (options.highlight.preload) {
+      options.highlight.langs.push(...options.highlight.preload as any || [])
     }
   }
 }

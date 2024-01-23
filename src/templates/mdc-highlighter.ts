@@ -1,26 +1,23 @@
 import fs from 'fs/promises'
 import { existsSync } from 'fs'
-import type { ModuleOptions } from '@nuxt/schema'
-import type { ShikiModuleOptions } from '../types'
 import type { LanguageRegistration, ThemeRegistration } from 'shikiji/core'
+import type { ModuleOptions } from '../types'
 
 export async function mdcHighlighter({
   options: {
-    highlighter,
     shikiPath,
-    shikiOptions
+    options
   }
 }: {
   options: {
-    highlighter: ModuleOptions['highlighter']
     shikiPath: string,
-    shikiOptions: ShikiModuleOptions
+    options: ModuleOptions['highlight']
   }
 }) {
-  if (!highlighter)
+  if (!options || !options.highlighter)
     return 'export default () => { throw new Error(\'[@nuxtjs/mdc] No highlighter specified\') }'
 
-  if (highlighter === 'shiki') {
+  if (options.highlighter === 'shiki') {
     const file = [
       shikiPath,
       shikiPath + '.mjs',
@@ -33,7 +30,7 @@ export async function mdcHighlighter({
     const { bundledLanguagesInfo } = await import('shikiji/langs')
 
     const langs = new Set<string | LanguageRegistration>()
-    shikiOptions.langs?.forEach((lang) => {
+    options.langs?.forEach((lang) => {
       if (typeof lang === 'string') {
         const id = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang))?.id || lang
         if (!bundledLanguagesInfo.find(i => i.id === id)) {
@@ -46,9 +43,9 @@ export async function mdcHighlighter({
         langs.add(lang)
     })
 
-    const themes = typeof shikiOptions?.theme === 'string'
-    ? [shikiOptions?.theme]
-    : Object.values(shikiOptions?.theme || {})
+    const themes = typeof options?.theme === 'string'
+    ? [options?.theme]
+    : Object.values(options?.theme || {})
 
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
@@ -66,15 +63,15 @@ export async function mdcHighlighter({
         : '  ' + JSON.stringify(theme) + ','),
       ']',
       'const options = ' + JSON.stringify({
-        theme: shikiOptions.theme,
-        wrapperStyle: shikiOptions.wrapperStyle
+        theme: options.theme,
+        wrapperStyle: options.wrapperStyle
       }),
       'const highlighter = createShikiHighlighter({ langs, themes, options, getMdcConfigs })',
       'export default highlighter',
     ].join('\n')
   }
 
-  if (highlighter === 'custom') {
+  if (options.highlighter === 'custom') {
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
       `export default function (...args) {
@@ -90,9 +87,6 @@ export async function mdcHighlighter({
 
   }
 
-  if ('path' in highlighter) {
-    return 'export { default } from ' + JSON.stringify(highlighter.path)
-  }
-
-  throw new Error(`[@nuxtjs/mdc] Unknown highlighter: ${highlighter}`)
+  // custom highlighter path
+    return 'export { default } from ' + JSON.stringify(options.highlighter)
 }
