@@ -15,7 +15,7 @@ export interface ModuleOptions {
    *
    * @default 'shiki'
    */
-  highlighter?: 'shiki' | 'custom' | false
+  highlighter?: 'shiki' | 'custom' | false | { path: string }
 
   /**
    * Shikiji setup Options, only available when `highlighter` is `shiki`.

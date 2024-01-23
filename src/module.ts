@@ -1,12 +1,12 @@
 import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
 import fs from 'fs'
-import { mdcConfigsTemplate, mdcHighlighterTemplate, mdcImportTemplate, mdcShikijiBundle } from './utils/templates'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
 import type { MdcThemeOptions } from './runtime/highlighter/types'
 import { useNuxt } from '@nuxt/kit'
+import * as templates from './templates'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -35,35 +35,9 @@ export default defineNuxtModule<ModuleOptions>({
     shiki: {}
   },
   async setup(options, nuxt) {
+    resolveOptions(options)
+
     const resolver = createResolver(import.meta.url)
-
-    if (options.highlighter == null)
-      options.highlighter = options.highlight === false ? false : 'shiki'
-
-    if (options.highlighter) {
-      options.shiki ||= {}
-      if (options.highlight) {
-        options.shiki.wrapperStyle ||= options.highlight?.wrapperStyle
-        options.shiki.theme ||= options.highlight?.theme
-      }
-      options.shiki.theme ||= {
-        default: 'github-light',
-        dark: 'github-dark'
-      }
-      options.shiki.langs ||= [
-        // TODO: support alias resolve
-        'javascript',
-        'typescript',
-        'vue',
-        'css',
-        'html',
-      ]
-
-      if (options.highlight) {
-        options.shiki.langs.push(...options.highlight.preload as any || [])
-      }
-    }
-
 
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
     nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
@@ -108,9 +82,9 @@ export default defineNuxtModule<ModuleOptions>({
           _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
             const { rollup: unwasm } = await import('unwasm/plugin')
             rollupConfig.plugins = rollupConfig.plugins || []
-            ;(rollupConfig.plugins as any[]).push(unwasm({
-              ..._nitro.options.wasm as any,
-            }))
+              ; (rollupConfig.plugins as any[]).push(unwasm({
+                ..._nitro.options.wasm as any,
+              }))
           })
         }
         addWasmSupport(nitro)
@@ -163,29 +137,28 @@ export default defineNuxtModule<ModuleOptions>({
         }
       }
     }
+
     registerTemplate({
       filename: 'mdc-configs.mjs',
-      getContents: mdcConfigsTemplate,
+      getContents: templates.mdcConfigs,
       options: { configs: mdcConfigs },
     })
 
     // Add highlighter
     registerTemplate({
       filename: 'mdc-highlighter.mjs',
-      getContents: mdcHighlighterTemplate,
+      getContents: templates.mdcHighlighter,
       options: {
         highlighter: options.highlighter,
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki')
       },
     })
 
-    nuxt.options.nitro.externals?.inline?.push(resolver.resolve('./runtime/highlighter/shiki'))
-
     // Add shiki-bundle
     const themes = typeof options.shiki?.theme === 'string' ? [options.shiki?.theme] : Object.values(options.shiki?.theme || {})
     registerTemplate({
       filename: 'mdc-shiki-bundle.mjs',
-      getContents: mdcShikijiBundle,
+      getContents: templates.mdcShikijiBundle,
       options: { themes, langs: options.shiki?.langs },
       write: true
     })
@@ -193,7 +166,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Add imports template
     registerTemplate({
       filename: 'mdc-imports.mjs',
-      getContents: mdcImportTemplate,
+      getContents: templates.mdcImports,
       options,
     })
 
@@ -278,6 +251,38 @@ declare module '@nuxt/schema' {
         }
         headings: ModuleOptions['headings']
       }
+    }
+  }
+}
+
+function resolveOptions(options: ModuleOptions) {
+  if (options.highlighter == null)
+    options.highlighter = options.highlight === false ? false : 'shiki'
+
+  if (typeof options.highlight !== 'boolean' && options.highlight?.highlighter)
+    options.highlighter ??= { path: options.highlight?.highlighter }
+
+  if (options.highlighter) {
+    options.shiki ||= {}
+    if (options.highlight) {
+      options.shiki.wrapperStyle ||= options.highlight?.wrapperStyle
+      options.shiki.theme ||= options.highlight?.theme
+    }
+    options.shiki.theme ||= {
+      default: 'github-light',
+      dark: 'github-dark'
+    }
+    options.shiki.langs ||= [
+      // TODO: support alias resolve
+      'javascript',
+      'typescript',
+      'vue',
+      'css',
+      'html',
+    ]
+
+    if (options.highlight) {
+      options.shiki.langs.push(...options.highlight.preload as any || [])
     }
   }
 }
