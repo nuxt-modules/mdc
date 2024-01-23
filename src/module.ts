@@ -35,8 +35,6 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     resolveOptions(options)
 
-    console.dir(options, { depth: 5 })
-
     const resolver = createResolver(import.meta.url)
 
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
