@@ -24,7 +24,13 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   if (inlineOptions.highlight != null && inlineOptions.highlight != false && typeof inlineOptions.highlight.highlighter !== 'function') {
     if (import.meta.dev)
       console.warn('[mdc] `highlighter` passed to `parseMarkdown` is should be a function, but got ' + JSON.stringify(inlineOptions.highlight.highlighter) + ', ignored.')
-    delete inlineOptions.highlight.highlighter
+    inlineOptions = {
+      ...inlineOptions,
+      highlight: {
+        ...inlineOptions.highlight
+      }
+    }
+    delete (inlineOptions.highlight as any).highlighter
   }
 
   const options = defu(inlineOptions, {
