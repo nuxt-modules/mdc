@@ -10,6 +10,7 @@ import { defaults } from './options'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 import { getMdcConfigs } from '#mdc-configs'
+import { pickObject } from '../utils/general'
 
 // TODO: maybe cache the processors in a way
 
@@ -19,10 +20,18 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
-  const options = defu(opts, {
+  const options = defu({
+    ...opts,
+    // TODO: remove the passing in @nuxt/content and then we could remove this line
+    highlight: opts.highlight === false
+      ? false
+      : typeof opts.highlight !== 'function'
+        ? pickObject(opts.highlight || {}, ['theme'])
+        : opts.highlight
+  }, {
     remark: { plugins: moduleOptions?.remarkPlugins },
     rehype: { plugins: moduleOptions?.rehypePlugins },
-    highlight: moduleOptions?.highlight,
+    highlight: moduleOptions?.highlight
   }, defaults) as MDCParseOptions
 
   if (options.rehype?.plugins?.highlight) {
@@ -96,7 +105,7 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   }
 }
 
-export function contentHeading (body: MDCRoot) {
+export function contentHeading(body: MDCRoot) {
   let title = ''
   let description = ''
   const children = body.children

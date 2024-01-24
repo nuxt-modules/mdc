@@ -44,8 +44,6 @@ export default defineNuxtModule<ModuleOptions>({
       headings: options.headings!
     })
 
-
-
     if (options.highlight) {
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
@@ -163,7 +161,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     extendViteConfig((config) => {
       const include = [
-        'unist-util-visit' // from runtime/highlighter/rehype.ts
+        'remark-gfm', // from runtime/parser/remark.ts
+        'remark-emoji', // from runtime/parser/remark.ts
+        'remark-mdc', // from runtime/parser/remark.ts
+        'unist-util-visit', // from runtime/highlighter/rehype.ts
+        'unified', // deps by all the plugins
+        'debug', // deps by many libraries but it's not an ESM
       ]
       const exclude = [
         '@nuxtjs/mdc' // package itself, it's a build time module
@@ -222,6 +225,8 @@ function resolveOptions(options: ModuleOptions) {
       'vue',
       'css',
       'html',
+      'vue',
+      'shell'
     ]
 
     if (options.highlight.preload) {
