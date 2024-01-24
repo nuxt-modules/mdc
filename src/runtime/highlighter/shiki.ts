@@ -32,7 +32,7 @@ export function createShikiHighlighter({
 
     const configs = await getMdcConfigs()
     for (const config of configs) {
-      await config.shikiji?.setup?.(shiki)
+      await config.shiki?.setup?.(shiki)
     }
 
     return shiki
@@ -62,7 +62,10 @@ export function createShikiHighlighter({
     ]
 
     for (const config of await getMdcConfigs()) {
-      transformers.push(...(config.shikiji?.transformers || []))
+      const newTransformers = typeof config.shiki?.transformers === 'function'
+        ? await config.shiki?.transformers(code, lang, theme, options)
+        : config.shiki?.transformers || []
+      transformers.push(...newTransformers)
     }
 
     const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})

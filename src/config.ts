@@ -1,10 +1,13 @@
 import type { Processor } from 'unified'
 import type { HighlighterCore, ShikijiTransformer } from 'shikiji'
-import type { Highlighter } from './runtime/highlighter/types'
+import type { Highlighter, HighlighterOptions, MdcThemeOptions } from './runtime/highlighter/types'
 
 export type Awaitable<T> = T | Promise<T>
 
 export interface MdcConfig {
+  /**
+   * Hooks for the unified markdown pipeline
+   */
   unified?: {
     /**
      * Custom setup for unified processor before other plugins
@@ -29,8 +32,17 @@ export interface MdcConfig {
    */
   highlighter?: Highlighter
 
-  shikiji?: {
-    transformers?: ShikijiTransformer[]
+  /**
+   * Hooks for shikiji
+   */
+  shiki?: {
+    /**
+     * Get transformers for shikiji
+     */
+    transformers?: ShikijiTransformer[] | ((code: string, lang: string, theme: MdcThemeOptions, options: Partial<HighlighterOptions>) => Awaitable<ShikijiTransformer[]>)
+    /**
+     * Custom setup for shikiji instance, only called once on server or client
+     */
     setup?: (highlighter: HighlighterCore) => Awaitable<void>
   }
 }

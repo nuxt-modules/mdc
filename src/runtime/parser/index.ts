@@ -10,25 +10,24 @@ import { defaults } from './options'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 import { getMdcConfigs } from '#mdc-configs'
-import { pickObject } from '../utils/general'
 
 // TODO: maybe cache the processors in a way
 
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
-export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
+export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
   const configs = await getMdcConfigs()
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
-  const options = defu({
-    ...opts,
-    // TODO: remove the passing in @nuxt/content and then we could remove this line
-    highlight: opts.highlight === false
-      ? false
-      : typeof opts.highlight?.highlighter !== 'function'
-        ? pickObject(opts.highlight || {}, ['theme'])
-        : opts.highlight
-  }, {
+
+  // TODO: remove the passing in @nuxt/content and then we could remove this line
+  if (inlineOptions.highlight != null && inlineOptions.highlight != false && typeof inlineOptions.highlight.highlighter !== 'function') {
+    if (import.meta.dev)
+      console.warn('[mdc] `highlighter` passed to `parseMarkdown` is should be a function, but got ' + JSON.stringify(inlineOptions.highlight.highlighter) + ', ignored.')
+    delete inlineOptions.highlight.highlighter
+  }
+
+  const options = defu(inlineOptions, {
     remark: { plugins: moduleOptions?.remarkPlugins },
     rehype: { plugins: moduleOptions?.rehypePlugins },
     highlight: moduleOptions?.highlight
