@@ -10,7 +10,7 @@ export function compileHast(this: any) {
 
   function compileToJSON(node: Root, parent?: Root | RootContent): MDCRoot;
   function compileToJSON(node: RootContent, parent?: Root | RootContent): MDCNode;
-  function compileToJSON (node: Root | RootContent, parent?: Root | RootContent): MDCNode | MDCRoot | null {
+  function compileToJSON(node: Root | RootContent, parent?: Root | RootContent): MDCNode | MDCRoot | null {
     if (node.type === 'root') {
       return {
         type: 'root',
@@ -60,11 +60,21 @@ export function compileHast(this: any) {
         node.tagName = 'template'
       }
 
+      // Hast has a special handling for template tags to read from `content` property instead of `children`
+      // https://github.com/syntax-tree/hast-util-to-html/blob/c8d5f675173bb75bde36dd7e01c77010f0c41901/lib/handle/element.js#L81-L83
+      // https://github.com/syntax-tree/hast#element
+      const children = (
+        node.tagName === 'template' && node.content?.children.length
+          ? node.content.children
+          : node.children
+      )
+        .map(child => compileToJSON(child, node)).filter(Boolean)
+
       return {
         type: 'element',
         tag: node.tagName,
         props: validateProps(node.tagName, node.properties),
-        children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
+        children
       }
     }
 
