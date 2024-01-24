@@ -5,6 +5,7 @@ export type MdcThemeOptions = BuiltinTheme | string | Record<string, BuiltinThem
 
 export interface HighlighterOptions {
   highlights?: number[]
+  meta?: string
 }
 
 export interface HighlightResult {

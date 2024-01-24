@@ -47,14 +47,18 @@ export function createShikiHighlighter({
     return shiki
   }
 
+  const baseTransformers: ShikijiTransformer[] = [
+    transformerNotationDiff(),
+    transformerNotationFocus(),
+    transformerNotationHighlight(),
+    transformerNotationErrorLevel(),
+  ]
+
   const highlighter: Highlighter = async (code, lang, theme, options = {}) => {
     const shiki = await getShiki()
 
     const transformers: ShikijiTransformer[] = [
-      transformerNotationDiff(),
-      transformerNotationFocus(),
-      transformerNotationHighlight(),
-      transformerNotationErrorLevel(),
+      ...baseTransformers,
     ]
 
     for (const config of await getMdcConfigs()) {
@@ -67,6 +71,9 @@ export function createShikiHighlighter({
       lang,
       themes: themesObject,
       defaultColor: false,
+      meta: {
+        __raw: options.meta
+      },
       transformers: [
         ...transformers,
         {

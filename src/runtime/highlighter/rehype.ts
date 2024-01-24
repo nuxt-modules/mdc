@@ -52,7 +52,10 @@ export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
           toString(node as any),
           _node.properties!.language as string,
           options.theme!,
-          { highlights: (_node.properties!.highlights ?? []) as number[] }
+          {
+            highlights: (_node.properties!.highlights ?? []) as number[],
+            meta: _node.properties.meta as string
+          }
         )
           .then(({ tree, className, style, inlineStyle }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
