@@ -114,9 +114,11 @@ export default defineNuxtModule<ModuleOptions>({
     // Update Vite optimizeDeps
     extendViteConfig((config) => {
       const include = [
-        'remark-gfm', // from runtime/parser/remark.ts
-        'remark-emoji', // from runtime/parser/remark.ts
-        'remark-mdc', // from runtime/parser/remark.ts
+        'remark-gfm', // from runtime/parser/index.ts
+        'remark-emoji', // from runtime/parser/index.ts
+        'remark-mdc', // from runtime/parser/index.ts
+        'remark-rehype', // from runtime/parser/index.ts
+        'rehype-raw', // from runtime/parser/index.ts
         'unist-util-visit', // from runtime/highlighter/rehype.ts
         'unified', // deps by all the plugins
         'debug', // deps by many libraries but it's not an ESM
