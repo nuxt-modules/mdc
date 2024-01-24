@@ -52,19 +52,6 @@ export default defineNuxtModule<ModuleOptions>({
       } : {}
     })
 
-    nuxt.hook('vite:extendConfig', (viteConfig) => {
-      const optimizeList = ['debug', 'flat', 'node-emoji', 'extend', 'hast-util-raw']
-
-      viteConfig.optimizeDeps ||= {}
-      viteConfig.optimizeDeps.include ||= []
-      const list = viteConfig.optimizeDeps.include
-      optimizeList.forEach((pkg) => {
-        if (!list.includes(pkg)) {
-          list.push(pkg)
-        }
-      })
-    })
-
     if (options.highlight) {
       // Enable unwasm for shikiji
       nuxt.hook('ready', () => {
@@ -124,10 +111,34 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
+    // Update Vite optimizeDeps
     extendViteConfig((config) => {
-      config.optimizeDeps = config.optimizeDeps || {}
-      config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
-      config.optimizeDeps.exclude.push('@nuxtjs/mdc')
+      const include = [
+        'remark-gfm', // from runtime/parser/remark.ts
+        'remark-emoji', // from runtime/parser/remark.ts
+        'remark-mdc', // from runtime/parser/remark.ts
+        'unist-util-visit', // from runtime/highlighter/rehype.ts
+        'unified', // deps by all the plugins
+        'debug', // deps by many libraries but it's not an ESM
+      ]
+      const exclude = [
+        '@nuxtjs/mdc' // package itself, it's a build time module
+      ]
+      config.optimizeDeps ||= {}
+      config.optimizeDeps.exclude ||= []
+      config.optimizeDeps.include ||= []
+
+      for (const pkg of include) {
+        if (!config.optimizeDeps.include.includes(pkg)) {
+          config.optimizeDeps.include.push(pkg)
+        }
+      }
+
+      for (const pkg of exclude) {
+        if (!config.optimizeDeps.exclude.includes(pkg)) {
+          config.optimizeDeps.exclude.push(pkg)
+        }
+      }
     })
 
     // Register user global components
