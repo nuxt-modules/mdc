@@ -25,7 +25,7 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
     // TODO: remove the passing in @nuxt/content and then we could remove this line
     highlight: opts.highlight === false
       ? false
-      : typeof opts.highlight !== 'function'
+      : typeof opts.highlight?.highlighter !== 'function'
         ? pickObject(opts.highlight || {}, ['theme'])
         : opts.highlight
   }, {
