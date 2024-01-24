@@ -119,6 +119,7 @@ export default defineNuxtModule<ModuleOptions>({
         'remark-mdc', // from runtime/parser/index.ts
         'remark-rehype', // from runtime/parser/index.ts
         'rehype-raw', // from runtime/parser/index.ts
+        'parse5', // transitive deps of rehype
         'unist-util-visit', // from runtime/highlighter/rehype.ts
         'unified', // deps by all the plugins
         'debug', // deps by many libraries but it's not an ESM
