@@ -26,6 +26,17 @@
   "files": [
     "dist"
   ],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ],
+      "config": [
+        "./dist/config.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "prepack": "nuxt-module-build prepare; nuxt-module-build",
     "build": "nuxt-module-build prepare; nuxt-module-build build",
