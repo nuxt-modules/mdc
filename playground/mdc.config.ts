@@ -1,7 +1,5 @@
 import { defineConfig } from '@nuxtjs/mdc/config'
 
-const a: 1 = 1
-
 export default defineConfig({
 })
 

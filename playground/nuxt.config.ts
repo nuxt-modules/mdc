@@ -3,11 +3,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '../src/module'
   ],
-  nitro: {
-    experimental: {
-      wasm: true
-    }
-  },
   // ssr: false,
   mdc: {
     highlight: {
