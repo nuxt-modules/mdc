@@ -51,11 +51,14 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
       node => ['pre', 'code'].includes((node as Element).tagName) && !!((node as Element).properties?.language || (node as Element).properties?.highlights),
       (node) => {
         const _node = node as Element
+        const highlights = typeof _node.properties!.highlights === 'string'
+          ? _node.properties!.highlights.split(' ').map(Number)
+          : []
         const task = options.highlighter!(
           toString(node as any),
           _node.properties!.language as string,
           options.theme!,
-          (_node.properties!.highlights ?? []) as number[]
+          highlights
         )
           .then(({ tree, className, style, inlineStyle }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
