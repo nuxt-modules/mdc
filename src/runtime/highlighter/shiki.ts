@@ -1,4 +1,4 @@
-import { getHighlighterCore, addClassToHast, isSpecialLang } from 'shikiji/core'
+import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shikiji/core'
 import type { HighlighterCore, LanguageInput, ShikijiTransformer, ThemeInput } from 'shikiji'
 import type { Highlighter } from './types'
 import type { Element } from 'hast'
@@ -58,7 +58,6 @@ export function createShikiHighlighter({
     const shiki = await getShiki()
 
     const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
-    const themes = Object.values(themesObject)
 
     if (!shiki.getLoadedLanguages().includes(lang) && !isSpecialLang(lang)) {
       if (process.dev) {
@@ -68,9 +67,14 @@ export function createShikiHighlighter({
     }
 
     const loadedThemes = shiki.getLoadedThemes()
-    const missingThemes = themes.filter(theme => !loadedThemes.includes(theme))
-    if (missingThemes.length > 0) {
-      new Error(`[mdc] Theme "${missingThemes.join(', ')}" is not loaded to the Shiki highlighter. Add the theme(s) to "mdc.highlight.theme" to fix this.`)
+    for (const color of Object.keys(themesObject)) {
+      const theme = themesObject[color]
+      if (!loadedThemes.includes(theme) && isSpecialTheme(theme)) {
+        if (process.dev) {
+          console.warn(`[mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
+        }
+        themesObject[color] = 'none'
+      }
     }
 
     const transformers: ShikijiTransformer[] = [

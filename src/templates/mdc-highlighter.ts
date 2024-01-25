@@ -22,10 +22,11 @@ export async function mdcHighlighter({
       shikiPath,
       shikiPath + '.mjs',
     ].find((file) => existsSync(file))
+
     if (!file)
       throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
-    const code = await fs.readFile(file, 'utf-8')
 
+    const code = await fs.readFile(file, 'utf-8')
 
     const { bundledLanguagesInfo } = await import('shikiji/langs')
 
@@ -43,9 +44,12 @@ export async function mdcHighlighter({
         langs.add(lang)
     })
 
-    const themes = typeof options?.theme === 'string'
-    ? [options?.theme]
-    : Object.values(options?.theme || {})
+    const themes = Array.from(new Set([
+      ...typeof options?.theme === 'string'
+        ? [options?.theme]
+        : Object.values(options?.theme || {}),
+      ...options?.themes || []
+    ]))
 
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
@@ -88,5 +92,5 @@ export async function mdcHighlighter({
   }
 
   // custom highlighter path
-    return 'export { default } from ' + JSON.stringify(options.highlighter)
+  return 'export { default } from ' + JSON.stringify(options.highlighter)
 }
