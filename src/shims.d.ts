@@ -1,5 +1,7 @@
 declare module '#mdc-configs' {
-  function getMdcConfigs(): Promise<ModuleOptions[]>
+  import type { MdcConfig } from './runtime/types/config'
+
+  function getMdcConfigs(): Promise<MdcConfig[]>
   export { getMdcConfigs }
 }
 

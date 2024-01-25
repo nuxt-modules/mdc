@@ -1,5 +1,6 @@
 import type { Options as RehypeOption } from 'remark-rehype'
 import type { RehypeHighlightOption } from '../highlighter/rehype'
+import type { MdcConfig } from './config'
 
 export interface RemarkPlugin {
   instance?: any
@@ -30,4 +31,9 @@ export interface MDCParseOptions {
     depth?: number
     searchDepth?: number
   }
+
+  /**
+   * Inline mdc.config.ts
+   */
+  configs?: MdcConfig[]
 }

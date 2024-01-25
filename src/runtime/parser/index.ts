@@ -9,16 +9,27 @@ import { compileHast } from './compiler'
 import { defaults } from './options'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
-import { getMdcConfigs } from '#mdc-configs'
+import type { MdcConfig } from '../types/config'
 
 // TODO: maybe cache the processors in a way
 
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
+let generatedMdcConfigs: MdcConfig[] | undefined
+
 export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
-  const configs = await getMdcConfigs()
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
+  if (!generatedMdcConfigs) {
+    generatedMdcConfigs = await import('#mdc-configs' /* @vite-ignore */)
+      .then(r=>r.getMdcConfigs())
+      .catch()
+  }
+
+  const mdcConfigs = [
+    ...generatedMdcConfigs || [],
+    ...(inlineOptions.configs || [])
+  ]
 
   // TODO: remove the passing in @nuxt/content and then we could remove this line
   if (inlineOptions.highlight != null && inlineOptions.highlight != false && typeof inlineOptions.highlight.highlighter !== 'function') {
@@ -46,7 +57,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   let processor = unified()
 
   // mdc.config.ts hooks
-  for (const config of configs) {
+  for (const config of mdcConfigs) {
     processor = await config.unified?.pre?.(processor) || processor
   }
 
@@ -54,7 +65,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   processor.use(remarkParse as any)
 
   // mdc.config.ts hooks
-  for (const config of configs) {
+  for (const config of mdcConfigs) {
     processor = await config.unified?.remark?.(processor) || processor
   }
 
@@ -65,7 +76,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   processor.use(remark2rehype as any, (options.rehype as any)?.options)
 
   // mdc.config.ts hooks
-  for (const config of configs) {
+  for (const config of mdcConfigs) {
     processor = await config.unified?.rehype?.(processor) || processor
   }
 
@@ -76,7 +87,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   processor.use(compileHast)
 
   // mdc.config.ts hooks
-  for (const config of configs) {
+  for (const config of mdcConfigs) {
     processor = await config.unified?.post?.(processor) || processor
   }
 

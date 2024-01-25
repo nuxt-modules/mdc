@@ -8,7 +8,7 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
 } from 'shikiji-transformers'
-import type { MdcConfig } from '@nuxtjs/mdc/config'
+import type { MdcConfig } from '../types/config'
 
 export interface CreateShikiHighlighterOptions {
   langs: LanguageInput[]
