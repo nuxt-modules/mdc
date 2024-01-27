@@ -1,5 +1,5 @@
 import type { ElementContent } from 'hast'
-import type { BuiltinTheme } from 'shikiji'
+import type { BuiltinTheme } from 'shiki'
 
 export type MdcThemeOptions = BuiltinTheme | string | Record<string, BuiltinTheme | string>
 

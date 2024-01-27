@@ -45,7 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (options.highlight) {
-      // Enable unwasm for shikiji
+      // Enable unwasm for shiki
       nuxt.hook('ready', () => {
         const nitro = useNitro()
         const addWasmSupport = (_nitro: typeof nitro) => {

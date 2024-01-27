@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
 import { existsSync } from 'fs'
-import type { LanguageRegistration, ThemeRegistration } from 'shikiji/core'
+import type { LanguageRegistration, ThemeRegistration } from 'shiki/core'
 import type { ModuleOptions } from '../types'
 
 export async function mdcHighlighter({
@@ -28,14 +28,14 @@ export async function mdcHighlighter({
 
     const code = await fs.readFile(file, 'utf-8')
 
-    const { bundledLanguagesInfo } = await import('shikiji/langs')
+    const { bundledLanguagesInfo } = await import('shiki/langs')
 
     const langs = new Set<string | LanguageRegistration>()
     options.langs?.forEach((lang) => {
       if (typeof lang === 'string') {
         const id = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang))?.id || lang
         if (!bundledLanguagesInfo.find(i => i.id === id)) {
-          console.error(`[@nuxtjs/mdc] Could not find shikiji language: ${lang}`)
+          console.error(`[@nuxtjs/mdc] Could not find shiki language: ${lang}`)
           return
         }
         langs.add(id)
@@ -58,12 +58,12 @@ export async function mdcHighlighter({
       'const langs = [',
       ...Array.from(langs)
         .map((lang) => typeof lang === 'string'
-          ? `  import('shikiji/langs/${lang}.mjs'),`
+          ? `  import('shiki/langs/${lang}.mjs'),`
           : '  ' + JSON.stringify(lang) + ','),
       ']',
       'const themes = [',
       ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
-        ? `  import('shikiji/themes/${theme}.mjs'),`
+        ? `  import('shiki/themes/${theme}.mjs'),`
         : '  ' + JSON.stringify(theme) + ','),
       ']',
       'const options = ' + JSON.stringify({

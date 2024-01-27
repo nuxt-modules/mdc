@@ -1,5 +1,5 @@
-import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shikiji/core'
-import type { HighlighterCore, LanguageInput, ShikijiTransformer, ThemeInput } from 'shikiji'
+import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
+import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
 import type { Highlighter } from './types'
 import type { Element } from 'hast'
 import {
@@ -7,7 +7,7 @@ import {
   transformerNotationErrorLevel,
   transformerNotationFocus,
   transformerNotationHighlight,
-} from 'shikiji-transformers'
+} from '@shikijs/transformers'
 import type { MdcConfig } from '../types/config'
 
 export interface CreateShikiHighlighterOptions {
@@ -27,7 +27,7 @@ export function createShikiHighlighter({
     const shiki = await getHighlighterCore({
       langs,
       themes,
-      loadWasm: () => import('shikiji/wasm')
+      loadWasm: () => import('shiki/wasm')
     })
 
     const configs = await getMdcConfigs()
@@ -47,7 +47,7 @@ export function createShikiHighlighter({
     return shiki
   }
 
-  const baseTransformers: ShikijiTransformer[] = [
+  const baseTransformers: ShikiTransformer[] = [
     transformerNotationDiff(),
     transformerNotationFocus(),
     transformerNotationHighlight(),
@@ -77,7 +77,7 @@ export function createShikiHighlighter({
       }
     }
 
-    const transformers: ShikijiTransformer[] = [
+    const transformers: ShikiTransformer[] = [
       ...baseTransformers,
     ]
 

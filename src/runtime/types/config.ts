@@ -1,5 +1,5 @@
-import type { Highlighter, HighlighterCore } from 'shikiji'
-import type { ShikijiTransformer } from 'shikiji'
+import type { Highlighter, HighlighterCore } from 'shiki'
+import type { ShikiTransformer } from 'shiki'
 import type { Processor } from 'unified'
 import type { MdcThemeOptions, HighlighterOptions } from '../highlighter/types'
 
@@ -34,15 +34,15 @@ export interface MdcConfig {
   highlighter?: Highlighter
 
   /**
-   * Hooks for shikiji
+   * Hooks for shiki
    */
   shiki?: {
     /**
-     * Get transformers for shikiji
+     * Get transformers for shiki
      */
-    transformers?: ShikijiTransformer[] | ((code: string, lang: string, theme: MdcThemeOptions, options: Partial<HighlighterOptions>) => Awaitable<ShikijiTransformer[]>)
+    transformers?: ShikiTransformer[] | ((code: string, lang: string, theme: MdcThemeOptions, options: Partial<HighlighterOptions>) => Awaitable<ShikiTransformer[]>)
     /**
-     * Custom setup for shikiji instance, only called once on server or client
+     * Custom setup for shiki instance, only called once on server or client
      */
     setup?: (highlighter: HighlighterCore) => Awaitable<void>
   }

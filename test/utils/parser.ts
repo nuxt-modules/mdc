@@ -25,12 +25,12 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
 
     const highlighter = createShikiHighlighter({
       langs: [
-        import('shikiji/langs/typescript.mjs'),
-        import('shikiji/langs/javascript.mjs'),
+        import('shiki/langs/typescript.mjs'),
+        import('shiki/langs/javascript.mjs'),
       ],
       themes: [
-        import('shikiji/themes/github-light.mjs'),
-        import('shikiji/themes/github-dark.mjs'),
+        import('shiki/themes/github-light.mjs'),
+        import('shiki/themes/github-dark.mjs'),
       ],
       options: {},
       getMdcConfigs: async () => []
