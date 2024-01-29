@@ -23,7 +23,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   if (!generatedMdcConfigs) {
     generatedMdcConfigs = await import('#mdc-configs' /* @vite-ignore */)
       .then(r=>r.getMdcConfigs())
-      .catch()
+      .catch(() => ([]))
   }
 
   const mdcConfigs = [
