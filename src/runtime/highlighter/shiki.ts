@@ -31,7 +31,7 @@ export function createShikiHighlighter({
     })
 
     const configs = await getMdcConfigs()
-    for (const config of configs) {
+    for await (const config of configs) {
       await config.shiki?.setup?.(shiki)
     }
 
