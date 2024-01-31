@@ -11,18 +11,31 @@ import {
 import type { MdcConfig } from '../types/config'
 
 export interface CreateShikiHighlighterOptions {
-  langs: LanguageInput[]
+  /* An array of themes to be loaded initially */
   themes: ThemeInput[]
-  options: { wrapperStyle?: string }
-  getMdcConfigs: () => Promise<MdcConfig[]>
+  /* An array of languages to be loaded initially */
+  langs: LanguageInput[]
+  /* An object of themes to be loaded lazily */
+  bundledThemes?: Record<string, ThemeInput>
+  /* An object of languages to be loaded lazily */
+  bundledLangs?: Record<string, LanguageInput>
+  /* Extra options for renderer */
+  options?: { wrapperStyle?: string }
+  /* A function to custom mdc configs */
+  getMdcConfigs?: () => Promise<MdcConfig[]>
 }
 
 export function createShikiHighlighter({
   langs,
   themes,
+  bundledLangs,
+  bundledThemes,
   getMdcConfigs,
   options: shikiOptions
 }: CreateShikiHighlighterOptions): Highlighter {
+  let shiki: Promise<HighlighterCore> | undefined
+  let configs: Promise<MdcConfig[]> | undefined
+
   async function _getShiki() {
     const shiki = await getHighlighterCore({
       langs,
@@ -30,21 +43,25 @@ export function createShikiHighlighter({
       loadWasm: () => import('shiki/wasm')
     })
 
-    const configs = await getMdcConfigs()
-    for await (const config of configs) {
+    for await (const config of await getConfigs()) {
       await config.shiki?.setup?.(shiki)
     }
 
     return shiki
   }
 
-  let shiki: Promise<HighlighterCore> | undefined
-
   async function getShiki() {
     if (!shiki) {
       shiki = _getShiki()
     }
     return shiki
+  }
+
+  async function getConfigs() {
+    if (!configs) {
+      configs = Promise.resolve(getMdcConfigs?.() || [])
+    }
+    return configs
   }
 
   const baseTransformers: ShikiTransformer[] = [
@@ -58,22 +75,33 @@ export function createShikiHighlighter({
     const shiki = await getShiki()
 
     const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
+    const loadedThemes = shiki.getLoadedThemes()
+    const loadedLanguages = shiki.getLoadedLanguages()
 
-    if (!shiki.getLoadedLanguages().includes(lang) && !isSpecialLang(lang)) {
-      if (process.dev) {
-        console.warn(`[mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
+    if (!loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
+      if (bundledLangs?.[lang]) {
+        await shiki.loadLanguage(bundledLangs[lang])
       }
-      lang = 'text'
+      else {
+        if (process.dev) {
+          console.warn(`[mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
+        }
+        lang = 'text'
+      }
     }
 
-    const loadedThemes = shiki.getLoadedThemes()
     for (const color of Object.keys(themesObject)) {
       const theme = themesObject[color]
       if (!loadedThemes.includes(theme) && isSpecialTheme(theme)) {
-        if (process.dev) {
-          console.warn(`[mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
+        if (bundledThemes?.[theme]) {
+          await shiki.loadTheme(bundledThemes[theme])
         }
-        themesObject[color] = 'none'
+        else {
+          if (process.dev) {
+            console.warn(`[mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
+          }
+          themesObject[color] = 'none'
+        }
       }
     }
 
@@ -81,13 +109,12 @@ export function createShikiHighlighter({
       ...baseTransformers,
     ]
 
-    for (const config of await getMdcConfigs()) {
+    for (const config of await getConfigs()) {
       const newTransformers = typeof config.shiki?.transformers === 'function'
         ? await config.shiki?.transformers(code, lang, theme, options)
         : config.shiki?.transformers || []
       transformers.push(...newTransformers)
     }
-
 
     const root = shiki.codeToHast(code.trimEnd(), {
       lang,
@@ -144,7 +171,7 @@ export function createShikiHighlighter({
     const preEl = root.children[0] as Element
     const codeEl = preEl.children[0] as Element
 
-    const wrapperStyle = shikiOptions.wrapperStyle
+    const wrapperStyle = shikiOptions?.wrapperStyle
     preEl.properties.style = wrapperStyle
       ? (typeof wrapperStyle === 'string'
         ? wrapperStyle
