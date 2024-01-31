@@ -30,18 +30,25 @@ export async function mdcHighlighter({
 
     const { bundledLanguagesInfo } = await import('shiki/langs')
 
-    const langs = new Set<string | LanguageRegistration>()
+    /**
+     * Key: language alias or id for lookup
+     * Value: language id or language registration
+     */
+    const langsMap = new Map<string, string | LanguageRegistration>()
     options.langs?.forEach((lang) => {
       if (typeof lang === 'string') {
-        const id = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang))?.id || lang
-        if (!bundledLanguagesInfo.find(i => i.id === id)) {
-          console.error(`[@nuxtjs/mdc] Could not find shiki language: ${lang}`)
-          return
+        const info = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang) || i.id === lang)
+        if (!info) {
+          throw new Error(`[mdc] Could not find shiki language: ${lang}`)
         }
-        langs.add(id)
+        langsMap.set(info.id, info.id)
+        for (const alias of info.aliases || []) {
+          langsMap.set(alias, info.id)
+        }
       }
-      else
-        langs.add(lang)
+      else {
+        langsMap.set(lang.name, lang)
+      }
     })
 
     const themes = Array.from(new Set([
@@ -55,22 +62,22 @@ export async function mdcHighlighter({
       'import { getMdcConfigs } from \'#mdc-configs\'',
       code,
 
-      'const langs = [',
-      ...Array.from(langs)
-        .map((lang) => typeof lang === 'string'
-          ? `  import('shiki/langs/${lang}.mjs'),`
-          : '  ' + JSON.stringify(lang) + ','),
-      ']',
-      'const themes = [',
-      ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
-        ? `  import('shiki/themes/${theme}.mjs'),`
-        : '  ' + JSON.stringify(theme) + ','),
-      ']',
+      'const bundledLangs = {',
+      ...Array.from(langsMap.entries())
+        .map(([name, lang]) => typeof lang === 'string'
+          ? JSON.stringify(name) + `: () => import('shiki/langs/${lang}.mjs'),`
+          : JSON.stringify(name) + ': ' + JSON.stringify(lang) + ','),
+      '}',
+      'const bundledThemes = {',
+        ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
+          ? JSON.stringify(theme) + `: () => import('shiki/themes/${theme}.mjs').then(r => r.default),`
+          : JSON.stringify(theme.name) + ': ' + JSON.stringify(theme) + ','),
+      '}',
       'const options = ' + JSON.stringify({
         theme: options.theme,
         wrapperStyle: options.wrapperStyle
       }),
-      'const highlighter = createShikiHighlighter({ langs, themes, options, getMdcConfigs })',
+      'const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs })',
       'export default highlighter',
     ].join('\n')
   }

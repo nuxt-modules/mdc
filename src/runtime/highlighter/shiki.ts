@@ -12,9 +12,9 @@ import type { MdcConfig } from '../types/config'
 
 export interface CreateShikiHighlighterOptions {
   /* An array of themes to be loaded initially */
-  themes: ThemeInput[]
+  themes?: ThemeInput[]
   /* An array of languages to be loaded initially */
-  langs: LanguageInput[]
+  langs?: LanguageInput[]
   /* An object of themes to be loaded lazily */
   bundledThemes?: Record<string, ThemeInput>
   /* An object of languages to be loaded lazily */
@@ -26,13 +26,13 @@ export interface CreateShikiHighlighterOptions {
 }
 
 export function createShikiHighlighter({
-  langs,
-  themes,
-  bundledLangs,
-  bundledThemes,
+  langs = [],
+  themes = [],
+  bundledLangs = {},
+  bundledThemes = {},
   getMdcConfigs,
   options: shikiOptions
-}: CreateShikiHighlighterOptions): Highlighter {
+}: CreateShikiHighlighterOptions = {}): Highlighter {
   let shiki: Promise<HighlighterCore> | undefined
   let configs: Promise<MdcConfig[]> | undefined
 
@@ -78,8 +78,8 @@ export function createShikiHighlighter({
     const loadedThemes = shiki.getLoadedThemes()
     const loadedLanguages = shiki.getLoadedLanguages()
 
-    if (!loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
-      if (bundledLangs?.[lang]) {
+    if (typeof lang === 'string' && !loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
+      if (bundledLangs[lang]) {
         await shiki.loadLanguage(bundledLangs[lang])
       }
       else {
@@ -90,10 +90,9 @@ export function createShikiHighlighter({
       }
     }
 
-    for (const color of Object.keys(themesObject)) {
-      const theme = themesObject[color]
-      if (!loadedThemes.includes(theme) && isSpecialTheme(theme)) {
-        if (bundledThemes?.[theme]) {
+    for (const [color, theme] of Object.entries(themesObject)) {
+      if (typeof theme === 'string' && !loadedThemes.includes(theme) && !isSpecialTheme(theme)) {
+        if (bundledThemes[theme]) {
           await shiki.loadTheme(bundledThemes[theme])
         }
         else {
