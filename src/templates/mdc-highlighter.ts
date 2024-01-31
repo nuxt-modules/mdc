@@ -39,7 +39,7 @@ export async function mdcHighlighter({
       if (typeof lang === 'string') {
         const info = bundledLanguagesInfo.find(i => i.aliases?.includes?.(lang) || i.id === lang)
         if (!info) {
-          throw new Error(`[mdc] Could not find shiki language: ${lang}`)
+          throw new Error(`[@nuxtjs/mdc] Could not find shiki language: ${lang}`)
         }
         langsMap.set(info.id, info.id)
         for (const alias of info.aliases || []) {

@@ -84,7 +84,7 @@ export function createShikiHighlighter({
       }
       else {
         if (process.dev) {
-          console.warn(`[mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
+          console.warn(`[@nuxtjs/mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
         }
         lang = 'text'
       }
@@ -97,7 +97,7 @@ export function createShikiHighlighter({
         }
         else {
           if (process.dev) {
-            console.warn(`[mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
+            console.warn(`[@nuxtjs/mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
           }
           themesObject[color] = 'none'
         }
