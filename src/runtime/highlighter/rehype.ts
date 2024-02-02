@@ -48,12 +48,16 @@ export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
       node => ['pre', 'code'].includes((node as Element).tagName) && !!((node as Element).properties?.language || (node as Element).properties?.highlights),
       (node) => {
         const _node = node as Element
+        const highlights = typeof _node.properties!.highlights === 'string'
+          ? _node.properties!.highlights.split(/[,\s]+/).map(Number)
+          : (Array.isArray(_node.properties!.highlights) ? _node.properties!.highlights.map(Number) : [])
+
         const task = options.highlighter!(
           toString(node as any),
           _node.properties!.language as string,
           options.theme!,
           {
-            highlights: (_node.properties!.highlights ?? []) as number[],
+            highlights: highlights.filter(Boolean),
             meta: _node.properties.meta as string
           }
         )
