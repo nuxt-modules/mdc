@@ -9,31 +9,65 @@ import { compileHast } from './compiler'
 import { defaults } from './options'
 import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
+import type { MdcConfig } from '../types/config'
 
-let moduleOptions: any
-export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
+// TODO: maybe cache the processors in a way
+
+let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
+let generatedMdcConfigs: MdcConfig[] | undefined
+
+export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
   if (!moduleOptions) {
-    // @ts-ignore
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
-  const options = defu(opts, {
+  if (!generatedMdcConfigs) {
+    generatedMdcConfigs = await import('#mdc-configs' /* @vite-ignore */)
+      .then(r=>r.getMdcConfigs())
+      .catch(() => ([]))
+  }
+
+  const mdcConfigs = [
+    ...generatedMdcConfigs || [],
+    ...(inlineOptions.configs || [])
+  ]
+
+  // TODO: remove the passing in @nuxt/content and then we could remove this line
+  if (inlineOptions.highlight != null && inlineOptions.highlight != false && typeof inlineOptions.highlight.highlighter !== 'function') {
+    if (import.meta.dev)
+      console.warn('[@nuxtjs/mdc] `highlighter` passed to `parseMarkdown` is should be a function, but got ' + JSON.stringify(inlineOptions.highlight.highlighter) + ', ignored.')
+    inlineOptions = {
+      ...inlineOptions,
+      highlight: {
+        ...inlineOptions.highlight
+      }
+    }
+    delete (inlineOptions.highlight as any).highlighter
+  }
+
+  const options = defu(inlineOptions, {
     remark: { plugins: moduleOptions?.remarkPlugins },
     rehype: { plugins: moduleOptions?.rehypePlugins },
-    highlight: moduleOptions?.highlight,
-  }, defaults)
+    highlight: moduleOptions?.highlight
+  }, defaults) as MDCParseOptions
 
   if (options.rehype?.plugins?.highlight) {
     options.rehype.plugins.highlight.options = options.highlight || {}
   }
-  
 
-  // Extract front matter data
-  const { content, data: frontmatter } = await parseFrontMatter(md)
+  let processor = unified()
 
-  const processor = unified()
+  // mdc.config.ts hooks
+  for (const config of mdcConfigs) {
+    processor = await config.unified?.pre?.(processor) || processor
+  }
 
   // Use `remark-parse` plugin to parse markdown input
   processor.use(remarkParse as any)
+
+  // mdc.config.ts hooks
+  for (const config of mdcConfigs) {
+    processor = await config.unified?.remark?.(processor) || processor
+  }
 
   // Apply custom plugins to extend remark capabilities
   await useProcessorPlugins(processor as any, options.remark?.plugins)
@@ -41,11 +75,24 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   // Turns markdown into HTML to support rehype
   processor.use(remark2rehype as any, (options.rehype as any)?.options)
 
-  // Apply custom plguins to extend rehybe capabilities
+  // mdc.config.ts hooks
+  for (const config of mdcConfigs) {
+    processor = await config.unified?.rehype?.(processor) || processor
+  }
+
+  // Apply custom plugins to extend rehype capabilities
   await useProcessorPlugins(processor as any, options.rehype?.plugins)
 
   // Apply compiler
   processor.use(compileHast)
+
+  // mdc.config.ts hooks
+  for (const config of mdcConfigs) {
+    processor = await config.unified?.post?.(processor) || processor
+  }
+
+  // Extract front matter data
+  const { content, data: frontmatter } = await parseFrontMatter(md)
 
   // Start processing stream
   const processedFile = await processor.process({ value: content, data: frontmatter })
@@ -74,7 +121,7 @@ export const parseMarkdown = async (md: string, opts: MDCParseOptions = {}) => {
   }
 }
 
-export function contentHeading (body: MDCRoot) {
+export function contentHeading(body: MDCRoot) {
   let title = ''
   let description = ''
   const children = body.children

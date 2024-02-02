@@ -28,7 +28,7 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
                 path: resolver.resolve(`./runtime/utils/${context.ssr ? 'ssrSlot' : 'slot'}`)
               })
             }
-          } 
+          }
         }
 
         if (context.nodeTransforms[0].name !== 'viteMDCSlot') {

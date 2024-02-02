@@ -1,23 +1,18 @@
-import type { Root, Element } from '../types/hast'
+import type { Root, Element } from 'hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import type { HighlightResult, Highlighter, Theme } from './types'
+import type { HighlightResult, Highlighter, MdcThemeOptions } from './types'
 
-interface RehypeShikiOption {
-  theme?: Theme
+export interface RehypeHighlightOption {
+  theme?: MdcThemeOptions
   highlighter?: Highlighter
 }
 
-const defaults: RehypeShikiOption = {
-  theme: {
-    default: 'github-light',
-    dark: 'github-dark'
-  },
-  async highlighter (code, lang, theme, highlights) {
+const defaults: RehypeHighlightOption = {
+  theme: {},
+  async highlighter(code, lang, theme, options) {
     if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
-      return import('./highlighter').then(({ useShikiHighlighter }) => {
-        return useShikiHighlighter().getHighlightedAST(code, lang as any, theme, { highlights })
-      })
+      return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options))
     }
 
     try {
@@ -26,21 +21,23 @@ const defaults: RehypeShikiOption = {
           code,
           lang,
           theme: JSON.stringify(theme),
-          highlights: JSON.stringify(highlights)
+          options: JSON.stringify(options)
         }
       })
     } catch (e: any) {
       if (process.browser && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
-        return this.highlighter?.(code, lang, theme, highlights)!
+        return this.highlighter?.(code, lang, theme, options)!
       }
     }
 
     return Promise.resolve({ tree: [{ type: 'text', value: code }], className: '', style: '' } as HighlightResult)
   }
 }
-export default rehypeShiki
-export function rehypeShiki(opts: RehypeShikiOption = {}) {
+
+export default rehypeHighlight
+
+export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
   const options = { ...defaults, ...opts }
 
   return async (tree: Root) => {
@@ -52,13 +49,17 @@ export function rehypeShiki(opts: RehypeShikiOption = {}) {
       (node) => {
         const _node = node as Element
         const highlights = typeof _node.properties!.highlights === 'string'
-          ? _node.properties!.highlights.split(' ').map(Number)
-          : []
+          ? _node.properties!.highlights.split(/[,\s]+/).map(Number)
+          : (Array.isArray(_node.properties!.highlights) ? _node.properties!.highlights.map(Number) : [])
+
         const task = options.highlighter!(
           toString(node as any),
           _node.properties!.language as string,
           options.theme!,
-          highlights
+          {
+            highlights: highlights.filter(Boolean),
+            meta: _node.properties.meta as string
+          }
         )
           .then(({ tree, className, style, inlineStyle }) => {
             _node.properties!.className = ((_node.properties!.className || '') + ' ' + className).trim()
