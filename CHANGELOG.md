@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v0.4.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.3.2...v0.4.0)
+
+### 🚀 Enhancements
+
+- ⚠️  `mdc.config.js` support, improve shiki bundle ([#129](https://github.com/nuxt-modules/mdc/pull/129))
+
+### 🩹 Fixes
+
+- Improve optimizeDeps handling ([#131](https://github.com/nuxt-modules/mdc/pull/131))
+- **code-block:** Convert string to `number[]` before rehypeShiki ([#133](https://github.com/nuxt-modules/mdc/pull/133))
+
+### 🏡 Chore
+
+- Remove comment ([9d75268](https://github.com/nuxt-modules/mdc/commit/9d75268))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  `mdc.config.js` support, improve shiki bundle ([#129](https://github.com/nuxt-modules/mdc/pull/129))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Charlie0228 <charlie800228@gmail.com>
+- Anthony Fu <anthonyfu117@hotmail.com>
+
 ## v0.3.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.3.1...v0.3.2)
