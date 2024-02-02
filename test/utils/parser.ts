@@ -1,9 +1,8 @@
 import { vi } from 'vitest'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import type { MDCParseOptions } from '../../src/runtime/types'
-import type { Theme } from '../../src/runtime/shiki/types'
-import { useShikiHighlighter } from '../../src/runtime/shiki/highlighter'
-import rehypeShiki from '../../src/runtime/shiki'
+import  { rehypeHighlight } from '../../src/runtime/highlighter/rehype'
+import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 
 vi.mock('#mdc-imports', () => {
   return {
@@ -13,19 +12,35 @@ vi.mock('#mdc-imports', () => {
   }
 })
 
+vi.mock('#mdc-configs', () => {
+  return {
+    getMdcConfigs: async () => []
+  }
+})
+
 export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
   if (options.highlight !== false) {
     options.highlight = options.highlight || {}
     options.highlight.theme = options.highlight.theme || 'github-light'
 
-    options.highlight.highlighter = async (code: string, lang: string, theme: Theme, highlights) => {
-      const shikiHighlighter = useShikiHighlighter({})
-      return await shikiHighlighter.getHighlightedAST(code as string, lang as any, theme as Theme, { highlights })
-    }
+    const highlighter = createShikiHighlighter({
+      langs: [
+        import('shiki/langs/typescript.mjs'),
+        import('shiki/langs/javascript.mjs'),
+      ],
+      themes: [
+        import('shiki/themes/github-light.mjs'),
+        import('shiki/themes/github-dark.mjs'),
+      ],
+      options: {},
+      getMdcConfigs: async () => []
+    })
+
+    options.highlight.highlighter = highlighter
     options.rehype = options.rehype || {}
     options.rehype.plugins = options.rehype?.plugins || {}
     options.rehype.plugins.highlight = options.rehype?.plugins.highlight || {}
-    options.rehype.plugins.highlight.instance = rehypeShiki
+    options.rehype.plugins.highlight.instance = rehypeHighlight
   }
 
   return _parseMarkDown(md, options)

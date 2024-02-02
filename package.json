@@ -11,6 +11,11 @@
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.mjs",
+      "require": "./dist/config.cjs"
+    },
     "./runtime": "./dist/runtime/index.mjs",
     "./dist/runtime": "./dist/runtime/index.mjs",
     "./runtime/*": "./dist/runtime/*.mjs",
@@ -21,6 +26,17 @@
   "files": [
     "dist"
   ],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ],
+      "config": [
+        "./dist/config.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "prepack": "nuxt-module-build prepare; nuxt-module-build",
     "build": "nuxt-module-build prepare; nuxt-module-build build",
@@ -34,8 +50,9 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.9.3",
-    "@types/hast": "^3.0.3",
+    "@nuxt/kit": "^3.10.0",
+    "@shikijs/transformers": "^1.0.0-beta.2",
+    "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.3",
     "@vue/compiler-core": "^3.4.15",
     "consola": "^3.2.3",
@@ -49,7 +66,8 @@
     "micromark-util-sanitize-uri": "^2.0.0",
     "ohash": "^1.1.3",
     "parse5": "^7.1.2",
-    "property-information": "^6.4.0",
+    "pathe": "^1.1.2",
+    "property-information": "^6.4.1",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "rehype-slug": "^6.0.0",
@@ -57,12 +75,11 @@
     "rehype-sort-attributes": "^5.0.0",
     "remark-emoji": "^4.0.1",
     "remark-gfm": "^4.0.0",
-    "remark-mdc": "^3.0.1",
+    "remark-mdc": "^3.0.2",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "scule": "^1.2.0",
-    "shikiji": "^0.9.19",
-    "shikiji-transformers": "^0.9.19",
+    "shiki": "^1.0.0-beta.2",
     "ufo": "^1.3.2",
     "unified": "^11.0.4",
     "unist-builder": "^4.0.0",
@@ -73,19 +90,19 @@
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxt/module-builder": "^0.5.5",
-    "@nuxt/schema": "^3.9.3",
-    "@nuxt/test-utils": "^3.10.0",
-    "@nuxt/ui": "^2.12.2",
+    "@nuxt/schema": "^3.10.0",
+    "@nuxt/test-utils": "^3.11.0",
+    "@nuxt/ui": "^2.13.0",
     "@types/mdurl": "^1.0.5",
-    "@types/node": "^20.11.5",
+    "@types/node": "^20.11.13",
     "changelogen": "^0.5.5",
     "eslint": "^8.56.0",
-    "nuxt": "^3.9.3",
+    "nuxt": "^3.10.0",
     "rehype": "^13.0.1",
-    "release-it": "^17.0.1",
-    "vitest": "^1.2.1"
+    "release-it": "^17.0.3",
+    "vitest": "^1.2.2"
   },
-  "packageManager": "pnpm@8.14.1",
+  "packageManager": "pnpm@8.15.1",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): release v${version}"

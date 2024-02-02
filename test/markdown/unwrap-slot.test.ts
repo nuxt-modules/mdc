@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { flatUnwrap } from '../../src/runtime'
+import { flatUnwrap } from '../../src/runtime/utils/node'
 
 const vnodes = [{__v_isVNode:true,__v_skip:true,type:'p',props:{},key:null,ref:null,scopeId:null,slotScopeIds:null,children:[{__v_isVNode:true,__v_skip:true,props:null,key:null,ref:null,scopeId:null,slotScopeIds:null,children:'I am an alert!',component:null,suspense:null,ssContent:null,ssFallback:null,dirs:null,transition:null,el:{},anchor:null,target:null,targetAnchor:null,staticCount:0,shapeFlag:8,patchFlag:0,dynamicProps:null,dynamicChildren:null,appContext:null}],component:null,suspense:null,ssContent:null,ssFallback:null,dirs:null,transition:null,el:{},anchor:null,target:null,targetAnchor:null,staticCount:0,shapeFlag:17,patchFlag:0,dynamicProps:null,dynamicChildren:null,appContext:null}]
 

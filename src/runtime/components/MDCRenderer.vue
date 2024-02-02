@@ -95,12 +95,12 @@ export default defineComponent({
     // Resolve root component
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
 
-    const childrenRendrer = renderSlots(body, h, meta, meta)
+    const childrenRenderer = renderSlots(body, h, meta, meta)
 
     // Return Vue component
     return component
-      ? h(component as any, { ...meta.component?.props, ...this.$attrs, key: contentKey }, childrenRendrer)
-      : childrenRendrer.default?.()
+      ? h(component as any, { ...meta.component?.props, ...this.$attrs, key: contentKey }, childrenRenderer)
+      : childrenRenderer.default?.()
   }
 })
 

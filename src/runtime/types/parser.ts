@@ -1,5 +1,6 @@
 import type { Options as RehypeOption } from 'remark-rehype'
-import type { Theme, Highlighter } from '../shiki/types'
+import type { RehypeHighlightOption } from '../highlighter/rehype'
+import type { MdcConfig } from './config'
 
 export interface RemarkPlugin {
   instance?: any
@@ -21,10 +22,7 @@ export interface MDCParseOptions {
     plugins?: Record<string, false | RehypePlugin>
   }
 
-  highlight?: {
-    theme?: Theme
-    highlighter?: Highlighter
-  } | false
+  highlight?: RehypeHighlightOption | false
 
   toc?: {
     /**
@@ -33,4 +31,9 @@ export interface MDCParseOptions {
     depth?: number
     searchDepth?: number
   }
+
+  /**
+   * Inline mdc.config.ts
+   */
+  configs?: MdcConfig[]
 }
