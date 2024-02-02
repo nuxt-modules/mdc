@@ -12,8 +12,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0(rollup@3.29.4)
       '@shikijs/transformers':
-        specifier: ^1.0.0-beta.3
-        version: 1.0.0-beta.3
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -96,8 +96,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       shiki:
-        specifier: ^1.0.0-beta.3
-        version: 1.0.0-beta.3
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5
       ufo:
         specifier: ^1.3.2
         version: 1.3.2
@@ -2359,14 +2359,14 @@ packages:
     resolution: {integrity: sha512-RbhOOTCNoCrbfkRyoXODZp75MlpiHMgbE5MEBZAnnnLyQNgrigEj4p0lzsMDyc1zVsJDLrivB58tgg3emX0eEA==}
     dev: true
 
-  /@shikijs/core@1.0.0-beta.3:
-    resolution: {integrity: sha512-SCwPom2Wn8XxNlEeqdzycU93SKgzYeVsedjqDsgZaz4XiiPpZUzlHt2NAEQTwTnPcHNZapZ6vbkwJ8P11ggL3Q==}
+  /@shikijs/core@1.0.0-beta.5:
+    resolution: {integrity: sha512-C/MxtvK3FFCQZSsDq6OfjDHHOmyP1Jc9wO66cnE8VLEyWXzWch7Zpoc2MWuVJTSC0Pz9QxyUlsBCnroplFqoSg==}
     dev: false
 
-  /@shikijs/transformers@1.0.0-beta.3:
-    resolution: {integrity: sha512-ASQQQqxW4dANxMGw4yGkTjtMSsUaRhImv/lzJEdfJ3/eP8TVlVYnohOFQVgpLjBBYGy9P0l0oKrlbjiGosTJ/Q==}
+  /@shikijs/transformers@1.0.0-beta.5:
+    resolution: {integrity: sha512-Kd3312yH6sh8Jw0xjBFfGpXTU3Qts1bwuB19wDDoKRvJqjrkffftdSuKzhHPa+DP/L0ZFhq96xMPngzQ15rQmQ==}
     dependencies:
-      shiki: 1.0.0-beta.3
+      shiki: 1.0.0-beta.5
     dev: false
 
   /@sigstore/bundle@2.1.1:
@@ -9311,10 +9311,10 @@ packages:
       rechoir: 0.6.2
     dev: true
 
-  /shiki@1.0.0-beta.3:
-    resolution: {integrity: sha512-z7cHTNSSvwGx2DfeLwjSNLo+HcVxifgNIzLm6Ye52eXcIwNHXT0wHbhy7FDOKSKveuEHBwt9opfj3Hoc8LE1Yg==}
+  /shiki@1.0.0-beta.5:
+    resolution: {integrity: sha512-S5FV55ZH8zLicVyqlJZj8LYqh/VuUICDDNG/L9eDM9I4d69EX+FbgSnKRIuJIwLrmJfTiPoGVnH1HsHX5whP/g==}
     dependencies:
-      '@shikijs/core': 1.0.0-beta.3
+      '@shikijs/core': 1.0.0-beta.5
     dev: false
 
   /side-channel@1.0.4:
