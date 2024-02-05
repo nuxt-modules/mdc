@@ -34,7 +34,7 @@ export async function mdcHighlighter({
       code = code.replace(
         /import\((['"])shiki\/wasm\1\)/,
         // We can remove the .client condition once Vite supports WASM ESM import
-        `import.meta.client ? import('shiki/wasm') : import('shiki/onig.wasm')`
+        'import.meta.client ? import(\'shiki/wasm\') : import(\'shiki/onig.wasm\')'
       )
     }
 
