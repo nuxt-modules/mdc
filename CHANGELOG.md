@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.5.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.4.0...v0.5.0)
+
+### 🚀 Enhancements
+
+- Better wasm support for CF ([#137](https://github.com/nuxt-modules/mdc/pull/137))
+- Add more default highlight langs ([#138](https://github.com/nuxt-modules/mdc/pull/138))
+
+### 🩹 Fixes
+
+- Check highlight for `undefined` value ([ea30fc7](https://github.com/nuxt-modules/mdc/commit/ea30fc7))
+
+### 📖 Documentation
+
+- Improve jsdoc ([516eb7e](https://github.com/nuxt-modules/mdc/commit/516eb7e))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Anthony Fu <anthonyfu117@hotmail.com>
+
 ## v0.4.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.3.2...v0.4.0)
