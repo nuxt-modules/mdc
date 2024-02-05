@@ -4,7 +4,24 @@ import type { ModuleOptions } from './types'
 import { defu } from 'defu'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
+import type { BundledLanguage } from 'shiki'
 import * as templates from './templates'
+
+export const DefaultHighlightLangs: BundledLanguage[] = [
+  'js',
+  'jsx',
+  'json',
+  'ts',
+  'tsx',
+  'vue',
+  'css',
+  'html',
+  'vue',
+  'bash',
+  'md',
+  'mdc',
+  'yaml'
+]
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -223,15 +240,7 @@ function resolveOptions(options: ModuleOptions) {
       default: 'github-light',
       dark: 'github-dark'
     }
-    options.highlight.langs ||= [
-      'js',
-      'ts',
-      'vue',
-      'css',
-      'html',
-      'vue',
-      'shell'
-    ]
+    options.highlight.langs ||= DefaultHighlightLangs
 
     if (options.highlight.preload) {
       options.highlight.langs.push(...options.highlight.preload as any || [])
