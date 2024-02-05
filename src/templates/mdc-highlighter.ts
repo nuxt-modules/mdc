@@ -6,12 +6,14 @@ import type { ModuleOptions } from '../types'
 export async function mdcHighlighter({
   options: {
     shikiPath,
-    options
+    options,
+    useWasmAssets
   }
 }: {
   options: {
     shikiPath: string,
-    options: ModuleOptions['highlight']
+    options: ModuleOptions['highlight'],
+    useWasmAssets: boolean
   }
 }) {
   if (!options || !options.highlighter)
@@ -26,7 +28,15 @@ export async function mdcHighlighter({
     if (!file)
       throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
 
-    const code = await fs.readFile(file, 'utf-8')
+    let code = await fs.readFile(file, 'utf-8')
+
+    if (useWasmAssets) {
+      code = code.replace(
+        /import\((['"])shiki\/wasm\1\)/,
+        // We can remove the .client condition once Vite supports WASM ESM import
+        'import.meta.client ? import(\'shiki/wasm\') : import(\'shiki/onig.wasm\')'
+      )
+    }
 
     const { bundledLanguagesInfo } = await import('shiki/langs')
 

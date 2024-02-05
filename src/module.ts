@@ -127,6 +127,8 @@ export default defineNuxtModule<ModuleOptions>({
       options: {
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
         options: options.highlight,
+        // When WASM support enabled in Nitro, we could use the .wasm file directly for Cloudflare Workers
+        useWasmAssets: !nuxt.options.dev && !!nuxt.options.nitro.experimental?.wasm
       },
     })
 
