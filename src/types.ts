@@ -1,5 +1,5 @@
 import type { MdcThemeOptions } from './runtime/highlighter/types'
-import type { BundledLanguage, BundledTheme, LanguageRegistration, ThemeRegistration, ThemeRegistrationAny } from 'shiki'
+import type { BundledLanguage, BundledTheme, LanguageRegistration, ThemeRegistrationAny } from 'shiki'
 
 export interface UnistPlugin {
   src?: string
@@ -35,6 +35,12 @@ export interface ModuleOptions {
 
     /**
      * Languages to be bundled loaded by Shiki
+     *
+     * All languages used has to be included in this list at build time, to create granular bundles.
+     *
+     * Unlike the `preload` option, when this option is provided, it will override the default languages.
+     *
+     * @default ['js','ts','vue','css','html','vue','shell']
      */
     langs?: (BundledLanguage | LanguageRegistration)[]
 
