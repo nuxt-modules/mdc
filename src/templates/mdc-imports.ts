@@ -30,11 +30,12 @@ function processUnistPlugins(plugins: Record<string, UnistPlugin>) {
   const imports: string[] = []
   const definitions: string[] = []
   Object.entries(plugins).forEach(([name, plugin]) => {
-    imports.push(`import ${pascalCase(name)} from '${plugin.src || name}'`)
+    const instanceName = pascalCase(name).replace(/\W/g, '')
+    imports.push(`import ${instanceName} from '${plugin.src || name}'`)
     if (Object.keys(plugin).length) {
-      definitions.push(`  '${name}': { instance: ${pascalCase(name)}, options: ${JSON.stringify(plugin.options || plugin)} },`)
+      definitions.push(`  '${name}': { instance: ${instanceName}, options: ${JSON.stringify(plugin.options || plugin)} },`)
     } else {
-      definitions.push(`  '${name}': { instance: ${pascalCase(name)} },`)
+      definitions.push(`  '${name}': { instance: ${instanceName} },`)
     }
   })
 
