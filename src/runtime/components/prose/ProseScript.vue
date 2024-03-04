@@ -13,5 +13,5 @@ defineProps({
     default: ''
   }
 })
-const isDev = computed(() => process.dev)
+const isDev = computed(() => typeof process !== 'undefined' && process.dev)
 </script>

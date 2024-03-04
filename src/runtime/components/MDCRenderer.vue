@@ -62,11 +62,12 @@ export default defineComponent({
     }
   },
   async setup (props) {
-    const { mdc } = useRuntimeConfig().public
+    // TODO: Is there a better fallback here?
+    const { mdc } = typeof useRuntimeConfig === 'function' ? useRuntimeConfig().public : { mdc: {} as Record<string, any> }
 
     const tags = {
-      ...(mdc.components.prose && props.prose !== false ? proseComponentMap : {}),
-      ...mdc.components.map,
+      ...(mdc.components?.prose && props.prose !== false ? proseComponentMap : {}),
+      ...mdc.components?.map || {},
       ...toRaw(props.data?.mdc?.components || {}),
       ...props.components
     }
@@ -144,7 +145,7 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
 function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   const data = {
     ...parentScope,
-    $route: () => useRoute(),
+    $route: () => typeof useRoute === 'function' ? useRoute() : undefined,
     $document: documentMeta,
     $doc: documentMeta
   }

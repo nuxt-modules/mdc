@@ -11,11 +11,11 @@ export interface RehypeHighlightOption {
 const defaults: RehypeHighlightOption = {
   theme: {},
   async highlighter(code, lang, theme, options) {
-    if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
-      return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options))
-    }
-
     try {
+      if (typeof process !== 'undefined' && process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
+        return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options)).catch(() => ({}))
+      }
+
       return await $fetch('/api/_mdc/highlight', {
         params: {
           code,
@@ -25,7 +25,7 @@ const defaults: RehypeHighlightOption = {
         }
       })
     } catch (e: any) {
-      if (process.browser && e?.response?.status === 404) {
+      if (typeof process !== 'undefined' && process.browser && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
         return this.highlighter?.(code, lang, theme, options)!
       }
