@@ -62,7 +62,7 @@ export default defineComponent({
   },
   async setup (props) {
     const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
-    const $route = $nuxt?.$route
+    const route = $nuxt?.$route
     const { mdc } = $nuxt?.$config?.public || {}
       
     const tags = {
@@ -82,16 +82,16 @@ export default defineComponent({
 
     await resolveContentComponents(props.body, { tags })
 
-    return { tags, contentKey, $route }
+    return { tags, contentKey, route }
   },
   render (ctx: any) {
-    const { tags, tag, body, data, contentKey, $route } = ctx
+    const { tags, tag, body, data, contentKey, route } = ctx
 
     if (!body) {
       return null
     }
 
-    const meta = { ...data, tags, $route }
+    const meta = { ...data, tags, $route: route }
 
     // Resolve root component
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
