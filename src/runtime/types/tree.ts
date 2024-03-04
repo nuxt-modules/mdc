@@ -12,10 +12,10 @@ export type MDCElement = {
   type: 'element'
   tag: string
   props: Record<string, any> | undefined
-  children: Array<MDCElement | MDCText>
+  children: Array<MDCElement | MDCText | MDCComment>
 }
 
-export type MDCNode = MDCElement | MDCText | MDCCommnet
+export type MDCNode = MDCElement | MDCText | MDCComment
 
 export type MDCRoot = {
   type: 'root'

@@ -126,7 +126,7 @@ export function contentHeading(body: MDCRoot) {
   let description = ''
   const children = body.children
     // top level `text` and `hr` can be ignored
-    .filter(node => node.type !== 'text' && node.tag !== 'hr')
+    .filter(node => node.type === 'element' && node.tag !== 'hr')
 
   if (children.length && (children[0] as MDCElement).tag === 'h1') {
     /**

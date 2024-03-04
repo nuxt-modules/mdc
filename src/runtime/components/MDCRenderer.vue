@@ -391,7 +391,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
   function loadComponents (node: MDCRoot | MDCNode, documentMeta: Record<string, any>) {
     const tag = (node as MDCElement).tag
 
-    if (node.type === 'text' || tag === 'binding') {
+    if (node.type === 'text' || tag === 'binding' || node.type === 'comment') {
       return []
     }
 
