@@ -3,6 +3,11 @@ export type MDCText = {
   value: string
 }
 
+export type MDCComment = {
+  type: 'comment'
+  value: string
+}
+
 export type MDCElement = {
   type: 'element'
   tag: string
@@ -10,7 +15,7 @@ export type MDCElement = {
   children: Array<MDCElement | MDCText>
 }
 
-export type MDCNode = MDCElement | MDCText
+export type MDCNode = MDCElement | MDCText | MDCCommnet
 
 export type MDCRoot = {
   type: 'root'

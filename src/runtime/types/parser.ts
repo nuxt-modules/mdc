@@ -32,6 +32,8 @@ export interface MDCParseOptions {
     searchDepth?: number
   }
 
+  keepComments?: boolean
+
   /**
    * Inline mdc.config.ts
    */

@@ -43,6 +43,7 @@ export default defineNuxtModule<ModuleOptions>({
         h6: false
       }
     },
+    keepComments: false,
     components: {
       prose: true,
       map: {}

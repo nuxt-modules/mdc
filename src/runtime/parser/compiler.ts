@@ -1,10 +1,10 @@
 import type { RootContent, Root } from '../types/hast'
-import type { MDCNode, MDCRoot } from '../types'
+import type { MDCNode, MDCParseOptions, MDCRoot } from '../types'
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
 import { validateProps } from './utils/props'
 
-export function compileHast(this: any) {
+export function compileHast(this: any, options: MDCParseOptions = {}) {
   // Create new slugger for each Tree to generate
   const slugs = new Slugger()
 
@@ -88,6 +88,13 @@ export function compileHast(this: any) {
       }
     }
 
+    if (options.keepComments && node.type === 'comment') {
+      return {
+        type: 'comment',
+        value: node.value
+      }
+    }
+    
     // Remove other nodes from tree
     return null
   }

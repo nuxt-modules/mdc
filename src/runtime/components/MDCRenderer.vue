@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, resolveComponent, Text, defineComponent, toRaw, computed } from 'vue'
+import { h, resolveComponent, Text, Comment, defineComponent, toRaw, computed } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
@@ -113,6 +113,10 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
    */
   if (node.type === 'text') {
     return h(Text, node.value)
+  }
+
+  if (node.type === 'comment') {
+    return h(Comment, null, node.value)
   }
 
   const originalTag = node.tag!

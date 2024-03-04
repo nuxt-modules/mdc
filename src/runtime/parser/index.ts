@@ -84,7 +84,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   await useProcessorPlugins(processor as any, options.rehype?.plugins)
 
   // Apply compiler
-  processor.use(compileHast)
+  processor.use(compileHast, options)
 
   // mdc.config.ts hooks
   for (const config of mdcConfigs) {
