@@ -4,6 +4,7 @@
     :body="data?.body"
     :toc="data?.toc"
     :excerpt="data?.excerpt"
+    :error="error"
   >
     <MDCRenderer
       v-if="body"
@@ -59,7 +60,7 @@ const props = defineProps({
 
 const key = computed(() => hash(props.value))
 
-const { data, refresh } = await useAsyncData(key.value, async () => {
+const { data, refresh, error } = await useAsyncData(key.value, async () => {
   if (typeof props.value !== 'string') {
     return props.value
   }

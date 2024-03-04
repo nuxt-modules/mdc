@@ -1,6 +1,10 @@
 import type { MDCElement, MDCNode } from '../types'
 
 export function flattenNodeText (node: MDCNode): string {
+  if (node.type === 'comment') {
+    return ''
+  }
+
   if (node.type === 'text') {
     return node.value || ''
   } else {

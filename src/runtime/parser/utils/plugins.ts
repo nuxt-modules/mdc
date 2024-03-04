@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Processor } from 'remark-rehype/lib'
 import type { MDCParseOptions, RehypePlugin, RemarkPlugin } from '../../types'
 

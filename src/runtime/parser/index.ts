@@ -84,7 +84,7 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   await useProcessorPlugins(processor as any, options.rehype?.plugins)
 
   // Apply compiler
-  processor.use(compileHast)
+  processor.use(compileHast, options)
 
   // mdc.config.ts hooks
   for (const config of mdcConfigs) {
@@ -126,7 +126,7 @@ export function contentHeading(body: MDCRoot) {
   let description = ''
   const children = body.children
     // top level `text` and `hr` can be ignored
-    .filter(node => node.type !== 'text' && node.tag !== 'hr')
+    .filter(node => node.type === 'element' && node.tag !== 'hr')
 
   if (children.length && (children[0] as MDCElement).tag === 'h1') {
     /**

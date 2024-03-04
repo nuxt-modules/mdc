@@ -70,6 +70,8 @@ export interface ModuleOptions {
     }
   }
 
+  keepComments?: boolean
+
   components?: {
     prose?: boolean
     map?: Record<string, string>

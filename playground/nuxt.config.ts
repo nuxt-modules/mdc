@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '../src/module'
   ],
-  // ssr: false,
+  // @ts-ignore
   mdc: {
     highlight: {
       theme: {
