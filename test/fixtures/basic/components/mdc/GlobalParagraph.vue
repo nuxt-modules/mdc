@@ -1,7 +1,7 @@
 <template>
   <p>
     [Global Paragraph]
-    <ContentSlot
+    <MDCSlot
       :use="$slots.default"
       unwrap="p"
     />
