@@ -310,7 +310,7 @@ function propsToDataRxBind (key: string, value: any, data: any, documentMeta: MD
  */
 const resolveVueComponent = (component: any) => {
   // Check if node is not a native HTML tag
-  if (!htmlTags.includes(component) && !component?.render) {
+  if (!htmlTags.includes(component) && !component?.render && !component?.ssrRender) {
     const componentFn = resolveComponent(pascalCase(component), false)
     // If component exists
     if (typeof componentFn === 'object') {

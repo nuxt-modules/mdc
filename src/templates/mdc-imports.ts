@@ -30,7 +30,7 @@ function processUnistPlugins(plugins: Record<string, UnistPlugin>) {
   const imports: string[] = []
   const definitions: string[] = []
   Object.entries(plugins).forEach(([name, plugin]) => {
-    const instanceName = pascalCase(name).replace(/\W/g, '')
+    const instanceName = `_${pascalCase(name).replace(/\W/g, '')}`
     imports.push(`import ${instanceName} from '${plugin.src || name}'`)
     if (Object.keys(plugin).length) {
       definitions.push(`  '${name}': { instance: ${instanceName}, options: ${JSON.stringify(plugin.options || plugin)} },`)
