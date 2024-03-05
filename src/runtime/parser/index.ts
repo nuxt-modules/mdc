@@ -51,7 +51,10 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
   }, defaults) as MDCParseOptions
 
   if (options.rehype?.plugins?.highlight) {
-    options.rehype.plugins.highlight.options = options.highlight || {}
+    options.rehype.plugins.highlight.options = {
+      ...(options.rehype.plugins.highlight.options || {}),
+      ...(options.highlight || {})
+    }
   }
 
   let processor = unified()
