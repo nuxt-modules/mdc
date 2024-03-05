@@ -1,10 +1,9 @@
 <script lang="ts">
-import { h, resolveComponent, Text, Comment, defineComponent, toRaw, computed } from 'vue'
+import { h, resolveComponent, Text, Comment, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
-import { useRoute, useRuntimeConfig } from '#imports'
 import htmlTags from '../parser/utils/html-tags-list'
 import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../types'
 
@@ -62,12 +61,13 @@ export default defineComponent({
     }
   },
   async setup (props) {
-    // TODO: Is there a better fallback here?
-    const { mdc } = typeof useRuntimeConfig === 'function' ? useRuntimeConfig().public : { mdc: {} as Record<string, any> }
-
+    const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
+    const route = $nuxt?.$route
+    const { mdc } = $nuxt?.$config?.public || {}
+      
     const tags = {
-      ...(mdc.components?.prose && props.prose !== false ? proseComponentMap : {}),
-      ...mdc.components?.map || {},
+      ...(mdc?.components?.prose && props.prose !== false ? proseComponentMap : {}),
+      ...(mdc?.components?.map || {}),
       ...toRaw(props.data?.mdc?.components || {}),
       ...props.components
     }
@@ -82,16 +82,16 @@ export default defineComponent({
 
     await resolveContentComponents(props.body, { tags })
 
-    return { tags, contentKey }
+    return { tags, contentKey, route }
   },
   render (ctx: any) {
-    const { tags, tag, body, data, contentKey } = ctx
+    const { tags, tag, body, data, contentKey, route } = ctx
 
     if (!body) {
       return null
     }
 
-    const meta = { ...data, tags }
+    const meta = { ...data, tags, $route: route }
 
     // Resolve root component
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
@@ -145,7 +145,6 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
 function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   const data = {
     ...parentScope,
-    $route: () => typeof useRoute === 'function' ? useRoute() : undefined,
     $document: documentMeta,
     $doc: documentMeta
   }

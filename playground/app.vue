@@ -13,6 +13,7 @@
           {{ data.title }}
         </h1>
         <MDCRenderer
+          v-if="body"
           :body="body"
           :data="data"
           :prose="false"
