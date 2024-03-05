@@ -5,13 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 defineProps({
   src: {
     type: String,
     default: ''
   }
 })
-const isDev = computed(() => typeof process !== 'undefined' && process.dev)
+const isDev = import.meta.env
 </script>
