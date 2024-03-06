@@ -284,8 +284,8 @@ Since you're not using Nuxt, you'll need to stub the module's imports in your Vu
 Create a new file in your Vue project's root directory, such as `stub-mdc-imports.js`, and add the following content:
 
 ```ts
-export const useRoute = undefined
-export const useRuntimeConfig = undefined
+// stub-mdc-imports.js
+export default {}
 ```
 
 Next, update your Vue project's Vite config file (e.g. `vite.config.ts`) to alias the module's imports to the stub file. For example:
