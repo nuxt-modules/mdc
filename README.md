@@ -297,10 +297,8 @@ import path from 'path'
 export default defineConfig({
   resolve: {
     alias: {
-      '#imports': path.resolve(__dirname, './stub-mdc-imports.js'),
       '#mdc-imports': path.resolve(__dirname, './stub-mdc-imports.js'),
-      '#mdc-configs': path.resolve(__dirname, './stub-mdc-imports.js'),
-      '#mdc-highlighter': path.resolve(__dirname, './stub-mdc-imports.js'),
+      '#mdc-configs': path.resolve(__dirname, './stub-mdc-imports.js')
     }
   }
 })
@@ -348,7 +346,7 @@ onBeforeMount(async () => {
   ast.value = await parseMarkdown(md, {
     rehype: {
       plugins: {
-        shikiji: {
+        highlight: {
           instance: rehypeHighlight,
           options: {
             theme: 'material-theme-palenight',
