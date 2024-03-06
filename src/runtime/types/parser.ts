@@ -1,6 +1,8 @@
 import type { Options as RehypeOption } from 'remark-rehype'
 import type { RehypeHighlightOption } from '../highlighter/rehype'
 import type { MdcConfig } from './config'
+import type { MDCData, MDCRoot } from './tree'
+import type { Toc } from './toc'
 
 export interface RemarkPlugin {
   instance?: any
@@ -38,4 +40,11 @@ export interface MDCParseOptions {
    * Inline mdc.config.ts
    */
   configs?: MdcConfig[]
+}
+
+export interface MDCParserResult {
+    data: MDCData,
+    body: MDCRoot,
+    excerpt: MDCRoot | undefined,
+    toc: Toc | undefined
 }

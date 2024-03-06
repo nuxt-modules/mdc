@@ -308,67 +308,89 @@ export default defineConfig({
 
 Next, import the necessary package exports into your host project's Vue component, and utilize them to configure the `MDCRenderer>` component and `parseMarkdown` utility.
 
-```vue
-<script setup lang="ts">
+```ts
+// composables/useMarkdownParser.ts
 // Import package exports
 import {
-  MDCRenderer,
-  parseMarkdown,
+  createMarkdownParser,
   rehypeHighlight,
   createShikiHighlighter,
-} from '@nuxtjs/mdc/runtime'
-
+} from "@nuxtjs/mdc/runtime";
 // Import desired shiki themes and languages
-import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
-import HtmlLang from 'shiki/langs/html.mjs'
-import MdcLang from 'shiki/langs/mdc.mjs'
-import TsLang from 'shiki/langs/typescript.mjs'
-import VueLang from 'shiki/langs/vue.mjs'
-import ScssLang from 'shiki/langs/scss.mjs'
-import YamlLang from 'shiki/langs/yaml.mjs'
+import MaterialThemePalenight from "shiki/themes/material-theme-palenight.mjs";
+import HtmlLang from "shiki/langs/html.mjs";
+import MdcLang from "shiki/langs/mdc.mjs";
+import TsLang from "shiki/langs/typescript.mjs";
+import VueLang from "shiki/langs/vue.mjs";
+import ScssLang from "shiki/langs/scss.mjs";
+import YamlLang from "shiki/langs/yaml.mjs";
 
-// Vue imports
-import { onBeforeMount, ref } from 'vue'
+export const useMarkdownParser = () => {
+  let parser: Awaited<ReturnType<typeof createMarkdownParser>>;
+  
+  const parse = async (markdown: string) => {
+    if (!parser) {
+      parser = await createMarkdownParser({
+        rehype: {
+          plugins: {
+            highlight: {
+              instance: rehypeHighlight,
+              options: {
+                theme: "material-theme-palenight",
+                highlighter: createShikiHighlighter({
+                  bundledThemes: {
+                    "material-theme-palenight": MaterialThemePalenight,
+                  },
+                  bundledLangs: {
+                    html: HtmlLang,
+                    mdc: MdcLang,
+                    vue: VueLang,
+                    yml: YamlLang,
+                    scss: ScssLang,
+                    ts: TsLang,
+                    typescript: TsLang,
+                  },
+                }),
+              },
+            },
+          },
+        },
+      })
+    }
+    return parser(markdown);
+  };
 
-const md = `
-# Example
+  return parse;
+}
+```
 
-This is my markdown file with MDC below
+```vue
+<script setup lang="ts">
+import { onBeforeMount, ref, watch } from "vue";
+// Import package exports
+import { MDCRenderer } from "@nuxtjs/mdc/runtime";
+import type { MDCParserResult } from "@nuxtjs/mdc/runtime/types/index";
+import { useMarkdownParser } from "./composables/useMarkdownParser";
+
+const md = ref(`
+# Just a Vue app
+
+This is markdown content rendered via the \`<MDCRenderer>\` component, including MDC below.
 
 ::alert
 Hello MDC
 ::
-`
 
-const ast = ref(null)
+\`\`\`ts
+const a = 1;
+\`\`\`
+`);
+
+const ast = ref<MDCParserResult | null>(null);
+const parse = useMarkdownParser();
 
 onBeforeMount(async () => {
-  ast.value = await parseMarkdown(md, {
-    rehype: {
-      plugins: {
-        highlight: {
-          instance: rehypeHighlight,
-          options: {
-            theme: 'material-theme-palenight',
-            highlighter: createShikiHighlighter({
-              bundledThemes: {
-                'material-theme-palenight': MaterialThemePalenight,
-              },
-              bundledLangs: {
-                html: HtmlLang,
-                mdc: MdcLang,
-                vue: VueLang,
-                yml: YamlLang,
-                scss: ScssLang,
-                ts: TsLang,
-                typescript: TsLang,
-              },
-            }),
-          },
-        },
-      },
-    },
-  })
+  ast.value = await parser(md.value);
 })
 </script>
 
