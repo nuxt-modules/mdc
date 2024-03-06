@@ -5,7 +5,7 @@ import type { Highlighter, MdcThemeOptions } from './types'
 
 export interface RehypeHighlightOption {
   theme?: MdcThemeOptions
-  highlighter: Highlighter
+  highlighter?: Highlighter
 }
 
 export default rehypeHighlight

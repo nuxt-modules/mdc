@@ -1,7 +1,7 @@
 import { vi } from 'vitest'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import type { MDCParseOptions } from '../../src/runtime/types'
-import  { rehypeHighlight } from '../../src/runtime/highlighter/rehype'
+import  { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 
 vi.mock('#mdc-imports', () => {
