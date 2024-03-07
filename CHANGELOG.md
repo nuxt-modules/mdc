@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v0.6.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.5.0...v0.6.0)
+
+### 🚀 Enhancements
+
+- **comments:** Possibility to keep comments in MDC tree with `keepComments` option ([#152](https://github.com/nuxt-modules/mdc/pull/152))
+- Remove '#imports` from MDC Renderer ([#153](https://github.com/nuxt-modules/mdc/pull/153))
+- Use mdcrenderer component and parsemarkdown util outside nuxt ([#154](https://github.com/nuxt-modules/mdc/pull/154))
+
+### 🩹 Fixes
+
+- Strip non-word-chars from library import name ([#142](https://github.com/nuxt-modules/mdc/pull/142))
+- Prepend import names with underscore ([#144](https://github.com/nuxt-modules/mdc/pull/144))
+- **build:** Do not export component in runtime index ([9dc5cc3](https://github.com/nuxt-modules/mdc/commit/9dc5cc3))
+
+### 📦 Build
+
+- Exports types ([#145](https://github.com/nuxt-modules/mdc/pull/145))
+
+### 🏡 Chore
+
+- Upgrade remark-mdc ([3a0c5b0](https://github.com/nuxt-modules/mdc/commit/3a0c5b0))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+- Nobkd ([@nobkd](http://github.com/nobkd))
+- Estéban <e.soubiran25@gmail.com>
+
 ## v0.5.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.4.0...v0.5.0)
