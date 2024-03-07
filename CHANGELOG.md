@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.6.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.6.0...v0.6.1)
+
+### 🩹 Fixes
+
+- Ssr route detection ([69a4e3d](https://github.com/nuxt-modules/mdc/commit/69a4e3d))
+- Typo in dev detection ([b43e3b2](https://github.com/nuxt-modules/mdc/commit/b43e3b2))
+
+### ❤️ Contributors
+
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.6.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.5.0...v0.6.0)
