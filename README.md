@@ -23,6 +23,11 @@ MDC supercharges regular Markdown to write documents interacting deeply with any
 
 Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
 
+> [!Note]
+> You may utilize this package inside of your Nuxt project (standard configuration) or within any Vue project.
+>
+> See [Rendering in your Vue project](#rendering-in-your-vue-project) below for more information.
+
 ## Install
 
 ```bash
@@ -44,7 +49,7 @@ export default defineNuxtConfig({
 })
 ```
 
-That's it! You can start writing and rendering markdown files ✨
+That's it! You can start writing and rendering markdown files in your Nuxt project ✨
 
 ## Rendering
 
@@ -261,6 +266,145 @@ export default defineNuxtConfig({
 ```
 
 Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types.ts).
+
+## Rendering in your Vue project
+
+The `<MDCRenderer>` component in combination with a few exported package utilities may also be utilized inside a normal (non-Nuxt) Vue project.
+
+To implement in your standard Vue project, follow the instructions below.
+
+### Install the package
+
+Follow the [install instructions above](#install), ignoring the step of adding the Nuxt module to a `nuxt.config.ts` file.
+
+### Stub Nuxt module imports
+
+Since you're not using Nuxt, you'll need to stub a few of the module's imports in your Vue projects's Vite config file. This is necessary to avoid errors when the module tries to access Nuxt-specific imports.
+
+Create a new file in your Vue project's root directory, such as `stub-mdc-imports.js`, and add the following content:
+
+```ts
+// stub-mdc-imports.js
+export default {}
+```
+
+Next, update your Vue project's Vite config file (e.g. `vite.config.ts`) to alias the module's imports to the stub file:
+
+```ts
+import { defineConfig } from 'vite'
+import path from 'path'
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      '#mdc-imports': path.resolve(__dirname, './stub-mdc-imports.js'),
+      '#mdc-configs': path.resolve(__dirname, './stub-mdc-imports.js'),
+    }
+  }
+})
+```
+
+### Usage
+
+Next, let's create a new [Vue composable](https://vuejs.org/guide/reusability/composables.html) to handle parsing the markdown content, as well as adding syntax highlighting to code blocks with [Shiki](https://shiki.style/).
+
+```ts
+// composables/useMarkdownParser.ts
+// Import package exports
+import {
+  createMarkdownParser,
+  rehypeHighlight,
+  createShikiHighlighter,
+} from '@nuxtjs/mdc/runtime'
+// Import desired Shiki themes and languages
+import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
+import HtmlLang from 'shiki/langs/html.mjs'
+import MdcLang from 'shiki/langs/mdc.mjs'
+import TsLang from 'shiki/langs/typescript.mjs'
+import VueLang from 'shiki/langs/vue.mjs'
+import ScssLang from 'shiki/langs/scss.mjs'
+import YamlLang from 'shiki/langs/yaml.mjs'
+
+export default function useMarkdownParser() {
+  let parser: Awaited<ReturnType<typeof createMarkdownParser>>
+
+  const parse = async (markdown: string) => {
+    if (!parser) {
+      parser = await createMarkdownParser({
+        rehype: {
+          plugins: {
+            highlight: {
+              instance: rehypeHighlight,
+              options: {
+                // Pass in your desired theme(s)
+                theme: 'material-theme-palenight',
+                // Create the Shiki highlighter
+                highlighter: createShikiHighlighter({
+                  bundledThemes: {
+                    'material-theme-palenight': MaterialThemePalenight,
+                  },
+                  // Configure the bundled languages
+                  bundledLangs: {
+                    html: HtmlLang,
+                    mdc: MdcLang,
+                    vue: VueLang,
+                    yml: YamlLang,
+                    scss: ScssLang,
+                    ts: TsLang,
+                    typescript: TsLang,
+                  },
+                }),
+              },
+            },
+          },
+        },
+      })
+    }
+    return parser(markdown)
+  }
+
+  return parse
+}
+```
+
+Now import the `useMarkdownParser` composable we just created along with an exported type interface into your host project's Vue component, and utilize them to process the raw markdown and initialize the `<MDCRenderer>` component.
+
+```vue
+<script setup lang="ts">
+import { onBeforeMount, ref, watch } from 'vue'
+// Import package exports
+import { MDCRenderer } from '@nuxtjs/mdc/runtime'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import { useMarkdownParser } from './composables/useMarkdownParser';
+
+const md = ref(`
+# Just a Vue app
+
+This is markdown content rendered via the \`<MDCRenderer>\` component, including MDC below.
+
+::alert
+Hello MDC
+::
+
+\`\`\`ts
+const a = 1;
+\`\`\`
+`);
+
+const ast = ref<MDCParserResult | null>(null)
+const parse = useMarkdownParser()
+
+onBeforeMount(async () => {
+  ast.value = await parse(md.value)
+})
+</script>
+
+<template>
+  <Suspense>
+    <MDCRenderer v-if="ast?.body" :body="ast.body" :data="ast.data" />
+  </Suspense>
+</template>
+```
 
 ## Contributing
 

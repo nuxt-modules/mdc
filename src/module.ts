@@ -93,7 +93,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       options.rehypePlugins ||= {}
       options.rehypePlugins.highlight ||= {}
-      options.rehypePlugins.highlight.src ||= await resolver.resolvePath('./runtime/highlighter/rehype')
+      options.rehypePlugins.highlight.src ||= await resolver.resolvePath('./runtime/highlighter/rehype-nuxt')
       options.rehypePlugins.highlight.options ||= {}
     }
 

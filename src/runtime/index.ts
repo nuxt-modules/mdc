@@ -1,2 +1,5 @@
-export { parseMarkdown } from './parser'
+export { parseMarkdown, createMarkdownParser } from './parser'
+export { rehypeHighlight } from './highlighter/rehype'
+export { createShikiHighlighter } from './highlighter/shiki'
+export { default as MDCRenderer } from './components/MDCRenderer.vue'
 export * from './utils/node'

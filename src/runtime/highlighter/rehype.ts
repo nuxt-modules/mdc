@@ -1,44 +1,17 @@
 import type { Root, Element } from 'hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import type { HighlightResult, Highlighter, MdcThemeOptions } from './types'
+import type { Highlighter, MdcThemeOptions } from './types'
 
 export interface RehypeHighlightOption {
   theme?: MdcThemeOptions
   highlighter?: Highlighter
 }
 
-const defaults: RehypeHighlightOption = {
-  theme: {},
-  async highlighter(code, lang, theme, options) {
-    if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
-      return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options))
-    }
-
-    try {
-      return await $fetch('/api/_mdc/highlight', {
-        params: {
-          code,
-          lang,
-          theme: JSON.stringify(theme),
-          options: JSON.stringify(options)
-        }
-      })
-    } catch (e: any) {
-      if (process.browser && e?.response?.status === 404) {
-        window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
-        return this.highlighter?.(code, lang, theme, options)!
-      }
-    }
-
-    return Promise.resolve({ tree: [{ type: 'text', value: code }], className: '', style: '' } as HighlightResult)
-  }
-}
-
 export default rehypeHighlight
 
-export function rehypeHighlight(opts: RehypeHighlightOption = {}) {
-  const options = { ...defaults, ...opts }
+export function rehypeHighlight(opts: RehypeHighlightOption) {
+  const options = opts
 
   return async (tree: Root) => {
     const tasks: Promise<void>[] = []

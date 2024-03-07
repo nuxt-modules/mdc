@@ -1,4 +1,4 @@
-import type { MDCData, MDCElement, MDCParseOptions, MDCRoot, Toc } from '../types'
+import type { MDCData, MDCElement, MDCParseOptions, MDCParserResult, MDCRoot, Toc } from '../types'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
@@ -11,12 +11,10 @@ import { generateToc } from './toc'
 import { nodeTextContent } from '../utils/node'
 import type { MdcConfig } from '../types/config'
 
-// TODO: maybe cache the processors in a way
-
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 let generatedMdcConfigs: MdcConfig[] | undefined
 
-export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
+export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => {
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
@@ -94,34 +92,44 @@ export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions =
     processor = await config.unified?.post?.(processor) || processor
   }
 
-  // Extract front matter data
-  const { content, data: frontmatter } = await parseFrontMatter(md)
+  return async (md: string): Promise<MDCParserResult> => {
+    // Extract front matter data
+    const { content, data: frontmatter } = await parseFrontMatter(md)
 
-  // Start processing stream
-  const processedFile = await processor.process({ value: content, data: frontmatter })
+    // Start processing stream
+    const processedFile = await processor.process({ value: content, data: frontmatter })
 
-  const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+    const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
-  // Update data with processor data
-  const data: MDCData = Object.assign(
-    contentHeading(result.body),
-    frontmatter,
-    processedFile?.data || {}
-  )
+    // Update data with processor data
+    const data: MDCData = Object.assign(
+      contentHeading(result.body),
+      frontmatter,
+      processedFile?.data || {}
+    )
 
-  // Generate toc if it is not disabled in front-matter
-  let toc: Toc | undefined
-  if (data.toc !== false) {
-    const tocOption = defu(data.toc || {}, options.toc)
-    toc = generateToc(result.body, tocOption)
+    // Generate toc if it is not disabled in front-matter
+    let toc: Toc | undefined
+    if (data.toc !== false) {
+      const tocOption = defu(data.toc || {}, options.toc)
+      toc = generateToc(result.body, tocOption)
+    }
+
+    return {
+      data,
+      body: result.body,
+      excerpt: result.excerpt,
+      toc
+    }
   }
+}
 
-  return {
-    data,
-    body: result.body,
-    excerpt: result.excerpt,
-    toc
-  }
+export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
+  // Create parser
+  const parser = await createMarkdownParser(inlineOptions)
+
+  // Parse markdown
+  return parser(md)
 }
 
 export function contentHeading(body: MDCRoot) {
