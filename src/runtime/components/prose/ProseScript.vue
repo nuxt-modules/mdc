@@ -11,5 +11,5 @@ defineProps({
     default: ''
   }
 })
-const isDev = import.meta.env
+const isDev = import.meta.dev
 </script>

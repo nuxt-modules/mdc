@@ -83,7 +83,7 @@ export function createShikiHighlighter({
         await shiki.loadLanguage(bundledLangs[lang])
       }
       else {
-        if (import.meta.env) {
+        if (import.meta.dev) {
           console.warn(`[@nuxtjs/mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
         }
         lang = 'text'
@@ -96,7 +96,7 @@ export function createShikiHighlighter({
           await shiki.loadTheme(bundledThemes[theme])
         }
         else {
-          if (import.meta.env) {
+          if (import.meta.dev) {
             console.warn(`[@nuxtjs/mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
           }
           themesObject[color] = 'none'
