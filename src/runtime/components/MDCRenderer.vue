@@ -62,7 +62,7 @@ export default defineComponent({
   },
   async setup (props) {
     const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
-    const route = $nuxt?.$route
+    const route = $nuxt?.$route || $nuxt?._route
     const { mdc } = $nuxt?.$config?.public || {}
       
     const tags = {
@@ -151,14 +151,14 @@ function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCDat
   const splitter = /\.|\[(\d+)\]/
   const keys: string[] = node.props?.value.trim().split(splitter).filter(Boolean)
   const value = keys.reduce((data, key) => {
-    if (key in data) {
+    if (data && key in data) {
       if (typeof data[key] === 'function') {
         return data[key]()
       } else {
         return data[key]
       }
     }
-    return {}
+    return undefined
   }, data)
   const defaultValue = node.props?.defaultValue
 
