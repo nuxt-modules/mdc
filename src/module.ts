@@ -201,7 +201,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       for (const pkg of include) {
         if (!config.optimizeDeps.include.includes(pkg)) {
-          config.optimizeDeps.include.push(pkg)
+          config.optimizeDeps.include.push('@nuxtjs/mdc > ' + pkg)
         }
       }
 
