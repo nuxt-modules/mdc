@@ -80,7 +80,7 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
 
     // Keep non-newline text nodes
     if (node.type === 'text') {
-      if (node.value !== '\n' || (parent as any)?.properties?.emptyLinePlaceholder) {
+      if (!/^\n+$/.test(node.value || '') || (parent as any)?.properties?.emptyLinePlaceholder) {
         return {
           type: 'text',
           value: node.value
