@@ -50,6 +50,9 @@ importers:
       micromark-util-sanitize-uri:
         specifier: ^2.0.0
         version: 2.0.0
+      nuxt-shiki:
+        specifier: ^0.2.1
+        version: 0.2.1(rollup@3.29.4)
       ohash:
         specifier: ^1.1.3
         version: 1.1.3
@@ -110,9 +113,6 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
-      unwasm:
-        specifier: ^0.3.7
-        version: 0.3.7
     devDependencies:
       '@nuxt/devtools':
         specifier: latest
@@ -7680,6 +7680,17 @@ packages:
       - vite
       - vue
     dev: true
+
+  /nuxt-shiki@0.2.1(rollup@3.29.4):
+    resolution: {integrity: sha512-LWFgojb3autTMb+kpiwRQLHnM9getFHicWxGWU+UExFTydqm1CGC8oeAcZXweSUG9tm6nkpU/MNcAotCeVmXOg==}
+    dependencies:
+      '@nuxt/kit': 3.10.3(rollup@3.29.4)
+      shiki: 1.1.7
+      unwasm: 0.3.7
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: false
 
   /nuxt@3.10.3(@types/node@20.11.25)(eslint@8.57.0)(rollup@3.29.4)(typescript@5.3.3)(vite@5.1.4):
     resolution: {integrity: sha512-NchGNiiz9g/ErJAb462W/lpX2NqcXYb9hugySKWvLXNdrjeAPiJ2/7mhgwUSiZA9MpjuQg3saiEajr1zlRIOCg==}
