@@ -51,6 +51,33 @@ export default defineNuxtConfig({
 
 That's it! You can start writing and rendering markdown files in your Nuxt project ✨
 
+### WebAssembly (WASM)
+
+For some Nuxt projects, depending on your build preset, you may need to adjust settings to allow WebAssembly (WASM) to be used for the default Shiki highlighter.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/mdc'],
+  $production: {
+    nitro: {
+      // Enable the wasm feature in production for the Shiki syntax highlighter
+      experimental: {
+        wasm: true,
+      },
+    },
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        external: [
+          'shiki/onig.wasm', // Externalize the wasm import from Shiki
+        ],
+      },
+    },
+  },
+})
+```
+
 ## Rendering
 
 `@nuxtjs/mdc` exposes three components to render markdown files.
