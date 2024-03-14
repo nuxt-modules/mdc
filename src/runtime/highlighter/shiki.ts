@@ -11,6 +11,7 @@ import {
 import type { MdcConfig } from '../types/config'
 // @ts-expect-error - `nuxt-shiki` is installed by the module.
 import { loadShiki } from '#imports'
+import type { ShikiInstance } from 'nuxt-shiki/dist/runtime/types'
 
 export interface CreateShikiHighlighterOptions {
   /* An array of themes to be loaded initially */
@@ -37,7 +38,7 @@ export function createShikiHighlighter({
   let configs: Promise<MdcConfig[]> | undefined
 
   async function _getShiki() {
-    const shiki = await loadShiki()
+    const shiki = await loadShiki() as ShikiInstance
 
     for await (const config of await getConfigs()) {
       await config.shiki?.setup?.(shiki)
