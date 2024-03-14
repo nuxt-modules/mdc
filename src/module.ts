@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, installModule } from '@nuxt/kit'
 import fs from 'fs'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
@@ -63,26 +63,12 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (options.highlight) {
-      // Enable unwasm for shiki
-      nuxt.hook('ready', () => {
-        const nitro = useNitro()
-        const addWasmSupport = (_nitro: typeof nitro) => {
-          if (nitro.options.experimental?.wasm) { return }
-          _nitro.options.externals = _nitro.options.externals || {}
-          _nitro.options.externals.inline = _nitro.options.externals.inline || []
-          _nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
-          _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
-            const { rollup: unwasm } = await import('unwasm/plugin')
-            rollupConfig.plugins = rollupConfig.plugins || []
-              ; (rollupConfig.plugins as any[]).push(unwasm({
-                ..._nitro.options.wasm as any,
-              }))
-          })
-        }
-        addWasmSupport(nitro)
-        nitro.hooks.hook('prerender:init', (prerenderer) => {
-          addWasmSupport(prerenderer)
-        })
+      // Install nuxt-shiki
+      // @see https://github.com/pi0/nuxt-shiki#nuxt-shiki
+      installModule('nuxt-shiki', {
+        bundledThemes: options.highlight.themes,
+        bundledLangs: options.highlight.langs,
+        defaultTheme: options.highlight.theme,
       })
 
       // Add server handlers
@@ -243,6 +229,10 @@ function resolveOptions(options: ModuleOptions) {
       default: 'github-light',
       dark: 'github-dark'
     }
+    options.highlight.themes = [
+      ...(options.highlight.themes || []),
+      ...Object.values(options.highlight.theme) as any
+    ]
     options.highlight.langs ||= DefaultHighlightLangs
 
     if (options.highlight.preload) {
