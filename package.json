@@ -20,6 +20,10 @@
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.mjs"
     },
+    "./runtime/components/MDCRenderer": {
+      "types": "./dist/runtime/components/MDCRenderer.vue.d.ts",
+      "import": "./dist/runtime/components/MDCRenderer.vue"
+    },
     "./dist/runtime": {
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.mjs"
