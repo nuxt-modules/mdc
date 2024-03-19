@@ -141,7 +141,7 @@ export default defineNuxtModule<ModuleOptions>({
       getContents: templates.mdcConfigs,
       options: { configs: mdcConfigs },
     })
-    
+
     // Add highlighter
     const nitroPreset = nuxt.options.nitro.preset as string || process.env.NITRO_PRESET || process.env.SERVER_PRESET || ''
     const useWasmAssets = !nuxt.options.dev && (
