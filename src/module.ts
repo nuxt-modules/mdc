@@ -67,16 +67,20 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.hook('ready', () => {
         const nitro = useNitro()
         const addWasmSupport = (_nitro: typeof nitro) => {
-          if (nitro.options.experimental?.wasm) { return }
+          if (nitro.options.experimental?.wasm) {
+            return
+          }
           _nitro.options.externals = _nitro.options.externals || {}
           _nitro.options.externals.inline = _nitro.options.externals.inline || []
-          _nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
+          _nitro.options.externals.inline.push((id) => id.endsWith('.wasm'))
           _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
             const { rollup: unwasm } = await import('unwasm/plugin')
             rollupConfig.plugins = rollupConfig.plugins || []
-              ; (rollupConfig.plugins as any[]).push(unwasm({
-                ..._nitro.options.wasm as any,
-              }))
+            ;(rollupConfig.plugins as any[]).push(
+              unwasm({
+                ...(_nitro.options.wasm as any),
+              }),
+            )
           })
         }
         addWasmSupport(nitro)
@@ -137,16 +141,20 @@ export default defineNuxtModule<ModuleOptions>({
       getContents: templates.mdcConfigs,
       options: { configs: mdcConfigs },
     })
-
+    
     // Add highlighter
+    const nitroPreset = nuxt.options.nitro.preset as string || process.env.NITRO_PRESET || process.env.SERVER_PRESET || ''
+    const useWasmAssets = !nuxt.options.dev && (
+      !!nuxt.options.nitro.experimental?.wasm ||
+      ['cloudflare-pages', 'cloudflare'].includes(nitroPreset)
+    )
     registerTemplate({
       filename: 'mdc-highlighter.mjs',
       getContents: templates.mdcHighlighter,
       options: {
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
         options: options.highlight,
-        // When WASM support enabled in Nitro, we could use the .wasm file directly for Cloudflare Workers
-        useWasmAssets: !nuxt.options.dev && !!nuxt.options.nitro.experimental?.wasm
+        useWasmAssets
       },
     })
 
