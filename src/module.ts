@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
 import fs from 'fs'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
