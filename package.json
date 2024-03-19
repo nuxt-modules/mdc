@@ -24,13 +24,13 @@
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.mjs"
     },
-    "./runtime/components/MDCRenderer": {
-      "types": "./dist/runtime/components/MDCRenderer.vue.d.ts",
-      "import": "./dist/runtime/components/MDCRenderer.vue"
+    "./runtime/components/*": {
+      "types": "./dist/runtime/components/*.d.ts",
+      "import": "./dist/runtime/components/*"
     },
-    "./dist/runtime/components/MDCRenderer": {
-      "types": "./dist/runtime/components/MDCRenderer.vue.d.ts",
-      "import": "./dist/runtime/components/MDCRenderer.vue"
+    "./dist/runtime/components/*": {
+      "types": "./dist/runtime/components/*.d.ts",
+      "import": "./dist/runtime/components/*"
     },
     "./runtime/*": {
       "types": "./dist/runtime/*.d.ts",
