@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, useNitro } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
 import fs from 'fs'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
@@ -6,6 +6,7 @@ import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
 import type { BundledLanguage } from 'shiki'
 import * as templates from './templates'
+import { addWasmSupport } from './utils'
 
 export const DefaultHighlightLangs: BundledLanguage[] = [
   'js',
@@ -64,26 +65,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (options.highlight) {
       // Enable unwasm for shiki
-      nuxt.hook('ready', () => {
-        const nitro = useNitro()
-        const addWasmSupport = (_nitro: typeof nitro) => {
-          if (nitro.options.experimental?.wasm) { return }
-          _nitro.options.externals = _nitro.options.externals || {}
-          _nitro.options.externals.inline = _nitro.options.externals.inline || []
-          _nitro.options.externals.inline.push(id => id.endsWith('.wasm'))
-          _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
-            const { rollup: unwasm } = await import('unwasm/plugin')
-            rollupConfig.plugins = rollupConfig.plugins || []
-              ; (rollupConfig.plugins as any[]).push(unwasm({
-                ..._nitro.options.wasm as any,
-              }))
-          })
-        }
-        addWasmSupport(nitro)
-        nitro.hooks.hook('prerender:init', (prerenderer) => {
-          addWasmSupport(prerenderer)
-        })
-      })
+      addWasmSupport(nuxt)
 
       // Add server handlers
       addServerHandler({
@@ -139,14 +121,18 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // Add highlighter
+    const nitroPreset = nuxt.options.nitro.preset as string || process.env.NITRO_PRESET || process.env.SERVER_PRESET || ''
+    const useWasmAssets = !nuxt.options.dev && (
+      !!nuxt.options.nitro.experimental?.wasm ||
+      ['cloudflare-pages', 'cloudflare'].includes(nitroPreset)
+    )
     registerTemplate({
       filename: 'mdc-highlighter.mjs',
       getContents: templates.mdcHighlighter,
       options: {
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
         options: options.highlight,
-        // When WASM support enabled in Nitro, we could use the .wasm file directly for Cloudflare Workers
-        useWasmAssets: !nuxt.options.dev && !!nuxt.options.nitro.experimental?.wasm
+        useWasmAssets
       },
     })
 
