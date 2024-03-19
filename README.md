@@ -373,7 +373,7 @@ Now import the `useMarkdownParser` composable we just created along with an expo
 <script setup lang="ts">
 import { onBeforeMount, ref, watch } from 'vue'
 // Import package exports
-import { MDCRenderer } from '@nuxtjs/mdc/runtime/components/MDCRenderer'
+import MDCRenderer from '@nuxtjs/mdc/runtime/components/MDCRenderer.vue'
 import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
 import { useMarkdownParser } from './composables/useMarkdownParser';
 

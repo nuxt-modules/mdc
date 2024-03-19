@@ -24,6 +24,14 @@
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.mjs"
     },
+    "./runtime/components/*": {
+      "types": "./dist/runtime/components/*.d.ts",
+      "import": "./dist/runtime/components/*"
+    },
+    "./dist/runtime/components/*": {
+      "types": "./dist/runtime/components/*.d.ts",
+      "import": "./dist/runtime/components/*"
+    },
     "./runtime/*": {
       "types": "./dist/runtime/*.d.ts",
       "import": "./dist/runtime/*.mjs"
