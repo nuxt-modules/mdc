@@ -408,9 +408,9 @@ onBeforeMount(async () => {
 
 ## Contributing
 
-You can contribute to this module online with CodeSandbox:
+You can dive into this module online using StackBlitz:
 
-[![Edit @nuxtjs/mdc](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nuxt-modules/mdc/tree/main/?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit @nuxtjs/mdc](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/nuxt-modules/mdc?file=playground%2Fapp.vue)
 
 Or locally:
 
