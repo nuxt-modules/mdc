@@ -26,14 +26,7 @@ Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
 ## Install
 
 ```bash
-# Using npm
-npm install --save-dev @nuxtjs/mdc
-
-# Using yarn
-yarn add --dev @nuxtjs/mdc
-
-# Using pnpm
-pnpm add --dev @nuxtjs/mdc
+npx nuxi@latest module add mdc
 ```
 
 Then, add `@nuxtjs/mdc` to the modules section of your `nuxt.config.ts`
