@@ -16,7 +16,6 @@
           v-if="body"
           :body="body"
           :data="data"
-          :prose="false"
         />
       </article>
     </MDC>

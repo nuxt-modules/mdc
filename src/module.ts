@@ -1,4 +1,4 @@
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, hasNuxtModule } from '@nuxt/kit'
 import fs from 'fs'
 import type { ModuleOptions } from './types'
 import { defu } from 'defu'
@@ -162,6 +162,12 @@ export default defineNuxtModule<ModuleOptions>({
         pathPrefix: false,
         prefix: '',
         global: true
+      })
+    }
+
+    if (hasNuxtModule('@nuxt/image')) {
+      nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
+        useNuxtImage: true
       })
     }
 

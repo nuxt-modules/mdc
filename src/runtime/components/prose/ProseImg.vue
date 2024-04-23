@@ -1,15 +1,18 @@
 <template>
-  <img
+  <component
+    :is="imgComponent"
     :src="refinedSrc"
     :alt="alt"
     :width="width"
     :height="height"
-  >
+  />
 </template>
 
 <script setup lang="ts">
 import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
-import { useRuntimeConfig, computed } from '#imports'
+import { useRuntimeConfig, computed, resolveComponent } from '#imports'
+
+const imgComponent = useRuntimeConfig().public.mdc.useNuxtImage ? resolveComponent('NuxtImg') : 'img'
 
 const props = defineProps({
   src: {
