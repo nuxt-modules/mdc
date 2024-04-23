@@ -9,10 +9,10 @@ export interface HighlighterOptions {
 }
 
 export interface HighlightResult {
-  tree: ElementContent[],
-  className?: string,
-  style?: string,
-  inlineStyle?: string,
+  tree: ElementContent[]
+  className?: string
+  style?: string
+  inlineStyle?: string
 }
 
 export type Highlighter = (code: string, lang: string, theme: MdcThemeOptions, options: Partial<HighlighterOptions>) => Promise<HighlightResult>

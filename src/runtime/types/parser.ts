@@ -20,7 +20,7 @@ export interface MDCParseOptions {
   }
 
   rehype?: {
-    options?: RehypeOption,
+    options?: RehypeOption
     plugins?: Record<string, false | RehypePlugin>
   }
 
@@ -43,8 +43,8 @@ export interface MDCParseOptions {
 }
 
 export interface MDCParserResult {
-    data: MDCData,
-    body: MDCRoot,
-    excerpt: MDCRoot | undefined,
-    toc: Toc | undefined
+  data: MDCData
+  body: MDCRoot
+  excerpt: MDCRoot | undefined
+  toc: Toc | undefined
 }

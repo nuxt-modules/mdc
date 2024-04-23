@@ -1,5 +1,5 @@
-import fs from 'fs/promises'
-import { existsSync } from 'fs'
+import fs from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import type { LanguageRegistration, ThemeRegistration } from 'shiki/core'
 import type { ModuleOptions } from '../types'
 
@@ -11,8 +11,8 @@ export async function mdcHighlighter({
   }
 }: {
   options: {
-    shikiPath: string,
-    options: ModuleOptions['highlight'],
+    shikiPath: string
+    options: ModuleOptions['highlight']
     useWasmAssets: boolean
   }
 }) {
@@ -22,8 +22,8 @@ export async function mdcHighlighter({
   if (options.highlighter === 'shiki') {
     const file = [
       shikiPath,
-      shikiPath + '.mjs',
-    ].find((file) => existsSync(file))
+      shikiPath + '.mjs'
+    ].find(file => existsSync(file))
 
     if (!file)
       throw new Error(`[@nuxtjs/mdc] Could not find shiki highlighter: ${shikiPath}`)
@@ -55,8 +55,7 @@ export async function mdcHighlighter({
         for (const alias of info.aliases || []) {
           langsMap.set(alias, info.id)
         }
-      }
-      else {
+      } else {
         langsMap.set(lang.name, lang)
       }
     })
@@ -79,16 +78,16 @@ export async function mdcHighlighter({
           : JSON.stringify(name) + ': ' + JSON.stringify(lang) + ','),
       '}',
       'const bundledThemes = {',
-        ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
-          ? JSON.stringify(theme) + `: () => import('shiki/themes/${theme}.mjs').then(r => r.default),`
-          : JSON.stringify(theme.name) + ': ' + JSON.stringify(theme) + ','),
+      ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
+        ? JSON.stringify(theme) + `: () => import('shiki/themes/${theme}.mjs').then(r => r.default),`
+        : JSON.stringify(theme.name) + ': ' + JSON.stringify(theme) + ','),
       '}',
       'const options = ' + JSON.stringify({
         theme: options.theme,
         wrapperStyle: options.wrapperStyle
       }),
       'const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs })',
-      'export default highlighter',
+      'export default highlighter'
     ].join('\n')
   }
 
@@ -105,7 +104,6 @@ export async function mdcHighlighter({
       '  throw new Error(\'[@nuxtjs/mdc] No custom highlighter specified\')',
       '}'
     ].join('\n')
-
   }
 
   // custom highlighter path

@@ -3,7 +3,7 @@ import type { Html } from 'mdast'
 import { kebabCase } from 'scule'
 import { getTagName } from './utils'
 
-export default function html (state: State, node: Html) {
+export default function html(state: State, node: Html) {
   const tagName = getTagName(node.value)
 
   if (tagName && /[A-Z]/.test(tagName)) {

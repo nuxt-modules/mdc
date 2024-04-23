@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process'
 import { inc } from 'semver'
 import { determineBumpType, loadWorkspace } from './utils'
 
-async function main () {
+async function main() {
   const workspace = await loadWorkspace(process.cwd())
 
   const commit = execSync('git rev-parse --short HEAD').toString('utf-8').trim().slice(0, 8)

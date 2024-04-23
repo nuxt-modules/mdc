@@ -2,14 +2,14 @@ import { type NodeTransform, type ElementNode } from '@vue/compiler-core'
 import { type Resolver, extendViteConfig } from '@nuxt/kit'
 
 export const registerMDCSlotTransformer = (resolver: Resolver) => {
-    extendViteConfig((config) => {
+  extendViteConfig((config) => {
     const compilerOptions = (config as any).vue.template.compilerOptions
     compilerOptions.nodeTransforms = [
-      <NodeTransform>function viteMDCSlot(node: ElementNode, context) {
+      <NodeTransform> function viteMDCSlot(node: ElementNode, context) {
         if (node.tag === 'MDCSlot') {
-          const transform = context.ssr ?
-            context.nodeTransforms.find(nt => nt.name === 'ssrTransformSlotOutlet') :
-            context.nodeTransforms.find(nt => nt.name === 'transformSlotOutlet')
+          const transform = context.ssr
+            ? context.nodeTransforms.find(nt => nt.name === 'ssrTransformSlotOutlet')
+            : context.nodeTransforms.find(nt => nt.name === 'transformSlotOutlet')
 
           return () => {
             node.tag = 'slot'

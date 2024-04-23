@@ -12,7 +12,6 @@ const getHeaderDepth = (node: MDCElement): number => TOC_TAGS_DEPTH[node.tag as 
 
 const getTocTags = (depth: number): string[] => {
   if (depth < 1 || depth > 5) {
-    // eslint-disable-next-line
     console.log(`\`toc.depth\` is set to ${depth}. It should be a number between 1 and 5. `)
     depth = 1
   }
@@ -20,7 +19,7 @@ const getTocTags = (depth: number): string[] => {
   return TOC_TAGS.slice(0, depth)
 }
 
-function nestHeaders (headers: TocLink[]): TocLink[] {
+function nestHeaders(headers: TocLink[]): TocLink[] {
   if (headers.length <= 1) {
     return headers
   }
@@ -45,7 +44,7 @@ function nestHeaders (headers: TocLink[]): TocLink[] {
   return toc
 }
 
-export function generateFlatToc (body: MDCNode, options: Toc): Toc {
+export function generateFlatToc(body: MDCNode, options: Toc): Toc {
   const { searchDepth, depth, title = '' } = options
   const tags = getTocTags(depth)
 
@@ -64,7 +63,7 @@ export function generateFlatToc (body: MDCNode, options: Toc): Toc {
   }
 }
 
-export function generateToc (body: MDCElement | MDCRoot, options: Toc): Toc {
+export function generateToc(body: MDCElement | MDCRoot, options: Toc): Toc {
   const toc = generateFlatToc(body as MDCElement, options)
   toc.links = nestHeaders(toc.links)
   return toc

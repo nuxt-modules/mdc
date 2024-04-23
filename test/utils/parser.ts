@@ -1,7 +1,7 @@
 import { vi } from 'vitest'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import type { MDCParseOptions } from '../../src/runtime/types'
-import  { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
+import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 
 vi.mock('#mdc-imports', () => {
@@ -26,11 +26,11 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
     const highlighter = createShikiHighlighter({
       langs: [
         import('shiki/langs/typescript.mjs'),
-        import('shiki/langs/javascript.mjs'),
+        import('shiki/langs/javascript.mjs')
       ],
       themes: [
         import('shiki/themes/github-light.mjs'),
-        import('shiki/themes/github-dark.mjs'),
+        import('shiki/themes/github-dark.mjs')
       ],
       options: {},
       getMdcConfigs: async () => []

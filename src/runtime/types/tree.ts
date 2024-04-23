@@ -23,6 +23,6 @@ export type MDCRoot = {
 }
 
 export interface MDCData extends Record<string, any> {
-  title: string,
-  description: string,
+  title: string
+  description: string
 }

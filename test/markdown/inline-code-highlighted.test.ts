@@ -6,19 +6,19 @@ const md = `
 `.trim()
 
 it('', async () => {
-    const { body } = await parseMarkdown(md, {
-        highlight: {
-            theme: 'github-dark'
-        }
-    })
+  const { body } = await parseMarkdown(md, {
+    highlight: {
+      theme: 'github-dark'
+    }
+  })
 
-    expect(body).toHaveProperty('type', 'root')
-    expect(body.children).toHaveLength(2)
-    expect(body).toHaveProperty('children[0].tag', 'p')
-    expect(body).toHaveProperty('children[0].children[0].tag', 'code')
-    expect(body).toHaveProperty('children[0].children[0].props.language', 'ts')
-    expect(body).toHaveProperty('children[0].children[0].props.className', 'language-ts shiki shiki-themes github-dark')
-    expect(body).toMatchInlineSnapshot(`
+  expect(body).toHaveProperty('type', 'root')
+  expect(body.children).toHaveLength(2)
+  expect(body).toHaveProperty('children[0].tag', 'p')
+  expect(body).toHaveProperty('children[0].children[0].tag', 'code')
+  expect(body).toHaveProperty('children[0].children[0].props.language', 'ts')
+  expect(body).toHaveProperty('children[0].children[0].props.className', 'language-ts shiki shiki-themes github-dark')
+  expect(body).toMatchInlineSnapshot(`
       {
         "children": [
           {

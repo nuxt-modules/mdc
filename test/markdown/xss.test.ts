@@ -32,12 +32,12 @@ const md = `\
 `.trim()
 
 it('XSS', async () => {
-    const { data, body } = await parseMarkdown(md)
+  const { data, body } = await parseMarkdown(md)
 
-    expect(Object.keys(data)).toHaveLength(2)
+  expect(Object.keys(data)).toHaveLength(2)
 
-    for (const node of (body.children[0] as MDCElement).children) {
-      const props = (node as MDCElement).props || {}
-      expect(Object.entries(props as Record<string, any>).every(([k, v]) => validateProp(k, v))).toBeTruthy()
-    }
+  for (const node of (body.children[0] as MDCElement).children) {
+    const props = (node as MDCElement).props || {}
+    expect(Object.entries(props as Record<string, any>).every(([k, v]) => validateProp(k, v))).toBeTruthy()
+  }
 })

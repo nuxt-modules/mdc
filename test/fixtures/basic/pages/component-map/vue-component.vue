@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import CustomParagraph from '~/components/CustomParagraph.vue'
+
 const md = `
 ---
 title: Sample

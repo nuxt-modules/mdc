@@ -60,11 +60,11 @@ export default defineComponent({
       default: () => ({})
     }
   },
-  async setup (props) {
+  async setup(props) {
     const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
     const route = $nuxt?.$route || $nuxt?._route
     const { mdc } = $nuxt?.$config?.public || {}
-      
+
     const tags = {
       ...(mdc?.components?.prose && props.prose !== false ? proseComponentMap : {}),
       ...(mdc?.components?.map || {}),
@@ -74,8 +74,8 @@ export default defineComponent({
 
     const contentKey = computed(() => {
       const components = (props.body?.children || [])
-      .map(n => (n as any).tag || n.type)
-      .filter(t => !htmlTags.includes(t))
+        .map(n => (n as any).tag || n.type)
+        .filter(t => !htmlTags.includes(t))
 
       return Array.from(new Set(components)).sort().join('.')
     })
@@ -84,7 +84,7 @@ export default defineComponent({
 
     return { tags, contentKey, route }
   },
-  render (ctx: any) {
+  render(ctx: any) {
     const { tags, tag, body, data, contentKey, route } = ctx
 
     if (!body) {
@@ -108,7 +108,7 @@ export default defineComponent({
 /**
  * Render a markdown node
  */
-function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+function renderNode(node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   /**
    * Render Text node
    */
@@ -142,7 +142,7 @@ function renderNode (node: MDCNode, h: CreateElement, documentMeta: MDCData, par
   )
 }
 
-function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+function renderBinding(node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   const data = {
     ...parentScope,
     $document: documentMeta,
@@ -168,7 +168,7 @@ function renderBinding (node: MDCElement, h: CreateElement, documentMeta: MDCDat
 /**
  * Create slots from `node` template children.
  */
-function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
+function renderSlots(node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
   const children: MDCNode[] = (node as MDCElement).children || []
 
   const slotNodes: Record<string, MDCNode[]> = children.reduce((data, node) => {
@@ -190,7 +190,9 @@ function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, pa
   } as Record<string, any[]>)
 
   const slots = Object.entries(slotNodes).reduce((slots, [name, children]) => {
-    if (!children.length) { return slots }
+    if (!children.length) {
+      return slots
+    }
 
     slots[name] = () => {
       const vNodes = children.map(child => renderNode(child, h, documentMeta, parentProps))
@@ -206,11 +208,13 @@ function renderSlots (node: MDCNode, h: CreateElement, documentMeta: MDCData, pa
 /**
  * Create component data from node props.
  */
-function propsToData (node: MDCElement, documentMeta: MDCData) {
+function propsToData(node: MDCElement, documentMeta: MDCData) {
   const { tag = '', props = {} } = node
   return Object.keys(props).reduce(function (data, key) {
     // Ignore internal `__ignoreMap` prop.
-    if (key === '__ignoreMap') { return data }
+    if (key === '__ignoreMap') {
+      return data
+    }
 
     const value = props[key]
 
@@ -251,7 +255,7 @@ function propsToData (node: MDCElement, documentMeta: MDCData) {
 /**
  * Handle `v-model`
  */
-function propsToDataRxModel (key: string, value: any, data: any, documentMeta: MDCData) {
+function propsToDataRxModel(key: string, value: any, data: any, documentMeta: MDCData) {
   // Model modifiers
   const number = (d: any) => +d
   const trim = (d: any) => d.trim()
@@ -280,7 +284,7 @@ function propsToDataRxModel (key: string, value: any, data: any, documentMeta: M
 /**
  * Handle object binding `v-bind`
  */
-function propsToDataVBind (_key: string, value: any, data: any, documentMeta: MDCData) {
+function propsToDataVBind(_key: string, value: any, data: any, documentMeta: MDCData) {
   const val = evalInContext(value, documentMeta)
   data = Object.assign(data, val)
   return data
@@ -289,7 +293,7 @@ function propsToDataVBind (_key: string, value: any, data: any, documentMeta: MD
 /**
  * Handle `v-on` and `@`
  */
-function propsToDataRxOn (key: string, value: any, data: any, documentMeta: MDCData) {
+function propsToDataRxOn(key: string, value: any, data: any, documentMeta: MDCData) {
   key = key.replace(rxOn, '')
   data.on = data.on || {}
   data.on[key] = () => evalInContext(value, documentMeta)
@@ -299,7 +303,7 @@ function propsToDataRxOn (key: string, value: any, data: any, documentMeta: MDCD
 /**
  * Handle single binding `v-bind:` and `:`
  */
-function propsToDataRxBind (key: string, value: any, data: any, documentMeta: MDCData) {
+function propsToDataRxBind(key: string, value: any, data: any, documentMeta: MDCData) {
   key = key.replace(rxBind, '')
   data[key] = evalInContext(value, documentMeta)
   return data
@@ -323,7 +327,7 @@ const resolveVueComponent = (component: any) => {
 /**
  * Evaluate value in specific context
  */
-function evalInContext (code: string, context: any) {
+function evalInContext(code: string, context: any) {
   // Retrive value from context
   const result = code
     .split('.')
@@ -335,7 +339,7 @@ function evalInContext (code: string, context: any) {
 /**
  * Get slot name out of a node
  */
-function getSlotName (node: MDCNode) {
+function getSlotName(node: MDCNode) {
   let name = ''
   for (const propName of Object.keys((node as MDCElement).props || {})) {
     // Check if prop name correspond to a slot
@@ -352,14 +356,14 @@ function getSlotName (node: MDCNode) {
 /**
  * Check if node is Vue template tag
  */
-function isTemplate (node: MDCNode) {
+function isTemplate(node: MDCNode) {
   return (node as MDCElement).tag === 'template'
 }
 
 /**
  * Merge consequent Text nodes into single node
  */
-function mergeTextNodes (nodes: Array<VNode>) {
+function mergeTextNodes(nodes: Array<VNode>) {
   const mergedNodes: Array<VNode> = []
   for (const node of nodes) {
     const previousNode = mergedNodes[mergedNodes.length - 1]
@@ -372,7 +376,7 @@ function mergeTextNodes (nodes: Array<VNode>) {
   return mergedNodes
 }
 
-async function resolveContentComponents (body: MDCRoot, meta: Record<string, any>) {
+async function resolveContentComponents(body: MDCRoot, meta: Record<string, any>) {
   if (!body) {
     return
   }
@@ -388,7 +392,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
     }
   }))
 
-  function loadComponents (node: MDCRoot | MDCNode, documentMeta: Record<string, any>) {
+  function loadComponents(node: MDCRoot | MDCNode, documentMeta: Record<string, any>) {
     const tag = (node as MDCElement).tag
 
     if (node.type === 'text' || tag === 'binding' || node.type === 'comment') {
@@ -408,7 +412,7 @@ async function resolveContentComponents (body: MDCRoot, meta: Record<string, any
   }
 }
 
-function findMappedTag (node: MDCElement, tags: Record<string, string>) {
+function findMappedTag(node: MDCElement, tags: Record<string, string>) {
   const tag = node.tag
 
   if (!tag || typeof (node as MDCElement).props?.__ignoreMap !== 'undefined') {
@@ -416,6 +420,5 @@ function findMappedTag (node: MDCElement, tags: Record<string, string>) {
   }
 
   return tags[tag] || tags[pascalCase(tag)] || tags[kebabCase(node.tag)] || tag
-
 }
 </script>

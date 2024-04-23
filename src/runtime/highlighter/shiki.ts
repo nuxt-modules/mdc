@@ -1,14 +1,14 @@
 import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
 import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
-import type { Highlighter } from './types'
 import type { Element } from 'hast'
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
   transformerNotationFocus,
-  transformerNotationHighlight,
+  transformerNotationHighlight
 } from '@shikijs/transformers'
 import type { MdcConfig } from '../types/config'
+import type { Highlighter } from './types'
 
 export interface CreateShikiHighlighterOptions {
   /* An array of themes to be loaded initially */
@@ -68,7 +68,7 @@ export function createShikiHighlighter({
     transformerNotationDiff(),
     transformerNotationFocus(),
     transformerNotationHighlight(),
-    transformerNotationErrorLevel(),
+    transformerNotationErrorLevel()
   ]
 
   const highlighter: Highlighter = async (code, lang, theme, options = {}) => {
@@ -81,8 +81,7 @@ export function createShikiHighlighter({
     if (typeof lang === 'string' && !loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
       if (bundledLangs[lang]) {
         await shiki.loadLanguage(bundledLangs[lang])
-      }
-      else {
+      } else {
         if (import.meta.dev) {
           console.warn(`[@nuxtjs/mdc] Language "${lang}" is not loaded to the Shiki highlighter, fallback to plain text. Add the language to "mdc.highlight.langs" to fix this.`)
         }
@@ -94,8 +93,7 @@ export function createShikiHighlighter({
       if (typeof theme === 'string' && !loadedThemes.includes(theme) && !isSpecialTheme(theme)) {
         if (bundledThemes[theme]) {
           await shiki.loadTheme(bundledThemes[theme])
-        }
-        else {
+        } else {
           if (import.meta.dev) {
             console.warn(`[@nuxtjs/mdc] Theme "${theme}" is not loaded to the Shiki highlighter. Add the theme to "mdc.highlight.themes" to fix this.`)
           }
@@ -105,7 +103,7 @@ export function createShikiHighlighter({
     }
 
     const transformers: ShikiTransformer[] = [
-      ...baseTransformers,
+      ...baseTransformers
     ]
 
     for (const config of await getConfigs()) {
@@ -139,9 +137,9 @@ export function createShikiHighlighter({
             if (code?.includes('\n')) {
               // Set newline for empty lines
               if (node.children.length === 0 || (
-                node.children.length === 1 && node.children[0].type === 'element' &&
-                node.children[0].children.length === 1 && node.children[0].children[0].type === 'text' &&
-                node.children[0].children[0].value === ''
+                node.children.length === 1 && node.children[0].type === 'element'
+                && node.children[0].children.length === 1 && node.children[0].children[0].type === 'text'
+                && node.children[0].children[0].value === ''
               )) {
                 node.children = [{
                   type: 'element',
@@ -163,7 +161,7 @@ export function createShikiHighlighter({
                   text.value += '\n'
               }
             }
-          },
+          }
         }]
     })
 
@@ -173,13 +171,13 @@ export function createShikiHighlighter({
     const wrapperStyle = shikiOptions?.wrapperStyle
     preEl.properties.style = wrapperStyle
       ? (typeof wrapperStyle === 'string'
-        ? wrapperStyle
-        : preEl.properties.style)
+          ? wrapperStyle
+          : preEl.properties.style)
       : ''
 
     const styles: string[] = []
     Object.keys(themesObject)
-      .forEach(color => {
+      .forEach((color) => {
         const colorScheme = color !== 'default' ? `.${color}` : ''
 
         styles.push(
@@ -210,7 +208,7 @@ export function createShikiHighlighter({
         ? preEl.properties.class.join(' ')
         : preEl.properties.class as string,
       inlineStyle: preEl.properties.style as string,
-      style: styles.join(''),
+      style: styles.join('')
     }
   }
 
