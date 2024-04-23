@@ -12,6 +12,7 @@
       :class="props.class"
       :body="body"
       :data="data?.data"
+      :unwrap="props.unwrap"
     />
   </slot>
 </template>
@@ -55,7 +56,15 @@ const props = defineProps({
   class: {
     type: [String, Array, Object],
     default: ''
-  }
+  },
+  /**
+   * Tags to unwrap separated by spaces
+   * Example: 'ul li'
+   */
+  unwrap: {
+    type: [Boolean, String],
+    default: false
+  },
 })
 
 const key = computed(() => hash(props.value))
