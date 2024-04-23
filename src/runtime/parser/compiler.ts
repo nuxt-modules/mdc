@@ -1,15 +1,15 @@
-import type { RootContent, Root } from '../types/hast'
-import type { MDCNode, MDCParseOptions, MDCRoot } from '../types'
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
+import type { RootContent, Root } from '../types/hast'
+import type { MDCNode, MDCParseOptions, MDCRoot } from '../types'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any, options: MDCParseOptions = {}) {
   // Create new slugger for each Tree to generate
   const slugs = new Slugger()
 
-  function compileToJSON(node: Root, parent?: Root | RootContent): MDCRoot;
-  function compileToJSON(node: RootContent, parent?: Root | RootContent): MDCNode;
+  function compileToJSON(node: Root, parent?: Root | RootContent): MDCRoot
+  function compileToJSON(node: RootContent, parent?: Root | RootContent): MDCNode
   function compileToJSON(node: Root | RootContent, parent?: Root | RootContent): MDCNode | MDCRoot | null {
     if (node.type === 'root') {
       return {
@@ -94,7 +94,7 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
         value: node.value
       }
     }
-    
+
     // Remove other nodes from tree
     return null
   }

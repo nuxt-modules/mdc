@@ -1,5 +1,4 @@
-import type { Highlighter, HighlighterCore } from 'shiki'
-import type { ShikiTransformer } from 'shiki'
+import type { Highlighter, HighlighterCore, ShikiTransformer } from 'shiki'
 import type { Processor } from 'unified'
 import type { MdcThemeOptions, HighlighterOptions } from '../highlighter/types'
 

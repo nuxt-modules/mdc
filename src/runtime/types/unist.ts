@@ -39,19 +39,19 @@ export interface Data {}
  * One place in a source file.
  */
 export interface Point {
-    /**
-     * Line in a source file (1-indexed integer).
-     */
-    line: number;
+  /**
+   * Line in a source file (1-indexed integer).
+   */
+  line: number
 
-    /**
-     * Column in a source file (1-indexed integer).
-     */
-    column: number;
-    /**
-     * Character in a source file (0-indexed integer).
-     */
-    offset?: number | undefined;
+  /**
+   * Column in a source file (1-indexed integer).
+   */
+  column: number
+  /**
+   * Character in a source file (0-indexed integer).
+   */
+  offset?: number | undefined
 }
 
 /**
@@ -60,15 +60,15 @@ export interface Point {
  * A position is a range between two points.
  */
 export interface Position {
-    /**
-     * Place of the first character of the parsed source region.
-     */
-    start: Point;
+  /**
+   * Place of the first character of the parsed source region.
+   */
+  start: Point
 
-    /**
-     * Place of the first character after the parsed source region.
-     */
-    end: Point;
+  /**
+   * Place of the first character after the parsed source region.
+   */
+  end: Point
 }
 
 // ## Abstract nodes
@@ -81,10 +81,10 @@ export interface Position {
  * For example, in HTML, a `text` node is a leaf that contains text.
  */
 export interface Literal extends Node {
-    /**
-     * Plain value.
-     */
-    value: unknown;
+  /**
+   * Plain value.
+   */
+  value: unknown
 }
 
 /**
@@ -98,23 +98,23 @@ export interface Literal extends Node {
  * nor parent, but still a node.
  */
 export interface Node {
-    /**
-     * Node type.
-     */
-    type: string;
+  /**
+   * Node type.
+   */
+  type: string
 
-    /**
-     * Info from the ecosystem.
-     */
-    data?: Data | undefined;
+  /**
+   * Info from the ecosystem.
+   */
+  data?: Data | undefined
 
-    /**
-     * Position of a node in a source document.
-     *
-     * Nodes that are generated (not in the original source document) must not
-     * have a position.
-     */
-    position?: Position | undefined;
+  /**
+   * Position of a node in a source document.
+   *
+   * Nodes that are generated (not in the original source document) must not
+   * have a position.
+   */
+  position?: Position | undefined
 }
 
 /**
@@ -126,8 +126,8 @@ export interface Node {
  * comments, text, and further elements.
  */
 export interface Parent extends Node {
-    /**
-     * List of children.
-     */
-    children: Node[];
+  /**
+   * List of children.
+   */
+  children: Node[]
 }

@@ -5,7 +5,7 @@ const defaults: RehypeHighlightOption = {
   theme: {},
   async highlighter(code, lang, theme, options) {
     try {
-      if (process.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
+      if (import.meta.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
         return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options)).catch(() => ({}))
       }
 
@@ -18,9 +18,9 @@ const defaults: RehypeHighlightOption = {
         }
       })
     } catch (e: any) {
-      if (process.browser && e?.response?.status === 404) {
+      if (import.meta.browser && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
-        return this.highlighter?.(code, lang, theme, options)!
+        return this.highlighter?.(code, lang, theme, options)
       }
     }
 
@@ -35,7 +35,6 @@ export function rehypeHighlight(opts: Partial<RehypeHighlightOption> = {}) {
   if (typeof options.highlighter !== 'function') {
     options.highlighter = defaults.highlighter
   }
-
 
   return rehypeHighlightUniversal(options)
 }

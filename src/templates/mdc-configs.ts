@@ -1,4 +1,3 @@
-
 export async function mdcConfigs({ options }: any) {
   return [
     'let configs',

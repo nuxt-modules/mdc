@@ -3,7 +3,7 @@ import type { Element, Properties } from 'hast'
 import type { Link } from 'mdast'
 import { normalizeUri } from 'micromark-util-sanitize-uri'
 
-export default function link (state: State, node: Link & { attributes?: Properties}) {
+export default function link(state: State, node: Link & { attributes?: Properties }) {
   const properties: Properties = {
     ...((node.attributes || {})),
     href: normalizeUri(node.url)

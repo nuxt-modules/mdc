@@ -1,15 +1,15 @@
-import type { MDCData, MDCElement, MDCParseOptions, MDCParserResult, MDCRoot, Toc } from '../types'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import { parseFrontMatter } from 'remark-mdc'
 import { defu } from 'defu'
-import { useProcessorPlugins } from './utils/plugins'
-import { compileHast } from './compiler'
-import { defaults } from './options'
-import { generateToc } from './toc'
+import type { MDCData, MDCElement, MDCParseOptions, MDCParserResult, MDCRoot, Toc } from '../types'
 import { nodeTextContent } from '../utils/node'
 import type { MdcConfig } from '../types/config'
+import { useProcessorPlugins } from './utils/plugins'
+import { defaults } from './options'
+import { generateToc } from './toc'
+import { compileHast } from './compiler'
 
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 let generatedMdcConfigs: MdcConfig[] | undefined
@@ -20,7 +20,7 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
   }
   if (!generatedMdcConfigs) {
     generatedMdcConfigs = await import('#mdc-configs' /* @vite-ignore */)
-      .then(r=>r.getMdcConfigs())
+      .then(r => r.getMdcConfigs())
       .catch(() => ([]))
   }
 

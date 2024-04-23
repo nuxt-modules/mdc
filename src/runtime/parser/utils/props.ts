@@ -30,7 +30,6 @@ export const validateProps = (type: string, props?: Record<string, any>) => {
       const isValid = validateProp(name, value)
 
       if (!isValid) {
-        // eslint-disable-next-line no-console
         console.warn(`[@nuxtjs/mdc] removing unsafe attribute: ${name}="${value}"`)
       }
 
@@ -40,7 +39,7 @@ export const validateProps = (type: string, props?: Record<string, any>) => {
 
   if (type === 'pre') {
     if (typeof props.highlights === 'string') {
-      props.highlights = props.highlights.split(' ').map(i => parseInt(i))
+      props.highlights = props.highlights.split(' ').map(i => Number.parseInt(i))
     }
   }
 

@@ -8,7 +8,7 @@ Default slot
 `.trim()
 
 describe('Single Block Compoennt', () => {
-  it('', async() => {
+  it('', async () => {
     const { data, body } = await parseMarkdown(md)
 
     expect(Object.keys(data)).toHaveLength(2)

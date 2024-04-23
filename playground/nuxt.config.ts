@@ -3,12 +3,11 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '../src/module'
   ],
-  // @ts-ignore
   mdc: {
     highlight: {
       theme: {
         default: 'vitesse-light',
-        dark: 'material-theme-palenight',
+        dark: 'material-theme-palenight'
       },
       preload: [
         'sql'
