@@ -375,7 +375,7 @@ import { onBeforeMount, ref, watch } from 'vue'
 // Import package exports
 import MDCRenderer from '@nuxtjs/mdc/runtime/components/MDCRenderer.vue'
 import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
-import { useMarkdownParser } from './composables/useMarkdownParser';
+import useMarkdownParser from './composables/useMarkdownParser';
 
 const md = ref(`
 # Just a Vue app
