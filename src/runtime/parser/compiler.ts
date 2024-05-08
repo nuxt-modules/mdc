@@ -119,6 +119,9 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       }
     }
 
+    // Top level text nodes are not allowed
+    body.children = (body.children || []).filter(child => child.type !== 'text')
+
     return {
       body,
       excerpt
