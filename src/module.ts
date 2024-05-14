@@ -17,7 +17,6 @@ export const DefaultHighlightLangs: BundledLanguage[] = [
   'vue',
   'css',
   'html',
-  'vue',
   'bash',
   'md',
   'mdc',
