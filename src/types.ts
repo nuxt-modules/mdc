@@ -40,7 +40,7 @@ export interface ModuleOptions {
      *
      * Unlike the `preload` option, when this option is provided, it will override the default languages.
      *
-     * @default ['js','jsx','json','ts','tsx','vue','css','html','vue','bash','md','mdc','yaml']
+     * @default ['js','jsx','json','ts','tsx','vue','css','html','bash','md','mdc','yaml']
      */
     langs?: (BundledLanguage | LanguageRegistration)[]
 
