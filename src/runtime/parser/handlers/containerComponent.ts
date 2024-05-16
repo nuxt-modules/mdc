@@ -8,7 +8,7 @@ type Node = MdastContent & {
   fmAttributes?: Properties
 }
 
-export default function containerComponent (state: State, node: Node) {
+export default function containerComponent(state: State, node: Node) {
   const result: Element = {
     type: 'element',
     tagName: node.name,
@@ -20,10 +20,10 @@ export default function containerComponent (state: State, node: Node) {
   }
   state.patch(node, result)
 
-  // @ts-ignore Inline attributes that passed in MDC sysntax `:component{...attributes}`
+  // @ts-expect-error Inline attributes that passed in MDC sysntax `:component{...attributes}`
   result.attributes = node.attributes
 
-  // @ts-ignore Attributes define using FrontMatter syntax and YAML format
+  // @ts-expect-error Attributes define using FrontMatter syntax and YAML format
   result.fmAttributes = node.fmAttributes
 
   return result

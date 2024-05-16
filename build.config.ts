@@ -1,9 +1,9 @@
+import fs from 'node:fs'
 import { defineBuildConfig } from 'unbuild'
-import fs from 'fs'
 
 export default defineBuildConfig({
   entries: [
-    'src/config.ts',
+    'src/config.ts'
   ],
   hooks: {
     'rollup:done': () => {

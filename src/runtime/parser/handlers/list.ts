@@ -2,7 +2,7 @@ import { type State } from 'mdast-util-to-hast'
 import type { Element, Properties } from 'hast'
 import type { List } from 'mdast'
 
-export default function list (state: State, node: List) {
+export default function list(state: State, node: List) {
   const properties: Properties = {}
   const results = state.all(node)
   let index = -1
@@ -16,11 +16,11 @@ export default function list (state: State, node: List) {
     const child = results[index]
 
     if (
-      child.type === 'element' &&
-      child.tagName === 'li' &&
-      child.properties &&
-      Array.isArray(child.properties.className) &&
-      child.properties.className.includes('task-list-item')
+      child.type === 'element'
+      && child.tagName === 'li'
+      && child.properties
+      && Array.isArray(child.properties.className)
+      && child.properties.className.includes('task-list-item')
     ) {
       properties.className = ['contains-task-list']
       break

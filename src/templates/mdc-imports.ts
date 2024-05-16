@@ -1,5 +1,5 @@
-import type { UnistPlugin } from '../types'
 import { pascalCase } from 'scule'
+import type { UnistPlugin } from '../types'
 
 export async function mdcImports({ options }: any) {
   const imports: string[] = []
@@ -21,7 +21,7 @@ export async function mdcImports({ options }: any) {
     '',
     `export const highlight = ${JSON.stringify({
       theme: options.highlight?.theme,
-      wrapperStyle: options.highlight?.wrapperStyle,
+      wrapperStyle: options.highlight?.wrapperStyle
     })}`
   ].join('\n')
 }

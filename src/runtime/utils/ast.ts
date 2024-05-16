@@ -1,6 +1,6 @@
 import type { MDCElement, MDCNode } from '../types'
 
-export function flattenNodeText (node: MDCNode): string {
+export function flattenNodeText(node: MDCNode): string {
   if (node.type === 'comment') {
     return ''
   }
@@ -14,7 +14,7 @@ export function flattenNodeText (node: MDCNode): string {
   }
 }
 
-export function flattenNode (node: MDCNode, maxDepth = 2, _depth = 0): Array<MDCNode> {
+export function flattenNode(node: MDCNode, maxDepth = 2, _depth = 0): Array<MDCNode> {
   if (!Array.isArray((node as MDCElement).children) || _depth === maxDepth) {
     return [node]
   }
@@ -24,7 +24,7 @@ export function flattenNode (node: MDCNode, maxDepth = 2, _depth = 0): Array<MDC
   ]
 }
 
-export function setNodeData (node: MDCNode & { data: any }, name: string, value: any, pageData: any) {
+export function setNodeData(node: MDCNode & { data: any }, name: string, value: any, pageData: any) {
   if (!name.startsWith(':')) {
     name = ':' + name
   }
@@ -33,6 +33,6 @@ export function setNodeData (node: MDCNode & { data: any }, name: string, value:
   node.data.hProperties[name] = dataKey
 }
 
-function randomHash () {
+function randomHash() {
   return Math.random().toString(36).substr(2, 16)
 }

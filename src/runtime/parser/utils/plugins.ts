@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-expect-error missing types
 import type { Processor } from 'remark-rehype/lib'
 import type { MDCParseOptions, RehypePlugin, RemarkPlugin } from '../../types'
 
@@ -9,7 +9,7 @@ export const useProcessorPlugins = async (
   const toUse = Object.entries(plugins).filter(p => p[1] !== false) as Array<[string, RemarkPlugin | RehypePlugin]>
 
   for (const plugin of toUse) {
-    const instance = plugin[1].instance || await import(/* @vite-ignore */ plugin[0] ).then(m => m.default || m)
+    const instance = plugin[1].instance || await import(/* @vite-ignore */ plugin[0]).then(m => m.default || m)
     processor.use(instance, plugin[1].options)
   }
 }

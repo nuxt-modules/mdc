@@ -3,7 +3,7 @@
  * in a codeblock and set line-highlights or
  * filename from it
  */
-export function parseThematicBlock (lang: string) {
+export function parseThematicBlock(lang: string) {
   /**
    * Language property on node is missing
    */
@@ -35,7 +35,7 @@ export function parseThematicBlock (lang: string) {
   }
 }
 
-function parseHighlightedLines (lines?: string | null) {
+function parseHighlightedLines(lines?: string | null) {
   const lineArray = String(lines || '')
     .split(',')
     .filter(Boolean)
@@ -47,7 +47,7 @@ function parseHighlightedLines (lines?: string | null) {
 }
 
 const TAG_NAME_REGEXP = /^<\/?([A-Za-z0-9-_]+) ?[^>]*>/
-export function getTagName (value: string) {
+export function getTagName(value: string) {
   const result = String(value).match(TAG_NAME_REGEXP)
 
   return result && result[1]

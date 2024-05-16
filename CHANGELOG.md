@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v0.7.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.6.1...v0.7.0)
+
+### 🚀 Enhancements
+
+- Use `NuxtImg` component in ProseImg if the `@nuxt/image` module is activated ([#180](https://github.com/nuxt-modules/mdc/pull/180))
+
+### 🩹 Fixes
+
+- Optimise deps with nested config ([#160](https://github.com/nuxt-modules/mdc/pull/160))
+- Improve new line text node detection ([#163](https://github.com/nuxt-modules/mdc/pull/163))
+- Component exports ([#166](https://github.com/nuxt-modules/mdc/pull/166))
+- **shiki:** Enable WASM on CF deployment ([#167](https://github.com/nuxt-modules/mdc/pull/167))
+- **ProseA:** Prop types mismatch ([6acc231](https://github.com/nuxt-modules/mdc/commit/6acc231))
+
+### 📖 Documentation
+
+- Add Stackblitz playground ([dfd777c](https://github.com/nuxt-modules/mdc/commit/dfd777c))
+- Use default export ([#179](https://github.com/nuxt-modules/mdc/pull/179))
+- Use new `nuxi module add` command in installation ([#176](https://github.com/nuxt-modules/mdc/pull/176))
+
+### 🏡 Chore
+
+- Update dev script ([83b8ca5](https://github.com/nuxt-modules/mdc/commit/83b8ca5))
+- Upgrade remark-mdc ([42613d5](https://github.com/nuxt-modules/mdc/commit/42613d5))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+- Maxime Pauvert ([@maximepvrt](http://github.com/maximepvrt))
+- Farnabaz ([@farnabaz](http://github.com/farnabaz))
+
 ## v0.6.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.6.0...v0.6.1)

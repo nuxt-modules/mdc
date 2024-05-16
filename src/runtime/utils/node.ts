@@ -12,7 +12,7 @@ export const TEXT_TAGS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']
  * @param tag tag name
  * @returns `true` it the virtual node match the tag
  */
-export function isTag (vnode: VNode | MDCNode, tag: string | symbol): boolean {
+export function isTag(vnode: VNode | MDCNode, tag: string | symbol): boolean {
   // Vue 3 uses `type` instead of `tag`
   if (vnode.type === tag) {
     return true
@@ -31,16 +31,16 @@ export function isTag (vnode: VNode | MDCNode, tag: string | symbol): boolean {
 /**
  * Check if virtual node is text node
  */
-export function isText (vnode: VNode | MDCNode): boolean {
+export function isText(vnode: VNode | MDCNode): boolean {
   return isTag(vnode, 'text') || isTag(vnode, Symbol.for('v-txt'))
 }
 
 /**
  * Find children of a virtual node
- * @param vnode Virtuel node from Vue virtual DOM
+ * @param node Virtuel node from Vue virtual DOM
  * @returns Children of given node
  */
-export function nodeChildren (node: VNode | MDCElement) {
+export function nodeChildren(node: VNode | MDCElement) {
   if (Array.isArray(node.children) || typeof node.children === 'string') {
     return node.children
   }
@@ -53,12 +53,14 @@ export function nodeChildren (node: VNode | MDCElement) {
 
 /**
  * Calculate text content of a virtual node
- * @param vnode Virtuel node from Vue virtual DOM
+ * @param node Virtuel node from Vue virtual DOM
  * @returns text content of given node
  */
-export function nodeTextContent (node: VNode | MDCNode): string {
+export function nodeTextContent(node: VNode | MDCNode): string {
   // Return empty string is vnode is falsy
-  if (!node) { return '' }
+  if (!node) {
+    return ''
+  }
 
   if (Array.isArray(node)) {
     return node.map(nodeTextContent).join('')
@@ -82,9 +84,9 @@ export function nodeTextContent (node: VNode | MDCNode): string {
  * Unwrap tags within a virtual node
  * @param vnode Virtuel node from Vue virtual DOM
  * @param tags list of tags to unwrap
- * @returns
+ *
  */
-export function unwrap (vnode: VNode, tags: string[] = []): VNode | VNode[] {
+export function unwrap(vnode: VNode, tags: string[] = []): VNode | VNode[] {
   if (Array.isArray(vnode)) {
     return vnode.flatMap(node => unwrap(node, tags))
   }
@@ -102,7 +104,7 @@ export function unwrap (vnode: VNode, tags: string[] = []): VNode | VNode[] {
   return result
 }
 
-function _flatUnwrap (vnodes: VNode | VNode[], tags: string[] = []): Array<VNode> {
+function _flatUnwrap(vnodes: VNode | VNode[], tags: string[] = []): Array<VNode> {
   vnodes = Array.isArray(vnodes) ? vnodes : [vnodes]
 
   if (!tags.length) {
@@ -114,7 +116,7 @@ function _flatUnwrap (vnodes: VNode | VNode[], tags: string[] = []): Array<VNode
     .filter(vnode => !(isText(vnode) && nodeTextContent(vnode).trim() === ''))
 }
 
-export function flatUnwrap (vnodes: VNode | VNode[], tags: string | string[] = []): Array<VNode | string> | VNode {
+export function flatUnwrap(vnodes: VNode | VNode[], tags: string | string[] = []): Array<VNode | string> | VNode {
   if (typeof tags === 'string') {
     tags = tags.split(',').map(tag => tag.trim()).filter(Boolean)
   }

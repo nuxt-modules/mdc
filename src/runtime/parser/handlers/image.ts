@@ -3,7 +3,7 @@ import type { Element, Properties } from 'hast'
 import type { Image } from 'mdast'
 import { normalizeUri } from 'micromark-util-sanitize-uri'
 
-export default function image (state: State, node: Image & { attributes?: Properties }) {
+export default function image(state: State, node: Image & { attributes?: Properties }) {
   const properties: Properties = { ...node.attributes, src: normalizeUri(node.url) }
 
   if (node.alt !== null && node.alt !== undefined) {

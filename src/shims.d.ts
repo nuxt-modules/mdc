@@ -17,6 +17,7 @@ declare module '#mdc-imports' {
 
 declare module '#mdc-highlighter' {
   import type { Highlighter } from '../runtime/highlighter/types'
+
   const highlighter: Highlighter
   export default highlighter
 }

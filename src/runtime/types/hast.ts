@@ -36,7 +36,7 @@ export interface Data extends UnistData {}
  * Info associated with an element.
  */
 export interface Properties {
-    [PropertyName: string]: boolean | number | string | null | undefined | Array<string | number>;
+  [PropertyName: string]: boolean | number | string | null | undefined | Array<string | number>
 }
 
 // ## Content maps
@@ -47,7 +47,7 @@ export interface Properties {
  * To register mote custom hast nodes, add them to {@link ElementContentMap}.
  * They will be automatically added here.
  */
-export type ElementContent = ElementContentMap[keyof ElementContentMap];
+export type ElementContent = ElementContentMap[keyof ElementContentMap]
 
 /**
  * Registry of all hast nodes that can occur as children of {@link Element}.
@@ -55,9 +55,9 @@ export type ElementContent = ElementContentMap[keyof ElementContentMap];
  * For a union of all {@link Element} children, see {@link ElementContent}.
  */
 export interface ElementContentMap {
-    comment: Comment;
-    element: Element;
-    text: Text;
+  comment: Comment
+  element: Element
+  text: Text
 }
 
 /**
@@ -66,7 +66,7 @@ export interface ElementContentMap {
  * To register custom hast nodes, add them to {@link RootContentMap}.
  * They will be automatically added here.
  */
-export type RootContent = RootContentMap[keyof RootContentMap];
+export type RootContent = RootContentMap[keyof RootContentMap]
 
 /**
  * Registry of all hast nodes that can occur as children of {@link Root}.
@@ -77,10 +77,10 @@ export type RootContent = RootContentMap[keyof RootContentMap];
  * For a union of all {@link Root} children, see {@link RootContent}.
  */
 export interface RootContentMap {
-    comment: Comment;
-    doctype: Doctype;
-    element: Element;
-    text: Text;
+  comment: Comment
+  doctype: Doctype
+  element: Element
+  text: Text
 }
 
 // ### Special content types
@@ -90,7 +90,7 @@ export interface RootContentMap {
  *
  * @deprecated Use {@link RootContent} instead.
  */
-export type Content = RootContent;
+export type Content = RootContent
 
 /**
  * Union of registered hast literals.
@@ -99,7 +99,7 @@ export type Content = RootContent;
  * places where relevant.
  * They will be automatically added here.
  */
-export type Literals = Extract<Nodes, UnistLiteral>;
+export type Literals = Extract<Nodes, UnistLiteral>
 
 /**
  * Union of registered hast nodes.
@@ -108,7 +108,7 @@ export type Literals = Extract<Nodes, UnistLiteral>;
  * places where relevant.
  * They will be automatically added here.
  */
-export type Nodes = Root | RootContent;
+export type Nodes = Root | RootContent
 
 /**
  * Union of registered hast parents.
@@ -117,7 +117,7 @@ export type Nodes = Root | RootContent;
  * places where relevant.
  * They will be automatically added here.
  */
-export type Parents = Extract<Nodes, UnistParent>;
+export type Parents = Extract<Nodes, UnistParent>
 
 // ## Abstract nodes
 
@@ -135,10 +135,10 @@ export type Parents = Extract<Nodes, UnistParent>;
  * For a union of all registered hast nodes, see {@link Nodes}.
  */
 export interface Node extends UnistNode {
-    /**
-     * Info from the ecosystem.
-     */
-    data?: Data | undefined;
+  /**
+   * Info from the ecosystem.
+   */
+  data?: Data | undefined
 }
 
 /**
@@ -149,10 +149,10 @@ export interface Node extends UnistNode {
  * For a union of all registered hast literals, see {@link Literals}.
  */
 export interface Literal extends Node {
-    /**
-     * Plain-text value.
-     */
-    value: string;
+  /**
+   * Plain-text value.
+   */
+  value: string
 }
 
 /**
@@ -163,10 +163,10 @@ export interface Literal extends Node {
  * For a union of all registered hast parents, see {@link Parents}.
  */
 export interface Parent extends Node {
-    /**
-     * List of children.
-     */
-    children: RootContent[];
+  /**
+   * List of children.
+   */
+  children: RootContent[]
 }
 
 // ## Concrete nodes
@@ -175,14 +175,14 @@ export interface Parent extends Node {
  * HTML comment.
  */
 export interface Comment extends Literal {
-    /**
-     * Node type of HTML comments in hast.
-     */
-    type: 'comment';
-    /**
-     * Data associated with the comment.
-     */
-    data?: CommentData | undefined;
+  /**
+   * Node type of HTML comments in hast.
+   */
+  type: 'comment'
+  /**
+   * Data associated with the comment.
+   */
+  data?: CommentData | undefined
 }
 
 /**
@@ -194,14 +194,14 @@ export interface CommentData extends Data {}
  * HTML document type.
  */
 export interface Doctype extends UnistNode {
-    /**
-     * Node type of HTML document types in hast.
-     */
-    type: 'doctype';
-    /**
-     * Data associated with the doctype.
-     */
-    data?: DoctypeData | undefined;
+  /**
+   * Node type of HTML document types in hast.
+   */
+  type: 'doctype'
+  /**
+   * Data associated with the doctype.
+   */
+  data?: DoctypeData | undefined
 }
 
 /**
@@ -213,31 +213,31 @@ export interface DoctypeData extends Data {}
  * HTML element.
  */
 export interface Element extends Parent {
-    /**
-     * Node type of elements.
-     */
-    type: 'element';
-    /**
-     * Tag name (such as `'body'`) of the element.
-     */
-    tagName: string;
-    /**
-     * Info associated with the element.
-     */
-    properties: Properties;
-    /**
-     * Children of element.
-     */
-    children: ElementContent[];
-    /**
-     * When the `tagName` field is `'template'`, a `content` field can be
-     * present.
-     */
-    content?: Root | undefined;
-    /**
-     * Data associated with the element.
-     */
-    data?: ElementData | undefined;
+  /**
+   * Node type of elements.
+   */
+  type: 'element'
+  /**
+   * Tag name (such as `'body'`) of the element.
+   */
+  tagName: string
+  /**
+   * Info associated with the element.
+   */
+  properties: Properties
+  /**
+   * Children of element.
+   */
+  children: ElementContent[]
+  /**
+   * When the `tagName` field is `'template'`, a `content` field can be
+   * present.
+   */
+  content?: Root | undefined
+  /**
+   * Data associated with the element.
+   */
+  data?: ElementData | undefined
 }
 
 /**
@@ -253,18 +253,18 @@ export interface ElementData extends Data {}
  * Can also be used as the value for the content field on a `'template'` element.
  */
 export interface Root extends Parent {
-    /**
-     * Node type of hast root.
-     */
-    type: 'root';
-    /**
-     * Children of root.
-     */
-    children: RootContent[];
-    /**
-     * Data associated with the hast root.
-     */
-    data?: RootData | undefined;
+  /**
+   * Node type of hast root.
+   */
+  type: 'root'
+  /**
+   * Children of root.
+   */
+  children: RootContent[]
+  /**
+   * Data associated with the hast root.
+   */
+  data?: RootData | undefined
 }
 
 /**
@@ -276,14 +276,14 @@ export interface RootData extends Data {}
  * HTML character data (plain text).
  */
 export interface Text extends Literal {
-    /**
-     * Node type of HTML character data (plain text) in hast.
-     */
-    type: 'text';
-    /**
-     * Data associated with the text.
-     */
-    data?: TextData | undefined;
+  /**
+   * Node type of HTML character data (plain text) in hast.
+   */
+  type: 'text'
+  /**
+   * Data associated with the text.
+   */
+  data?: TextData | undefined
 }
 
 /**

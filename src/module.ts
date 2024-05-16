@@ -1,10 +1,10 @@
+import fs from 'node:fs'
 import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, hasNuxtModule } from '@nuxt/kit'
-import fs from 'fs'
-import type { ModuleOptions } from './types'
 import { defu } from 'defu'
-import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import { resolve } from 'pathe'
 import type { BundledLanguage } from 'shiki'
+import type { ModuleOptions } from './types'
+import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import * as templates from './templates'
 import { addWasmSupport } from './utils'
 
@@ -48,7 +48,7 @@ export default defineNuxtModule<ModuleOptions>({
     components: {
       prose: true,
       map: {}
-    },
+    }
   },
   async setup(options, nuxt) {
     resolveOptions(options)
@@ -84,7 +84,7 @@ export default defineNuxtModule<ModuleOptions>({
       const alias = '#' + name
       const results = addTemplate({
         ...options as any,
-        write: true, // Write to disk for Nitro to consume
+        write: true // Write to disk for Nitro to consume
       })
 
       nuxt.options.nitro.alias ||= {}
@@ -104,8 +104,7 @@ export default defineNuxtModule<ModuleOptions>({
       let path = resolve(layer.config.srcDir, 'mdc.config.ts')
       if (fs.existsSync(path)) {
         mdcConfigs.push(path)
-      }
-      else {
+      } else {
         path = resolve(layer.config.srcDir, 'mdc.config.js')
         if (fs.existsSync(path)) {
           mdcConfigs.push(path)
@@ -117,14 +116,14 @@ export default defineNuxtModule<ModuleOptions>({
     registerTemplate({
       filename: 'mdc-configs.mjs',
       getContents: templates.mdcConfigs,
-      options: { configs: mdcConfigs },
+      options: { configs: mdcConfigs }
     })
 
     // Add highlighter
     const nitroPreset = nuxt.options.nitro.preset as string || process.env.NITRO_PRESET || process.env.SERVER_PRESET || ''
     const useWasmAssets = !nuxt.options.dev && (
-      !!nuxt.options.nitro.experimental?.wasm ||
-      ['cloudflare-pages', 'cloudflare'].includes(nitroPreset)
+      !!nuxt.options.nitro.experimental?.wasm
+      || ['cloudflare-pages', 'cloudflare'].includes(nitroPreset)
     )
     registerTemplate({
       filename: 'mdc-highlighter.mjs',
@@ -133,14 +132,14 @@ export default defineNuxtModule<ModuleOptions>({
         shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
         options: options.highlight,
         useWasmAssets
-      },
+      }
     })
 
     // Add imports template
     registerTemplate({
       filename: 'mdc-imports.mjs',
       getContents: templates.mdcImports,
-      options,
+      options
     })
 
     // Add components
@@ -182,7 +181,7 @@ export default defineNuxtModule<ModuleOptions>({
         'parse5', // transitive deps of rehype
         'unist-util-visit', // from runtime/highlighter/rehype.ts
         'unified', // deps by all the plugins
-        'debug', // deps by many libraries but it's not an ESM
+        'debug' // deps by many libraries but it's not an ESM
       ]
       const exclude = [
         '@nuxtjs/mdc' // package itself, it's a build time module
@@ -226,7 +225,6 @@ export default defineNuxtModule<ModuleOptions>({
   }
 })
 
-
 function resolveOptions(options: ModuleOptions) {
   if (options.highlight !== false) {
     options.highlight ||= {}
@@ -255,6 +253,7 @@ declare module '@nuxt/schema' {
         map: Record<string, string>
       }
       headings: ModuleOptions['headings']
+      useNuxtImage?: boolean;
     }
   }
 

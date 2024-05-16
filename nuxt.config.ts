@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 
 export default defineNuxtConfig({
   typescript: {
@@ -7,7 +7,7 @@ export default defineNuxtConfig({
         paths: {
           '@nuxtjs/mdc/config': [
             fileURLToPath(new URL('./src/config.ts', import.meta.url))
-          ],
+          ]
         }
       }
     }

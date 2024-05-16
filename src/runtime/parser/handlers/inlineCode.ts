@@ -2,7 +2,7 @@ import { type State } from 'mdast-util-to-hast'
 import type { Element, Text, Properties } from 'hast'
 import type { InlineCode } from 'mdast'
 
-export default function inlineCode (state: State, node: InlineCode & { attributes?: Properties }) {
+export default function inlineCode(state: State, node: InlineCode & { attributes?: Properties }) {
   const language = node.attributes?.language || node.attributes?.lang
   const text: Text = { type: 'text', value: node.value.replace(/\r?\n|\r/g, ' ') }
   state.patch(node, text)
