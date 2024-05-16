@@ -113,7 +113,6 @@
     "@nuxt/schema": "^3.11.2",
     "@nuxt/test-utils": "^3.13.0",
     "@nuxt/ui": "^2.16.0",
-    "@types/mdurl": "^1.0.5",
     "@types/node": "^20.12.12",
     "changelogen": "^0.5.5",
     "eslint": "^9.2.0",
