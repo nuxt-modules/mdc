@@ -6,6 +6,7 @@ import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import htmlTags from '../parser/utils/html-tags-list'
 import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../types'
+import { flatUnwrap } from '../utils/node'
 
 type CreateElement = typeof h
 
@@ -41,6 +42,13 @@ export default defineComponent({
     /**
      * Root tag to use for rendering
      */
+    class: {
+      type: [String, Object],
+      default: undefined
+    },
+    /**
+     * Root tag to use for rendering
+     */
     tag: {
       type: [String, Boolean],
       default: undefined
@@ -58,6 +66,14 @@ export default defineComponent({
     components: {
       type: Object as PropType<Record<string, string | DefineComponent<any, any, any>>>,
       default: () => ({})
+    },
+    /**
+     * Tags to unwrap separated by spaces
+     * Example: 'ul li'
+     */
+    unwrap: {
+      type: [Boolean, String],
+      default: false
     }
   },
   async setup(props) {
@@ -85,7 +101,7 @@ export default defineComponent({
     return { tags, contentKey, route }
   },
   render(ctx: any) {
-    const { tags, tag, body, data, contentKey, route } = ctx
+    const { tags, tag, body, data, contentKey, route, unwrap } = ctx
 
     if (!body) {
       return null
@@ -96,12 +112,20 @@ export default defineComponent({
     // Resolve root component
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
 
-    const childrenRenderer = renderSlots(body, h, meta, meta)
-
     // Return Vue component
     return component
-      ? h(component as any, { ...meta.component?.props, ...this.$attrs, key: contentKey }, childrenRenderer)
-      : childrenRenderer.default?.()
+      ? h(component as any, { ...meta.component?.props, class: ctx.class, ...this.$attrs, key: contentKey }, { default: defaultSlotRenderer })
+      : defaultSlotRenderer?.()
+
+    function defaultSlotRenderer() {
+      if (unwrap) {
+        return flatUnwrap(
+          renderSlots(body, h, meta, meta).default(),
+          typeof unwrap === 'string' ? unwrap.split(' ') : ['*']
+        )
+      }
+      return renderSlots(body, h, meta, meta).default()
+    }
   }
 })
 
