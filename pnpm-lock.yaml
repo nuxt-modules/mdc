@@ -84,7 +84,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       remark-mdc:
-        specifier: ^3.2.0
+        specifier: ^3.2.1
         version: 3.2.1
       remark-parse:
         specifier: ^11.0.0
