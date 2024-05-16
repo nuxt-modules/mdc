@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v0.7.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.7.0...v0.7.1)
+
+### 🚀 Enhancements
+
+- Allow unwrapping tags in renderer ([#186](https://github.com/nuxt-modules/mdc/pull/186))
+
+### 🩹 Fixes
+
+- Cleanup top level text nodes ([231bac6](https://github.com/nuxt-modules/mdc/commit/231bac6))
+- **types:** Add `useNuxtImage` type into runtime config ([#191](https://github.com/nuxt-modules/mdc/pull/191))
+- Duplicate element in default highlight languages ([#201](https://github.com/nuxt-modules/mdc/pull/201))
+- Add `false` as accepted value for `headings.anchorLinks` option ([#206](https://github.com/nuxt-modules/mdc/pull/206))
+
+### 🏡 Chore
+
+- Update renovate config ([#198](https://github.com/nuxt-modules/mdc/pull/198))
+- Remove mdurl types ([399225c](https://github.com/nuxt-modules/mdc/commit/399225c))
+
+### ❤️ Contributors
+
+- Stefano Bartoletti ([@stefanobartoletti](http://github.com/stefanobartoletti))
+- Farnabaz <farnabaz@gmail.com>
+- Gangan ([@shinGangan](http://github.com/shinGangan))
+- William Oldham ([@binaryoverload](http://github.com/binaryoverload))
+
 ## v0.7.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.6.1...v0.7.0)
