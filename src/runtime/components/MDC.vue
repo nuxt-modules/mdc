@@ -64,7 +64,7 @@ const props = defineProps({
   unwrap: {
     type: [Boolean, String],
     default: false
-  },
+  }
 })
 
 const key = computed(() => hash(props.value))

@@ -74,7 +74,7 @@ export default defineComponent({
     unwrap: {
       type: [Boolean, String],
       default: false
-    },
+    }
   },
   async setup(props) {
     const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
@@ -100,7 +100,7 @@ export default defineComponent({
 
     return { tags, contentKey, route }
   },
-  render (ctx: any) {
+  render(ctx: any) {
     const { tags, tag, body, data, contentKey, route, unwrap } = ctx
 
     if (!body) {
@@ -117,10 +117,10 @@ export default defineComponent({
       ? h(component as any, { ...meta.component?.props, class: ctx.class, ...this.$attrs, key: contentKey }, { default: defaultSlotRenderer })
       : defaultSlotRenderer?.()
 
-    function defaultSlotRenderer () {
+    function defaultSlotRenderer() {
       if (unwrap) {
         return flatUnwrap(
-          renderSlots(body, h, meta, meta).default(), 
+          renderSlots(body, h, meta, meta).default(),
           typeof unwrap === 'string' ? unwrap.split(' ') : ['*']
         )
       }
