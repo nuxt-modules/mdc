@@ -15,6 +15,6 @@ export default defineNuxtConfig({
       ]
     },
     strict: true,
-    includeWorkspace: true,
-  },
+    includeWorkspace: true
+  }
 })
