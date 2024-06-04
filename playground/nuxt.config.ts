@@ -3,7 +3,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '../src/module'
   ],
-  // @ts-expect-error - Ignore invalid property error; mdc is a local module
   mdc: {
     highlight: {
       theme: {

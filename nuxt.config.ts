@@ -11,7 +11,8 @@ export default defineNuxtConfig({
         }
       },
       exclude: [
-        fileURLToPath(new URL('./docs', import.meta.url))
+        fileURLToPath(new URL('./docs', import.meta.url)),
+        fileURLToPath(new URL('./playground', import.meta.url))
       ]
     },
     strict: true,
