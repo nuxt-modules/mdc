@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import CustomParagraph from '~/components/CustomParagraph.vue'
+import CustomParagraph from '../../components/CustomParagraph.vue'
 
 const md = `
 ---
