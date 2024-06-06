@@ -122,7 +122,7 @@ export default defineNuxtModule<ModuleOptions>({
     const nitroPreset = nuxt.options.nitro.preset as string || process.env.NITRO_PRESET || process.env.SERVER_PRESET || ''
     const useWasmAssets = !nuxt.options.dev && (
       !!nuxt.options.nitro.experimental?.wasm
-      || ['cloudflare-pages', 'cloudflare'].includes(nitroPreset)
+      || ['cloudflare-pages', 'cloudflare-module', 'cloudflare'].includes(nitroPreset)
     )
     registerTemplate({
       filename: 'mdc-highlighter.mjs',
