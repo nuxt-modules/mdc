@@ -78,8 +78,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       remark-emoji:
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: ^5.0.0
+        version: 5.0.0
       remark-gfm:
         specifier: ^4.0.0
         version: 4.0.0
@@ -5424,9 +5424,9 @@ packages:
     engines: {node: ^18.18.0 || ^20.8.0 || ^21.0.0}
     hasBin: true
 
-  remark-emoji@4.0.1:
-    resolution: {integrity: sha512-fHdvsTR1dHkWKev9eNyhTo4EFwbUvJ8ka9SgeWkMPYFX4WoI7ViVBms3PjlQYgw5TLvNQso3GUB/b/8t3yo+dg==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  remark-emoji@5.0.0:
+    resolution: {integrity: sha512-LCVYkHja10TXgrpHDB4AGYmYv9GtqiSebjyhK8aihuzJlZvrvkE2cndQmnK40Ch5ez/WtujcrcDa7nXVH6Jwcg==}
+    engines: {node: '>=18'}
 
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
@@ -13736,7 +13736,7 @@ snapshots:
       - supports-color
       - typescript
 
-  remark-emoji@4.0.1:
+  remark-emoji@5.0.0:
     dependencies:
       '@types/mdast': 4.0.4
       emoticon: 4.0.1
