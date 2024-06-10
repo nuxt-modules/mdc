@@ -17,8 +17,8 @@ export function parseThematicBlock(lang: string) {
   }
 
   const languageMatches = lang.replace(/[{|[](.+)/, '').match(/^[^ \t]+(?=[ \t]|$)/)
-  const highlightTokensMatches = lang.match(/{([^}]*)}/)
-  const filenameMatches = lang.match(/\[((\\]|[^\]])*)\]/)
+  const highlightTokensMatches = lang.match(/\{([^}]*)\}/)
+  const filenameMatches = lang.match(/\[((\\\]|[^\]])*)\]/)
 
   const meta = lang
     .replace(languageMatches?.[0] ?? '', '')
@@ -30,7 +30,7 @@ export function parseThematicBlock(lang: string) {
     language: languageMatches?.[0] || undefined,
     highlights: parseHighlightedLines(highlightTokensMatches?.[1] || undefined),
     // https://github.com/nuxt/content/pull/2169
-    filename: filenameMatches?.[1].replace(/\\]/g, ']') || undefined,
+    filename: filenameMatches?.[1].replace(/\\\]/g, ']') || undefined,
     meta
   }
 }
@@ -46,7 +46,7 @@ function parseHighlightedLines(lines?: string | null) {
   return lineArray.length ? lineArray : undefined
 }
 
-const TAG_NAME_REGEXP = /^<\/?([A-Za-z0-9-_]+) ?[^>]*>/
+const TAG_NAME_REGEXP = /^<\/?([\w-]+)(\s[^>]*?)?\/?>/
 export function getTagName(value: string) {
   const result = String(value).match(TAG_NAME_REGEXP)
 
