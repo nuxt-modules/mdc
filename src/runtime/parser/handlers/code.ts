@@ -19,7 +19,6 @@ export default (state: State, node: Code) => {
 
   if (meta) {
     result.data = {
-      // @ts-expect-error missing types
       meta
     }
   }
