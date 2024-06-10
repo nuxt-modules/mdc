@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.8.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.7.1...v0.8.0)
+
+### 🩹 Fixes
+
+- Anchor links types and type-safety ([#217](https://github.com/nuxt-modules/mdc/pull/217))
+- **wasm:** Include cloudflare-module preset ([#216](https://github.com/nuxt-modules/mdc/pull/216))
+- Types ([fc62d60](https://github.com/nuxt-modules/mdc/commit/fc62d60))
+
+### 🏡 Chore
+
+- Upgrade deps ([38dd182](https://github.com/nuxt-modules/mdc/commit/38dd182))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+
 ## v0.7.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.7.0...v0.7.1)
