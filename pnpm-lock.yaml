@@ -121,8 +121,8 @@ importers:
         specifier: ^0.3.13
         version: 0.3.13(eslint@9.4.0)(typescript@5.4.5)
       '@nuxt/module-builder':
-        specifier: ^0.7.0
-        version: 0.7.0(@nuxt/kit@3.11.2(rollup@4.17.2))(nuxi@3.11.1)(typescript@5.4.5)(vue-tsc@2.0.19(typescript@5.4.5))
+        specifier: ^0.7.1
+        version: 0.7.1(@nuxt/kit@3.11.2(rollup@4.17.2))(nuxi@3.11.1)(typescript@5.4.5)(vue-tsc@2.0.19(typescript@5.4.5))
       '@nuxt/schema':
         specifier: ^3.11.2
         version: 3.11.2(rollup@4.17.2)
@@ -924,12 +924,12 @@ packages:
     resolution: {integrity: sha512-yiYKP0ZWMW7T3TCmsv4H8+jEsB/nFriRAR8bKoSqSV9bkVYWPE36sf7JDux30dQ91jSlQG6LQkB3vCHYTS2cIg==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
-  '@nuxt/module-builder@0.7.0':
-    resolution: {integrity: sha512-aCp1/h5IFvG0q21Nr55GF76ie5p5I/9fjiPmhsRzBRTltWOjz+Q/v+1t+cQjl9gsngN1qF2XzkADSdK92rxgFA==}
+  '@nuxt/module-builder@0.7.1':
+    resolution: {integrity: sha512-lVnmciTt5k2wfZ9SANAj8IBm0k2z3EA0/AFZVas5a8xFXT5JwEnsPCIUkvlEg6qBjdGNYu9G3DK7ofU3R+M7cg==}
     hasBin: true
     peerDependencies:
-      '@nuxt/kit': ^3.11.2
-      nuxi: ^3.11.1
+      '@nuxt/kit': ^3.12.1
+      nuxi: ^3.12.0
 
   '@nuxt/schema@3.11.2':
     resolution: {integrity: sha512-Z0bx7N08itD5edtpkstImLctWMNvxTArsKXzS35ZuqyAyKBPcRjO1CU01slH0ahO30Gg9kbck3/RKNZPwfOjJg==}
@@ -4387,6 +4387,9 @@ packages:
   mlly@1.7.0:
     resolution: {integrity: sha512-U9SDaXGEREBYQgfejV97coK0UL1r+qnF2SyO9A3qcI8MzKnsIFKHNVEkrDyNncQTKQQumsasmeq84eNMdBfsNQ==}
 
+  mlly@1.7.1:
+    resolution: {integrity: sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA==}
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -7612,14 +7615,14 @@ snapshots:
       - rollup
       - supports-color
 
-  '@nuxt/module-builder@0.7.0(@nuxt/kit@3.11.2(rollup@4.17.2))(nuxi@3.11.1)(typescript@5.4.5)(vue-tsc@2.0.19(typescript@5.4.5))':
+  '@nuxt/module-builder@0.7.1(@nuxt/kit@3.11.2(rollup@4.17.2))(nuxi@3.11.1)(typescript@5.4.5)(vue-tsc@2.0.19(typescript@5.4.5))':
     dependencies:
       '@nuxt/kit': 3.11.2(rollup@4.17.2)
       citty: 0.1.6
       consola: 3.2.3
       defu: 6.1.4
       magic-regexp: 0.8.0
-      mlly: 1.7.0
+      mlly: 1.7.1
       nuxi: 3.11.1
       pathe: 1.1.2
       pkg-types: 1.1.1
@@ -11521,7 +11524,7 @@ snapshots:
     dependencies:
       estree-walker: 3.0.3
       magic-string: 0.30.10
-      mlly: 1.7.0
+      mlly: 1.7.1
       regexp-tree: 0.1.27
       type-level-regexp: 0.1.17
       ufo: 1.5.3
@@ -11985,7 +11988,7 @@ snapshots:
       fs-extra: 11.2.0
       globby: 14.0.1
       jiti: 1.21.0
-      mlly: 1.7.0
+      mlly: 1.7.1
       mri: 1.2.0
       pathe: 1.1.2
       pkg-types: 1.1.1
@@ -11997,6 +12000,13 @@ snapshots:
       vue-tsc: 2.0.19(typescript@5.4.5)
 
   mlly@1.7.0:
+    dependencies:
+      acorn: 8.11.3
+      pathe: 1.1.2
+      pkg-types: 1.1.1
+      ufo: 1.5.3
+
+  mlly@1.7.1:
     dependencies:
       acorn: 8.11.3
       pathe: 1.1.2
@@ -14141,7 +14151,7 @@ snapshots:
       jiti: 1.21.0
       magic-string: 0.30.10
       mkdist: 1.5.1(typescript@5.4.5)(vue-tsc@2.0.19(typescript@5.4.5))
-      mlly: 1.7.0
+      mlly: 1.7.1
       pathe: 1.1.2
       pkg-types: 1.1.1
       pretty-bytes: 6.1.1
