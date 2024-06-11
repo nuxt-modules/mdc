@@ -18,11 +18,11 @@
     },
     "./runtime": {
       "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime/index.mjs"
+      "import": "./dist/runtime/index.js"
     },
     "./dist/runtime": {
       "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime/index.mjs"
+      "import": "./dist/runtime/index.js"
     },
     "./runtime/components/*": {
       "types": "./dist/runtime/components/*.d.ts",
@@ -34,11 +34,11 @@
     },
     "./runtime/*": {
       "types": "./dist/runtime/*.d.ts",
-      "import": "./dist/runtime/*.mjs"
+      "import": "./dist/runtime/*.js"
     },
     "./dist/runtime/*": {
       "types": "./dist/runtime/*.d.ts",
-      "import": "./dist/runtime/*.mjs"
+      "import": "./dist/runtime/*.js"
     }
   },
   "main": "./dist/module.cjs",
