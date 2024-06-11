@@ -128,7 +128,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'mdc-highlighter.mjs',
       getContents: templates.mdcHighlighter,
       options: {
-        shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki'),
+        shikiPath: resolver.resolve('../dist/runtime/highlighter/shiki.js'),
         options: options.highlight,
         useWasmAssets
       }
