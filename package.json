@@ -124,6 +124,7 @@
     "vitest": "^1.6.0",
     "vue-tsc": "^2.0.19"
   },
+  "packageManager": "pnpm@9.3.0",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): release v${version}"
