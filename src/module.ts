@@ -8,6 +8,8 @@ import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import * as templates from './templates'
 import { addWasmSupport } from './utils'
 
+export type { ModuleOptions }
+
 export const DefaultHighlightLangs: BundledLanguage[] = [
   'js',
   'jsx',
