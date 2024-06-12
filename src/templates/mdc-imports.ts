@@ -1,5 +1,5 @@
 import { pascalCase } from 'scule'
-import type { UnistPlugin } from '../types'
+import type { UnistPlugin } from '../types/module'
 
 export async function mdcImports({ options }: any) {
   const imports: string[] = []

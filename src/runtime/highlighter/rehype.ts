@@ -1,7 +1,7 @@
 import type { Root, Element } from 'hast'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import type { Highlighter, MdcThemeOptions } from './types'
+import type { Highlighter, MdcThemeOptions } from '../../types/highlighter'
 
 export interface RehypeHighlightOption {
   theme?: MdcThemeOptions

@@ -1,5 +1,5 @@
+import type { HighlightResult } from '../../types/highlighter'
 import { rehypeHighlight as rehypeHighlightUniversal, type RehypeHighlightOption } from './rehype'
-import type { HighlightResult } from './types'
 
 const defaults: RehypeHighlightOption = {
   theme: {},

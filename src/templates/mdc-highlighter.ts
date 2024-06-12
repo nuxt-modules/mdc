@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import type { LanguageRegistration, ThemeRegistration } from 'shiki/core'
-import type { ModuleOptions } from '../types'
+import type { ModuleOptions } from '../types/module'
 
 export async function mdcHighlighter({
   options: {

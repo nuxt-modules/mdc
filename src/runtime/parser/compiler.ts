@@ -1,7 +1,7 @@
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
-import type { RootContent, Root } from '../types/hast'
-import type { MDCNode, MDCParseOptions, MDCRoot } from '../types'
+import type { RootContent, Root } from '../../types/hast'
+import type { MDCNode, MDCParseOptions, MDCRoot } from '../../types'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any, options: MDCParseOptions = {}) {

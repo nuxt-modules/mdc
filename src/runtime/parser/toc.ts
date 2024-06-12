@@ -1,4 +1,4 @@
-import type { MDCNode, Toc, TocLink, MDCElement, MDCRoot } from '../types'
+import type { MDCNode, Toc, TocLink, MDCElement, MDCRoot } from '../../types'
 import { flattenNode, flattenNodeText } from '../utils/ast'
 
 const TOC_TAGS = ['h2', 'h3', 'h4', 'h5', 'h6']

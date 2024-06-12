@@ -5,7 +5,7 @@ import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import htmlTags from '../parser/utils/html-tags-list'
-import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../types'
+import type { MDCElement, MDCNode, MDCRoot, MDCData } from '../../types'
 import { flatUnwrap } from '../utils/node'
 
 type CreateElement = typeof h
