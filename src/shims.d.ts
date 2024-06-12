@@ -1,12 +1,12 @@
 declare module '#mdc-configs' {
-  import type { MdcConfig } from './runtime/types/config'
+  import type { MdcConfig } from './types/config'
 
   function getMdcConfigs(): Promise<MdcConfig[]>
   export { getMdcConfigs }
 }
 
 declare module '#mdc-imports' {
-  import type { RehypePlugin, RemarkPlugin } from './runtime/types'
+  import type { RehypePlugin, RemarkPlugin } from './types'
   import type { RehypeHighlightOption } from './runtime/highlighter/rehype'
 
   const remarkPlugins: Record<string, false | RemarkPlugin>
@@ -16,7 +16,7 @@ declare module '#mdc-imports' {
 }
 
 declare module '#mdc-highlighter' {
-  import type { Highlighter } from '../runtime/highlighter/types'
+  import type { Highlighter } from './types/highlighter'
 
   const highlighter: Highlighter
   export default highlighter

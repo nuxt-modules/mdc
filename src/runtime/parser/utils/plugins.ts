@@ -1,6 +1,6 @@
 // @ts-expect-error missing types
 import type { Processor } from 'remark-rehype/lib'
-import type { MDCParseOptions, RehypePlugin, RemarkPlugin } from '../../types'
+import type { MDCParseOptions, RehypePlugin, RemarkPlugin } from '../../../types'
 
 export const useProcessorPlugins = async (
   processor: Processor,

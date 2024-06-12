@@ -1,6 +1,6 @@
 import type { Highlighter, HighlighterCore, ShikiTransformer } from 'shiki'
 import type { Processor } from 'unified'
-import type { MdcThemeOptions, HighlighterOptions } from '../highlighter/types'
+import type { MdcThemeOptions, HighlighterOptions } from './highlighter'
 
 export type Awaitable<T> = T | Promise<T>
 

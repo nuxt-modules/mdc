@@ -1,5 +1,5 @@
 import type { BundledLanguage, BundledTheme, LanguageRegistration, ThemeRegistrationAny } from 'shiki'
-import type { MdcThemeOptions } from './runtime/highlighter/types'
+import type { MdcThemeOptions } from './highlighter'
 
 export interface UnistPlugin {
   src?: string

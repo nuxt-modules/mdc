@@ -3,10 +3,12 @@ import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, cre
 import { defu } from 'defu'
 import { resolve } from 'pathe'
 import type { BundledLanguage } from 'shiki'
-import type { ModuleOptions } from './types'
+import type { ModuleOptions } from './types/module'
 import { registerMDCSlotTransformer } from './utils/vue-mdc-slot'
 import * as templates from './templates'
 import { addWasmSupport } from './utils'
+
+export * from './types/module'
 
 export const DefaultHighlightLangs: BundledLanguage[] = [
   'js',

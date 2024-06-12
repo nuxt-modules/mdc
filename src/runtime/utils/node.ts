@@ -1,5 +1,5 @@
 import type { VNode } from 'vue'
-import type { MDCElement, MDCNode, MDCText } from '../types'
+import type { MDCElement, MDCNode, MDCText } from '../../types'
 
 /**
  * List of text nodes

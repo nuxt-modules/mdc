@@ -1,4 +1,4 @@
-import type { MDCElement, MDCNode } from '../types'
+import type { MDCElement, MDCNode } from '../../types'
 
 export function flattenNodeText(node: MDCNode): string {
   if (node.type === 'comment') {
