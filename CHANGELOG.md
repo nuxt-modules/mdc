@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.8.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.0...v0.8.1)
+
+### 🚀 Enhancements
+
+- Export module types ([#223](https://github.com/nuxt-modules/mdc/pull/223))
+
+### 🩹 Fixes
+
+- **build:** Resolve `runtime/**/*.js` files and prose header types ([#220](https://github.com/nuxt-modules/mdc/pull/220))
+
+### 🏡 Chore
+
+- Bump `@nuxt/module-builder` ([#221](https://github.com/nuxt-modules/mdc/pull/221))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+
 ## v0.8.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.7.1...v0.8.0)
