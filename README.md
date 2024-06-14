@@ -76,7 +76,7 @@ This component will take the result of [`parseMarkdown`](#parsing-markdown) func
 <script setup lang="ts">
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
-const ast = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
+const { data: ast } = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
 </script>
 
 <template>
@@ -196,7 +196,7 @@ The `parseMarkdown` function is a universal helper, and you can also use it in t
 <script setup lang="ts">
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
-const ast = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
+const { data: ast } = await useAsyncData('markdown', () => parseMarkdown('::alert\nMissing markdown input\n::'))
 </script>
 
 <template>
