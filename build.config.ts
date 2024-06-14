@@ -2,7 +2,6 @@ import fs from 'node:fs'
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
-  failOnWarn: false,
   entries: [
     'src/config.ts'
   ],

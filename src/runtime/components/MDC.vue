@@ -21,8 +21,8 @@
 import { hash } from 'ohash'
 import { useAsyncData } from 'nuxt/app'
 import { watch, computed, type PropType } from 'vue'
+import type { MDCParseOptions } from '@nuxtjs/mdc'
 import { parseMarkdown } from '../parser'
-import type { MDCParseOptions } from '../../types'
 
 const props = defineProps({
   tag: {
