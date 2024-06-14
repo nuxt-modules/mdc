@@ -7,8 +7,7 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight
 } from '@shikijs/transformers'
-import type { MdcConfig } from '../../types/config'
-import type { Highlighter } from '../../types/highlighter'
+import type { MdcConfig, Highlighter } from '@nuxtjs/mdc'
 
 export interface CreateShikiHighlighterOptions {
   /* An array of themes to be loaded initially */

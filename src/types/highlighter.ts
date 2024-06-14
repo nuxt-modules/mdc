@@ -16,3 +16,8 @@ export interface HighlightResult {
 }
 
 export type Highlighter = (code: string, lang: string, theme: MdcThemeOptions, options: Partial<HighlighterOptions>) => Promise<HighlightResult>
+
+export interface RehypeHighlightOption {
+  theme?: MdcThemeOptions
+  highlighter?: Highlighter
+}

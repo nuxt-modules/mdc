@@ -1,8 +1,8 @@
 import type { Options as RehypeOption } from 'remark-rehype'
-import type { RehypeHighlightOption } from '../runtime/highlighter/rehype'
 import type { MdcConfig } from './config'
 import type { MDCData, MDCRoot } from './tree'
 import type { Toc } from './toc'
+import type { RehypeHighlightOption } from './highlighter'
 
 export interface RemarkPlugin {
   instance?: any
