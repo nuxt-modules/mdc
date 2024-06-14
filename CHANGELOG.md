@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.8.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.1...v0.8.2)
+
+### 🩹 Fixes
+
+- Export module types under pakcage name ([#226](https://github.com/nuxt-modules/mdc/pull/226))
+
+### 📖 Documentation
+
+- Fix invalid `useAsyncData` usage ([3f2fb53](https://github.com/nuxt-modules/mdc/commit/3f2fb53))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.8.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.0...v0.8.1)
