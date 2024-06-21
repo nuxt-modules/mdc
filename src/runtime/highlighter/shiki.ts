@@ -1,4 +1,4 @@
-import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
+import { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
 import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
 import type { Element } from 'hast'
 import {
@@ -36,7 +36,7 @@ export function createShikiHighlighter({
   let configs: Promise<MdcConfig[]> | undefined
 
   async function _getShiki() {
-    const shiki = await getHighlighterCore({
+    const shiki = await createHighlighterCore({
       langs,
       themes,
       loadWasm: () => import('shiki/wasm')
