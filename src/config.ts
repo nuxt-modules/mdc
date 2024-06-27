@@ -1,5 +1,5 @@
 import type { MdcConfig } from './types'
 
-export function defineConfig(config: MdcConfig) {
+export function defineConfig(config: MdcConfig): MdcConfig {
   return config
 }
