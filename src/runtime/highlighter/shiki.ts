@@ -1,4 +1,5 @@
-import { getHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
+import type { CodeToHastOptions } from 'shiki/core'
+import { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
 import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
 import type { Element } from 'hast'
 import {
@@ -36,7 +37,7 @@ export function createShikiHighlighter({
   let configs: Promise<MdcConfig[]> | undefined
 
   async function _getShiki() {
-    const shiki = await getHighlighterCore({
+    const shiki = await createHighlighterCore({
       langs,
       themes,
       loadWasm: () => import('shiki/wasm')
@@ -72,6 +73,22 @@ export function createShikiHighlighter({
 
   const highlighter: Highlighter = async (code, lang, theme, options = {}) => {
     const shiki = await getShiki()
+
+    const codeToHastOptions: Partial<CodeToHastOptions<string, string>> = {
+      defaultColor: false,
+      meta: {
+        __raw: options.meta
+      }
+    }
+
+    // Custom embedded languages
+    if (lang === 'ts-type' || lang === 'typescript-type') {
+      lang = 'typescript'
+      codeToHastOptions.grammarContextCode = 'let a:'
+    } else if (lang === 'vue-html' || lang === 'vue-template') {
+      lang = 'vue'
+      codeToHastOptions.grammarContextCode = '<template>'
+    }
 
     const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
     const loadedThemes = shiki.getLoadedThemes()
@@ -114,11 +131,8 @@ export function createShikiHighlighter({
 
     const root = shiki.codeToHast(code.trimEnd(), {
       lang,
+      ...codeToHastOptions,
       themes: themesObject,
-      defaultColor: false,
-      meta: {
-        __raw: options.meta
-      },
       transformers: [
         ...transformers,
         {

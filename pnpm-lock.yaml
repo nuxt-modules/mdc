@@ -12,8 +12,8 @@ importers:
         specifier: ^3.12.1
         version: 3.12.1(rollup@3.29.4)
       '@shikijs/transformers':
-        specifier: ^1.6.4
-        version: 1.6.4
+        specifier: ^1.10.0
+        version: 1.10.0
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -96,8 +96,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       shiki:
-        specifier: ^1.6.4
-        version: 1.6.4
+        specifier: ^1.10.0
+        version: 1.10.0
       ufo:
         specifier: ^1.5.3
         version: 1.5.3
@@ -1018,9 +1018,6 @@ packages:
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
-  '@iconify/utils@2.1.23':
-    resolution: {integrity: sha512-YGNbHKM5tyDvdWZ92y2mIkrfvm5Fvhe6WJSkWu7vvOFhMtYDP0casZpoRz0XEHZCrYsR4stdGT3cZ52yp5qZdQ==}
-
   '@iconify/utils@2.1.24':
     resolution: {integrity: sha512-H8r2KpL5uKyrkb3z9/3HD/22JcxqW3BJyjEWZhX2T7DehnYVZthEap1cNsEl/UtCDC3TlpNmwiPX8wg3y8E4dg==}
 
@@ -1692,17 +1689,17 @@ packages:
   '@rushstack/eslint-patch@1.10.3':
     resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
 
+  '@shikijs/core@1.10.0':
+    resolution: {integrity: sha512-BZcr6FCmPfP6TXaekvujZcnkFmJHZ/Yglu97r/9VjzVndQA56/F4WjUKtJRQUnK59Wi7p/UTAOekMfCJv7jnYg==}
+
   '@shikijs/core@1.3.0':
     resolution: {integrity: sha512-7fedsBfuILDTBmrYZNFI8B6ATTxhQAasUHllHmjvSZPnoq4bULWoTpHwmuQvZ8Aq03/tAa2IGo6RXqWtHdWaCA==}
 
   '@shikijs/core@1.5.2':
     resolution: {integrity: sha512-wSAOgaz48GmhILFElMCeQypSZmj6Ru6DttOOtl3KNkdJ17ApQuGNCfzpk4cClasVrnIu45++2DBwG4LNMQAfaA==}
 
-  '@shikijs/core@1.6.4':
-    resolution: {integrity: sha512-WTU9rzZae1p2v6LOxMf6LhtmZOkIHYYW160IuahUyJy7YXPPjyWZLR1ag+SgD22ZMxZtz1gfU6Tccc8t0Il/XA==}
-
-  '@shikijs/transformers@1.6.4':
-    resolution: {integrity: sha512-NqDt7gUg3ayVBnsipT/KoL1pqsVbsvT/2cB0pb5SG2q72qjAv9Lb5OP99pL//BMmI+sMTo+TeARntklyBu4mZQ==}
+  '@shikijs/transformers@1.10.0':
+    resolution: {integrity: sha512-5Eu/kuJu7/CzAjFlTJkyyPoLTLSVQZ31Ps81cjIeR/3PDJ2RUuX1/R8d0qFziBKToym1LXbNiXoJQq0mg5+Cwg==}
 
   '@sigstore/bundle@2.3.1':
     resolution: {integrity: sha512-eqV17lO3EIFqCWK3969Rz+J8MYrRZKw9IBHpSo6DEcEX2c+uzDFOgHE9f2MnyDpfs48LFO4hXmk9KhQ74JzU1g==}
@@ -6117,14 +6114,14 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
+  shiki@1.10.0:
+    resolution: {integrity: sha512-YD2sXQ+TMD/F9BimV9Jn0wj35pqOvywvOG/3PB6hGHyGKlM7TJ9tyJ02jOb2kF8F0HfJwKNYrh3sW7jEcuRlXA==}
+
   shiki@1.3.0:
     resolution: {integrity: sha512-9aNdQy/etMXctnPzsje1h1XIGm9YfRcSksKOGqZWXA/qP9G18/8fpz5Bjpma8bOgz3tqIpjERAd6/lLjFyzoww==}
 
   shiki@1.5.2:
     resolution: {integrity: sha512-fpPbuSaatinmdGijE7VYUD3hxLozR3ZZ+iAx8Iy2X6REmJGyF5hQl94SgmiUNTospq346nXUVZx0035dyGvIVw==}
-
-  shiki@1.6.4:
-    resolution: {integrity: sha512-X88chM7w8jnadoZtjPTi5ahCJx9pc9f8GfEkZAEYUTlcUZIEw2D/RY86HI/LkkE7Nj8TQWkiBfaFTJ3VJT6ESg==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -7966,18 +7963,6 @@ snapshots:
 
   '@iconify/types@2.0.0': {}
 
-  '@iconify/utils@2.1.23':
-    dependencies:
-      '@antfu/install-pkg': 0.1.1
-      '@antfu/utils': 0.7.8
-      '@iconify/types': 2.0.0
-      debug: 4.3.5
-      kolorist: 1.8.0
-      local-pkg: 0.5.0
-      mlly: 1.7.1
-    transitivePeerDependencies:
-      - supports-color
-
   '@iconify/utils@2.1.24':
     dependencies:
       '@antfu/install-pkg': 0.1.1
@@ -9211,15 +9196,15 @@ snapshots:
 
   '@rushstack/eslint-patch@1.10.3': {}
 
+  '@shikijs/core@1.10.0': {}
+
   '@shikijs/core@1.3.0': {}
 
   '@shikijs/core@1.5.2': {}
 
-  '@shikijs/core@1.6.4': {}
-
-  '@shikijs/transformers@1.6.4':
+  '@shikijs/transformers@1.10.0':
     dependencies:
-      shiki: 1.6.4
+      shiki: 1.10.0
 
   '@sigstore/bundle@2.3.1':
     dependencies:
@@ -9621,7 +9606,7 @@ snapshots:
 
   '@unocss/preset-icons@0.60.2':
     dependencies:
-      '@iconify/utils': 2.1.23
+      '@iconify/utils': 2.1.24
       '@unocss/core': 0.60.2
       ofetch: 1.3.4
     transitivePeerDependencies:
@@ -15087,6 +15072,10 @@ snapshots:
       interpret: 1.4.0
       rechoir: 0.6.2
 
+  shiki@1.10.0:
+    dependencies:
+      '@shikijs/core': 1.10.0
+
   shiki@1.3.0:
     dependencies:
       '@shikijs/core': 1.3.0
@@ -15094,10 +15083,6 @@ snapshots:
   shiki@1.5.2:
     dependencies:
       '@shikijs/core': 1.5.2
-
-  shiki@1.6.4:
-    dependencies:
-      '@shikijs/core': 1.6.4
 
   side-channel@1.0.6:
     dependencies:
