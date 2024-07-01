@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v0.8.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.2...v0.8.3)
+
+### 🚀 Enhancements
+
+- Upgrade shiki, support custom embedded languages `ts-type` and `vue-html` ([#232](https://github.com/nuxt-modules/mdc/pull/232))
+
+### 🩹 Fixes
+
+- `defineConfig` should be side-effect free ([#235](https://github.com/nuxt-modules/mdc/pull/235))
+- **build:** Change default exports to `module.d.ts` ([c8b12d5](https://github.com/nuxt-modules/mdc/commit/c8b12d5))
+
+### 🏡 Chore
+
+- Upgrade deps ([5ef4d87](https://github.com/nuxt-modules/mdc/commit/5ef4d87))
+- Update lockfile ([dc4cf01](https://github.com/nuxt-modules/mdc/commit/dc4cf01))
+
+### 🤖 CI
+
+- Update edge job ([b3c0f28](https://github.com/nuxt-modules/mdc/commit/b3c0f28))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Anthony Fu <anthonyfu117@hotmail.com>
+
 ## v0.8.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.1...v0.8.2)
