@@ -160,7 +160,7 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.9)(terser@5.31.1)
       vue-tsc:
-        specifier: ^2.0.19
+        specifier: ^2.0.24
         version: 2.0.24(typescript@5.5.2)
 
   playground:
