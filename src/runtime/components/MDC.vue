@@ -8,7 +8,7 @@
   >
     <MDCRenderer
       v-if="body"
-      :tag="tag"
+      :tag="props.tag"
       :class="props.class"
       :body="body"
       :data="data?.data"
