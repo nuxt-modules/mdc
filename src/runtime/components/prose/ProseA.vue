@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
-defineProps({
+const props = defineProps({
   href: {
     type: String,
     default: ''
