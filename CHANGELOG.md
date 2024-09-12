@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.9.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.3...v0.9.0)
+
+### 🩹 Fixes
+
+- Use explicit `props` ([#252](https://github.com/nuxt-modules/mdc/pull/252))
+- **shiki:** Dynamic import highlighter packages ([#253](https://github.com/nuxt-modules/mdc/pull/253))
+
+### 🏡 Chore
+
+- Upgrade deps ([e41bafc](https://github.com/nuxt-modules/mdc/commit/e41bafc))
+- Update playground ([8a7c5b5](https://github.com/nuxt-modules/mdc/commit/8a7c5b5))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Eugen Istoc <eugenistoc@gmail.com>
+
 ## v0.8.3
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.2...v0.8.3)
