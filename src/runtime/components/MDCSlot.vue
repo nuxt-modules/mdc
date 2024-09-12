@@ -62,7 +62,7 @@ export default defineComponent({
       }
 
       return unwrap ? flatUnwrap(slot(), tags) : [slot()]
-    } catch (e) {
+    } catch {
       // Catching errors to allow content reactivity
       return h('div')
     }

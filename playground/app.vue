@@ -29,7 +29,7 @@ useDark()
 
 const key = 'nuxt-mdc-playground-code'
 const md = useLocalStorage(key,
-`---
+  `---
 title: Sam
 ---
 

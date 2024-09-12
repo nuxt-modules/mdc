@@ -33,7 +33,9 @@
  * }
  * ```
  */
-export interface Data {}
+export interface Data {
+  [key: string]: unknown
+}
 
 /**
  * One place in a source file.

@@ -1,4 +1,4 @@
-import { type State, type Raw } from 'mdast-util-to-hast'
+import type { State, Raw } from 'mdast-util-to-hast'
 import type { Html } from 'mdast'
 import { kebabCase } from 'scule'
 import { getTagName } from './utils'

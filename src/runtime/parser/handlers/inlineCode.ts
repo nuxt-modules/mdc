@@ -1,4 +1,4 @@
-import { type State } from 'mdast-util-to-hast'
+import type { State } from 'mdast-util-to-hast'
 import type { Element, Text, Properties } from 'hast'
 import type { InlineCode } from 'mdast'
 
