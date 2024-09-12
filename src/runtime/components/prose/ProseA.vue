@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
-    :href="href"
-    :target="target"
+    :href="props.href"
+    :target="props.target"
   >
     <slot />
   </NuxtLink>
@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
-defineProps({
+const props = defineProps({
   href: {
     type: String,
     default: ''

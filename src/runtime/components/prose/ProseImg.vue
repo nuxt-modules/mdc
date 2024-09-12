@@ -2,9 +2,9 @@
   <component
     :is="imgComponent"
     :src="refinedSrc"
-    :alt="alt"
-    :width="width"
-    :height="height"
+    :alt="props.alt"
+    :width="props.width"
+    :height="props.height"
   />
 </template>
 

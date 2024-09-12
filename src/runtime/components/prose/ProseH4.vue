@@ -1,8 +1,8 @@
 <template>
-  <h4 :id="id">
+  <h4 :id="props.id">
     <a
-      v-if="id && generate"
-      :href="`#${id}`"
+      v-if="props.id && generate"
+      :href="`#${props.id}`"
     >
       <slot />
     </a>
