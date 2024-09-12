@@ -1,13 +1,6 @@
 import type { CodeToHastOptions } from 'shiki/core'
-import { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } from 'shiki/core'
 import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
 import type { Element } from 'hast'
-import {
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight
-} from '@shikijs/transformers'
 import type { MdcConfig, Highlighter } from '@nuxtjs/mdc'
 
 export interface CreateShikiHighlighterOptions {
@@ -33,11 +26,14 @@ export function createShikiHighlighter({
   getMdcConfigs,
   options: shikiOptions
 }: CreateShikiHighlighterOptions = {}): Highlighter {
-  let shiki: Promise<HighlighterCore> | undefined
+  let shiki: ReturnType<typeof _getShiki> | undefined
   let configs: Promise<MdcConfig[]> | undefined
 
   async function _getShiki() {
-    const shiki = await createHighlighterCore({
+    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('shiki/core')
+    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('@shikijs/transformers')
+
+    const shiki: HighlighterCore = await createHighlighterCore({
       langs,
       themes,
       loadWasm: () => import('shiki/wasm')
@@ -47,7 +43,18 @@ export function createShikiHighlighter({
       await config.shiki?.setup?.(shiki)
     }
 
-    return shiki
+    return {
+      shiki,
+      addClassToHast,
+      isSpecialLang,
+      isSpecialTheme,
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationErrorLevel(),
+        transformerNotationFocus(),
+        transformerNotationHighlight()
+      ] as ShikiTransformer[]
+    }
   }
 
   async function getShiki() {
@@ -64,15 +71,14 @@ export function createShikiHighlighter({
     return configs
   }
 
-  const baseTransformers: ShikiTransformer[] = [
-    transformerNotationDiff(),
-    transformerNotationFocus(),
-    transformerNotationHighlight(),
-    transformerNotationErrorLevel()
-  ]
-
   const highlighter: Highlighter = async (code, lang, theme, options = {}) => {
-    const shiki = await getShiki()
+    const {
+      shiki,
+      addClassToHast,
+      isSpecialLang,
+      isSpecialTheme,
+      transformers: baseTransformers
+    } = await getShiki()
 
     const codeToHastOptions: Partial<CodeToHastOptions<string, string>> = {
       defaultColor: false,
