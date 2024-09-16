@@ -3,12 +3,14 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '../src/module'
   ],
+
   mdc: {
     highlight: {
       theme: {
         default: 'vitesse-light',
         dark: 'material-theme-palenight'
       },
+      shikiEngine: 'javascript',
       preload: [
         'sql'
       ]
@@ -23,7 +25,10 @@ export default defineNuxtConfig({
       }
     }
   },
+
   devtools: {
     enabled: true
-  }
+  },
+
+  compatibilityDate: '2024-09-16'
 })

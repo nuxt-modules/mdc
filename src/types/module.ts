@@ -50,6 +50,16 @@ export interface ModuleOptions {
     themes?: (BundledTheme | ThemeRegistrationAny)[]
 
     /**
+     * Engine to be used for Shiki
+     *
+     * Note that the `javascript` engine still in experimental, use with caution.
+     *
+     * @see https://shiki.style/guide/regex-engines
+     * @default 'oniguruma'
+     */
+    shikiEngine?: 'oniguruma' | 'javascript'
+
+    /**
      * Preloaded languages that will be available for highlighting code blocks.
      *
      * @deprecated use `langs` instead.

@@ -67,10 +67,16 @@ export async function mdcHighlighter({
       ...options?.themes || []
     ]))
 
+    const {
+      shikiEngine = 'oniguruma'
+    } = options
+
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
+      shikiEngine === 'javascript'
+        ? 'import { createJavaScriptRegexEngine } from \'shiki/engine/javascript\''
+        : 'import { createWasmOnigEngine } from \'shiki/engine/oniguruma\'',
       code,
-
       'const bundledLangs = {',
       ...Array.from(langsMap.entries())
         .map(([name, lang]) => typeof lang === 'string'
@@ -86,7 +92,10 @@ export async function mdcHighlighter({
         theme: options.theme,
         wrapperStyle: options.wrapperStyle
       }),
-      'const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs })',
+      shikiEngine === 'javascript'
+        ? 'const engine = createJavaScriptRegexEngine({ forgiving: true })'
+        : `const engine = createWasmOnigEngine(() => import('shiki/wasm'))`,
+      'const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs, engine })',
       'export default highlighter'
     ].join('\n')
   }

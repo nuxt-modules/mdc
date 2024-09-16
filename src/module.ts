@@ -236,6 +236,7 @@ function resolveOptions(options: ModuleOptions) {
       default: 'github-light',
       dark: 'github-dark'
     }
+    options.highlight.shikiEngine ||= 'oniguruma'
     options.highlight.langs ||= DefaultHighlightLangs
 
     if (options.highlight.preload) {
