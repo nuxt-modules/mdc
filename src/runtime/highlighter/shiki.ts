@@ -1,5 +1,5 @@
 import type { CodeToHastOptions } from 'shiki/core'
-import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput } from 'shiki'
+import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput, RegexEngine } from 'shiki'
 import type { Element } from 'hast'
 import type { MdcConfig, Highlighter } from '@nuxtjs/mdc'
 
@@ -16,6 +16,8 @@ export interface CreateShikiHighlighterOptions {
   options?: { wrapperStyle?: string }
   /* A function to custom mdc configs */
   getMdcConfigs?: () => Promise<MdcConfig[]>
+  /* Shiki regex engine */
+  engine?: RegexEngine
 }
 
 export function createShikiHighlighter({
@@ -24,7 +26,8 @@ export function createShikiHighlighter({
   bundledLangs = {},
   bundledThemes = {},
   getMdcConfigs,
-  options: shikiOptions
+  options: shikiOptions,
+  engine
 }: CreateShikiHighlighterOptions = {}): Highlighter {
   let shiki: ReturnType<typeof _getShiki> | undefined
   let configs: Promise<MdcConfig[]> | undefined
@@ -36,7 +39,7 @@ export function createShikiHighlighter({
     const shiki: HighlighterCore = await createHighlighterCore({
       langs,
       themes,
-      loadWasm: () => import('shiki/wasm')
+      engine
     })
 
     for await (const config of await getConfigs()) {
