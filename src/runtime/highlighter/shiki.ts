@@ -17,7 +17,7 @@ export interface CreateShikiHighlighterOptions {
   /* A function to custom mdc configs */
   getMdcConfigs?: () => Promise<MdcConfig[]>
   /* Shiki regex engine */
-  engine?: RegexEngine
+  engine?: RegexEngine | Promise<RegexEngine>
 }
 
 export function createShikiHighlighter({
