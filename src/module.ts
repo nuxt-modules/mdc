@@ -256,7 +256,6 @@ declare module '@nuxt/schema' {
         map: Record<string, string>
       }
       headings: ModuleOptions['headings']
-      useNuxtImage?: boolean
     }
   }
 
