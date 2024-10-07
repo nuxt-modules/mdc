@@ -40,7 +40,7 @@ export default defineComponent({
       default: () => ({})
     },
     /**
-     * Root tag to use for rendering
+     * Class(es) to bind to the component
      */
     class: {
       type: [String, Object],
