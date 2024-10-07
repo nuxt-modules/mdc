@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports, hasNuxtModule } from '@nuxt/kit'
+import { defineNuxtModule, extendViteConfig, addComponent, addComponentsDir, createResolver, addServerHandler, addTemplate, addImports, addServerImports } from '@nuxt/kit'
 import { defu } from 'defu'
 import { resolve } from 'pathe'
 import type { BundledLanguage } from 'shiki'
@@ -167,11 +167,10 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
-    if (hasNuxtModule('@nuxt/image')) {
-      nuxt.options.runtimeConfig.public.mdc = defu(nuxt.options.runtimeConfig.public.mdc, {
-        useNuxtImage: true
-      })
-    }
+    addTemplate({
+      filename: 'mdc-image-component.mjs',
+      getContents: ({ app }) => app.components.some(c => c.pascalName === 'NuxtImg' && !c.filePath.includes('nuxt/dist/app')) ? 'export { NuxtImg } from "#components"' : 'export default "img"'
+    })
 
     // Update Vite optimizeDeps
     extendViteConfig((config) => {

@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="imgComponent"
+    :is="ImageComponent"
     :src="refinedSrc"
     :alt="props.alt"
     :width="props.width"
@@ -12,7 +12,7 @@
 import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
 import { useRuntimeConfig, computed, resolveComponent } from '#imports'
 
-const imgComponent = useRuntimeConfig().public.mdc.useNuxtImage ? resolveComponent('NuxtImg') : 'img'
+import ImageComponent from '#build/mdc-image-component.mjs'
 
 const props = defineProps({
   src: {
