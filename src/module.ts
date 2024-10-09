@@ -70,12 +70,13 @@ export default defineNuxtModule<ModuleOptions>({
       // Enable unwasm for shiki
       addWasmSupport(nuxt)
 
-      // Add server handlers
-      addServerHandler({
-        route: '/api/_mdc/highlight',
-        handler: resolver.resolve('./runtime/highlighter/event-handler')
-      })
-
+      if (options.highlight?.noApiRoute !== true) {
+        // Add server handlers
+        addServerHandler({
+          route: '/api/_mdc/highlight',
+          handler: resolver.resolve('./runtime/highlighter/event-handler')
+        })
+      }
       options.rehypePlugins ||= {}
       options.rehypePlugins.highlight ||= {}
       options.rehypePlugins.highlight.src ||= await resolver.resolvePath('./runtime/highlighter/rehype-nuxt')

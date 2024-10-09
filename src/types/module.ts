@@ -72,6 +72,8 @@ export interface ModuleOptions {
      * @default false
      */
     wrapperStyle?: boolean | string
+
+    noApiRoute?: boolean
   } | false
 
   headings?: {
