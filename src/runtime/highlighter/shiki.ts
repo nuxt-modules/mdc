@@ -99,7 +99,7 @@ export function createShikiHighlighter({
       codeToHastOptions.grammarContextCode = '<template>'
     }
 
-    const themesObject = typeof theme === 'string' ? { default: theme } : (theme || {})
+    const themesObject = { ...(typeof theme === 'string' ? { default: theme } : (theme || {})) }
     const loadedThemes = shiki.getLoadedThemes()
     const loadedLanguages = shiki.getLoadedLanguages()
 
