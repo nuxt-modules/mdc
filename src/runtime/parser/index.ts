@@ -30,7 +30,8 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
 
   // TODO: remove the passing in @nuxt/content and then we could remove this line
   if (inlineOptions.highlight != null && inlineOptions.highlight != false && inlineOptions.highlight.highlighter !== undefined && typeof inlineOptions.highlight.highlighter !== 'function') {
-    if (import.meta.dev)
+    // eslint-disable-next-line nuxt/prefer-import-meta
+    if (process.dev)
       console.warn('[@nuxtjs/mdc] `highlighter` passed to `parseMarkdown` is should be a function, but got ' + JSON.stringify(inlineOptions.highlight.highlighter) + ', ignored.')
     inlineOptions = {
       ...inlineOptions,
