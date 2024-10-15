@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v0.9.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.0...v0.9.1)
+
+### 🚀 Enhancements
+
+- Introduce `highlight.shikiEngine` option ([#256](https://github.com/nuxt-modules/mdc/pull/256))
+- **highlight:** Introduce `noApiRoute` option to disable hightlight api ([bceb98a](https://github.com/nuxt-modules/mdc/commit/bceb98a))
+
+### 🩹 Fixes
+
+- **shiki:** Prevent change side effect ([ada4d71](https://github.com/nuxt-modules/mdc/commit/ada4d71))
+- **MDCRenderer:** Allow passing component definition to `components` prop ([136f847](https://github.com/nuxt-modules/mdc/commit/136f847))
+- Do not load `<NuxtImg>` stub if it is not installed ([#261](https://github.com/nuxt-modules/mdc/pull/261))
+
+### 🏡 Chore
+
+- Allow parser to be execute in node and jiti ([6278d20](https://github.com/nuxt-modules/mdc/commit/6278d20))
+- Update prop inline documentation ([#262](https://github.com/nuxt-modules/mdc/pull/262))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+- Farnabaz <farnabaz@gmail.com>
+- Anthony Fu <anthonyfu117@hotmail.com>
+
 ## v0.9.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.8.3...v0.9.0)
