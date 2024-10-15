@@ -170,7 +170,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     addTemplate({
       filename: 'mdc-image-component.mjs',
-      getContents: ({ app }) => app.components.some(c => c.pascalName === 'NuxtImg' && !c.filePath.includes('nuxt/dist/app')) ? 'export { NuxtImg } from "#components"' : 'export default "img"'
+      write: true,
+      getContents: ({ app }) => {
+        const image = app.components.find(c => c.pascalName === 'NuxtImg' && !c.filePath.includes('nuxt/dist/app'))
+
+        return image ? `export { default } from "${image.filePath}"` : 'export default "img"'
+      }
     })
 
     // Update Vite optimizeDeps
