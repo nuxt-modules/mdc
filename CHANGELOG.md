@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.9.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.1...v0.9.2)
+
+### 🩹 Fixes
+
+- **prose-image:** Broken template import ([d3ddc9c](https://github.com/nuxt-modules/mdc/commit/d3ddc9c))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.9.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.0...v0.9.1)
