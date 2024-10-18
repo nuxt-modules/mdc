@@ -271,8 +271,8 @@ This behavior allows for introducing [MDC block components](https://content.nuxt
 
 In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve, all of the following **must** be true:
 
-1. All functionality in the child component **must** be executed within an async setup function with top-level `await`.
-2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`
+1. All functionality in the child component **must** be executed within an async setup function with top-level `await`  (if no async/await behavior is needed, there's no issue).
+2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`.
 
     ```vue
     <template>
@@ -294,9 +294,17 @@ In order for the parent `MDCRenderer` component to properly wait for the child a
 
 To demonstrate how powerful these nested async block components can be, you could allow users to define a subset of markdown documents in your project that will be utilized as reusable "snippets" in a parent document.
 
-You would create a custom block component in your project that handles fetching the snippet markdown content, and render it in its own `MDCRenderer` component. See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example.
+You would create a custom block component in your project that handles fetching the snippet markdown content, and render it in its own `MDCRenderer` component.
 
-To see a working example of this behavior, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+
+### Handling recursion
+
+If your project implements a "reusable snippet" type of approach, you will likely want to prevent the use of recursive snippets, whereby a nested `MDCRenderer` attempts to then load another child with the same content (meaning, importing itself) and your application would be thrown into an infinite loop.
+
+One way to get around this is to utilize Vue's [`provide/inject`](https://vuejs.org/guide/components/provide-inject.html#provide-inject) to pass down the history of rendered "snippets" so that a child can properly determine if it is being called recursively, and stop the chain. This can be used in combination with parsing the `ast` document nodes after calling the `parseMarkdown` function to strip out recursive node trees from the `ast` before rendering the content in the DOM.
+
+For an example on how to prevent infinite loops and recursion with this pattern, please see the code in the playground's [`PageSnippet` component](/playground/components/global/PageSnippet.vue).
 
 ---
 
