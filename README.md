@@ -271,7 +271,7 @@ This behavior allows for introducing [MDC block components](https://content.nuxt
 
 In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve:
 
-1. All functionality in the child component **must** be executed within an async setup function with top-level `await`  (if no async/await behavior is needed, there's no issue).
+1. All functionality in the child component **must** be executed within an async setup function with top-level `await` (if no async/await behavior is needed in the child, e.g. no data fetching, then the component will resolve normally).
 2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`.
 
     ```vue
