@@ -294,7 +294,7 @@ In order for the parent `MDCRenderer` component to properly wait for the child a
 
 To demonstrate how powerful these nested async block components can be, you could allow users to define a subset of markdown documents in your project that will be utilized as reusable "snippets" in a parent document.
 
-You would create a custom block component in your project that handles fetching the snippet markdown content, and render it in its own `MDCRenderer` component.
+You would create a custom block component in your project that handles fetching the snippet markdown content from the API, use `parseMarkdown` to get the `ast` nodes, and render it in its own `MDC` or `MDCRenderer` component.
 
 See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
 
