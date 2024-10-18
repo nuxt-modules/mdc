@@ -1,8 +1,6 @@
 <template>
   <div class="root">
-    <Suspense suspensible>
-      <NuxtPage />
-    </Suspense>
+    <NuxtPage />
   </div>
 </template>
 

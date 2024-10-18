@@ -55,6 +55,7 @@ const { data: snippetData, error: snippetError } = await useFetch('/api/markdown
   },
   // Reuse the same key to avoid re-fetching the document, e.g. `portal-page-about`
   key: fetchKey.value,
+  dedupe: 'defer',
   immediate: !!snippetName.value, // Do not immediately fetch in case there's no snippet name
   retry: false, // Do not retry on 404 in case the snippet doesn't exist
   transform,
@@ -108,7 +109,7 @@ const removeInvalidSnippets = (obj: Record<string, any>): Record<string, any> | 
   return obj
 }
 
-const { data: ast, execute: parseSnippetData } = await useAsyncData(`parsed-${fetchKey.value}`, async (): Promise<MDCParserResult> => {
+const { data: ast } = await useAsyncData(`parsed-${fetchKey.value}`, async (): Promise<MDCParserResult> => {
   const parsed = await parseMarkdown(sanitizedData)
 
   // Extract the `body` and destructure the rest of the document
@@ -123,17 +124,13 @@ const { data: ast, execute: parseSnippetData } = await useAsyncData(`parsed-${fe
     body: processedBody as MDCRoot
   }
 }, {
-  immediate: false, // Do not immediately process the snippet data
+  // Only parse if there is content and no error
+  immediate: !!snippetName.value && (!!sanitizedData && !!snippetData.value?.content) && !snippetError.value, // Do not immediately process the snippet data
   dedupe: 'defer',
   deep: false,
   transform,
   getCachedData
 })
-
-// Only fire if there is content and no error
-if (!!snippetName.value && (!!sanitizedData && !!snippetData.value?.content) && !snippetError.value) {
-  await parseSnippetData()
-}
 
 if (snippetName.value && snippetError.value) {
   console.error(`snippet(${snippetName.value}) `, 'could not render snippet', snippetError.value)

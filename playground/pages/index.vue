@@ -5,13 +5,11 @@
       v-if="ast"
       class="page-mdc-content"
     >
-      <Suspense suspensible>
-        <MDCRenderer
-          v-if="ast.body"
-          :body="ast.body"
-          :data="ast.data"
-        />
-      </Suspense>
+      <MDCRenderer
+        v-if="ast.body"
+        :body="ast.body"
+        :data="ast.data"
+      />
     </div>
   </div>
 </template>
