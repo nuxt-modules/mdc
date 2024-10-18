@@ -19,6 +19,7 @@ MDC supercharges regular Markdown to write documents interacting deeply with any
 - Unwrap any generated content (ex: `<p>` added by each Markdown paragraph)
 - Use Vue components with named slots
 - Support inline components
+- Support asynchronous rendering of nested components
 - Add attributes and classes to inline HTML tags
 
 Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
@@ -259,6 +260,22 @@ export default defineNuxtConfig({
 ```
 
 Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types.ts).
+
+## Render nested async components
+
+The `MDCRenderer` also supports rendering _nested_ async components by waiting for any child component in its tree to resolve its top-level `await` calls.
+
+This behavior allows for introducing [MDC block components](https://content.nuxt.com/usage/markdown#block-components) that themselves can perform async actions, such as fetching their own data before resolving.
+
+In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve, all async functionality must resolve within a top-level `await` statement. As an example, this means that setting `immediate: false` on any `useAsyncData` or `useFetch` calls would _prevent_ the parent `MDCRenderer` from waiting and it would potentially resolve before the child components have finished rendering, causing hydration errors or missing content.
+
+### Example: MDC "snippets"
+
+To demonstrate how powerful these nested async block components can be, you could allow users to define a subset of markdown documents in your project that will be utilized as reusable "snippets" in a parent document.
+
+You would create a custom block component in your project that handles fetching the snippet markdown content, and render it in its own `MDCRenderer` component. See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example.
+
+To see a working example of this behavior, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
 
 ## Rendering in your Vue project
 

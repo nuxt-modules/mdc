@@ -5,6 +5,22 @@
       v-if="ast"
       class="page-mdc-content"
     >
+      <UAlert
+        color="blue"
+        variant="subtle"
+        class="mb-4"
+      >
+        <template #description>
+          <p class="mb-2">
+            You can refresh the page to see there are no hydration errors in the console.
+          </p>
+          <p>
+            Navigate to the <ULink to="/async-components/second">
+              /second
+            </ULink> page, refresh, and then click on the <b>Async Components</b> link to see the client-side routing waits for the nested content to resolve.
+          </p>
+        </template>
+      </UAlert>
       <MDCRenderer
         v-if="ast.body"
         :body="ast.body"

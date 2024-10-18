@@ -1,12 +1,10 @@
 <template>
-  <Suspense suspensible>
-    <MDCRenderer
-      v-if="!!snippetName && ast?.body && !snippetError"
-      :body="ast.body"
-      :data="ast.data"
-      :data-testid="!!snippetName ? snippetName : undefined"
-    />
-  </Suspense>
+  <MDCRenderer
+    v-if="!!snippetName && ast?.body && !snippetError"
+    :body="ast.body"
+    :data="ast.data"
+    :data-testid="!!snippetName ? snippetName : undefined"
+  />
 </template>
 
 <script setup lang="ts">
