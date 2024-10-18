@@ -261,13 +261,34 @@ export default defineNuxtConfig({
 
 Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types.ts).
 
+---
+
 ## Render nested async components
 
-The `MDCRenderer` also supports rendering _nested_ async components by waiting for any child component in its tree to resolve its top-level `await` calls.
+The `MDCRenderer` also supports rendering _nested_ async components by waiting for any child component in its tree to resolve its top-level `async setup()`.
 
-This behavior allows for introducing [MDC block components](https://content.nuxt.com/usage/markdown#block-components) that themselves can perform async actions, such as fetching their own data before resolving.
+This behavior allows for introducing [MDC block components](https://content.nuxt.com/usage/markdown#block-components) that themselves can perform async actions, such as fetching their own data before allowing the parent component to resolve.
 
-In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve, all async functionality must resolve within a top-level `await` statement. As an example, this means that setting `immediate: false` on any `useAsyncData` or `useFetch` calls would _prevent_ the parent `MDCRenderer` from waiting and it would potentially resolve before the child components have finished rendering, causing hydration errors or missing content.
+In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve, all of the following **must** be true:
+
+1. All functionality in the child component **must** be executed within an async setup function with top-level `await`.
+2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`
+
+    ```vue
+    <template>
+      <Suspense suspensible>
+        <pre>{{ data }}</pre>
+      </Suspense>
+    </template>
+
+    <script setup>
+    const { data } = await useAsyncData(..., {
+      immediate: true, // This is the default, but is required for this functionality
+    })
+    </script>
+    ```
+
+    In a Nuxt application, this means that setting `immediate: false` on any `useAsyncData` or `useFetch` calls would _prevent_ the parent `MDCRenderer` from waiting and the parent would potentially resolve before the child components have finished rendering, causing hydration errors or missing content.
 
 ### Example: MDC "snippets"
 
@@ -276,6 +297,8 @@ To demonstrate how powerful these nested async block components can be, you coul
 You would create a custom block component in your project that handles fetching the snippet markdown content, and render it in its own `MDCRenderer` component. See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example.
 
 To see a working example of this behavior, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+
+---
 
 ## Rendering in your Vue project
 
@@ -415,6 +438,8 @@ onBeforeMount(async () => {
   </Suspense>
 </template>
 ```
+
+---
 
 ## Contributing
 
