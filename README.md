@@ -269,7 +269,7 @@ The `MDCRenderer` also supports rendering _nested_ async components by waiting f
 
 This behavior allows for introducing [MDC block components](https://content.nuxt.com/usage/markdown#block-components) that themselves can perform async actions, such as fetching their own data before allowing the parent component to resolve.
 
-In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve, all of the following **must** be true:
+In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve:
 
 1. All functionality in the child component **must** be executed within an async setup function with top-level `await`  (if no async/await behavior is needed, there's no issue).
 2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`.
