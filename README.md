@@ -300,7 +300,7 @@ See the code in the playground [`PageSnippet` component](/playground/components/
 
 ### Handling recursion
 
-If your project implements a "reusable snippet" type of approach, you will likely want to prevent the use of recursive snippets, whereby a nested `MDCRenderer` attempts to then load another child with the same content (meaning, importing itself) and your application would be thrown into an infinite loop.
+If your project implements a "reusable snippet" type of approach, you will likely want to prevent the use of recursive snippets, whereby a nested `MDCRenderer` attempts to then load another child somewhere in its component tree with the same content (meaning, importing itself) and your application would be thrown into an infinite loop.
 
 One way to get around this is to utilize Vue's [`provide/inject`](https://vuejs.org/guide/components/provide-inject.html#provide-inject) to pass down the history of rendered "snippets" so that a child can properly determine if it is being called recursively, and stop the chain. This can be used in combination with parsing the `ast` document nodes after calling the `parseMarkdown` function to strip out recursive node trees from the `ast` before rendering the content in the DOM.
 
