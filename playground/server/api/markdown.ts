@@ -10,8 +10,10 @@ export default defineEventHandler(async (event) => {
 
   if (!name) {
     content = `
-# MDC nested snippets
+# 8 MDC nested snippets
 
+:page-snippet{ name="document" }
+:page-snippet{ name="document" }
 :page-snippet{ name="document" }
 :page-snippet{ name="document" }
 :page-snippet{ name="document" }

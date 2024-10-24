@@ -124,7 +124,7 @@ const { data: ast } = await useAsyncData(`parsed-${fetchKey.value}`, async (): P
     body: processedBody as MDCRoot
   }
 }, {
-  // Only parse if there is content and no error
+  // Only parse if there is content and no error. Must be true to allow for async rendering
   immediate: !!snippetName.value && (!!sanitizedData && !!snippetData.value?.content) && !snippetError.value, // Do not immediately process the snippet data
   dedupe: 'defer',
   deep: false,
