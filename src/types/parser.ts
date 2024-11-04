@@ -1,3 +1,4 @@
+import type { VFile } from 'vfile'
 import type { Options as RehypeOption } from 'remark-rehype'
 import type { MdcConfig } from './config'
 import type { MDCData, MDCRoot } from './tree'
@@ -25,6 +26,8 @@ export interface MDCParseOptions {
   }
 
   highlight?: RehypeHighlightOption | false
+
+  rootDocument?: VFile
 
   toc?: {
     /**

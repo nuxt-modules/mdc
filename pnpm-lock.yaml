@@ -113,6 +113,9 @@ importers:
       unwasm:
         specifier: ^0.3.9
         version: 0.3.9
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@nuxt/devtools':
         specifier: latest
@@ -6799,7 +6802,7 @@ snapshots:
       tinyglobby: 0.2.9
       unimport: 3.13.1(rollup@4.24.0)
       vite: 5.4.9(@types/node@22.7.5)(terser@5.34.1)
-      vite-plugin-inspect: 0.8.7(@nuxt/kit@3.13.2(magicast@0.3.5)(rollup@3.29.5))(rollup@4.24.0)(vite@5.4.9(@types/node@22.7.5)(terser@5.34.1))
+      vite-plugin-inspect: 0.8.7(@nuxt/kit@3.13.2(magicast@0.3.5)(rollup@4.24.0))(rollup@4.24.0)(vite@5.4.9(@types/node@22.7.5)(terser@5.34.1))
       vite-plugin-vue-inspector: 5.1.3(vite@5.4.9(@types/node@22.7.5)(terser@5.34.1))
       which: 3.0.1
       ws: 8.18.0
@@ -12639,7 +12642,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-inspect@0.8.7(@nuxt/kit@3.13.2(magicast@0.3.5)(rollup@3.29.5))(rollup@4.24.0)(vite@5.4.9(@types/node@22.7.5)(terser@5.34.1)):
+  vite-plugin-inspect@0.8.7(@nuxt/kit@3.13.2(magicast@0.3.5)(rollup@4.24.0))(rollup@4.24.0)(vite@5.4.9(@types/node@22.7.5)(terser@5.34.1)):
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.2(rollup@4.24.0)
@@ -12652,7 +12655,7 @@ snapshots:
       sirv: 2.0.4
       vite: 5.4.9(@types/node@22.7.5)(terser@5.34.1)
     optionalDependencies:
-      '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@3.29.5)
+      '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@4.24.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
