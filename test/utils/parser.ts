@@ -1,5 +1,6 @@
 import { vi } from 'vitest'
 import { createWasmOnigEngine } from 'shiki/engine/oniguruma'
+import remarkMdc from 'remark-mdc'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 import type { MDCParseOptions } from '../../src/types'
 import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
@@ -7,7 +8,11 @@ import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 
 vi.mock('#mdc-imports', () => {
   return {
-    remarkPlugins: {},
+    remarkPlugins: {
+      'remark-mdc': {
+        instance: remarkMdc
+      }
+    },
     rehypePlugins: {},
     highlight: {}
   }
