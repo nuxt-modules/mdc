@@ -34,8 +34,21 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options of the Nuxt module
   defaults: {
-    remarkPlugins: {},
-    rehypePlugins: {},
+    remarkPlugins: {
+      'remark-mdc': {},
+      'remark-emoji': {},
+      'remark-gfm': {}
+    },
+    rehypePlugins: {
+      'rehype-external-links': {},
+      'rehype-sort-attribute-values': {},
+      'rehype-sort-attributes': {},
+      'rehype-raw': {
+        options: {
+          passThrough: ['element']
+        }
+      }
+    },
     highlight: false,
     headings: {
       anchorLinks: {
