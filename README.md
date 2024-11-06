@@ -292,7 +292,9 @@ In order for the parent `MDCRenderer` component to properly wait for the child a
 
 ### Simple Example: Async Component
 
-Your nested components can utilize top-level `async setup()` as part of their lifecycle, such as awaiting data fetching before allowing the parent component to resolve. See the code in the playground [`AsyncComponent` component](/playground/components/global/AsyncComponent.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+Your nested MDC block components can utilize top-level `async setup()` as part of their lifecycle, such as awaiting data fetching before allowing the parent component to resolve.
+
+See the code in the playground [`AsyncComponent` component](/playground/components/global/AsyncComponent.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
 
 ### Advanced Example: MDC "snippets"
 
@@ -302,7 +304,7 @@ You would create a custom block component in your project that handles fetching 
 
 See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components/advanced` route.
 
-### Handling recursion
+#### Handling recursion
 
 If your project implements a "reusable snippet" type of approach, you will likely want to prevent the use of recursive snippets, whereby a nested `MDCRenderer` attempts to then load another child somewhere in its component tree with the same content (meaning, importing itself) and your application would be thrown into an infinite loop.
 
