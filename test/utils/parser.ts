@@ -1,11 +1,5 @@
 import { vi } from 'vitest'
 import { createWasmOnigEngine } from 'shiki/engine/oniguruma'
-import remarkGFM from 'remark-gfm'
-import remarkMDC from 'remark-mdc'
-import rehypeExternalLinks from 'rehype-external-links'
-import rehypeSortAttributeValues from 'rehype-sort-attribute-values'
-import rehypeSortAttributes from 'rehype-sort-attributes'
-import rehypeRaw from 'rehype-raw'
 import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import type { MDCParseOptions } from '../../src/types'
@@ -13,31 +7,8 @@ import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 
 vi.mock('#mdc-imports', () => {
   return {
-    remarkPlugins: {
-      'remark-mdc': {
-        instance: remarkMDC
-      },
-      'remark-gfm': {
-        instance: remarkGFM
-      }
-    },
-    rehypePlugins: {
-      'rehype-external-links': {
-        instance: rehypeExternalLinks
-      },
-      'rehype-sort-attribute-values': {
-        instance: rehypeSortAttributeValues
-      },
-      'rehype-sort-attributes': {
-        instance: rehypeSortAttributes
-      },
-      'rehype-raw': {
-        instance: rehypeRaw,
-        options: {
-          passThrough: ['element']
-        }
-      }
-    },
+    remarkPlugins: {},
+    rehypePlugins: {},
     highlight: {}
   }
 })
