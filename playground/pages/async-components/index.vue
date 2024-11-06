@@ -5,22 +5,6 @@
       v-if="ast"
       class="page-mdc-content"
     >
-      <UAlert
-        color="blue"
-        variant="subtle"
-        class="mb-4"
-      >
-        <template #description>
-          <p class="mb-2">
-            You can refresh the page to see there are no hydration errors in the console.
-          </p>
-          <p>
-            Navigate to the <ULink to="/async-components/second">
-              /second
-            </ULink> page, refresh, and then click on the <b>Async Components</b> link to see the client-side routing waits for the nested content to resolve.
-          </p>
-        </template>
-      </UAlert>
       <MDCRenderer
         v-if="ast.body"
         :body="ast.body"
@@ -32,21 +16,19 @@
 
 <script setup lang="ts">
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-import { useRoute, computed, serveCachedData, useFetch, useAsyncData } from '#imports'
+import { useAsyncData } from '#imports'
 
-const route = useRoute()
-const fetchKey = computed((): string => `portal-page${route.path.replace(/\//g, '-')}`)
+const md = `# Simple Async Example
 
-const { transform, getCachedData } = serveCachedData()
-const { data: pageData } = await useFetch('/api/markdown', {
-  key: fetchKey.value,
-  transform,
-  getCachedData
-})
-const { data: ast } = await useAsyncData<any>(() => parseMarkdown(pageData.value?.content || ''), {
-  transform,
-  getCachedData
-})
+:async-component
+
+This page contains a simple async component example (above) that simulates async data fetching inside of the \`MDCRenderer\` component.
+
+You can refresh the page to see there are no hydration errors in the console.
+
+Navigate to the [No Async Components page](/async-components/no-async), refresh, and then click on the [Simple Async Example](/async-components) link to see the client-side routing waits for the nested content to resolve.
+`
+const { data: ast } = await useAsyncData<any>(() => parseMarkdown(md))
 </script>
 
 <style scoped>
@@ -59,5 +41,13 @@ h1,
 
 .page-mdc-content {
   padding: 20px;
+}
+
+:deep(p) {
+  margin: 0 0 16px;
+
+  a {
+    color: #4ade80;
+  }
 }
 </style>

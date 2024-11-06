@@ -267,7 +267,7 @@ Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/
 
 The `MDCRenderer` also supports rendering _nested_ async components by waiting for any child component in its tree to resolve its top-level `async setup()`.
 
-This behavior allows for introducing [MDC block components](https://content.nuxt.com/usage/markdown#block-components) that themselves can perform async actions, such as fetching their own data before allowing the parent component to resolve.
+This behavior allows for rendering asynchronous [MDC block components](https://content.nuxt.com/usage/markdown#block-components) (e.g. via `defineAsyncComponent`) as well as introducing components that themselves internally utilize the `MDCRenderer` to render markdown before allowing the parent component to resolve.
 
 In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve:
 
@@ -290,13 +290,17 @@ In order for the parent `MDCRenderer` component to properly wait for the child a
 
     In a Nuxt application, this means that setting `immediate: false` on any `useAsyncData` or `useFetch` calls would _prevent_ the parent `MDCRenderer` from waiting and the parent would potentially resolve before the child components have finished rendering, causing hydration errors or missing content.
 
-### Example: MDC "snippets"
+### Simple Example: Async Component
+
+Your nested components can utilize top-level `async setup()` as part of their lifecycle, such as awaiting data fetching before allowing the parent component to resolve. See the code in the playground [`AsyncComponent` component](/playground/components/global/AsyncComponent.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+
+### Advanced Example: MDC "snippets"
 
 To demonstrate how powerful these nested async block components can be, you could allow users to define a subset of markdown documents in your project that will be utilized as reusable "snippets" in a parent document.
 
 You would create a custom block component in your project that handles fetching the snippet markdown content from the API, use `parseMarkdown` to get the `ast` nodes, and render it in its own `MDC` or `MDCRenderer` component.
 
-See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components/advanced` route.
 
 ### Handling recursion
 

@@ -2,8 +2,8 @@
   <div>
     <PageNav />
     <div class="page-content">
-      <h1>Second Page</h1>
-      <p>This is just a second page with no MDC.</p>
+      <h1>No Async Components</h1>
+      <p>This is just a page with no async components.</p>
     </div>
   </div>
 </template>

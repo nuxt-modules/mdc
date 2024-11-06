@@ -3,12 +3,17 @@
     <ul class="flex gap-1">
       <li>
         <UButton class="block" size="xs" to="/async-components">
-          Async Components
+          Simple Async Example
         </UButton>
       </li>
       <li>
-        <UButton class="block" size="xs" to="/async-components/second">
-          Second Page
+        <UButton class="block" size="xs" to="/async-components/advanced">
+          Advanced Async Example
+        </UButton>
+      </li>
+      <li>
+        <UButton class="block" size="xs" to="/async-components/no-async">
+          No Async Components
         </UButton>
       </li>
     </ul>

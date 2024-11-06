@@ -1,11 +1,19 @@
 <template>
   <Suspense suspensible>
-    <MDCRenderer
-      v-if="!!snippetName && ast?.body && !snippetError"
-      :body="ast.body"
-      :data="ast.data"
-      :data-testid="!!snippetName ? snippetName : undefined"
-    />
+    <UAlert
+      color="primary"
+      variant="subtle"
+      class="page-snippet-alert"
+    >
+      <template #description>
+        <MDCRenderer
+          v-if="!!snippetName && ast?.body && !snippetError"
+          :body="ast.body"
+          :data="ast.data"
+          :data-testid="!!snippetName ? snippetName : undefined"
+        />
+      </template>
+    </UAlert>
   </Suspense>
 </template>
 
@@ -136,3 +144,13 @@ if (snippetName.value && snippetError.value) {
   console.error(`snippet(${snippetName.value}) `, 'could not render snippet', snippetError.value)
 }
 </script>
+
+<style scoped>
+.page-snippet-alert {
+  margin: 8px 0;
+
+  :deep(p) {
+    margin: 0;
+  }
+}
+</style>
