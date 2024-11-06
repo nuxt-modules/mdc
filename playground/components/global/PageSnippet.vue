@@ -44,15 +44,12 @@ const snippetName = computed((): string => String(props.name || '').trim() || ''
 
 // Provide/inject parent nodes to filter out
 const SNIPPET_INJECTION_KEY = 'snippet-parent-nodes'
-const SNIPPET_NESTING_LEVEL_INJECTION_KEY = 'snippet-nesting-level'
 
 const componentId = useId()
 
 const snippetParentNodes = useState(`page-snippet-${componentId}`, () => new Set([...inject<Set<string>>(SNIPPET_INJECTION_KEY, new Set()), snippetName.value].filter(item => item.trim() !== '')))
-const snippetNestingLevel = useState<number>(`page-snippet-level-${componentId}`, () => Number(inject<number>(SNIPPET_NESTING_LEVEL_INJECTION_KEY, 0)))
 
 provide(SNIPPET_INJECTION_KEY, new Set([...snippetParentNodes.value].filter(item => item.trim() !== '')))
-provide(SNIPPET_NESTING_LEVEL_INJECTION_KEY, snippetNestingLevel.value + 1)
 
 const fetchKey = computed((): string => `portal-snippet-${(snippetName.value || componentId || '').replace(/\//g, '-')}`)
 
@@ -75,8 +72,6 @@ const nodes = [...snippetParentNodes.value].join('|')
 const snippetRegex = new RegExp(`(name)(=|:)( )?('|"|\`)?('|"|\`)?(${nodes})('|"|\`)?('|"|\`)?`, 'i')
 // Important: Replace $6 with an empty string to remove the snippet name from the content; must be a space to avoid evaluating as a boolean prop.
 const sanitizedData = String(snippetData.value?.content || '')?.replace(snippetRegex, `$1$2$3$4$5${String(' ')}$7`) || ''
-// Alternatively, you could utilize the levels variable to only allow nesting `n` levels deep:
-// const sanitizedData = snippetNestingLevel.value < 3 ? String(snippetData.value?.content || '')?.replace(snippetRegex, `$1$2$3$4$5${String(' ')}$7`) || '' : ''
 
 const removeInvalidSnippets = (obj: Record<string, any>): Record<string, any> | null => {
   if (Array.isArray(obj)) {
