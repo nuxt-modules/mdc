@@ -3,6 +3,17 @@ const mdList = `
 - Hello
 - World
 `
+
+const mdc = `
+::callout
+This is a callout
+::
+
+::list
+- Hello
+- World
+::
+`
 </script>
 
 <template>
@@ -18,5 +29,7 @@ const mdList = `
     <MDC unwrap="ul" :value="mdList" />
     <div>Unwrap `ul li`:</div>
     <MDC unwrap="ul li" :value="mdList" />
+    <hr />
+    <MDC :value="mdc" />
   </div>
 </template>
