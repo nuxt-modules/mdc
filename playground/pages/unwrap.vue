@@ -5,6 +5,13 @@ const mdList = `
 `
 
 const mdc = `
+::hero
+Hello World
+
+#description
+This is a description
+::
+
 ::callout
 This is a callout
 ::
