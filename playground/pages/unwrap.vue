@@ -25,6 +25,7 @@ This is a callout
 
 <template>
   <div class="p-4 prose dark:prose-invert">
+    <NuxtLink to="/">Back home</NuxtLink>
     <div>No unwrap:</div>
     <MDC value="Hello **world**" />
     <div>Unwrap `p`:</div>
