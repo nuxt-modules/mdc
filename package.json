@@ -125,6 +125,9 @@
     "vitest": "^2.1.4",
     "vue-tsc": "^2.1.10"
   },
+  "resolutions": {
+    "@nuxtjs/mdc": "workspace:*"
+  },
   "packageManager": "pnpm@9.12.3",
   "release-it": {
     "git": {
