@@ -1,4 +1,3 @@
-import remarkEmoji from 'remark-emoji'
 import remarkGFM from 'remark-gfm'
 import remarkMDC from 'remark-mdc'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -13,9 +12,6 @@ export const defaults: MDCParseOptions = {
     plugins: {
       'remark-mdc': {
         instance: remarkMDC
-      },
-      'remark-emoji': {
-        instance: remarkEmoji
       },
       'remark-gfm': {
         instance: remarkGFM

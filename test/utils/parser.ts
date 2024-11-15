@@ -1,9 +1,9 @@
 import { vi } from 'vitest'
 import { createWasmOnigEngine } from 'shiki/engine/oniguruma'
-import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
-import type { MDCParseOptions } from '../../src/types'
-import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
+import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
+import type { MDCParseOptions } from '../../src/types'
+import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
 
 vi.mock('#mdc-imports', () => {
   return {

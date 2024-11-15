@@ -34,7 +34,9 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options of the Nuxt module
   defaults: {
-    remarkPlugins: {},
+    remarkPlugins: {
+      'remark-emoji': {}
+    },
     rehypePlugins: {},
     highlight: false,
     headings: {

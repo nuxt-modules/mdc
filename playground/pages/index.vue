@@ -1,47 +1,5 @@
-<template>
-  <div class="">
-    <div class="p-1 flex gap-1 justify-between">
-      <div class="flex gap-1">
-        <UButton v-for="(example, name) in examples" :key="name" size="xs" @click="md = example">
-          {{ name }}
-        </UButton>
-      </div>
-      <UButton size="xs" @click="router.push('/async-components')">
-        Async Components
-      </UButton>
-    </div>
-    <div class="grid grid-cols-3 h-screen">
-      <textarea
-        v-model="md"
-        class="w-full p-4 bg-gray-600 font-mono text-sm"
-      />
-      <MDC
-        v-slot="{ data, body }"
-        :value="md"
-      >
-        <pre class="h-screen overflow-auto bg-gray-700 text-xs">{{ body }}</pre>
-        <article class="p-4 prose prose-invert bg-gray-900">
-          <h1 v-if="data?.title">
-            {{ data.title }}
-          </h1>
-          <MDCRenderer
-            v-if="body"
-            :body="body"
-            :data="data"
-          />
-        </article>
-      </MDC>
-    </div>
-  </div>
-</template>
-
 <script setup>
-import { useDark, useLocalStorage } from '@vueuse/core'
-import { useRouter } from '#vue-router'
-
-const router = useRouter()
-
-useDark()
+import { useLocalStorage } from '@vueuse/core'
 
 const examples = {
   default: `---
@@ -78,6 +36,41 @@ async function main(mdc: string) {
 const key = 'nuxt-mdc-playground-code'
 const md = useLocalStorage(key, examples.default)
 </script>
+
+<template>
+  <div class="bg-white dark:bg-gray-900">
+    <div class="fixed left-0 right-0 h-12 px-2 p-1 backdrop-blur-xl flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
+      <div>
+        <UButton v-for="(example, name) in examples" :key="name" size="xs" :color="md === example ? 'green' : 'gray'" variant="ghost" @click="md = example">
+          {{ name }}
+        </UButton>
+      </div>
+      <UButton :icon="$colorMode.preference === 'dark' ? 'lucide-moon' : 'lucide-sun'" color="gray" variant="ghost" size="xs" @click="$colorMode.preference = $colorMode.preference === 'dark' ? 'light' : 'dark'" />
+    </div>
+    <div class="grid grid-cols-3 h-[calc(100vh-48px)] pt-12">
+      <textarea
+        v-model="md"
+        class="w-full p-4 dark:bg-gray-900 font-mono text-sm"
+      />
+      <MDC
+        v-slot="{ data, body }"
+        :value="md"
+      >
+        <pre class="h-screen overflow-auto bg-gray-100 dark:bg-gray-950 text-xs">{{ body }}</pre>
+        <article class="p-4 prose dark:prose-invert dark:bg-gray-900">
+          <h1 v-if="data?.title">
+            {{ data.title }}
+          </h1>
+          <MDCRenderer
+            v-if="body"
+            :body="body"
+            :data="data"
+          />
+        </article>
+      </MDC>
+    </div>
+  </div>
+</template>
 
 <style>
 pre {
