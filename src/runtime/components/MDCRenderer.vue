@@ -338,11 +338,21 @@ function propsToDataRxBind(key: string, value: any, data: any, documentMeta: MDC
  */
 const resolveVueComponent = (component: any) => {
   if (typeof component === 'string') {
-    return htmlTags.includes(component)
-      ? component
-      : defineAsyncComponent(() => new Promise((resolve) => {
-        resolve(resolveComponent(pascalCase(component), false) as any)
-      }))
+    if (htmlTags.includes(component)) {
+      return component
+    }
+
+    const _component = resolveComponent(pascalCase(component), false) as any
+
+    if (!component || _component?.name === 'AsyncComponentWrapper') {
+      return _component
+    }
+
+    if ('setup' in _component) {
+      return defineAsyncComponent(() => new Promise(resolve => resolve(_component)))
+    }
+
+    return _component
   }
   return component
 }
