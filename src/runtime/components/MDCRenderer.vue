@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, resolveComponent, reactive, watch, Text, Comment, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
+import { h, resolveComponent, reactive, watch, Text, Comment, defineAsyncComponent, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
@@ -347,7 +347,21 @@ function propsToDataRxBind(key: string, value: any, data: any, documentMeta: MDC
  */
 const resolveVueComponent = (component: any) => {
   if (typeof component === 'string') {
-    return htmlTags.includes(component) ? component : resolveComponent(pascalCase(component), false)
+    if (htmlTags.includes(component)) {
+      return component
+    }
+
+    const _component = resolveComponent(pascalCase(component), false) as any
+
+    if (!component || _component?.name === 'AsyncComponentWrapper') {
+      return _component
+    }
+
+    if ('setup' in _component) {
+      return defineAsyncComponent(() => new Promise(resolve => resolve(_component)))
+    }
+
+    return _component
   }
   return component
 }

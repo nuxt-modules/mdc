@@ -41,11 +41,15 @@ const md = useLocalStorage(key, examples.default)
   <div class="bg-white dark:bg-gray-900">
     <div class="fixed left-0 right-0 h-12 px-2 p-1 backdrop-blur-xl flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
       <div>
-        <UButton v-for="(example, name) in examples" :key="name" size="xs" @click="md = example" :color="md === example ? 'green' : 'gray'" variant="ghost">
+        <UButton v-for="(example, name) in examples" :key="name" size="xs" :color="md === example ? 'green' : 'gray'" variant="ghost" @click="md = example">
           {{ name }}
         </UButton>
+        .
+        <UButton size="xs" color="gray" variant="ghost" to="/async-components">
+          Async Components
+        </UButton>
       </div>
-      <UButton :icon="$colorMode.preference === 'dark' ? 'lucide-moon' : 'lucide-sun'" @click="$colorMode.preference = $colorMode.preference === 'dark' ? 'light' : 'dark'" color="gray" variant="ghost" size="xs"/>
+      <UButton :icon="$colorMode.preference === 'dark' ? 'lucide-moon' : 'lucide-sun'" color="gray" variant="ghost" size="xs" @click="$colorMode.preference = $colorMode.preference === 'dark' ? 'light' : 'dark'" />
     </div>
     <div class="grid grid-cols-3 h-[calc(100vh-48px)] pt-12">
       <textarea
