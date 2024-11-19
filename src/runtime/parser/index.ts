@@ -2,6 +2,7 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import { parseFrontMatter } from 'remark-mdc'
+import type { Options as VFileOptions } from 'vfile'
 import { defu } from 'defu'
 import type { MdcConfig, MDCData, MDCElement, MDCParseOptions, MDCParserResult, MDCRoot, Toc } from '@nuxtjs/mdc'
 import { nodeTextContent } from '../utils/node'
@@ -92,13 +93,12 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     processor = await config.unified?.post?.(processor) || processor
   }
 
-  return async (md: string): Promise<MDCParserResult> => {
+  return async function parse(md: string, { fileOptions }: { fileOptions?: VFileOptions } = {}): Promise<MDCParserResult> {
     // Extract front matter data
     const { content, data: frontmatter } = await parseFrontMatter(md)
 
     // Start processing stream
-    const mdcWithContext = { ...(inlineOptions.rootDocument || {}), value: content, data: frontmatter }
-    const processedFile = await processor.process(mdcWithContext)
+    const processedFile = await processor.process({ ...fileOptions, value: content, data: frontmatter })
 
     const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
@@ -125,12 +125,12 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
   }
 }
 
-export const parseMarkdown = async (md: string, inlineOptions: MDCParseOptions = {}) => {
+export const parseMarkdown = async (md: string, markdownParserOptions: MDCParseOptions = {}, parseOptions: { fileOptions?: VFileOptions } = {}) => {
   // Create parser
-  const parser = await createMarkdownParser(inlineOptions)
+  const parser = await createMarkdownParser(markdownParserOptions)
 
   // Parse markdown
-  return parser(md)
+  return parser(md, parseOptions)
 }
 
 export function contentHeading(body: MDCRoot) {
