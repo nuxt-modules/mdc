@@ -19,6 +19,7 @@ MDC supercharges regular Markdown to write documents interacting deeply with any
 - Unwrap any generated content (ex: `<p>` added by each Markdown paragraph)
 - Use Vue components with named slots
 - Support inline components
+- Support asynchronous rendering of nested components
 - Add attributes and classes to inline HTML tags
 
 Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
@@ -260,6 +261,59 @@ export default defineNuxtConfig({
 
 Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types.ts).
 
+---
+
+## Render nested async components
+
+The `MDCRenderer` also supports rendering _nested_ async components by waiting for any child component in its tree to resolve its top-level `async setup()`.
+
+This behavior allows for rendering asynchronous [MDC block components](https://content.nuxt.com/usage/markdown#block-components) (e.g. via `defineAsyncComponent`) as well as introducing components that themselves internally utilize the `MDCRenderer` to render markdown before allowing the parent component to resolve.
+
+In order for the parent `MDCRenderer` component to properly wait for the child async component(s) to resolve:
+
+1. All functionality in the child component **must** be executed within an async setup function with top-level `await` (if no async/await behavior is needed in the child, e.g. no data fetching, then the component will resolve normally).
+2. The child component's `template` content **should** be wrapped with the built-in [`Suspense` component](https://vuejs.org/guide/built-ins/suspense.html#suspense) with the [`suspensible` prop](https://vuejs.org/guide/built-ins/suspense.html#nested-suspense) set to `true`.
+
+    ```vue
+    <template>
+      <Suspense suspensible>
+        <pre>{{ data }}</pre>
+      </Suspense>
+    </template>
+
+    <script setup>
+    const { data } = await useAsyncData(..., {
+      immediate: true, // This is the default, but is required for this functionality
+    })
+    </script>
+    ```
+
+    In a Nuxt application, this means that setting `immediate: false` on any `useAsyncData` or `useFetch` calls would _prevent_ the parent `MDCRenderer` from waiting and the parent would potentially resolve before the child components have finished rendering, causing hydration errors or missing content.
+
+### Simple Example: Async Component
+
+Your nested MDC block components can utilize top-level `async setup()` as part of their lifecycle, such as awaiting data fetching before allowing the parent component to resolve.
+
+See the code in the playground [`AsyncComponent` component](/playground/components/global/AsyncComponent.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components` route.
+
+### Advanced Example: MDC "snippets"
+
+To demonstrate how powerful these nested async block components can be, you could allow users to define a subset of markdown documents in your project that will be utilized as reusable "snippets" in a parent document.
+
+You would create a custom block component in your project that handles fetching the snippet markdown content from the API, use `parseMarkdown` to get the `ast` nodes, and render it in its own `MDC` or `MDCRenderer` component.
+
+See the code in the playground [`PageSnippet` component](/playground/components/global/PageSnippet.vue) as an example, and to see the behavior in action, check out the playground by running `pnpm dev` and navigating to the `/async-components/advanced` route.
+
+#### Handling recursion
+
+If your project implements a "reusable snippet" type of approach, you will likely want to prevent the use of recursive snippets, whereby a nested `MDCRenderer` attempts to then load another child somewhere in its component tree with the same content (meaning, importing itself) and your application would be thrown into an infinite loop.
+
+One way to get around this is to utilize Vue's [`provide/inject`](https://vuejs.org/guide/components/provide-inject.html#provide-inject) to pass down the history of rendered "snippets" so that a child can properly determine if it is being called recursively, and stop the chain. This can be used in combination with parsing the `ast` document nodes after calling the `parseMarkdown` function to strip out recursive node trees from the `ast` before rendering the content in the DOM.
+
+For an example on how to prevent infinite loops and recursion with this pattern, please see the code in the playground's [`PageSnippet` component](/playground/components/global/PageSnippet.vue).
+
+---
+
 ## Rendering in your Vue project
 
 The `<MDCRenderer>` component in combination with a few exported package utilities may also be utilized inside a normal (non-Nuxt) Vue project.
@@ -398,6 +452,8 @@ onBeforeMount(async () => {
   </Suspense>
 </template>
 ```
+
+---
 
 ## Contributing
 

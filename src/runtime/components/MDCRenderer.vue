@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, resolveComponent, Text, Comment, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
+import { h, resolveComponent, reactive, watch, Text, Comment, defineAsyncComponent, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
@@ -96,18 +96,37 @@ export default defineComponent({
       return Array.from(new Set(components)).sort().join('.')
     })
 
+    const runtimeData = reactive({
+      ...props.data
+    })
+
+    watch(() => props.data, (newData) => {
+      Object.assign(runtimeData, newData)
+    })
+
     await resolveContentComponents(props.body, { tags })
 
-    return { tags, contentKey, route }
+    function updateRuntimeData(code: string, value: any) {
+      const lastIndex = code.split('.').length - 1
+      return code.split('.').reduce((o, k, i) => {
+        if (i == lastIndex && o) {
+          o[k] = value
+          return o[k]
+        }
+        return typeof o === 'object' ? o[k] : void 0
+      }, runtimeData)
+    }
+
+    return { tags, contentKey, route, runtimeData, updateRuntimeData }
   },
   render(ctx: any) {
-    const { tags, tag, body, data, contentKey, route, unwrap } = ctx
+    const { tags, tag, body, data, contentKey, route, unwrap, runtimeData, updateRuntimeData } = ctx
 
     if (!body) {
       return null
     }
 
-    const meta = { ...data, tags, $route: route }
+    const meta = { ...data, tags, $route: route, runtimeData, updateRuntimeData }
 
     // Resolve root component
     const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
@@ -168,6 +187,7 @@ function renderNode(node: MDCNode, h: CreateElement, documentMeta: MDCData, pare
 
 function renderBinding(node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
   const data = {
+    ...documentMeta.runtimeData,
     ...parentScope,
     $document: documentMeta,
     $doc: documentMeta
@@ -243,8 +263,8 @@ function propsToData(node: MDCElement, documentMeta: MDCData) {
     const value = props[key]
 
     // `v-model="foo"`
-    if (rxModel.test(key) && !nativeInputs.includes(tag)) {
-      return propsToDataRxModel(key, value, data, documentMeta)
+    if (rxModel.test(key)) {
+      return propsToDataRxModel(key, value, data, documentMeta, { native: nativeInputs.includes(tag) })
     }
 
     // `v-bind="{foo: 'bar'}"`
@@ -279,28 +299,17 @@ function propsToData(node: MDCElement, documentMeta: MDCData) {
 /**
  * Handle `v-model`
  */
-function propsToDataRxModel(key: string, value: any, data: any, documentMeta: MDCData) {
-  // Model modifiers
-  const number = (d: any) => +d
-  const trim = (d: any) => d.trim()
-  const noop = (d: any) => d
-
-  const mods = key
-    .replace(rxModel, '')
-    .split('.')
-    .filter(d => d)
-    .reduce((d, k) => {
-      d[k] = true
-      return d
-    }, {} as any)
+function propsToDataRxModel(key: string, value: any, data: any, documentMeta: MDCData, { native }: { native: boolean }) {
+  const propName = key.match(/^v-model:([^=]+)/)?.[1] || 'modelValue'
 
   // As of yet we don't resolve custom v-model field/event names from components
-  const field = 'value'
-  const event = mods.lazy ? 'change' : 'input'
-  const processor = mods.number ? number : mods.trim ? trim : noop
-  data[field] = evalInContext(value, documentMeta)
-  data.on = data.on || {}
-  data.on[event] = (e: any) => ((documentMeta as any)[value] = processor(e))
+  const field = native ? 'value' : propName
+  const event = native ? 'onInput' : `onUpdate:${propName}`
+
+  data[field] = evalInContext(value, documentMeta.runtimeData)
+  data[event] = (e: any) => {
+    documentMeta.updateRuntimeData(value, native ? e.target?.value : e)
+  }
 
   return data
 }
@@ -338,7 +347,21 @@ function propsToDataRxBind(key: string, value: any, data: any, documentMeta: MDC
  */
 const resolveVueComponent = (component: any) => {
   if (typeof component === 'string') {
-    return htmlTags.includes(component) ? component : resolveComponent(pascalCase(component), false)
+    if (htmlTags.includes(component)) {
+      return component
+    }
+
+    const _component = resolveComponent(pascalCase(component), false) as any
+
+    if (!component || _component?.name === 'AsyncComponentWrapper') {
+      return _component
+    }
+
+    if ('setup' in _component) {
+      return defineAsyncComponent(() => new Promise(resolve => resolve(_component)))
+    }
+
+    return _component
   }
   return component
 }

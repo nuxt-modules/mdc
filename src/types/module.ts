@@ -10,11 +10,11 @@ export interface ModuleOptions {
   /**
    * A map of remark plugins to be used for processing markdown.
    */
-  remarkPlugins?: Record<string, UnistPlugin>
+  remarkPlugins?: Record<string, UnistPlugin | false>
   /**
    * A map of remark plugins to be used for processing markdown.
    */
-  rehypePlugins?: Record<string, UnistPlugin>
+  rehypePlugins?: Record<string, UnistPlugin | false>
 
   highlight?: {
     /**
