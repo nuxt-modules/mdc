@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v0.9.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.2...v0.9.3)
+
+### 🚀 Enhancements
+
+- Space separated unwrap tags ([a64f871](https://github.com/nuxt-modules/mdc/commit/a64f871))
+- Async nested rendering ([#270](https://github.com/nuxt-modules/mdc/pull/270))
+- Support adding documentRoot vfile context to MDC parser ([#275](https://github.com/nuxt-modules/mdc/pull/275))
+
+### 🩹 Fixes
+
+- **module:** Possibility to remove module's default remark/rehype plugins from bundle ([#276](https://github.com/nuxt-modules/mdc/pull/276))
+- Keep main plugins inside parser bundle ([11d9d72](https://github.com/nuxt-modules/mdc/commit/11d9d72))
+- **MDCRenderer:** Vue3 `v-model` ([ce996d1](https://github.com/nuxt-modules/mdc/commit/ce996d1))
+
+### 🏡 Chore
+
+- Upgrade deps ([706ff04](https://github.com/nuxt-modules/mdc/commit/706ff04))
+- Update playground ([befd68b](https://github.com/nuxt-modules/mdc/commit/befd68b))
+- Add reproduction in playground ([e1a5eb0](https://github.com/nuxt-modules/mdc/commit/e1a5eb0))
+- Push another issue to solve ([a44ace2](https://github.com/nuxt-modules/mdc/commit/a44ace2))
+- **playground:** Add back link ([af55c0c](https://github.com/nuxt-modules/mdc/commit/af55c0c))
+- **playground:** Update ([4438e05](https://github.com/nuxt-modules/mdc/commit/4438e05))
+- Upgrade deps ([714ec57](https://github.com/nuxt-modules/mdc/commit/714ec57))
+- Upgrade deps ([c1f928c](https://github.com/nuxt-modules/mdc/commit/c1f928c))
+- Upgrade deps ([9481efb](https://github.com/nuxt-modules/mdc/commit/9481efb))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Jess ([@JessicaSachs](http://github.com/JessicaSachs))
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+
 ## v0.9.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.1...v0.9.2)
