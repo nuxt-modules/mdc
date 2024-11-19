@@ -357,6 +357,10 @@ const resolveVueComponent = (component: any) => {
       return _component
     }
 
+    if (typeof _component === 'string') {
+      return _component
+    }
+
     if ('setup' in _component) {
       return defineAsyncComponent(() => new Promise(resolve => resolve(_component)))
     }
