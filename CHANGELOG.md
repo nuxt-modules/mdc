@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.9.4
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.3...v0.9.4)
+
+### 🩹 Fixes
+
+- **MDCRenderer:** App breaking when component is missing ([8531b09](https://github.com/nuxt-modules/mdc/commit/8531b09))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.9.3
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.2...v0.9.3)
