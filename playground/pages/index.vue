@@ -44,6 +44,10 @@ const md = useLocalStorage(key, examples.default)
         <UButton v-for="(example, name) in examples" :key="name" size="xs" :color="md === example ? 'green' : 'gray'" variant="ghost" @click="md = example">
           {{ name }}
         </UButton>
+        .
+        <UButton size="xs" color="gray" variant="ghost" to="/async-components">
+          Async Components
+        </UButton>
       </div>
       <UButton :icon="$colorMode.preference === 'dark' ? 'lucide-moon' : 'lucide-sun'" color="gray" variant="ghost" size="xs" @click="$colorMode.preference = $colorMode.preference === 'dark' ? 'light' : 'dark'" />
     </div>
