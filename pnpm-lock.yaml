@@ -116,6 +116,9 @@ importers:
       unwasm:
         specifier: ^0.3.9
         version: 0.3.9
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@nuxt/devtools':
         specifier: latest
