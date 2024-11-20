@@ -14,7 +14,7 @@ import { compileHast } from './compiler'
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 let generatedMdcConfigs: MdcConfig[] | undefined
 
-export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => {
+export const createProcessor = async (inlineOptions: MDCParseOptions = {}) => {
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
@@ -93,37 +93,42 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     processor = await config.unified?.post?.(processor) || processor
   }
 
-  return async function parse(md: string, { fileOptions }: { fileOptions?: VFileOptions } = {}): Promise<MDCParserResult> {
-    // Extract front matter data
-    const { content, data: frontmatter } = await parseFrontMatter(md)
+  return {
+    processor,
+    parser: async function parse(md: string, { fileOptions }: { fileOptions?: VFileOptions } = {}): Promise<MDCParserResult> {
+      // Extract front matter data
+      const { content, data: frontmatter } = await parseFrontMatter(md)
 
-    // Start processing stream
-    const processedFile = await processor.process({ ...fileOptions, value: content, data: frontmatter })
+      // Start processing stream
+      const processedFile = await processor.process({ ...fileOptions, value: content, data: frontmatter })
 
-    const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+      const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
-    // Update data with processor data
-    const data: MDCData = Object.assign(
-      contentHeading(result.body),
-      frontmatter,
-      processedFile?.data || {}
-    )
+      // Update data with processor data
+      const data: MDCData = Object.assign(
+        contentHeading(result.body),
+        frontmatter,
+        processedFile?.data || {}
+      )
 
-    // Generate toc if it is not disabled in front-matter
-    let toc: Toc | undefined
-    if (data.toc !== false) {
-      const tocOption = defu(data.toc || {}, options.toc)
-      toc = generateToc(result.body, tocOption)
-    }
+      // Generate toc if it is not disabled in front-matter
+      let toc: Toc | undefined
+      if (data.toc !== false) {
+        const tocOption = defu(data.toc || {}, options.toc)
+        toc = generateToc(result.body, tocOption)
+      }
 
-    return {
-      data,
-      body: result.body,
-      excerpt: result.excerpt,
-      toc
+      return {
+        data,
+        body: result.body,
+        excerpt: result.excerpt,
+        toc
+      }
     }
   }
 }
+
+export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => (await createProcessor(inlineOptions)).parser
 
 export const parseMarkdown = async (md: string, markdownParserOptions: MDCParseOptions = {}, parseOptions: { fileOptions?: VFileOptions } = {}) => {
   // Create parser
