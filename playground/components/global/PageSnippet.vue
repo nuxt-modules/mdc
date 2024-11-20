@@ -7,7 +7,7 @@
     >
       <template #description>
         <MDCRenderer
-          v-if="!!snippetName && ast?.body && !snippetError"
+          v-if="!!snippetName && ast && ast.body && !snippetError"
           :body="ast.body"
           :data="ast.data"
           :data-testid="!!snippetName ? snippetName : undefined"
