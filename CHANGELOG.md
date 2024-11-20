@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v0.9.5
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.4...v0.9.5)
+
+### 🏡 Chore
+
+- Upgrade `remark-mdc` ([484a12d](https://github.com/nuxt-modules/mdc/commit/484a12d))
+- Upgrade deps ([45fb570](https://github.com/nuxt-modules/mdc/commit/45fb570))
+- **playground:** Update syntax for github highlighting ([#290](https://github.com/nuxt-modules/mdc/pull/290))
+
+### ❤️ Contributors
+
+- Adam DeHaven ([@adamdehaven](http://github.com/adamdehaven))
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.9.4
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.3...v0.9.4)
