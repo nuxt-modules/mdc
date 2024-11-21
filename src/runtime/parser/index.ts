@@ -14,7 +14,7 @@ import { compileHast } from './compiler'
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 let generatedMdcConfigs: MdcConfig[] | undefined
 
-export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => {
+export const createProcessor = async (inlineOptions: MDCParseOptions = {}) => {
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
@@ -93,6 +93,12 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     processor = await config.unified?.post?.(processor) || processor
   }
 
+  return processor
+}
+
+export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => {
+  const processor = await createProcessor(inlineOptions)
+
   return async function parse(md: string, { fileOptions }: { fileOptions?: VFileOptions } = {}): Promise<MDCParserResult> {
     // Extract front matter data
     const { content, data: frontmatter } = await parseFrontMatter(md)
@@ -112,7 +118,7 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     // Generate toc if it is not disabled in front-matter
     let toc: Toc | undefined
     if (data.toc !== false) {
-      const tocOption = defu(data.toc || {}, options.toc)
+      const tocOption = defu(data.toc || {}, inlineOptions.toc, defaults.toc)
       toc = generateToc(result.body, tocOption)
     }
 
