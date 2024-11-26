@@ -1,4 +1,4 @@
-import type { NodeTransform, ElementNode } from '@vue/compiler-core'
+import type { NodeTransform, ElementNode, DirectiveNode } from '@vue/compiler-core'
 import { type Resolver, extendViteConfig } from '@nuxt/kit'
 
 export const registerMDCSlotTransformer = (resolver: Resolver) => {
@@ -6,7 +6,10 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
     const compilerOptions = (config as any).vue.template.compilerOptions
     compilerOptions.nodeTransforms = [
       <NodeTransform> function viteMDCSlot(node: ElementNode, context) {
-        if (node.tag === 'MDCSlot') {
+        const isVueSlotWithUnwrap = node.tag === 'slot' && node.props.find(p => p.name === 'mdc-unwrap' || (p.name === 'bind' && (p as DirectiveNode).rawName === ':mdc-unwrap'))
+        const isMDCSlot = node.tag === 'MDCSlot'
+
+        if (isVueSlotWithUnwrap || isMDCSlot) {
           const transform = context.ssr
             ? context.nodeTransforms.find(nt => nt.name === 'ssrTransformSlotOutlet')
             : context.nodeTransforms.find(nt => nt.name === 'transformSlotOutlet')
