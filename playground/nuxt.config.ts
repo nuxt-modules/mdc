@@ -18,15 +18,6 @@ export default defineNuxtConfig({
       preload: [
         'sql'
       ]
-    },
-    remarkPlugins: {
-      'remark-mdc': {
-        options: {
-          experimental: {
-            autoUnwrap: true
-          }
-        }
-      }
     }
   },
 
