@@ -7,6 +7,7 @@ import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import type { MDCElement, MDCNode, MDCRoot, MDCData } from '@nuxtjs/mdc'
 import htmlTags from '../parser/utils/html-tags-list'
 import { flatUnwrap } from '../utils/node'
+import { pick } from '../utils'
 
 type CreateElement = typeof h
 
@@ -215,36 +216,41 @@ function renderBinding(node: MDCElement, h: CreateElement, documentMeta: MDCData
 function renderSlots(node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
   const children: MDCNode[] = (node as MDCElement).children || []
 
-  const slotNodes: Record<string, MDCNode[]> = children.reduce((data, node) => {
+  const slotNodes: Record<string, { props?: Record<string, any>, children: MDCNode[] }> = children.reduce((data, node) => {
     if (!isTemplate(node)) {
-      data[DEFAULT_SLOT].push(node)
+      data[DEFAULT_SLOT].children.push(node)
       return data
     }
 
     const slotName = getSlotName(node)
-    data[slotName] = data[slotName] || []
+    data[slotName] = data[slotName] || { props: {}, children: [] }
     if (node.type === 'element') {
+      data[slotName].props = node.props
       // Append children to slot
-      data[slotName].push(...(node.children || []))
+      data[slotName].children.push(...(node.children || []))
     }
 
     return data
   }, {
-    [DEFAULT_SLOT]: [] as any[]
-  } as Record<string, any[]>)
+    [DEFAULT_SLOT]: { props: {}, children: [] }
+  } as Record<string, { props?: Record<string, any>, children: MDCNode[] }>)
 
-  const slots = Object.entries(slotNodes).reduce((slots, [name, children]) => {
+  const slots = Object.entries(slotNodes).reduce((slots, [name, { props, children }]) => {
     if (!children.length) {
       return slots
     }
 
-    slots[name] = () => {
-      const vNodes = children.map(child => renderNode(child, h, documentMeta, parentProps))
+    slots[name] = (data = {}) => {
+      const scopedProps = pick(data, Object.keys(props || {}))
+      let vNodes = children.map(child => renderNode(child, h, documentMeta, { ...parentProps, ...scopedProps }))
+      if (props?.unwrap) {
+        vNodes = flatUnwrap(vNodes, props.unwrap) as VNode[]
+      }
       return mergeTextNodes(vNodes)
     }
 
     return slots
-  }, {} as Record<string, () => VNode[]>)
+  }, {} as Record<string, (data?: Record<string, any>) => VNode[]>)
 
   return slots
 }
