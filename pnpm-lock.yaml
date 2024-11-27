@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@nuxtjs/mdc': workspace:*
+  remark-mdc: npm:remark-mdc-edge@latest
 
 importers:
 
@@ -87,8 +88,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       remark-mdc:
-        specifier: ^3.4.0
-        version: 3.4.0
+        specifier: npm:remark-mdc-edge@latest
+        version: remark-mdc-edge@3.4.0-28878365.3cd5c5a
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -4682,8 +4683,8 @@ packages:
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
 
-  remark-mdc@3.4.0:
-    resolution: {integrity: sha512-0bKazg69CnSp5aLIQapkZcv0nS+2SuLd7xz4TMOcxEhukSXKL7f40bEPbNKGbJ4eY65nWAQKyCD1JCtzndmnxw==}
+  remark-mdc-edge@3.4.0-28878365.3cd5c5a:
+    resolution: {integrity: sha512-I16R2y12em/OfCN/vqyzHEuf8APrNz/kpFi/2dntM9VphX4wz3VhVIjEcFXzWUkpiffEeMizIqub107Ln6WM2A==}
 
   remark-parse@11.0.0:
     resolution: {integrity: sha512-FCxlKLNGknS5ba/1lmpYijMUzX2esxW5xQqjWxw2eHFfS2MSdaHVINFmhjo+qN1WhZhNimq0dZATN9pH0IDrpA==}
@@ -5709,6 +5710,11 @@ packages:
 
   yaml@2.6.0:
     resolution: {integrity: sha512-a6ae//JvKDEra2kdi1qzCyrJW/WZCgFi8ydDV+eXExl95t+5R+ijnqHJbz9tmMh8FUjx3iv2fCQ4dclAQlO2UQ==}
+    engines: {node: '>= 14'}
+    hasBin: true
+
+  yaml@2.6.1:
+    resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -11452,7 +11458,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdc@3.4.0:
+  remark-mdc-edge@3.4.0-28878365.3cd5c5a:
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
@@ -11471,7 +11477,7 @@ snapshots:
       unified: 11.0.5
       unist-util-visit: 5.0.0
       unist-util-visit-parents: 6.0.1
-      yaml: 2.6.0
+      yaml: 2.6.1
     transitivePeerDependencies:
       - supports-color
 
@@ -12684,6 +12690,8 @@ snapshots:
   yaml-ast-parser@0.0.43: {}
 
   yaml@2.6.0: {}
+
+  yaml@2.6.1: {}
 
   yargs-parser@21.1.1: {}
 
