@@ -67,7 +67,7 @@ export function nodeTextContent(node: VNode | MDCNode): string {
   }
 
   if (isText(node)) {
-    return (node as VNode).children as string || (node as MDCText).value! || ''
+    return (node as MDCText).value! || (node as VNode).children as string || ''
   }
 
   // Walk through node children
