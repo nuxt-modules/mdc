@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v0.10.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.5...v0.10.0)
+
+### 🚀 Enhancements
+
+- **parser:** New `createProcessor` util ([#289](https://github.com/nuxt-modules/mdc/pull/289))
+- **slot:** Detect Vue slots with `mdc-unwrap` prop and treat them as `<MDCSlot>` ([#294](https://github.com/nuxt-modules/mdc/pull/294))
+
+### 🩹 Fixes
+
+- **nodeTextContent:** `.value` has higher priority than `.children` ([08ce958](https://github.com/nuxt-modules/mdc/commit/08ce958))
+
+### 🏡 Chore
+
+- Upgrade deps ([2436c1c](https://github.com/nuxt-modules/mdc/commit/2436c1c))
+- Disable docs update ([7ef26ba](https://github.com/nuxt-modules/mdc/commit/7ef26ba))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Sandro Circi ([@sandros94](http://github.com/sandros94))
+
 ## v0.9.5
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.4...v0.9.5)
