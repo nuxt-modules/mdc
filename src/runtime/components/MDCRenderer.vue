@@ -1,10 +1,10 @@
 <script lang="ts">
-import { h, resolveComponent, reactive, watch, Text, Comment, defineAsyncComponent, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
+import { h, resolveComponent as vueResolveComponent, reactive, watch, Text, Comment, defineAsyncComponent, defineComponent, toRaw, computed, getCurrentInstance } from 'vue'
 import destr from 'destr'
 import { kebabCase, pascalCase } from 'scule'
 import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
-import type { MDCElement, MDCNode, MDCRoot, MDCData } from '@nuxtjs/mdc'
+import type { MDCElement, MDCNode, MDCRoot, MDCData, MDCRenderOptions } from '@nuxtjs/mdc'
 import htmlTags from '../parser/utils/html-tags-list'
 import { flatUnwrap } from '../utils/node'
 import { pick } from '../utils'
@@ -20,6 +20,7 @@ const rxOn = /^@|^v-on:/
 const rxBind = /^:|^v-bind:/
 const rxModel = /^v-model/
 const nativeInputs = ['select', 'textarea', 'input']
+const specialParentTags = ['math', 'svg']
 
 const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code', 'pre', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr', 'script'].map(t => [t, `prose-${t}`]))
 
@@ -130,7 +131,7 @@ export default defineComponent({
     const meta = { ...data, tags, $route: route, runtimeData, updateRuntimeData }
 
     // Resolve root component
-    const component: string | ConcreteComponent = tag !== false ? resolveVueComponent((tag || meta.component?.name || meta.component || 'div') as string) : undefined
+    const component: string | ConcreteComponent = tag !== false ? resolveComponentInstance((tag || meta.component?.name || meta.component || 'div') as string) : undefined
 
     // Return Vue component
     return component
@@ -138,13 +139,17 @@ export default defineComponent({
       : defaultSlotRenderer?.()
 
     function defaultSlotRenderer() {
+      const defaultSlot = _renderSlots(body, h, { documentMeta: meta, parentScope: meta, resolveComponent: resolveComponentInstance })
+      if (!defaultSlot?.default) {
+        return null
+      }
       if (unwrap) {
         return flatUnwrap(
-          renderSlots(body, h, meta, meta).default(),
+          defaultSlot.default(),
           typeof unwrap === 'string' ? unwrap.split(' ') : ['*']
         )
       }
-      return renderSlots(body, h, meta, meta).default()
+      return defaultSlot.default()
     }
   }
 })
@@ -152,7 +157,8 @@ export default defineComponent({
 /**
  * Render a markdown node
  */
-function renderNode(node: MDCNode, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+function _renderNode(node: MDCNode, h: CreateElement, options: MDCRenderOptions): VNode {
+  const { documentMeta, parentScope, resolveComponent } = options
   /**
    * Render Text node
    */
@@ -172,7 +178,9 @@ function renderNode(node: MDCNode, h: CreateElement, documentMeta: MDCData, pare
     return renderBinding(node, h, documentMeta, parentScope)
   }
 
-  const component = resolveVueComponent(renderTag)
+  const _resolveComponent = isUnresolvableTag(renderTag) ? (component: unknown) => component : resolveComponent
+
+  const component = _resolveComponent(renderTag)
   if (typeof component === 'object') {
     component.tag = originalTag
   }
@@ -182,38 +190,21 @@ function renderNode(node: MDCNode, h: CreateElement, documentMeta: MDCData, pare
   return h(
     component as any,
     props,
-    renderSlots(node, h, documentMeta, { ...parentScope, ...props })
+    _renderSlots(
+      node,
+      h,
+      {
+        documentMeta,
+        parentScope: { ...parentScope, ...props },
+        resolveComponent: _resolveComponent
+      })
   )
 }
-
-function renderBinding(node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
-  const data = {
-    ...documentMeta.runtimeData,
-    ...parentScope,
-    $document: documentMeta,
-    $doc: documentMeta
-  }
-  const splitter = /\.|\[(\d+)\]/
-  const keys: string[] = node.props?.value.trim().split(splitter).filter(Boolean)
-  const value = keys.reduce((data, key) => {
-    if (data && key in data) {
-      if (typeof data[key] === 'function') {
-        return data[key]()
-      } else {
-        return data[key]
-      }
-    }
-    return undefined
-  }, data)
-  const defaultValue = node.props?.defaultValue
-
-  return h(Text, value ?? defaultValue ?? '')
-}
-
 /**
  * Create slots from `node` template children.
  */
-function renderSlots(node: MDCNode, h: CreateElement, documentMeta: MDCData, parentProps: any): Record<string, () => VNode[]> {
+function _renderSlots(node: MDCNode, h: CreateElement, options: MDCRenderOptions): Record<string, () => VNode[]> {
+  const { documentMeta, parentScope, resolveComponent } = options
   const children: MDCNode[] = (node as MDCElement).children || []
 
   const slotNodes: Record<string, { props?: Record<string, any>, children: MDCNode[] }> = children.reduce((data, node) => {
@@ -242,7 +233,16 @@ function renderSlots(node: MDCNode, h: CreateElement, documentMeta: MDCData, par
 
     slots[name] = (data = {}) => {
       const scopedProps = pick(data, Object.keys(props || {}))
-      let vNodes = children.map(child => renderNode(child, h, documentMeta, { ...parentProps, ...scopedProps }))
+      let vNodes = children.map(child => _renderNode(
+        child,
+        h,
+        {
+          documentMeta,
+          parentScope: { ...parentScope, ...scopedProps },
+          resolveComponent
+        }
+      ))
+
       if (props?.unwrap) {
         vNodes = flatUnwrap(vNodes, props.unwrap) as VNode[]
       }
@@ -253,6 +253,30 @@ function renderSlots(node: MDCNode, h: CreateElement, documentMeta: MDCData, par
   }, {} as Record<string, (data?: Record<string, any>) => VNode[]>)
 
   return slots
+}
+
+function renderBinding(node: MDCElement, h: CreateElement, documentMeta: MDCData, parentScope: any = {}): VNode {
+  const data = {
+    ...documentMeta.runtimeData,
+    ...parentScope,
+    $document: documentMeta,
+    $doc: documentMeta
+  }
+  const splitter = /\.|\[(\d+)\]/
+  const keys: string[] = node.props?.value.trim().split(splitter).filter(Boolean)
+  const value = keys.reduce((data, key) => {
+    if (data && key in data) {
+      if (typeof data[key] === 'function') {
+        return data[key]()
+      } else {
+        return data[key]
+      }
+    }
+    return undefined
+  }, data)
+  const defaultValue = node.props?.defaultValue
+
+  return h(Text, value ?? defaultValue ?? '')
 }
 
 /**
@@ -351,13 +375,13 @@ function propsToDataRxBind(key: string, value: any, data: any, documentMeta: MDC
 /**
  * Resolve component if it's a Vue component
  */
-const resolveVueComponent = (component: any) => {
+const resolveComponentInstance = (component: any) => {
   if (typeof component === 'string') {
     if (htmlTags.includes(component)) {
       return component
     }
 
-    const _component = resolveComponent(pascalCase(component), false) as any
+    const _component = vueResolveComponent(pascalCase(component), false) as any
 
     if (!component || _component?.name === 'AsyncComponentWrapper') {
       return _component
@@ -413,6 +437,13 @@ function isTemplate(node: MDCNode) {
 }
 
 /**
+ * Check if tag is a special tag that should not be resolved to a component
+ */
+function isUnresolvableTag(tag: unknown) {
+  return specialParentTags.includes(tag as string)
+}
+
+/**
  * Merge consequent Text nodes into single node
  */
 function mergeTextNodes(nodes: Array<VNode>) {
@@ -438,7 +469,7 @@ async function resolveContentComponents(body: MDCRoot, meta: Record<string, any>
     if (c?.render || c?.ssrRender || c?.__ssrInlineRender) {
       return
     }
-    const resolvedComponent = resolveVueComponent(c) as any
+    const resolvedComponent = resolveComponentInstance(c) as any
     if (resolvedComponent?.__asyncLoader && !resolvedComponent.__asyncResolved) {
       await resolvedComponent.__asyncLoader()
     }
@@ -453,7 +484,12 @@ async function resolveContentComponents(body: MDCRoot, meta: Record<string, any>
 
     const renderTag: string = findMappedTag(node as MDCElement, documentMeta.tags)
 
+    if (isUnresolvableTag(renderTag)) {
+      return []
+    }
+
     const components: string[] = []
+
     if (node.type !== 'root' && !htmlTags.includes(renderTag as any)) {
       components.push(renderTag)
     }
