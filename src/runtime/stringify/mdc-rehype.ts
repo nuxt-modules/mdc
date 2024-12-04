@@ -88,7 +88,7 @@ export const mdcRehypeNodeHandlers = {
   }
 }
 
-export const mdcRehypeHandlers = {
+export const mdcRehypeHandlers: Record<string, (state: State, node: Parents) => unknown> = {
   template: (state: State, node: Parents) => {
     const vSlot = Object.keys(node.properties || {}).find(prop => prop?.startsWith('v-slot:'))?.replace('v-slot:', '') || 'default'
 
