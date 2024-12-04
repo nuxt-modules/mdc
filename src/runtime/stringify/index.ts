@@ -1,23 +1,18 @@
 import { unified, type Processor } from 'unified'
-import rehypeRemark from 'rehype-remark'
 import gfm from 'remark-gfm'
 import mdc, { stringifyFrontMatter } from 'remark-mdc'
 import stringify from 'remark-stringify'
 import type { MDCParseOptions, MDCRoot } from '@nuxtjs/mdc'
-import { mdcRehype, mdcRehypeHandlers, mdcRehypeNodeHandlers } from './mdc-rehype'
+import { mdcRemark } from './mdc-remark'
 
-export function createStringifyProcessor(_inlineOptions: MDCParseOptions = {}): Processor {
+export function createStringifyProcessor(_inlineOptions: MDCParseOptions = {}) {
   return unified()
     .use(function jsonParser(this: Processor) {
       this.parser = function (root: string) {
         return JSON.parse(root)
       }
     })
-    .use(mdcRehype)
-    .use(rehypeRemark, {
-      handlers: mdcRehypeHandlers as never,
-      nodeHandlers: mdcRehypeNodeHandlers as never
-    })
+    .use(mdcRemark)
     .use(gfm)
     .use(mdc)
     .use(stringify, {

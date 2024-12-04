@@ -1,59 +1,86 @@
 import type { MDCNode, Parents as HastParents, Element, MDCElement } from '@nuxtjs/mdc'
-import { defaultHandlers } from 'hast-util-to-mdast'
-import type { Node as RehypeNode, Text } from 'hast'
+import { defaultHandlers, toMdast } from 'hast-util-to-mdast'
+import type { Root as HastRoot, RootContent, Text } from 'hast'
 import { nodeTextContent } from '@nuxtjs/mdc/runtime/utils/node'
-import type { State } from 'hast-util-to-mdast'
+import type { State, Options as ToMdastOptions } from 'hast-util-to-mdast'
 import { hasProtocol } from 'ufo'
-import type { Nodes } from 'mdast'
+import type { Nodes, Root as MDastRoot } from 'mdast'
 import { toHtml } from 'hast-util-to-html'
 import { visit } from 'unist-util-visit'
 import { format } from 'hast-util-format'
+import type { VFile } from 'vfile'
 import { computeHighlightRanges } from './utils'
 
-const mdcRehypeElementType = 'rehype-element'
+/**
+ * Since toMdast state uses `element` as special type and unwraps it if `node.tagName` is not in `handlers`,
+ * we need to use a custom type to avoid this behavior.
+ *
+ * @see https://github.com/syntax-tree/hast-util-to-mdast/blob/main/lib/state.js#L258-L283
+ */
+const mdcRemarkElementType = 'mdc-element'
 const own = {}.hasOwnProperty
 type Parents = HastParents & { properties: Record<string, unknown>, tagName: string }
-interface MDCRehypeElement extends RehypeNode {
-  type: 'rehype-element'
-  tagName: string
-  properties: Record<string, unknown> | undefined
-  children: MDCRehypeElement[]
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface Options extends ToMdastOptions {
 }
 
-export function mdcRehype() {
-  return function mdcNodeToRehype(node: MDCNode): RehypeNode {
-    if (node.type === 'element') {
-      if (node.children?.length && (node.children || []).every((child: MDCNode) => (child as MDCElement).tag === 'template')) {
-        // TODO: move it to remark-mdc
-        node.children = (node as MDCElement).children.flatMap((child) => {
-          if (typeof (child as MDCElement).props?.['v-slot:default'] !== 'undefined') {
-            return (child as MDCElement).children || []
-          }
-          return child
-        })
-      }
+export function mdcRemark(options?: Options | undefined | null) {
+  return function (node: HastRoot, _file: VFile) {
+    const tree = preProcessElementNodes(node as unknown as MDCNode)
 
-      return {
-        type: mdcRehypeElementType,
-        tagName: node.tag,
-        properties: node.props,
-        children: (node.children || []).map(mdcNodeToRehype)
-      } as MDCRehypeElement
-    }
-
-    if ((node as unknown as MDCElement)?.children) {
-      return {
-        ...node,
-        children: ((node as unknown as MDCElement).children || []).map(mdcNodeToRehype)
-      } as unknown as MDCRehypeElement
-    }
-
-    return node as unknown as RehypeNode
+    // return node as unknown as Root
+    return toMdast(tree, {
+      /**
+       * Default to true in rehype-remark
+       * @see https://github.com/rehypejs/rehype-remark/blob/main/lib/index.js#L37ckages/remark/lib/index.js#L100
+       */
+      document: true,
+      ...options,
+      handlers: {
+        ...mdcRemarkHandlers,
+        ...options?.handlers
+      } as Options['handlers'],
+      nodeHandlers: {
+        ...mdcRemarkNodeHandlers,
+        ...options?.nodeHandlers
+      } as Options['nodeHandlers']
+    }) as MDastRoot
   }
 }
 
-export const mdcRehypeNodeHandlers = {
-  [mdcRehypeElementType]: (state: State, node: Parents, parent: Parents) => {
+function preProcessElementNodes(node: MDCNode): RootContent {
+  if (node.type === 'element') {
+    if (node.children?.length && (node.children || []).every((child: MDCNode) => (child as MDCElement).tag === 'template')) {
+      // TODO: move it to remark-mdc
+      node.children = (node as MDCElement).children.flatMap((child) => {
+        if (typeof (child as MDCElement).props?.['v-slot:default'] !== 'undefined') {
+          return (child as MDCElement).children || []
+        }
+        return child
+      })
+    }
+
+    return {
+      type: mdcRemarkElementType,
+      tagName: node.tag,
+      properties: node.props,
+      children: (node.children || []).map(preProcessElementNodes)
+    } as unknown as RootContent
+  }
+
+  if ((node as unknown as MDCElement)?.children) {
+    return {
+      ...node,
+      children: ((node as unknown as MDCElement).children || []).map(preProcessElementNodes)
+    } as unknown as RootContent
+  }
+
+  return node
+}
+
+const mdcRemarkNodeHandlers = {
+  [mdcRemarkElementType]: (state: State, node: Parents, parent: Parents) => {
     if (node.properties && node.properties.dataMdast === 'ignore') {
       return
     }
@@ -88,7 +115,7 @@ export const mdcRehypeNodeHandlers = {
   }
 }
 
-export const mdcRehypeHandlers: Record<string, (state: State, node: Parents) => unknown> = {
+const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown> = {
   template: (state: State, node: Parents) => {
     const vSlot = Object.keys(node.properties || {}).find(prop => prop?.startsWith('v-slot:'))?.replace('v-slot:', '') || 'default'
 
