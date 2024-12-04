@@ -397,7 +397,7 @@ const resolveComponentInstance = (component: any) => {
 
     return _component
   }
-  return kebabCase(component)
+  return component
 }
 
 /**
