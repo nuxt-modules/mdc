@@ -14,7 +14,7 @@ import { compileHast } from './compiler'
 let moduleOptions: Partial<typeof import('#mdc-imports')> | undefined
 let generatedMdcConfigs: MdcConfig[] | undefined
 
-export const createProcessor = async (inlineOptions: MDCParseOptions = {}) => {
+export const createParseProcessor = async (inlineOptions: MDCParseOptions = {}) => {
   if (!moduleOptions) {
     moduleOptions = await import('#mdc-imports' /* @vite-ignore */).catch(() => ({}))
   }
@@ -97,7 +97,7 @@ export const createProcessor = async (inlineOptions: MDCParseOptions = {}) => {
 }
 
 export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) => {
-  const processor = await createProcessor(inlineOptions)
+  const processor = await createParseProcessor(inlineOptions)
 
   return async function parse(md: string, { fileOptions }: { fileOptions?: VFileOptions } = {}): Promise<MDCParserResult> {
     // Extract front matter data

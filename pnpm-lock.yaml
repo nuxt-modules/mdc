@@ -6,7 +6,6 @@ settings:
 
 overrides:
   '@nuxtjs/mdc': workspace:*
-  remark-mdc: npm:remark-mdc-edge@latest
 
 importers:
 
@@ -48,6 +47,9 @@ importers:
       hast-util-format:
         specifier: ^1.1.0
         version: 1.1.0
+      hast-util-to-mdast:
+        specifier: ^10.1.1
+        version: 10.1.1
       hast-util-to-string:
         specifier: ^3.0.1
         version: 3.0.1
@@ -97,14 +99,17 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       remark-mdc:
-        specifier: npm:remark-mdc-edge@latest
-        version: remark-mdc-edge@3.4.0-28878365.3cd5c5a
+        specifier: ^3.5.0
+        version: 3.5.0
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
       remark-rehype:
         specifier: ^11.1.1
         version: 11.1.1
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
       scule:
         specifier: ^1.3.0
         version: 1.3.0
@@ -160,9 +165,6 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@2.4.1)
-      hast-util-to-mdast:
-        specifier: ^10.1.1
-        version: 10.1.1
       nuxt:
         specifier: ^3.14.1592
         version: 3.14.1592(@parcel/watcher@2.5.0)(@types/node@22.10.1)(eslint@9.16.0(jiti@2.4.1))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.28.0)(terser@5.36.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.10.1)(terser@5.36.0))(vue-tsc@2.1.10(typescript@5.6.3))
@@ -4693,8 +4695,8 @@ packages:
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
 
-  remark-mdc-edge@3.4.0-28878365.3cd5c5a:
-    resolution: {integrity: sha512-I16R2y12em/OfCN/vqyzHEuf8APrNz/kpFi/2dntM9VphX4wz3VhVIjEcFXzWUkpiffEeMizIqub107Ln6WM2A==}
+  remark-mdc@3.5.0:
+    resolution: {integrity: sha512-Amz+Km+E3IkIS23ZbzPM+JRmLUT0iNkNCBHBSTWB187vi3Uv0iIWxHiH8EtoOqCCTDWEYrIh+KAIEf5kvqxT1Q==}
 
   remark-parse@11.0.0:
     resolution: {integrity: sha512-FCxlKLNGknS5ba/1lmpYijMUzX2esxW5xQqjWxw2eHFfS2MSdaHVINFmhjo+qN1WhZhNimq0dZATN9pH0IDrpA==}
@@ -11158,7 +11160,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdc-edge@3.4.0-28878365.3cd5c5a:
+  remark-mdc@3.5.0:
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
