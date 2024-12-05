@@ -30,7 +30,7 @@ export function mdcRemark(options?: Options | undefined | null) {
     const tree = preProcessElementNodes(node as unknown as MDCNode)
 
     // return node as unknown as Root
-    return toMdast(tree, {
+    const mdast = toMdast(tree, {
       /**
        * Default to true in rehype-remark
        * @see https://github.com/rehypejs/rehype-remark/blob/main/lib/index.js#L37ckages/remark/lib/index.js#L100
@@ -46,6 +46,8 @@ export function mdcRemark(options?: Options | undefined | null) {
         ...options?.nodeHandlers
       } as Options['nodeHandlers']
     }) as MDastRoot
+
+    return mdast
   }
 }
 
@@ -61,12 +63,22 @@ function preProcessElementNodes(node: MDCNode): RootContent {
       })
     }
 
-    return {
+    const result = {
       type: mdcRemarkElementType,
       tagName: node.tag,
       properties: node.props,
       children: (node.children || []).map(preProcessElementNodes)
     } as unknown as RootContent
+
+    // If there is no children in node, delete `children` property from node
+    // `hast-util-minify-whitespace` checks for `children` property to remove whitespaces,
+    // and having empty children will cause lossing a necessary whitespace(e.g. `:component text after` -> `:componenttext after`)
+    if (!node.children?.length) {
+      // @ts-expect-error: custom type
+      delete result.children
+    }
+
+    return result
   }
 
   if ((node as unknown as MDCElement)?.children) {
