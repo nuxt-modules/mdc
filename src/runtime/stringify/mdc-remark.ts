@@ -307,8 +307,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
     return {
       type: 'textComponent',
       name: 'br',
-      attributes: node.properties,
-      children: state.toFlow(state.all(node))
+      attributes: node.properties
     }
   }
 }
