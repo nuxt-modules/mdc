@@ -54,7 +54,7 @@ function preProcessElementNodes(node: MDCNode): RootContent {
     if (node.children?.length && (node.children || []).every((child: MDCNode) => (child as MDCElement).tag === 'template')) {
       // TODO: move it to remark-mdc
       node.children = (node as MDCElement).children.flatMap((child) => {
-        if (typeof (child as MDCElement).props?.['v-slot:default'] !== 'undefined') {
+        if (typeof (child as MDCElement).props?.['v-slot:default'] !== 'undefined' && Object.keys((child as MDCElement).props!).length === 1) {
           return (child as MDCElement).children || []
         }
         return child
