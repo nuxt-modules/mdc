@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.11.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.11.0...v0.11.1)
+
+### 🏡 Chore
+
+- Revert ro  `debug@4.3.7` ([d290452](https://github.com/nuxt-modules/mdc/commit/d290452))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.11.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.10.0...v0.11.0)
