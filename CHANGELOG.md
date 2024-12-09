@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v0.11.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.10.0...v0.11.0)
+
+### 🚀 Enhancements
+
+- **renderer:** Do not try to resolve `<svg>`, `<math>` and their children ([#299](https://github.com/nuxt-modules/mdc/pull/299))
+- MDC stringify utility ([#300](https://github.com/nuxt-modules/mdc/pull/300))
+
+### 🩹 Fixes
+
+- Export processors ([a0601df](https://github.com/nuxt-modules/mdc/commit/a0601df))
+- **stringify:** Do not remove slots with properties ([c862290](https://github.com/nuxt-modules/mdc/commit/c862290))
+- **stringify:** Whitespace between inline components and texts ([e2a7c43](https://github.com/nuxt-modules/mdc/commit/e2a7c43))
+- **stringify:** Whitespace between `:br` and texts ([42b9f9b](https://github.com/nuxt-modules/mdc/commit/42b9f9b))
+
+### 🏡 Chore
+
+- Upgrade deps ([f70b54c](https://github.com/nuxt-modules/mdc/commit/f70b54c))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.10.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.9.5...v0.10.0)
