@@ -100,7 +100,7 @@
     "rehype-sort-attributes": "^5.0.1",
     "remark-emoji": "^5.0.1",
     "remark-gfm": "^4.0.0",
-    "remark-mdc": "npm:remark-mdc-edge@3.5.0-28898523.80673e0",
+    "remark-mdc": "npm:remark-mdc-edge@3.5.0-28900048.8ed9bd2",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
     "remark-stringify": "^11.0.0",
@@ -115,7 +115,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@nuxt/eslint-config": "^0.7.2",
+    "@nuxt/eslint-config": "^0.7.3",
     "@nuxt/module-builder": "^0.8.4",
     "@nuxt/schema": "^3.14.1592",
     "@nuxt/test-utils": "^3.15.1",
