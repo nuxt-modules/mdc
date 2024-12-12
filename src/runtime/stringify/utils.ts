@@ -16,3 +16,11 @@ export function computeHighlightRanges(input: string[] | string) {
 
   return ranges.join(',')
 }
+
+export function refineCodeLanguage(language?: string) {
+  if (language === 'text') {
+    return undefined
+  }
+
+  return language
+}

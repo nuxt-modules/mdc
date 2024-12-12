@@ -13,7 +13,16 @@ export function rehypeHighlight(opts: RehypeHighlightOption) {
     const styles: string[] = []
     visit(
       tree,
-      node => ['pre', 'code'].includes((node as Element).tagName) && !!((node as Element).properties?.language || (node as Element).properties?.highlights),
+      (_node: any) => {
+        const node = _node as Element
+        if (!['pre', 'code'].includes(node.tagName)) {
+          return false
+        }
+
+        const hasHighlightableLanguage = node.properties?.language !== undefined && node.properties?.language !== 'text'
+        const hasHighlightableLines = Boolean(node.properties?.highlights)
+        return hasHighlightableLanguage || hasHighlightableLines
+      },
       (node) => {
         const _node = node as Element
         const highlights = typeof _node.properties!.highlights === 'string'
