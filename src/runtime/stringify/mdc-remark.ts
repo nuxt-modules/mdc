@@ -9,7 +9,7 @@ import { toHtml } from 'hast-util-to-html'
 import { visit } from 'unist-util-visit'
 import { format } from 'hast-util-format'
 import type { VFile } from 'vfile'
-import { computeHighlightRanges } from './utils'
+import { computeHighlightRanges, refineCodeLanguage } from './utils'
 
 /**
  * Since toMdast state uses `element` as special type and unwraps it if `node.tagName` is not in `handlers`,
@@ -168,7 +168,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
 
     // lang is shorthand for language and is more MDC compatible
     if (attributes.language) {
-      attributes.lang = attributes.language
+      attributes.lang = refineCodeLanguage(attributes.language as string)
       delete attributes.language
     }
 
@@ -191,7 +191,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
     return {
       type: 'code',
       value,
-      lang: node.properties.language,
+      lang: refineCodeLanguage(node.properties.language as string),
       meta
     }
   },
