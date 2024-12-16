@@ -160,6 +160,10 @@ export default defineNuxtModule<ModuleOptions>({
     addImports({ from: resolver.resolve('./runtime/parser'), name: 'parseMarkdown', as: 'parseMarkdown' })
     addServerImports([{ from: resolver.resolve('./runtime/parser'), name: 'parseMarkdown', as: 'parseMarkdown' }])
 
+    // Add stringifier
+    addImports({ from: resolver.resolve('./runtime/stringify'), name: 'stringifyMarkdown', as: 'stringifyMarkdown' })
+    addServerImports([{ from: resolver.resolve('./runtime/stringify'), name: 'stringifyMarkdown', as: 'stringifyMarkdown' }])
+
     // Register prose components
     if (options.components?.prose) {
       addComponentsDir({
