@@ -1,6 +1,6 @@
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
-import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot } from '@nuxtjs/mdc'
+import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot } from '../types/parser'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any, options: MDCParseOptions = {}) {
