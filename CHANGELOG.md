@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.12.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.11.1...v0.12.0)
+
+### 🚀 Enhancements
+
+- **parse:** Allow disabling heading extraction ([4420709](https://github.com/nuxt-modules/mdc/commit/4420709))
+
+### 🩹 Fixes
+
+- Text is default language for codeblocks ([#309](https://github.com/nuxt-modules/mdc/pull/309))
+- `stringifyMarkdown` auto-import ([#311](https://github.com/nuxt-modules/mdc/pull/311))
+- Do not remove text language from codeblocks ([3b6ca5b](https://github.com/nuxt-modules/mdc/commit/3b6ca5b))
+
+### 🏡 Chore
+
+- Upgrade deps ([b608fbd](https://github.com/nuxt-modules/mdc/commit/b608fbd))
+- Upgrade deps ([febcb01](https://github.com/nuxt-modules/mdc/commit/febcb01))
+- Upgrade deps ([2684dd2](https://github.com/nuxt-modules/mdc/commit/2684dd2))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Sandro Circi ([@sandros94](http://github.com/sandros94))
+
 ## v0.11.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.11.0...v0.11.1)
