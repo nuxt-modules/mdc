@@ -109,11 +109,11 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
     // Update data with processor data
-    const data: MDCData = Object.assign(
-      contentHeading(result.body),
+    const data = Object.assign(
+      inlineOptions.contentHeading !== false ? contentHeading(result.body) : {},
       frontmatter,
       processedFile?.data || {}
-    )
+    ) as MDCData
 
     // Generate toc if it is not disabled in front-matter
     let toc: Toc | undefined

@@ -37,6 +37,13 @@ export interface MDCParseOptions {
   keepComments?: boolean
 
   /**
+   * Extract content heading from the markdown file.
+   *
+   * @default true
+   */
+  contentHeading?: boolean
+
+  /**
    * Inline mdc.config.ts
    */
   configs?: MdcConfig[]
