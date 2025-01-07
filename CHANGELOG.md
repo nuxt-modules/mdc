@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.12.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.12.0...v0.12.1)
+
+### 🏡 Chore
+
+- Upgrade deps ([2f8a1d0](https://github.com/nuxt-modules/mdc/commit/2f8a1d0))
+
+### ✅ Tests
+
+- Fix typecheck ([6b00e5c](https://github.com/nuxt-modules/mdc/commit/6b00e5c))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.12.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.11.1...v0.12.0)
