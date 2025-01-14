@@ -207,7 +207,7 @@ const { data: ast } = await useAsyncData('markdown', () => parseMarkdown('::aler
 
 ### Options
 
-The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts)).
+The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types/parser.ts)).
 
 | Name | Default | Description |
 | --  | -- | -- |
@@ -218,7 +218,7 @@ The `parseMarkdown` helper also accepts options as the second argument to contro
 | `toc.depth` | `2` | Maximum heading depth to include in the table of contents.  |
 | `toc.searchDepth` | `2` | Maximum depth of nested tags to search for heading. |
 
-Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/types/parser.ts).
+Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types/parser.ts).
 
 ## Configurations
 
@@ -259,7 +259,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types.ts).
+Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/module.ts).
 
 ---
 
