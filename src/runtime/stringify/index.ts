@@ -17,7 +17,7 @@ export function createStringifyProcessor(options: MDCStringifyOptions = {}) {
     .use(mdc)
     .use(stringify, {
       bullet: '-',
-      emphasis: '_',
+      emphasis: '*',
       rule: '-',
       listItemIndent: 'one',
       fence: '`',
