@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v0.13.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.12.1...v0.13.0)
+
+### 🩹 Fixes
+
+- **stringify:** Use `*` instead `_` for emphsis syntax ([#325](https://github.com/nuxt-modules/mdc/pull/325))
+
+### 📖 Documentation
+
+- **README:** Links types module ([#324](https://github.com/nuxt-modules/mdc/pull/324))
+- Module loads components from `components/mdc` directory ([aac575e](https://github.com/nuxt-modules/mdc/commit/aac575e))
+
+### 🏡 Chore
+
+- Upgrade deps ([317d82e](https://github.com/nuxt-modules/mdc/commit/317d82e))
+- Freeze typescript 5.6.2 ([3955c94](https://github.com/nuxt-modules/mdc/commit/3955c94))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Guspan Tanadi ([@guspan-tanadi](http://github.com/guspan-tanadi))
+
 ## v0.12.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.12.0...v0.12.1)
