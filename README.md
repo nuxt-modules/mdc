@@ -67,7 +67,7 @@ Hello MDC
 </template>
 ```
 
-Note that `::alert` will use the `components/global/Alert.vue` component.
+Note that `::alert` will use the `components/mdc/Alert.vue` component.
 
 ### `<MDCRenderer>`
 
