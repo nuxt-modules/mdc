@@ -242,7 +242,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
   table: (state: State, node: Parents) => {
     visit(node, (node) => {
       // @ts-expect-error: custom type
-      if ((node as Element).type === 'rehype-element') {
+      if ((node as Element).type === mdcRemarkElementType) {
         node.type = 'element'
       }
     })
