@@ -89,7 +89,7 @@
     "micromark-util-sanitize-uri": "^2.0.1",
     "ohash": "^1.1.4",
     "parse5": "^7.2.1",
-    "pathe": "^2.0.1",
+    "pathe": "^2.0.2",
     "property-information": "^6.5.0",
     "rehype-external-links": "^3.0.0",
     "rehype-minify-whitespace": "^6.0.2",
@@ -128,7 +128,7 @@
     "rehype": "^13.0.2",
     "release-it": "^18.1.1",
     "typescript": "5.6.2",
-    "vitest": "^2.1.8",
+    "vitest": "^3.0.1",
     "vue-tsc": "^2.2.0"
   },
   "resolutions": {
