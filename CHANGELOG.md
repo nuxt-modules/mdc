@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.13.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.0...v0.13.1)
+
+### 🩹 Fixes
+
+- **stringify:** Convert `mdc-element` back to rehype `element` ([017fff0](https://github.com/nuxt-modules/mdc/commit/017fff0))
+
+### 🏡 Chore
+
+- Upgrade deps ([9040c86](https://github.com/nuxt-modules/mdc/commit/9040c86))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.13.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.12.1...v0.13.0)
