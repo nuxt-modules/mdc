@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.1...v0.13.2)
+
+### 🩹 Fixes
+
+- Transpile yaml package ([#331](https://github.com/nuxt-modules/mdc/pull/331))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.13.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.0...v0.13.1)
