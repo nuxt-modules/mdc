@@ -68,6 +68,9 @@ export default defineNuxtModule<ModuleOptions>({
       headings: options.headings!
     })
 
+    nuxt.options.build.transpile ||= []
+    nuxt.options.build.transpile.push('yaml')
+
     if (options.highlight) {
       // Enable unwasm for shiki
       addWasmSupport(nuxt)
