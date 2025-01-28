@@ -1,4 +1,4 @@
-import type { HighlightResult, RehypeHighlightOption } from '@nuxtjs/mdc'
+import type { HighlightResult, RehypeHighlightOption } from '../types/highlighter'
 import { rehypeHighlight as rehypeHighlightUniversal } from './rehype'
 
 const defaults: RehypeHighlightOption = {
