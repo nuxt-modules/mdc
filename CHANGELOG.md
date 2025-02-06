@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.13.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.2...v0.13.3)
+
 ## v0.13.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.1...v0.13.2)
