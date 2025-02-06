@@ -10,6 +10,7 @@ const md = `\
 [XSS](vbscript:alert(document.domain))
 <javascript:prompt(document.cookie)>
 [x](y '<style>')
+<a href="jav&#x09;ascript:alert('XSS');">Click Me</a>
 
 <!-- image -->
 
@@ -31,7 +32,7 @@ const md = `\
 
 `.trim()
 
-it('XSS', async () => {
+it('XSS generic payloads', async () => {
   const { data, body } = await parseMarkdown(md)
 
   expect(Object.keys(data)).toHaveLength(2)
@@ -39,5 +40,31 @@ it('XSS', async () => {
   for (const node of (body.children[0] as MDCElement).children) {
     const props = (node as MDCElement).props || {}
     expect(Object.entries(props as Record<string, any>).every(([k, v]) => validateProp(k, v))).toBeTruthy()
+  }
+})
+
+it('XSS payloads with HTML entities should be caught', async () => {
+  const md = `\
+## XSS payloads with HTML entities
+<a href="jav&#x09;ascript:alert('XSS');">Click Me 1</a>
+<a href="jav&#x0A;ascript:alert('XSS');">Click Me 2</a>  
+<a href="jav&#10;ascript:alert('XSS');">Click Me 3</a>
+  
+
+`.trim()
+
+  // set the number of assertions to expect
+  expect.assertions(4)
+
+  const { data, body } = await parseMarkdown(md)
+
+  expect(Object.keys(data)).toHaveLength(2)
+
+  for (const node of (body.children[1] as MDCElement).children) {
+    const props = (node as MDCElement).props || {}
+
+    if ((node as MDCElement).tag === 'a') {
+      expect(Object.keys(props)).toHaveLength(0)
+    }
   }
 })

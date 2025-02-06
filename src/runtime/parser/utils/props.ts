@@ -9,13 +9,31 @@ export const unsafeLinkPrefix = [
   'data:text/xml'
 ]
 
+function isAnchorLinkAllowed(value: string) {
+  const decodedUrl = decodeURIComponent(value)
+  const urlSanitized = decodedUrl.replace(/&#x([0-9a-f]+);?/gi, '')
+    .replace(/&#(\d+);?/g, '')
+    .replace(/&[a-z]+;?/gi, '')
+
+  try {
+    const url = new URL(urlSanitized)
+    if (unsafeLinkPrefix.some(prefix => url.protocol.toLowerCase().startsWith(prefix))) {
+      return false
+    }
+  } catch {
+    return false
+  }
+
+  return true
+}
+
 export const validateProp = (attribute: string, value: string) => {
   if (attribute.startsWith('on')) {
     return false
   }
 
   if (attribute === 'href' || attribute === 'src') {
-    return !unsafeLinkPrefix.some(prefix => value.toLowerCase().startsWith(prefix))
+    return isAnchorLinkAllowed(value)
   }
 
   return true
