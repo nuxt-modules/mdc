@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.13.4
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.3...v0.13.4)
+
+### 🩹 Fixes
+
+- Regression in allowed image links using absolute or relative paths ([#339](https://github.com/nuxt-modules/mdc/pull/339))
+
+### 🤖 CI
+
+- Fix corepack ([cf33c32](https://github.com/nuxt-modules/mdc/commit/cf33c32))
+- Fix corepack ([9659658](https://github.com/nuxt-modules/mdc/commit/9659658))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Liran Tal ([@lirantal](http://github.com/lirantal))
+
 ## v0.13.3
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.2...v0.13.3)
