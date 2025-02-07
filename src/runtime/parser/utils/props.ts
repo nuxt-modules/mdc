@@ -15,13 +15,12 @@ function isAnchorLinkAllowed(value: string) {
     .replace(/&#(\d+);?/g, '')
     .replace(/&[a-z]+;?/gi, '')
 
-  // Check if the URL is a relative path
-  if (urlSanitized.startsWith('/') || urlSanitized.startsWith('./') || urlSanitized.startsWith('../')) {
-    return true
-  }
-
   try {
-    const url = new URL(urlSanitized)
+    const url = new URL(urlSanitized, 'http://example.com')
+    if (url.origin === 'http://example.com') {
+      return true
+    }
+
     if (unsafeLinkPrefix.some(prefix => url.protocol.toLowerCase().startsWith(prefix))) {
       return false
     }
