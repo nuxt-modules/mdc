@@ -49,12 +49,12 @@ it('XSS payloads with HTML entities should be caught', async () => {
 <a href="jav&#x09;ascript:alert('XSS');">Click Me 1</a>
 <a href="jav&#x0A;ascript:alert('XSS');">Click Me 2</a>  
 <a href="jav&#10;ascript:alert('XSS');">Click Me 3</a>
-  
+<a href="&#x09;javascript:alert('XSS');">Click Me 4</a>
 
 `.trim()
 
   // set the number of assertions to expect
-  expect.assertions(4)
+  expect.assertions(5)
 
   const { data, body } = await parseMarkdown(md)
 
