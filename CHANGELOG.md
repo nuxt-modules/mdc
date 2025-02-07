@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.5
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.4...v0.13.5)
+
+### 🩹 Fixes
+
+- Support static file paths ([#340](https://github.com/nuxt-modules/mdc/pull/340))
+
+### ❤️ Contributors
+
+- Liran Tal ([@lirantal](http://github.com/lirantal))
+
 ## v0.13.4
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.3...v0.13.4)
