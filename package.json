@@ -134,7 +134,7 @@
   "resolutions": {
     "@nuxtjs/mdc": "workspace:*"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.4.0",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): release v${version}"
@@ -146,5 +146,11 @@
     "hooks": {
       "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
     }
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild"
+    ]
   }
 }
