@@ -8,8 +8,12 @@
     "generate": "nuxi generate"
   },
   "devDependencies": {
-    "nuxt": "latest",
     "@monaco-editor/loader": "^1.4.0",
-    "@nuxtlabs/monarch-mdc": "^0.2.0"
+    "@nuxtlabs/monarch-mdc": "^0.2.0",
+    "nuxt": "latest"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.26",
+    "@tailwindcss/typography": "^0.5.16"
   }
 }

@@ -3,7 +3,7 @@
     <UAlert
       color="primary"
       variant="subtle"
-      class="my-4"
+      class="my-4 not-prose"
     >
       <template #description>
         <h2 class="font-semibold">

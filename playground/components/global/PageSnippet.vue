@@ -3,7 +3,7 @@
     <UAlert
       color="primary"
       variant="subtle"
-      class="page-snippet-alert"
+      class="page-snippet-alert not-prose"
     >
       <template #description>
         <MDCRenderer

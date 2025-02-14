@@ -185,6 +185,13 @@ importers:
         version: 2.2.0(typescript@5.6.2)
 
   playground:
+    dependencies:
+      '@iconify-json/lucide':
+        specifier: ^1.2.26
+        version: 1.2.26
+      '@tailwindcss/typography':
+        specifier: ^0.5.16
+        version: 0.5.16(tailwindcss@3.4.17)
     devDependencies:
       '@monaco-editor/loader':
         specifier: ^1.4.0
@@ -753,6 +760,9 @@ packages:
 
   '@iconify-json/heroicons@1.2.2':
     resolution: {integrity: sha512-qoW4pXr5kTTL6juEjgTs83OJIwpePu7q1tdtKVEdj+i0zyyVHgg/dd9grsXJQnpTpBt6/VwNjrXBvFjRsKPENg==}
+
+  '@iconify-json/lucide@1.2.26':
+    resolution: {integrity: sha512-arD/8mK0lRxFY2LgLf345NhWVWiOtV8sOxJuLnq4QRz3frMiOwVwGxEgp5Xe/bRGzxO2CxxCBok0bPRpCkYZQQ==}
 
   '@iconify/collections@1.0.517':
     resolution: {integrity: sha512-s/s8RDwSPlEr67T1UaH9qQ/sJjJQMCvtsZw9i0kVhBzZy85SGUcgNt11UeCu6+TmTWrnG5em/RodAvqGxtDWug==}
@@ -6331,6 +6341,10 @@ snapshots:
   '@iarna/toml@2.2.5': {}
 
   '@iconify-json/heroicons@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/lucide@1.2.26':
     dependencies:
       '@iconify/types': 2.0.0
 

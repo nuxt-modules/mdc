@@ -3,7 +3,7 @@
     <PageNav />
     <div
       v-if="ast"
-      class="page-mdc-content"
+      class="page-mdc-content prose"
     >
       <MDCRenderer
         v-if="ast.body"
