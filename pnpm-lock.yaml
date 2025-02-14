@@ -12,7 +12,7 @@ importers:
   .:
     dependencies:
       '@nuxt/kit':
-        specifier: ^3.15.2
+        specifier: ^3.15.4
         version: 3.15.4(magicast@0.3.5)
       '@shikijs/transformers':
         specifier: ^1.27.2
@@ -145,7 +145,7 @@ importers:
         specifier: ^0.8.4
         version: 0.8.4(@nuxt/kit@3.15.4(magicast@0.3.5))(nuxi@3.21.1)(typescript@5.6.2)(vue-tsc@2.2.0(typescript@5.6.2))
       '@nuxt/schema':
-        specifier: ^3.15.2
+        specifier: ^3.15.4
         version: 3.15.4
       '@nuxt/test-utils':
         specifier: ^3.15.4
@@ -166,7 +166,7 @@ importers:
         specifier: ^9.18.0
         version: 9.20.1(jiti@2.4.2)
       nuxt:
-        specifier: ^3.15.2
+        specifier: ^3.15.4
         version: 3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.4)(db0@0.2.4)(eslint@9.20.1(jiti@2.4.2))(ioredis@5.5.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@3.29.5)(terser@5.39.0)(typescript@5.6.2)(vite@6.1.0(@types/node@22.13.4)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.0))(vue-tsc@2.2.0(typescript@5.6.2))(yaml@2.7.0)
       rehype:
         specifier: ^13.0.2
@@ -11066,7 +11066,7 @@ snapshots:
       ky: 1.7.5
       registry-auth-token: 5.1.0
       registry-url: 6.0.1
-      semver: 7.6.3
+      semver: 7.7.1
 
   package-manager-detector@0.2.9: {}
 
