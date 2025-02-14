@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Prepare project
+        run: pnpm dev:prepare
+
       - name: Ensure NuxtHub module is installed
-        run: npx nuxthub@latest ensure playground
+        run: pnpx nuxthub@latest ensure playground
 
       - name: Build application
         run: pnpm dev:build
