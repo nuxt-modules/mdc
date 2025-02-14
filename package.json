@@ -134,7 +134,7 @@
   "resolutions": {
     "@nuxtjs/mdc": "workspace:*"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.4.0",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): release v${version}"
