@@ -55,7 +55,7 @@ onMounted(() => {
       </div>
       <div class="flex-1 h-full flex flex-col  border-2 border-neutral-900">
         <code class="text-xs px-2 py-1">Source -> MDC -> Render</code>
-        <div class="flex-1 overflow-scroll prose p-4">
+        <div class="flex-1 overflow-scroll prose dark:prose-invert p-4">
           <MDCRenderer
             v-if="ast"
             :body="ast!.body"

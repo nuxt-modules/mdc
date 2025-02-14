@@ -3,7 +3,7 @@
     <PageNav />
     <div
       v-if="ast"
-      class="page-mdc-content prose"
+      class="page-mdc-content prose dark:prose-invert"
     >
       <MDCRenderer
         v-if="ast.body"
