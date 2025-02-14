@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      - run: npm i -g --force corepack && corepack enable
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
@@ -28,13 +28,14 @@ jobs:
         run: pnpm install
 
       - name: Ensure NuxtHub module is installed
-        run: npx nuxthub@latest ensure
+        run: npx nuxthub@latest ensure playground
 
       - name: Build application
-        run: pnpm build
+        run: pnpm dev:build
 
       - name: Deploy to NuxtHub
         uses: nuxt-hub/action@v1
         id: deploy
         with:
           project-key: mdc-ribk
+          directory: playground/dist
