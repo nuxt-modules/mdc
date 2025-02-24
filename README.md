@@ -135,6 +135,23 @@ export default defineNuxtConfig({
 })
 ```
 
+In order to customize these components yourself simply make a component with the same name of the prose component you are trying to take control over. Make sure to put these prose components in their own prose folder and tell nuxt to globally register them so that MDC can get proper access. 
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/mdc'],
+  mdc: {
+    components: {
+      prose: true
+    }
+  },
+  components: {
+    global: true,
+    path: './components/prose'
+  }
+})
+```
+
 Here is the list of available prose components:
 
 | Tag | Component | Source | Description |
