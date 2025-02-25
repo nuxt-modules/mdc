@@ -25,6 +25,9 @@ jobs:
       - run: pnpm build
       - run: pnpm test
 
+      - name: Publish
+        run: pnpx pkg-pr-new publish --compact --no-template --pnpm
+
   release-edge:
     if: |
       github.event_name == 'push' &&
