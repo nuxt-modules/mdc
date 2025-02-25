@@ -75,7 +75,7 @@ export async function mdcHighlighter({
       'import { getMdcConfigs } from \'#mdc-configs\'',
       shikiEngine === 'javascript'
         ? 'import { createJavaScriptRegexEngine } from \'shiki/engine/javascript\''
-        : 'import { createWasmOnigEngine } from \'shiki/engine/oniguruma\'',
+        : 'import { createOnigurumaEngine } from \'shiki/engine/oniguruma\'',
       code,
       'const bundledLangs = {',
       ...Array.from(langsMap.entries())
@@ -94,7 +94,7 @@ export async function mdcHighlighter({
       }),
       shikiEngine === 'javascript'
         ? 'const engine = createJavaScriptRegexEngine({ forgiving: true })'
-        : `const engine = createWasmOnigEngine(() => import('shiki/wasm'))`,
+        : `const engine = createOnigurumaEngine(() => import('shiki/wasm'))`,
       'const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs, engine })',
       'export default highlighter'
     ].join('\n')

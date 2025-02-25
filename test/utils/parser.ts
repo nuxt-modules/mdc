@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { createWasmOnigEngine } from 'shiki/engine/oniguruma'
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import type { MDCParseOptions } from '../../src/types'
@@ -35,7 +35,7 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
       ],
       options: {},
       getMdcConfigs: async () => [],
-      engine: createWasmOnigEngine(import('shiki/wasm'))
+      engine: createOnigurumaEngine(import('shiki/wasm'))
     })
 
     options.highlight.highlighter = highlighter

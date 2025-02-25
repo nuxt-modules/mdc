@@ -1,5 +1,5 @@
 import type { CodeToHastOptions } from 'shiki/core'
-import type { HighlighterCore, LanguageInput, ShikiTransformer, ThemeInput, RegexEngine } from 'shiki'
+import { type HighlighterCore, type LanguageInput, type ShikiTransformer, type ThemeInput, type RegexEngine, createJavaScriptRegexEngine } from 'shiki'
 import type { Element } from 'hast'
 import type { MdcConfig, Highlighter } from '@nuxtjs/mdc'
 
@@ -39,7 +39,7 @@ export function createShikiHighlighter({
     const shiki: HighlighterCore = await createHighlighterCore({
       langs,
       themes,
-      engine
+      engine: engine || createJavaScriptRegexEngine()
     })
 
     for await (const config of await getConfigs()) {

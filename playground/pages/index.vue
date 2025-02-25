@@ -51,7 +51,7 @@ onMounted(() => {
         <Editor v-model:code="source" class="flex-1" />
         <!-- MDC AST -->
         <code class="text-xs px-2 py-1">MDC AST</code>
-        <Editor :code="JSON.stringify(ast?.body, null, 2)" language="json" class="flex-1" read-only />
+        <Editor :code="JSON.stringify(ast?.body, null, 2) || ''" language="json" class="flex-1" read-only />
       </div>
       <div class="flex-1 h-full flex flex-col  border-2 border-neutral-900">
         <code class="text-xs px-2 py-1">Source -> MDC -> Render</code>
