@@ -60,8 +60,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       ohash:
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^1.1.4
+        version: 1.1.4
       parse5:
         specifier: ^7.2.1
         version: 7.2.1
@@ -4302,9 +4302,6 @@ packages:
 
   ohash@1.1.4:
     resolution: {integrity: sha512-FlDryZAahJmEF3VR3w1KogSEdWX3WhA5GPakFx4J81kEAiHyLMpdLLElS8n8dfNadMgAne/MywcvmogzscVt4g==}
-
-  ohash@2.0.5:
-    resolution: {integrity: sha512-3k3APZwRRPYyohdIDmPTpe5i0AY5lm7gvu/Oip7tZrTaEGfSlKX+7kXUoWLd9sHX0GDRVwVvlW18yEcD7qS1zw==}
 
   on-finished@2.4.1:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
@@ -11287,8 +11284,6 @@ snapshots:
       ufo: 1.5.4
 
   ohash@1.1.4: {}
-
-  ohash@2.0.5: {}
 
   on-finished@2.4.1:
     dependencies:
