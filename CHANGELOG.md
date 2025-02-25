@@ -1,6 +1,44 @@
 # Changelog
 
 
+## v0.14.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.5...v0.14.0)
+
+### 🩹 Fixes
+
+- **MDCRenderer:** Do not render script tags ([6c6a036](https://github.com/nuxt-modules/mdc/commit/6c6a036))
+
+### 📖 Documentation
+
+- Current links presets ([#345](https://github.com/nuxt-modules/mdc/pull/345))
+- Clarifies the need to globally register the custom prose components ([#347](https://github.com/nuxt-modules/mdc/pull/347))
+
+### 🏡 Chore
+
+- Update nuxthub ci ([7fe5fe4](https://github.com/nuxt-modules/mdc/commit/7fe5fe4))
+- Update ci ([3ecd111](https://github.com/nuxt-modules/mdc/commit/3ecd111))
+- Update deps ([6e45da6](https://github.com/nuxt-modules/mdc/commit/6e45da6))
+- Update nuxthub deploy ([f464043](https://github.com/nuxt-modules/mdc/commit/f464043))
+- **playground:** Add prose ([5854ee3](https://github.com/nuxt-modules/mdc/commit/5854ee3))
+- **playground:** Add prose-invert ([63cc459](https://github.com/nuxt-modules/mdc/commit/63cc459))
+- Upgrade shiki v3 ([#349](https://github.com/nuxt-modules/mdc/pull/349))
+- Upgrade deps ([9c11dfd](https://github.com/nuxt-modules/mdc/commit/9c11dfd))
+- Upgrade deps ([b741441](https://github.com/nuxt-modules/mdc/commit/b741441))
+- Revert ohash ([a648cf8](https://github.com/nuxt-modules/mdc/commit/a648cf8))
+
+### 🤖 CI
+
+- Add nuxthub workflow ([6464d9f](https://github.com/nuxt-modules/mdc/commit/6464d9f))
+- Add `pkg-pr-new` ([55f8492](https://github.com/nuxt-modules/mdc/commit/55f8492))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Samuel M. Bednarz ([@CarelessCourage](http://github.com/CarelessCourage))
+- Guspan Tanadi ([@guspan-tanadi](http://github.com/guspan-tanadi))
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+
 ## v0.13.5
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.4...v0.13.5)
