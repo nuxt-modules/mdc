@@ -6,7 +6,7 @@ import { find, html } from 'property-information'
 import type { VNode, ConcreteComponent, PropType, DefineComponent } from 'vue'
 import type { MDCElement, MDCNode, MDCRoot, MDCData, MDCRenderOptions } from '@nuxtjs/mdc'
 import htmlTags from '../parser/utils/html-tags-list'
-import { flatUnwrap } from '../utils/node'
+import { flatUnwrap, nodeTextContent } from '../utils/node'
 import { pick } from '../utils'
 
 type CreateElement = typeof h
@@ -179,6 +179,16 @@ function _renderNode(node: MDCNode, h: CreateElement, options: MDCRenderOptions)
   }
 
   const _resolveComponent = isUnresolvableTag(renderTag) ? (component: unknown) => component : resolveComponent
+
+  // Prevent script execution by converting script tags to pre tags
+  // This code will excute only when prose components are disabled, otherwise the script will be handled by ProseScript component
+  if (renderTag === 'script') {
+    return h(
+      'pre',
+      { class: 'script-to-pre' },
+      '<' + 'script' + '>\n' + nodeTextContent(node) + '\n<' + '/script' + '>'
+    )
+  }
 
   const component = _resolveComponent(renderTag)
   if (typeof component === 'object') {
