@@ -91,7 +91,7 @@
     "ohash": "^2.0.5",
     "parse5": "^7.2.1",
     "pathe": "^2.0.3",
-    "property-information": "^6.5.0",
+    "property-information": "^7.0.0",
     "rehype-external-links": "^3.0.0",
     "rehype-minify-whitespace": "^6.0.2",
     "rehype-raw": "^7.0.0",
