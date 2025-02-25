@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         default: 'vitesse-light',
         dark: 'material-theme-palenight'
       },
-      shikiEngine: 'javascript',
+      shikiEngine: 'oniguruma',
       preload: [
         'sql'
       ]
