@@ -68,7 +68,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "verify": "npm run dev:prepare && npm run lint && npm run test && npm run typecheck"
   },
   "dependencies": {
     "@nuxt/kit": "^3.15.2",
