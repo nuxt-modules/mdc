@@ -104,7 +104,7 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     const { content, data: frontmatter } = await parseFrontMatter(md)
 
     // Start processing stream
-    const processedFile = await processor.process({ ...fileOptions, value: content, data: frontmatter })
+    const processedFile = await processor.process({ cwd: typeof process.cwd === 'function' ? process.cwd() : '/tmp', ...fileOptions, value: content, data: frontmatter })
 
     const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
