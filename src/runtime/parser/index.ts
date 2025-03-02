@@ -2,7 +2,7 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import { parseFrontMatter } from 'remark-mdc'
-import type { Options as VFileOptions } from 'vfile'
+import type { VFile, Options as VFileOptions } from 'vfile'
 import { defu } from 'defu'
 import type { MdcConfig, MDCData, MDCElement, MDCParseOptions, MDCParserResult, MDCRoot, Toc } from '@nuxtjs/mdc'
 import { nodeTextContent } from '../utils/node'
@@ -104,9 +104,20 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
     const { content, data: frontmatter } = await parseFrontMatter(md)
 
     // Start processing stream
-    const processedFile = await processor.process({ cwd: typeof process.cwd === 'function' ? process.cwd() : '/tmp', ...fileOptions, value: content, data: frontmatter })
+    const cwd = typeof process !== 'undefined' && typeof process.cwd === 'function' ? process.cwd() : '/tmp'
+    const processedFile: VFile | undefined = await new Promise((resolve, reject) => {
+      // There is an issue with bundler optimizer which causes undefined error
+      // When using processor.process as a promise. Use callback instead to avoid this issue
+      processor.process({ cwd, ...fileOptions, value: content, data: frontmatter }, (err, file) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(file)
+        }
+      })
+    })
 
-    const result = processedFile.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+    const result = processedFile?.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
     // Update data with processor data
     const data = Object.assign(
