@@ -9,6 +9,7 @@ const defaults: RehypeHighlightOption = {
         return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options)).catch(() => ({}))
       }
 
+      // @ts-expect-error -- types not updated
       return await $fetch('/api/_mdc/highlight', {
         params: {
           code,
