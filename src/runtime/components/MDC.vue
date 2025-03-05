@@ -64,10 +64,18 @@ const props = defineProps({
   unwrap: {
     type: [Boolean, String],
     default: false
+  },
+  /**
+   * Async Data Unique Key
+   * @default `hash(props.value)`
+   */
+  cacheKey: {
+    type: String,
+    default: undefined
   }
 })
 
-const key = computed(() => hash(props.value))
+const key = computed(() => props.cacheKey ?? hash(props.value))
 
 const { data, refresh, error } = await useAsyncData(key.value, async () => {
   if (typeof props.value !== 'string') {
