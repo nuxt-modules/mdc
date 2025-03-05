@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.15.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.14.0...v0.15.0)
+
+### 🚀 Enhancements
+
+- Add `cache-key` to MDC component ([#353](https://github.com/nuxt-modules/mdc/pull/353))
+
+### 🩹 Fixes
+
+- **parser:** Provide default `cwd` to prevent exception outside node environment ([738defe](https://github.com/nuxt-modules/mdc/commit/738defe))
+- **parse:** Prevent undefined error due to bundler optimization ([30cd412](https://github.com/nuxt-modules/mdc/commit/30cd412))
+- **mdc-remark:** Do not remove new lines from paragraphs ([49d0ed4](https://github.com/nuxt-modules/mdc/commit/49d0ed4))
+
+### ❤️ Contributors
+
+- Sébastien Chopin <seb@nuxt.com>
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.14.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.13.5...v0.14.0)
