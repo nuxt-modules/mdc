@@ -133,7 +133,8 @@
     "vue-tsc": "^2.2.4"
   },
   "resolutions": {
-    "@nuxtjs/mdc": "workspace:*"
+    "@nuxtjs/mdc": "workspace:*",
+    "@nuxt/ui": "npm:@nuxt/ui-edge@2.21.0-29019762.65654725"
   },
   "packageManager": "pnpm@10.4.0",
   "release-it": {
