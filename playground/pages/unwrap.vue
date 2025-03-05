@@ -29,9 +29,9 @@ This is a callout
       Back home
     </NuxtLink>
     <div>No unwrap:</div>
-    <MDC value="Hello **world**" />
+    <MDC value="Hello **world**" cache-key="hello-world" />
     <div>Unwrap `p`:</div>
-    <MDC unwrap="p" value="Hello **world**" />
+    <MDC unwrap="p" value="Hello **world**" cache-key="hello-world" />
     <hr>
     <div>No unwrap:</div>
     <MDC :value="mdList" />
