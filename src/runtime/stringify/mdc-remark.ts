@@ -36,6 +36,7 @@ export function mdcRemark(options?: Options | undefined | null) {
        * @see https://github.com/rehypejs/rehype-remark/blob/main/lib/index.js#L37ckages/remark/lib/index.js#L100
        */
       document: true,
+      newlines: true,
       ...options,
       handlers: {
         ...mdcRemarkHandlers,
