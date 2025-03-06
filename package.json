@@ -88,7 +88,7 @@
     "hast-util-to-string": "^3.0.1",
     "mdast-util-to-hast": "^13.2.0",
     "micromark-util-sanitize-uri": "^2.0.1",
-    "ohash": "^1.1.4",
+    "ohash": "^2.0.11",
     "parse5": "^7.2.1",
     "pathe": "^2.0.3",
     "property-information": "^6.5.0",
@@ -133,7 +133,8 @@
     "vue-tsc": "^2.2.4"
   },
   "resolutions": {
-    "@nuxtjs/mdc": "workspace:*"
+    "@nuxtjs/mdc": "workspace:*",
+    "@nuxt/ui": "npm:@nuxt/ui-edge@2.21.0-29019762.65654725"
   },
   "packageManager": "pnpm@10.4.0",
   "release-it": {
