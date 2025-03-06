@@ -72,6 +72,13 @@ const props = defineProps({
   cacheKey: {
     type: String,
     default: undefined
+  },
+  /**
+   * Partial parsing (if partial is `true`, title and toc generation will not be generated)
+   */
+  partial: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -81,7 +88,11 @@ const { data, refresh, error } = await useAsyncData(key.value, async () => {
   if (typeof props.value !== 'string') {
     return props.value
   }
-  return await parseMarkdown(props.value, props.parserOptions)
+  return await parseMarkdown(props.value, {
+    ...props.parserOptions,
+    toc: props.partial ? false : props.parserOptions?.toc,
+    contentHeading: props.partial ? false : props.parserOptions?.contentHeading
+  })
 })
 
 const body = computed(() => props.excerpt ? data.value?.excerpt : data.value?.body)

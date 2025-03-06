@@ -32,7 +32,7 @@ export interface MDCParseOptions {
      */
     depth?: number
     searchDepth?: number
-  }
+  } | false
 
   keepComments?: boolean
 

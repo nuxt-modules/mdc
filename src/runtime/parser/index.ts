@@ -117,28 +117,29 @@ export const createMarkdownParser = async (inlineOptions: MDCParseOptions = {}) 
       })
     })
 
-    const result = processedFile?.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
+    const parsedContent = processedFile?.result as { body: MDCRoot, excerpt: MDCRoot | undefined }
 
     // Update data with processor data
     const data = Object.assign(
-      inlineOptions.contentHeading !== false ? contentHeading(result.body) : {},
+      inlineOptions.contentHeading !== false ? contentHeading(parsedContent.body) : {},
       frontmatter,
       processedFile?.data || {}
     ) as MDCData
 
-    // Generate toc if it is not disabled in front-matter
-    let toc: Toc | undefined
-    if (data.toc !== false) {
-      const tocOption = defu(data.toc || {}, inlineOptions.toc, defaults.toc)
-      toc = generateToc(result.body, tocOption)
+    const parsedResult = { data, body: parsedContent.body } as MDCParserResult
+
+    // Generate toc if it is not disabled
+    const userTocOption = data.toc ?? inlineOptions.toc
+    if (userTocOption !== false) {
+      const tocOption = defu({} as Toc, userTocOption, defaults.toc)
+      parsedResult.toc = generateToc(parsedContent.body, tocOption)
     }
 
-    return {
-      data,
-      body: result.body,
-      excerpt: result.excerpt,
-      toc
+    if (parsedContent.excerpt) {
+      parsedResult.excerpt = parsedContent.excerpt
     }
+
+    return parsedResult
   }
 }
 
