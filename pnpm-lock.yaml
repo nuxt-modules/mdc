@@ -181,8 +181,8 @@ importers:
   playground:
     devDependencies:
       '@iconify-json/lucide':
-        specifier: ^1.2.30
-        version: 1.2.30
+        specifier: ^1.2.31
+        version: 1.2.31
       '@monaco-editor/loader':
         specifier: ^1.5.0
         version: 1.5.0
@@ -878,8 +878,8 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
-  '@iconify-json/lucide@1.2.30':
-    resolution: {integrity: sha512-0EaiofYbUwnp15sNC3cOJi0oD5DbbfDKbnIEA6jJ+WGHigyePgBVmx/5/S97XQmvl+Ix/Md3oGLKxkI5szL0rg==}
+  '@iconify-json/lucide@1.2.31':
+    resolution: {integrity: sha512-Z9lkm4FmeydsNVqRK5DPjttjGpBOeSKaTpH0+sYzsWPv3RYGHUTJlQOb8PGe/AW+Sw7Fv3kWBrXaevFAeoDa+w==}
 
   '@iconify/collections@1.0.528':
     resolution: {integrity: sha512-AfQ7FtDlLsMsv1y1nfJ1WBF6R0HdbNe+BmUZ2bmekNuOzv0z+TMNF02EFUunkH2zQ+NFAEL02O8hvMjHZhPLLA==}
@@ -6543,7 +6543,7 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
-  '@iconify-json/lucide@1.2.30':
+  '@iconify-json/lucide@1.2.31':
     dependencies:
       '@iconify/types': 2.0.0
 
