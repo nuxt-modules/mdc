@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { hash } from 'ohash'
 import { useAsyncData } from 'nuxt/app'
 import { watch, computed, type PropType } from 'vue'
 import type { MDCParseOptions } from '@nuxtjs/mdc'
@@ -82,7 +81,7 @@ const props = defineProps({
   }
 })
 
-const key = computed(() => props.cacheKey ?? hash(props.value))
+const key = computed(() => props.cacheKey ?? hashString(props.value))
 
 const { data, refresh, error } = await useAsyncData(key.value, async () => {
   if (typeof props.value !== 'string') {
@@ -100,4 +99,18 @@ const body = computed(() => props.excerpt ? data.value?.excerpt : data.value?.bo
 watch(() => props.value, () => {
   refresh()
 })
+
+// Simple string hashing function
+function hashString(str: string | object) {
+  if (typeof str !== 'string') {
+    str = JSON.stringify(str || '')
+  }
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i)
+    hash = ((hash << 6) - hash) + char
+    hash = hash & hash // Convert to 64bit integer
+  }
+  return `mdc-${hash === 0 ? '0000' : hash.toString(36)}-key`
+}
 </script>

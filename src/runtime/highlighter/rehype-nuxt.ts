@@ -5,11 +5,10 @@ const defaults: RehypeHighlightOption = {
   theme: {},
   async highlighter(code, lang, theme, options) {
     try {
-      if (import.meta.browser && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
+      if (import.meta.client && window.sessionStorage.getItem('mdc-shiki-highlighter') === 'browser') {
         return import('#mdc-highlighter').then(h => h.default(code, lang, theme, options)).catch(() => ({}))
       }
 
-      // @ts-expect-error -- types not updated
       return await $fetch('/api/_mdc/highlight', {
         params: {
           code,
@@ -19,7 +18,7 @@ const defaults: RehypeHighlightOption = {
         }
       })
     } catch (e: any) {
-      if (import.meta.browser && e?.response?.status === 404) {
+      if (import.meta.client && e?.response?.status === 404) {
         window.sessionStorage.setItem('mdc-shiki-highlighter', 'browser')
         return this.highlighter?.(code, lang, theme, options)
       }

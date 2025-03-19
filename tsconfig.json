@@ -5,5 +5,9 @@
     "node_modules/*",
     "playground/*",
     "docs/*"
+  ],
+  "include": [
+    "src",
+    "src/shim.d.ts"
   ]
 }

@@ -79,7 +79,8 @@ export default defineComponent({
     }
   },
   async setup(props) {
-    const $nuxt = getCurrentInstance()?.appContext?.app?.$nuxt
+    const app = getCurrentInstance()?.appContext?.app as unknown as { $nuxt: any }
+    const $nuxt = app?.$nuxt
     const route = $nuxt?.$route || $nuxt?._route
     const { mdc } = $nuxt?.$config?.public || {}
 

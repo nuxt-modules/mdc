@@ -1,12 +1,14 @@
+import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
-    '../src/module'
+    '@nuxtjs/mdc'
   ],
-
   devtools: {
     enabled: true
   },
+  css: ['~/assets/css/main.css'],
 
   mdc: {
     highlight: {
