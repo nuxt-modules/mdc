@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.16.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.15.0...v0.16.0)
+
+### 🩹 Fixes
+
+- **MDC:** Do not generate title/description and toc ([#354](https://github.com/nuxt-modules/mdc/pull/354))
+- Upgrade deps and drop ohash ([3d08c74](https://github.com/nuxt-modules/mdc/commit/3d08c74))
+- Broken custom highlighter ([d090484](https://github.com/nuxt-modules/mdc/commit/d090484))
+
+### 🏡 Chore
+
+- Drop edge channel in favor of  `pkg-pr-new` releases ([35cc446](https://github.com/nuxt-modules/mdc/commit/35cc446))
+- Upgrade deps ([3853b10](https://github.com/nuxt-modules/mdc/commit/3853b10))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.15.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.14.0...v0.15.0)
