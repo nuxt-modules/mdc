@@ -27,27 +27,3 @@ jobs:
 
       - name: Publish
         run: pnpx pkg-pr-new publish --compact --no-template --pnpm
-
-  release-edge:
-    if: |
-      github.event_name == 'push' &&
-      !contains(github.event.head_commit.message, '[skip-release]') &&
-      !startsWith(github.event.head_commit.message, 'docs')
-    needs:
-      - test
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm i -g --force corepack && corepack enable
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Release Edge
-        run: bash ./.github/scripts/release-edge.sh
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
