@@ -103,8 +103,8 @@ export async function mdcHighlighter({
   if (options.highlighter === 'custom') {
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
-      `export default function (...args) {
-        '  const configs = await getMdcConfigs()`,
+      'export default async function (...args) {',
+      '  const configs = await getMdcConfigs()',
       '  for (const config of configs) {',
       '    if (config.highlighter) {',
       '      return config.highlighter(...args)',
