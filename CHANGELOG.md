@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.16.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.16.0...v0.16.1)
+
+### 🩹 Fixes
+
+- **stringify:** Stringify iframe ([9157af7](https://github.com/nuxt-modules/mdc/commit/9157af7))
+
+### 🏡 Chore
+
+- Upgrade deps ([3ab7435](https://github.com/nuxt-modules/mdc/commit/3ab7435))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.16.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.15.0...v0.16.0)
