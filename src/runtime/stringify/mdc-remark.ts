@@ -196,14 +196,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
       meta
     }
   },
-  binding: (state: State, node: Parents) => {
-    return {
-      type: 'textComponent',
-      name: 'binding',
-      attributes: node.properties,
-      children: state.toFlow(state.all(node))
-    }
-  },
+
   span: (state: State, node: Parents) => {
     const result = {
       type: 'textComponent',
@@ -216,30 +209,12 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
 
     return result
   },
-  video: (state: State, node: Parents) => {
-    return {
-      type: 'textComponent',
-      name: 'video',
-      attributes: node.properties,
-      children: state.toFlow(state.all(node))
-    }
-  },
-  'nuxt-img': (state: State, node: Parents) => {
-    return {
-      type: 'textComponent',
-      name: 'nuxt-img',
-      attributes: node.properties,
-      children: state.toFlow(state.all(node))
-    }
-  },
-  'nuxt-picture': (state: State, node: Parents) => {
-    return {
-      type: 'textComponent',
-      name: 'nuxt-picture',
-      attributes: node.properties,
-      children: state.toFlow(state.all(node))
-    }
-  },
+  binding: createTextComponent('binding'),
+  iframe: createTextComponent('iframe'),
+  video: createTextComponent('video'),
+  'nuxt-img': createTextComponent('nuxt-img'),
+  'nuxt-picture': createTextComponent('nuxt-picture'),
+  br: createTextComponent('br'),
   table: (state: State, node: Parents) => {
     visit(node, (node) => {
       // @ts-expect-error: custom type
@@ -303,12 +278,16 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
 
     state.patch(node, result)
     return result
-  },
-  br(state: State, node: Parents) {
+  }
+}
+
+function createTextComponent(name: string) {
+  return (state: State, node: Parents) => {
     return {
       type: 'textComponent',
-      name: 'br',
-      attributes: node.properties
+      name,
+      attributes: node.properties,
+      children: node.children ? state.toFlow(state.all(node)) : undefined
     }
   }
 }
