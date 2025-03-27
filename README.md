@@ -381,13 +381,13 @@ import {
   createShikiHighlighter,
 } from '@nuxtjs/mdc/runtime'
 // Import desired Shiki themes and languages
-import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
-import HtmlLang from 'shiki/langs/html.mjs'
-import MdcLang from 'shiki/langs/mdc.mjs'
-import TsLang from 'shiki/langs/typescript.mjs'
-import VueLang from 'shiki/langs/vue.mjs'
-import ScssLang from 'shiki/langs/scss.mjs'
-import YamlLang from 'shiki/langs/yaml.mjs'
+import MaterialThemePalenight from '@shikijs/themes/material-theme-palenight'
+import HtmlLang from '@shikijs/langs/html'
+import MdcLang from '@shikijs/langs/mdc'
+import TsLang from '@shikijs/langs/typescript'
+import VueLang from '@shikijs/langs/vue'
+import ScssLang from '@shikijs/langs/scss'
+import YamlLang from '@shikijs/langs/yaml'
 
 export default function useMarkdownParser() {
   let parser: Awaited<ReturnType<typeof createMarkdownParser>>
