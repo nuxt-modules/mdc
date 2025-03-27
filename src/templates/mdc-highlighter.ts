@@ -38,7 +38,7 @@ export async function mdcHighlighter({
       )
     }
 
-    const { bundledLanguagesInfo } = await import('shiki/bundle/web')
+    const { bundledLanguagesInfo } = await import('shiki/bundle/full')
 
     /**
      * Key: language alias or id for lookup
