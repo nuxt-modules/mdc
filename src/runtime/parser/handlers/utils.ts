@@ -18,7 +18,7 @@ export function parseThematicBlock(lang: string) {
 
   const languageMatches = lang.replace(/[{|[](.+)/, '').match(/^[^ \t]+(?=[ \t]|$)/)
   const highlightTokensMatches = lang.match(/\{([^}]*)\}/)
-  const filenameMatches = lang.match(/\[((\\\]|[^\]])*)\]/)
+  const filenameMatches = lang.match(/\[(.*)\]/)
 
   const meta = lang
     .replace(languageMatches?.[0] ?? '', '')
@@ -30,7 +30,7 @@ export function parseThematicBlock(lang: string) {
     language: languageMatches?.[0] || undefined,
     highlights: parseHighlightedLines(highlightTokensMatches?.[1] || undefined),
     // https://github.com/nuxt/content/pull/2169
-    filename: filenameMatches?.[1].replace(/\\\]/g, ']') || undefined,
+    filename: filenameMatches?.[1] || undefined,
     meta
   }
 }
