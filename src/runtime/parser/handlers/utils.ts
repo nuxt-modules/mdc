@@ -29,8 +29,8 @@ export function parseThematicBlock(lang: string) {
   // Process filename to handle backslashes correctly
   let filename = undefined
   if (filenameMatches?.[1]) {
-    // Remove escaping backslashes
-    filename = filenameMatches[1].replace(/\\(.)/g, '$1')
+    // Only unescape special regex characters but preserve path backslashes
+    filename = filenameMatches[1].replace(/\\([[\]{}().*+?^$|])/g, '$1')
   }
 
   return {
