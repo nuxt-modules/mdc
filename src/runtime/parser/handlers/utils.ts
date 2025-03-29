@@ -26,11 +26,18 @@ export function parseThematicBlock(lang: string) {
     .replace(filenameMatches?.[0] ?? '', '')
     .trim()
 
+  // Process filename to handle backslashes correctly
+  let filename = undefined
+  if (filenameMatches?.[1]) {
+    // Remove escaping backslashes
+    filename = filenameMatches[1].replace(/\\(.)/g, '$1')
+  }
+
   return {
     language: languageMatches?.[0] || undefined,
     highlights: parseHighlightedLines(highlightTokensMatches?.[1] || undefined),
     // https://github.com/nuxt/content/pull/2169
-    filename: filenameMatches?.[1] || undefined,
+    filename,
     meta
   }
 }
