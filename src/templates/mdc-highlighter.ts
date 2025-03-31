@@ -38,7 +38,7 @@ export async function mdcHighlighter({
       )
     }
 
-    const { bundledLanguagesInfo } = await import('shiki/langs')
+    const { bundledLanguagesInfo } = await import('shiki/bundle/full')
 
     /**
      * Key: language alias or id for lookup
@@ -80,12 +80,12 @@ export async function mdcHighlighter({
       'const bundledLangs = {',
       ...Array.from(langsMap.entries())
         .map(([name, lang]) => typeof lang === 'string'
-          ? JSON.stringify(name) + `: () => import('shiki/langs/${lang}.mjs'),`
+          ? JSON.stringify(name) + `: () => import('@shikijs/langs/${lang}').then(r => r.default || r),`
           : JSON.stringify(name) + ': ' + JSON.stringify(lang) + ','),
       '}',
       'const bundledThemes = {',
       ...themes.map((theme: string | ThemeRegistration) => typeof theme === 'string'
-        ? JSON.stringify(theme) + `: () => import('shiki/themes/${theme}.mjs').then(r => r.default),`
+        ? JSON.stringify(theme) + `: () => import('@shikijs/themes/${theme}').then(r => r.default || r),`
         : JSON.stringify(theme.name) + ': ' + JSON.stringify(theme) + ','),
       '}',
       'const options = ' + JSON.stringify({
