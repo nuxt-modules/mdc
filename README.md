@@ -22,7 +22,7 @@ MDC supercharges regular Markdown to write documents interacting deeply with any
 - Support asynchronous rendering of nested components
 - Add attributes and classes to inline HTML tags
 
-Learn more about the MDC syntax on https://content.nuxtjs.org/guide/writing/mdc
+Learn more about the MDC syntax on https://content.nuxt.com/docs/files/markdown
 
 > [!Note]
 > You may utilize this package inside of your Nuxt project (standard configuration) or within any Vue project.
