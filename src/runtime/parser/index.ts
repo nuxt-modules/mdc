@@ -148,7 +148,7 @@ export const parseMarkdown = async (md: string, markdownParserOptions: MDCParseO
   const parser = await createMarkdownParser(markdownParserOptions)
 
   // Parse markdown
-  return parser(md, parseOptions)
+  return parser(md.replace(/\r\n/g, '\n'), parseOptions)
 }
 
 export function contentHeading(body: MDCRoot) {
