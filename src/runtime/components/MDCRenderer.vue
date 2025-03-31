@@ -84,12 +84,12 @@ export default defineComponent({
     const route = $nuxt?.$route || $nuxt?._route
     const { mdc } = $nuxt?.$config?.public || {}
 
-    const tags = {
+    const tags = computed(() => ({
       ...(mdc?.components?.prose && props.prose !== false ? proseComponentMap : {}),
       ...(mdc?.components?.map || {}),
       ...toRaw(props.data?.mdc?.components || {}),
       ...props.components
-    }
+    }))
 
     const contentKey = computed(() => {
       const components = (props.body?.children || [])
@@ -107,7 +107,7 @@ export default defineComponent({
       Object.assign(runtimeData, newData)
     })
 
-    await resolveContentComponents(props.body, { tags })
+    await resolveContentComponents(props.body, { tags: tags.value })
 
     function updateRuntimeData(code: string, value: any) {
       const lastIndex = code.split('.').length - 1
