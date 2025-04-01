@@ -18,6 +18,15 @@ import { computeHighlightRanges, refineCodeLanguage } from './utils'
  * @see https://github.com/syntax-tree/hast-util-to-mdast/blob/main/lib/state.js#L258-L283
  */
 const mdcRemarkElementType = 'mdc-element'
+/**
+ * We use `textDirective` in the middle of the pipeline to allow `hast-util-to-mdast` to handle
+ * text components as pharsing nodes.
+ *
+ * `hast-util-to-mdast` does not handle `textComponent` as pharsing nodes, so we need to use `textDirective` instead.
+ * This is temporary mapping to avoid invalid output. The mapping will be reverted in `toMdast` function result.
+ */
+const mdastTextComponentType = 'textDirective'
+const mdcTextComponentType = 'textComponent'
 const own = {}.hasOwnProperty
 type Parents = HastParents & { properties: Record<string, unknown>, tagName: string }
 
@@ -47,6 +56,13 @@ export function mdcRemark(options?: Options | undefined | null) {
         ...options?.nodeHandlers
       } as Options['nodeHandlers']
     }) as MDastRoot
+
+    /**
+     * Revert textDirective to textComponent
+     */
+    visit(mdast, node => node.type === mdastTextComponentType, (node) => {
+      node.type = mdcTextComponentType as typeof node.type
+    })
 
     return mdast
   }
@@ -112,7 +128,7 @@ const mdcRemarkNodeHandlers = {
     const isInlineElement = (parent?.children || []).some(child => child.type === 'text') || ['p', 'li'].includes(parent?.tagName)
     if (isInlineElement) {
       return {
-        type: 'textComponent',
+        type: mdastTextComponentType,
         name: node.tagName,
         attributes: node.properties,
         children: state.all(node)
@@ -196,19 +212,7 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
       meta
     }
   },
-
-  span: (state: State, node: Parents) => {
-    const result = {
-      type: 'textComponent',
-      name: 'span',
-      attributes: node.properties,
-      children: state.all(node)
-    }
-
-    state.patch(node, result as Nodes)
-
-    return result
-  },
+  span: createTextComponent('span'),
   binding: createTextComponent('binding'),
   iframe: createTextComponent('iframe'),
   video: createTextComponent('video'),
@@ -283,11 +287,15 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
 
 function createTextComponent(name: string) {
   return (state: State, node: Parents) => {
-    return {
-      type: 'textComponent',
+    const result = {
+      type: mdastTextComponentType,
       name,
       attributes: node.properties,
-      children: node.children ? state.toFlow(state.all(node)) : undefined
+      children: state.all(node)
     }
+
+    state.patch(node, result as Nodes)
+
+    return result
   }
 }
