@@ -129,15 +129,18 @@ export function createShikiHighlighter({
       }
     }
 
-    const transformers: ShikiTransformer[] = [
-      ...baseTransformers
-    ]
+    const transformersMap = new Map<string, ShikiTransformer>()
+    for (const transformer of baseTransformers) {
+      transformersMap.set(transformer.name || `transformer:${Math.random()}-${transformer.constructor.name}`, transformer)
+    }
 
     for (const config of await getConfigs()) {
       const newTransformers = typeof config.shiki?.transformers === 'function'
         ? await config.shiki?.transformers(code, lang, theme, options)
         : config.shiki?.transformers || []
-      transformers.push(...newTransformers)
+      for (const transformer of newTransformers) {
+        transformersMap.set(transformer.name || `transformer:${Math.random()}-${transformer.constructor.name}`, transformer)
+      }
     }
 
     const root = shiki.codeToHast(code.trimEnd(), {
@@ -145,7 +148,7 @@ export function createShikiHighlighter({
       ...codeToHastOptions,
       themes: themesObject,
       transformers: [
-        ...transformers,
+        ...transformersMap.values(),
         {
           name: 'mdc:highlight',
           line(node, line) {
