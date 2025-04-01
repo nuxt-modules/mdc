@@ -74,7 +74,8 @@ export async function mdcHighlighter({
     return [
       'import { getMdcConfigs } from \'#mdc-configs\'',
       shikiEngine === 'javascript'
-        ? 'import { createJavaScriptRegexEngine } from \'shiki/engine/javascript\''
+        // `createJavaScriptRegexEngine` import comes from `shiki.ts` file
+        ? ''// 'import { createJavaScriptRegexEngine } from \'shiki/engine/javascript\''
         : 'import { createOnigurumaEngine } from \'shiki/engine/oniguruma\'',
       code,
       'const bundledLangs = {',
