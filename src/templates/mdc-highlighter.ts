@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import type { LanguageRegistration, ThemeRegistration } from 'shiki/core'
+import { bundledLanguagesInfo } from 'shiki/bundle/full'
 import type { ModuleOptions } from '../types/module'
 
 export async function mdcHighlighter({
@@ -37,8 +38,6 @@ export async function mdcHighlighter({
         'import.meta.client ? import(\'shiki/wasm\') : import(\'shiki/onig.wasm\')'
       )
     }
-
-    const { bundledLanguagesInfo } = await import('shiki/bundle/full')
 
     /**
      * Key: language alias or id for lookup
