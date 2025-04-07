@@ -41,8 +41,8 @@ export async function mdcHighlighter({
 
     // from "shiki"; -> from "shiki/engine/javascript"
     code = code.replace(
-      /import\((['"])shiki\1\)/,
-      'import(\'shiki/engine/javascript\')'
+      /from\s+(['"])shiki\1/,
+      'from "shiki/engine/javascript"'
     )
 
     /**
