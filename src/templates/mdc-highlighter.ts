@@ -39,6 +39,12 @@ export async function mdcHighlighter({
       )
     }
 
+    // from "shiki"; -> from "shiki/engine/javascript"
+    code = code.replace(
+      /import\((['"])shiki\1\)/,
+      'import(\'shiki/engine/javascript\')'
+    )
+
     /**
      * Key: language alias or id for lookup
      * Value: language id or language registration
