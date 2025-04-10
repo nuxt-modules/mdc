@@ -34,7 +34,7 @@ export function createShikiHighlighter({
 
   async function _getShiki() {
     const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('shiki/core')
-    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('@shikijs/transformers')
+    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight, transformerRemoveNotationEscape } = await import('@shikijs/transformers')
 
     const shiki: HighlighterCore = await createHighlighterCore({
       langs,
@@ -55,7 +55,8 @@ export function createShikiHighlighter({
         transformerNotationDiff(),
         transformerNotationErrorLevel(),
         transformerNotationFocus(),
-        transformerNotationHighlight()
+        transformerNotationHighlight(),
+        transformerRemoveNotationEscape()
       ] as ShikiTransformer[]
     }
   }
