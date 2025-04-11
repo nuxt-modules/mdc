@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import type { LanguageRegistration, ThemeRegistration } from 'shiki/core'
+import { bundledLanguagesInfo } from 'shiki/bundle/full'
 import type { ModuleOptions } from '../types/module'
 
 export async function mdcHighlighter({
@@ -38,7 +39,11 @@ export async function mdcHighlighter({
       )
     }
 
-    const { bundledLanguagesInfo } = await import('shiki/bundle/full')
+    // from "shiki"; -> from "shiki/engine/javascript"
+    code = code.replace(
+      /from\s+(['"])shiki\1/,
+      'from "shiki/engine/javascript"'
+    )
 
     /**
      * Key: language alias or id for lookup
