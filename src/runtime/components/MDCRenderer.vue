@@ -244,15 +244,19 @@ function _renderSlots(node: MDCNode, h: CreateElement, options: MDCRenderOptions
 
     slots[name] = (data = {}) => {
       const scopedProps = pick(data, Object.keys(props || {}))
-      let vNodes = children.map(child => _renderNode(
-        child,
-        h,
-        {
-          documentMeta,
-          parentScope: { ...parentScope, ...scopedProps },
-          resolveComponent
-        }
-      ))
+      let vNodes = children.map((child, index) => {
+        // Set key to the index of the child
+        (child as MDCElement).props = { ...(child as MDCElement).props, key: (child as MDCElement).props?.key || index }
+        return _renderNode(
+          child,
+          h,
+          {
+            documentMeta,
+            parentScope: { ...parentScope, ...scopedProps },
+            resolveComponent
+          }
+        )
+      })
 
       if (props?.unwrap) {
         vNodes = flatUnwrap(vNodes, props.unwrap) as VNode[]
