@@ -114,6 +114,14 @@ const mdcRemarkNodeHandlers = {
       return
     }
 
+    if (node.properties && (node.properties.className || node.properties['class-name'])) {
+      const pascal: string[] = Array.isArray(node.properties.className || '') ? node.properties.className as string[] : String(node.properties.className || '').split(' ')
+      const kebab: string[] = Array.isArray(node.properties['class-name'] || '') ? node.properties['class-name'] as string[] : String(node.properties['class-name'] || '').split(' ')
+      node.properties.class = [node.properties.class || '', ...pascal, ...kebab].filter(Boolean).join(' ')
+      Reflect.deleteProperty(node.properties, 'className')
+      Reflect.deleteProperty(node.properties, 'class-name')
+    }
+
     if (own.call(state.handlers, node.tagName)) {
       return state.handlers[node.tagName](state, node as Element, parent) || undefined
     }
