@@ -34,16 +34,20 @@ export function createCachedParser(parserOptions: MDCParseOptions) {
     if (result) {
       const body = {
         type: 'root',
-        children: result.body.children.map(child => ({
-          ...child,
-          position: child.position && {
-            start: child.position.start + startOffset,
-            end: child.position.end + startOffset
-          }
-        }))
+        children: [
+          ...(startOffset > 0 ? (lastParse?.body?.children.slice(0, -1) || []) : []),
+          ...result.body.children.map(child => ({
+            ...child,
+            position: child.position && {
+              start: child.position.start + startOffset,
+              end: child.position.end + startOffset
+            }
+          }))
+        ]
       } as MDCRoot
 
       lastParse = { ...result, body }
+      lastValue = value
 
       return lastParse
     }
