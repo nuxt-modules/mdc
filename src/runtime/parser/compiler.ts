@@ -1,6 +1,6 @@
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
-import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot } from '@nuxtjs/mdc'
+import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot, NodePosition } from '@nuxtjs/mdc'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any, options: MDCParseOptions = {}) {
@@ -16,6 +16,13 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
         children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
       }
     }
+
+    const position: NodePosition | undefined = node.position?.start.offset
+      ? {
+          start: node.position.start.offset!,
+          end: node.position.end.offset!
+        }
+      : undefined
 
     if (node.type === 'element') {
       // Remove empty paragraphs
@@ -73,7 +80,8 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
         type: 'element',
         tag: node.tagName,
         props: validateProps(node.tagName, node.properties),
-        children
+        children,
+        position
       }
     }
 
@@ -82,7 +90,8 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       if (!/^\n+$/.test(node.value || '') || (parent as any)?.properties?.emptyLinePlaceholder) {
         return {
           type: 'text',
-          value: node.value
+          value: node.value,
+          position
         }
       }
     }
@@ -90,7 +99,8 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
     if (options.keepComments && node.type === 'comment') {
       return {
         type: 'comment',
-        value: node.value
+        value: node.value,
+        position
       }
     }
 
