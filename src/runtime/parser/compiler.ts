@@ -76,32 +76,29 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       )
         .map(child => compileToJSON(child, node)).filter(Boolean)
 
-      return {
+      const result = {
         type: 'element',
         tag: node.tagName,
         props: validateProps(node.tagName, node.properties),
-        children,
-        position
+        children
+      } as MDCNode
+
+      if (options.keepPosition) {
+        result.position = position
       }
+
+      return result
     }
 
     // Keep non-newline text nodes
     if (node.type === 'text') {
       if (!/^\n+$/.test(node.value || '') || (parent as any)?.properties?.emptyLinePlaceholder) {
-        return {
-          type: 'text',
-          value: node.value,
-          position
-        }
+        return options.keepPosition ? { type: 'text', value: node.value, position } : { type: 'text', value: node.value }
       }
     }
 
     if (options.keepComments && node.type === 'comment') {
-      return {
-        type: 'comment',
-        value: node.value,
-        position
-      }
+      return options.keepPosition ? { type: 'comment', value: node.value, position } : { type: 'comment', value: node.value }
     }
 
     // Remove other nodes from tree
