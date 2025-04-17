@@ -1,11 +1,18 @@
+export type NodePosition = {
+  start: number
+  end: number
+}
+
 export type MDCText = {
   type: 'text'
   value: string
+  position?: NodePosition
 }
 
 export type MDCComment = {
   type: 'comment'
   value: string
+  position?: NodePosition
 }
 
 export type MDCElement = {
@@ -13,6 +20,7 @@ export type MDCElement = {
   tag: string
   props: Record<string, any> | undefined
   children: Array<MDCElement | MDCText | MDCComment>
+  position?: NodePosition
 }
 
 export type MDCNode = MDCElement | MDCText | MDCComment

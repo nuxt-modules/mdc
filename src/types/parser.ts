@@ -37,6 +37,11 @@ export interface MDCParseOptions {
   keepComments?: boolean
 
   /**
+   * Keep the position of the node
+   */
+  keepPosition?: boolean
+
+  /**
    * Extract content heading from the markdown file.
    *
    * @default true
