@@ -60,8 +60,24 @@ export function mdcRemark(options?: Options | undefined | null) {
     /**
      * Revert textDirective to textComponent
      */
-    visit(mdast, node => node.type === mdastTextComponentType, (node) => {
+    visit(mdast, node => node.type === mdastTextComponentType, (node, index, parent) => {
       node.type = mdcTextComponentType as typeof node.type
+
+      // ensure :br and inline components are separated by a space
+      if (index && parent && parent.children) {
+        if (index > 0 && parent.children[index - 1].type === 'text') {
+          const text = parent.children[index - 1] as Text
+          if (!['\n', ' ', '\t'].includes(text.value.slice(-1))) {
+            text.value += ' '
+          }
+        }
+        if (index && index < parent.children.length - 1 && parent.children[index + 1].type === 'text') {
+          const text = parent.children[index + 1] as Text
+          if (!['\n', ' ', '\t'].includes(text.value.slice(0, 1))) {
+            text.value = ' ' + text.value
+          }
+        }
+      }
     })
 
     return mdast
