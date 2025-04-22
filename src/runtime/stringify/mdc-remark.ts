@@ -64,6 +64,10 @@ export function mdcRemark(options?: Options | undefined | null) {
       node.type = mdcTextComponentType as typeof node.type
 
       // ensure :br and inline components are separated by a space
+      // binding is a special case, with it's secial syntax, we don't need to do anything
+      if ((node as unknown as { name: string }).name === 'binding') {
+        return
+      }
       if (index && parent && parent.children) {
         if (index > 0 && parent.children[index - 1].type === 'text') {
           const text = parent.children[index - 1] as Text
