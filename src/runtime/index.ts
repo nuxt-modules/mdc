@@ -2,4 +2,5 @@ export { parseMarkdown, createMarkdownParser, createParseProcessor } from './par
 export { stringifyMarkdown, createMarkdownStringifier, createStringifyProcessor } from './stringify'
 export { rehypeHighlight } from './highlighter/rehype'
 export { createShikiHighlighter } from './highlighter/shiki'
+export { createCachedParser } from './parser/cached'
 export * from './utils/node'

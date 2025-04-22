@@ -153,6 +153,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add components
     addComponent({ name: 'MDC', filePath: resolver.resolve('./runtime/components/MDC') })
+    addComponent({ name: 'MDCCached', filePath: resolver.resolve('./runtime/components/MDCCached') })
     addComponent({ name: 'MDCRenderer', filePath: resolver.resolve('./runtime/components/MDCRenderer') })
     addComponent({ name: 'MDCSlot', filePath: resolver.resolve('./runtime/components/MDCSlot') })
 

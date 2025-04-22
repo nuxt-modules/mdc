@@ -105,7 +105,7 @@ function preProcessElementNodes(node: MDCNode): RootContent {
     } as unknown as RootContent
   }
 
-  return node
+  return node as unknown as RootContent
 }
 
 const mdcRemarkNodeHandlers = {

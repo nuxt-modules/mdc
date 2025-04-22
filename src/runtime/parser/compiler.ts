@@ -1,6 +1,6 @@
 import { toString } from 'hast-util-to-string'
 import Slugger from 'github-slugger'
-import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot } from '@nuxtjs/mdc'
+import type { RootContent, Root, MDCNode, MDCParseOptions, MDCRoot, NodePosition } from '@nuxtjs/mdc'
 import { validateProps } from './utils/props'
 
 export function compileHast(this: any, options: MDCParseOptions = {}) {
@@ -16,6 +16,13 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
         children: node.children.map(child => compileToJSON(child, node)).filter(Boolean)
       }
     }
+
+    const position: NodePosition | undefined = node.position?.start?.offset
+      ? {
+          start: node.position.start.offset!,
+          end: node.position.end.offset!
+        }
+      : undefined
 
     if (node.type === 'element') {
       // Remove empty paragraphs
@@ -69,29 +76,29 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       )
         .map(child => compileToJSON(child, node)).filter(Boolean)
 
-      return {
+      const result = {
         type: 'element',
         tag: node.tagName,
         props: validateProps(node.tagName, node.properties),
         children
+      } as MDCNode
+
+      if (options.keepPosition) {
+        result.position = position
       }
+
+      return result
     }
 
     // Keep non-newline text nodes
     if (node.type === 'text') {
       if (!/^\n+$/.test(node.value || '') || (parent as any)?.properties?.emptyLinePlaceholder) {
-        return {
-          type: 'text',
-          value: node.value
-        }
+        return options.keepPosition ? { type: 'text', value: node.value, position } : { type: 'text', value: node.value }
       }
     }
 
     if (options.keepComments && node.type === 'comment') {
-      return {
-        type: 'comment',
-        value: node.value
-      }
+      return options.keepPosition ? { type: 'comment', value: node.value, position } : { type: 'comment', value: node.value }
     }
 
     // Remove other nodes from tree
