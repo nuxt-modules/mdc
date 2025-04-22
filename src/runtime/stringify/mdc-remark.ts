@@ -220,6 +220,21 @@ const mdcRemarkHandlers: Record<string, (state: State, node: Parents) => unknown
       meta
     }
   },
+  button: (state: State, node: Parents) => {
+    if (
+      // @ts-expect-error: custom type
+      node.children?.find(child => child.type === mdcRemarkElementType)
+      || node.children?.find(child => child.type === 'text' && child.value.includes('\n'))
+    ) {
+      return {
+        type: 'containerComponent',
+        name: 'button',
+        children: state.all(node),
+        attributes: node.properties
+      }
+    }
+    return createTextComponent('button')(state, node)
+  },
   span: createTextComponent('span'),
   binding: createTextComponent('binding'),
   iframe: createTextComponent('iframe'),
