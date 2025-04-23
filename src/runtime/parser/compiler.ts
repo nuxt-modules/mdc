@@ -17,7 +17,7 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       }
     }
 
-    const position: NodePosition | undefined = node.position?.start?.offset
+    const position: NodePosition | undefined = (node.position?.start?.offset && node.position?.end?.offset)
       ? {
           start: node.position.start.offset!,
           end: node.position.end.offset!
