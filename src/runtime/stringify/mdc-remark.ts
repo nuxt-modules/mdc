@@ -77,7 +77,7 @@ export function mdcRemark(options?: Options | undefined | null) {
         }
         if (index && index < parent.children.length - 1 && parent.children[index + 1].type === 'text') {
           const text = parent.children[index + 1] as Text
-          if (!['\n', ' ', '\t'].includes(text.value.slice(0, 1))) {
+          if (!['\n', ' ', '\t', ',', '.'].includes(text.value.slice(0, 1))) {
             text.value = ' ' + text.value
           }
         }
@@ -153,7 +153,8 @@ const mdcRemarkNodeHandlers = {
       return result
     }
 
-    const isInlineElement = (parent?.children || []).some(child => child.type === 'text') || ['p', 'li'].includes(parent?.tagName)
+    const isInlineElement = (parent?.children || [])
+      .some(child => child.type === 'text') || ['p', 'li', 'strong', 'em', 'span'].includes(parent?.tagName)
     if (isInlineElement) {
       return {
         type: mdastTextComponentType,

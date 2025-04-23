@@ -4,6 +4,7 @@ import { createShikiHighlighter } from '../../src/runtime/highlighter/shiki'
 import { rehypeHighlight } from '../../src/runtime/highlighter/rehype-nuxt'
 import type { MDCParseOptions } from '../../src/types'
 import { parseMarkdown as _parseMarkDown } from '../../src/runtime/parser'
+import { stringifyMarkdown as _stringifyMarkDown } from '../../src/runtime/stringify'
 
 vi.mock('#mdc-imports', () => {
   return {
@@ -46,4 +47,8 @@ export const parseMarkdown = (md: string, options: MDCParseOptions = {}) => {
   }
 
   return _parseMarkDown(md, options)
+}
+
+export const stringifyMarkdown = (node, data = {}) => {
+  return _stringifyMarkDown(node, data)
 }
