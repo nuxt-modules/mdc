@@ -1,6 +1,52 @@
 # Changelog
 
 
+## v0.17.0
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.16.1...v0.17.0)
+
+### 🚀 Enhancements
+
+- Introduce `MDCCached` component ([#382](https://github.com/nuxt-modules/mdc/pull/382))
+
+### 🩹 Fixes
+
+- Vue server renderer does not render `\r` causes hydration issue ([b722c4a](https://github.com/nuxt-modules/mdc/commit/b722c4a))
+- Dynamic load parser in MDC component ([#363](https://github.com/nuxt-modules/mdc/pull/363))
+- **parser:** Simplify filename regex in parseThematicBlock function ([#367](https://github.com/nuxt-modules/mdc/pull/367))
+- **MDCRenderer:** Re-render when tags are modified ([78a0571](https://github.com/nuxt-modules/mdc/commit/78a0571))
+- **stringify:** Force `hast-util-to-mdast` to treat `textComponent` nodes as text ([cd1c4fd](https://github.com/nuxt-modules/mdc/commit/cd1c4fd))
+- **shiki:** Allow overriding base transformers ([760874d](https://github.com/nuxt-modules/mdc/commit/760874d))
+- **md-highlighter:** Import bundledLanguagesInfo directly from shiki ([#375](https://github.com/nuxt-modules/mdc/pull/375))
+- Unify class properties ([b820147](https://github.com/nuxt-modules/mdc/commit/b820147))
+- **MDCRenderer:** Ensure nodes are in right order on re-render ([#381](https://github.com/nuxt-modules/mdc/pull/381))
+- Render button nodes ([5242c08](https://github.com/nuxt-modules/mdc/commit/5242c08))
+- **stringify:** Ensure inline components are separated by space ([c9f538a](https://github.com/nuxt-modules/mdc/commit/c9f538a))
+- Do not add spacing around binding ([c3efdd5](https://github.com/nuxt-modules/mdc/commit/c3efdd5))
+- Do not add space between components and punctuation ([6ea4163](https://github.com/nuxt-modules/mdc/commit/6ea4163))
+- Prevent undefined error ([fc8c294](https://github.com/nuxt-modules/mdc/commit/fc8c294))
+
+### 💅 Refactors
+
+- Imports for Shiki ([#365](https://github.com/nuxt-modules/mdc/pull/365))
+
+### 📖 Documentation
+
+- Fix link ([bcb41b1](https://github.com/nuxt-modules/mdc/commit/bcb41b1))
+
+### 🏡 Chore
+
+- Upgrade deps ([918ae96](https://github.com/nuxt-modules/mdc/commit/918ae96))
+- Upgrade deps ([418852c](https://github.com/nuxt-modules/mdc/commit/418852c))
+- Upgrade to latest remark-mdc ([180983f](https://github.com/nuxt-modules/mdc/commit/180983f))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Wind <hi@productdevbook.com>
+- Sébastien Chopin <seb@nuxt.com>
+- Dev <hi@productdevbook.com>
+
 ## v0.16.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.16.0...v0.16.1)
