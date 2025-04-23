@@ -86,7 +86,7 @@
     "hast-util-to-string": "^3.0.1",
     "mdast-util-to-hast": "^13.2.0",
     "micromark-util-sanitize-uri": "^2.0.1",
-    "parse5": "^7.2.1",
+    "parse5": "^7.3.0",
     "pathe": "^2.0.3",
     "property-information": "^7.0.0",
     "rehype-external-links": "^3.0.0",
@@ -98,7 +98,7 @@
     "rehype-sort-attributes": "^5.0.1",
     "remark-emoji": "^5.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-mdc": "^3.5.3",
+    "remark-mdc": "npm:remark-mdc-edge@3.5.3-29090217.6d19aad",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
@@ -126,7 +126,7 @@
     "release-it": "^19.0.1",
     "typescript": "5.8.3",
     "vitest": "^3.1.2",
-    "vue-tsc": "^2.2.8"
+    "vue-tsc": "^2.2.10"
   },
   "resolutions": {
     "@nuxtjs/mdc": "workspace:*"
