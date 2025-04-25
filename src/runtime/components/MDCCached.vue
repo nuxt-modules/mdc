@@ -108,7 +108,7 @@ const body = computed(() => props.excerpt ? data.value?.excerpt : data.value?.bo
 
 watch(() => props.value, () => {
   refresh()
-})
+}, { immediate: true })
 
 // Simple string hashing function
 function hashString(str: string | object) {
