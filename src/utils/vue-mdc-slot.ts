@@ -6,7 +6,7 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
     const compilerOptions = (config as any).vue.template.compilerOptions
     compilerOptions.nodeTransforms = [
       <NodeTransform> function viteMDCSlot(node: ElementNode, context) {
-        const isVueSlotWithUnwrap = node.tag === 'slot' && node.props.find(p => p.name === 'mdc-unwrap' || (p.name === 'bind' && (p as DirectiveNode).rawName === ':mdc-unwrap'))
+        const isVueSlotWithUnwrap = node.tag === 'slot' && node.props.find(p => p.name === 'mdc-unwrap' || p.name === 'mdcUnwrap' || (p.name === 'bind' && (p as DirectiveNode).rawName === ':mdc-unwrap'))
         const isMDCSlot = node.tag === 'MDCSlot'
 
         if (isVueSlotWithUnwrap || isMDCSlot) {
