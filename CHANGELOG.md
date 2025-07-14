@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.17.1
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.17.0...v0.17.1)
+
+### 🩹 Fixes
+
+- Detect mdcUnwrap on slots too ([#388](https://github.com/nuxt-modules/mdc/pull/388))
+- Also check for nuxt-nightly path ([#401](https://github.com/nuxt-modules/mdc/pull/401))
+
+### 🏡 Chore
+
+- Upgrade deps ([22bbe93](https://github.com/nuxt-modules/mdc/commit/22bbe93))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Daniel Roe ([@danielroe](https://github.com/danielroe))
+- Hendrik Heil <hendrik@heil.sh>
+
 ## v0.17.0
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.16.1...v0.17.0)
