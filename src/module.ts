@@ -182,7 +182,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'mdc-image-component.mjs',
       write: true,
       getContents: ({ app }) => {
-        const image = app.components.find(c => c.pascalName === 'NuxtImg' && !c.filePath.includes('nuxt/dist/app'))
+        const image = app.components.find(c => c.pascalName === 'NuxtImg' && !c.filePath.includes('nuxt/dist/app') && !c.filePath.includes('nuxt-nightly/dist/app'))
 
         return image ? `export { default } from "${image.filePath}"` : 'export default "img"'
       }
