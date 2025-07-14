@@ -20,7 +20,8 @@
 
 <script setup lang="ts">
 import { useAsyncData } from 'nuxt/app'
-import { watch, computed, type PropType, type DefineComponent } from 'vue'
+import type { PropType, DefineComponent } from 'vue'
+import { watch, computed } from 'vue'
 import type { MDCParseOptions, MDCParserResult } from '@nuxtjs/mdc'
 import { createCachedParser } from '@nuxtjs/mdc/runtime'
 

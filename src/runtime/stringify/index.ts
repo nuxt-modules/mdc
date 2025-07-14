@@ -1,4 +1,5 @@
-import { unified, type Processor } from 'unified'
+import type { Processor } from 'unified'
+import { unified } from 'unified'
 import gfm from 'remark-gfm'
 import mdc, { stringifyFrontMatter } from 'remark-mdc'
 import stringify from 'remark-stringify'

@@ -19,7 +19,8 @@
 
 <script setup lang="ts">
 import { useAsyncData } from 'nuxt/app'
-import { watch, computed, type PropType } from 'vue'
+import type { PropType } from 'vue'
+import { watch, computed } from 'vue'
 import type { MDCParseOptions } from '@nuxtjs/mdc'
 
 const props = defineProps({

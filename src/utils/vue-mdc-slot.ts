@@ -1,5 +1,6 @@
 import type { NodeTransform, ElementNode, DirectiveNode } from '@vue/compiler-core'
-import { type Resolver, extendViteConfig } from '@nuxt/kit'
+import { extendViteConfig } from '@nuxt/kit'
+import type { Resolver } from '@nuxt/kit'
 
 export const registerMDCSlotTransformer = (resolver: Resolver) => {
   extendViteConfig((config) => {
