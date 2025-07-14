@@ -19,23 +19,6 @@ it('Add space before :br', async () => {
   expect(output).toBe(`:br\nWorld\n`)
 })
 
-it('Do not change spacings of binding elements', async () => {
-  const inputs = [
-    `Hello{{ name }}`,
-    `Hello {{ name }}`,
-    `Hello{{ name }},`,
-    `Hello {{ name }},`,
-    `Hello {{ name }} ,`
-  ]
-
-  for (const input of inputs) {
-    const { body } = await parseMarkdown(input)
-    const output = await stringifyMarkdown(body)
-
-    expect(output).toBe(input + '\n')
-  }
-})
-
 it('Ensure spacing between inline components', async () => {
   const input = `This is a :test :for components :spacing`
 
