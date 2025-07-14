@@ -86,7 +86,7 @@
     "hast-util-to-string": "^3.0.1",
     "mdast-util-to-hast": "^13.2.0",
     "micromark-util-sanitize-uri": "^2.0.1",
-    "parse5": "^7.3.0",
+    "parse5": "^8.0.0",
     "pathe": "^2.0.3",
     "property-information": "^7.1.0",
     "rehype-external-links": "^3.0.0",
