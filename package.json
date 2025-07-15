@@ -76,7 +76,7 @@
     "@types/mdast": "^4.0.4",
     "@vue/compiler-core": "^3.5.17",
     "consola": "^3.4.2",
-    "debug": "4.4.1",
+    "debug": "^4.4.1",
     "defu": "^6.1.4",
     "destr": "^2.0.5",
     "detab": "^3.0.2",

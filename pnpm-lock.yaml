@@ -36,7 +36,7 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       debug:
-        specifier: 4.4.1
+        specifier: ^4.4.1
         version: 4.4.1
       defu:
         specifier: ^6.1.4
