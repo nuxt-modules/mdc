@@ -24,6 +24,11 @@ const specialParentTags = ['math', 'svg']
 
 const proseComponentMap = Object.fromEntries(['p', 'a', 'blockquote', 'code', 'pre', 'code', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'ul', 'ol', 'li', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr', 'script'].map(t => [t, `prose-${t}`]))
 
+/**
+ * Tags that are dangerous and should be rendered as plain text
+ */
+const dangerousTags = ['script', 'base']
+
 export default defineComponent({
   name: 'MDCRenderer',
   props: {
@@ -181,13 +186,13 @@ function _renderNode(node: MDCNode, h: CreateElement, options: MDCRenderOptions,
 
   const _resolveComponent = isUnresolvableTag(renderTag) ? (component: unknown) => component : resolveComponent
 
-  // Prevent script execution by converting script tags to pre tags
-  // This code will excute only when prose components are disabled, otherwise the script will be handled by ProseScript component
-  if (renderTag === 'script') {
+  // Prevent script execution by converting dangerous tags to pre tags
+  // This security check can be bypassed by Prose components.
+  if (dangerousTags.includes(renderTag)) {
     return h(
       'pre',
-      { class: 'script-to-pre' },
-      '<' + 'script' + '>\n' + nodeTextContent(node) + '\n<' + '/script' + '>'
+      { class: 'mdc-renderer-dangerous-tag' },
+      '<' + renderTag + '>' + nodeTextContent(node) + '<' + '/' + renderTag + '>'
     )
   }
 
