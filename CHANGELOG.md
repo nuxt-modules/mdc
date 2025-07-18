@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.17.2
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.17.1...v0.17.2)
+
+### 🏡 Chore
+
+- Upgrade parse5 ([e22f0c0](https://github.com/nuxt-modules/mdc/commit/e22f0c0))
+- Update "debug" version ([f555abf](https://github.com/nuxt-modules/mdc/commit/f555abf))
+
+### ✅ Tests
+
+- Binding component spacing ([ec49505](https://github.com/nuxt-modules/mdc/commit/ec49505))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.17.1
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.17.0...v0.17.1)
