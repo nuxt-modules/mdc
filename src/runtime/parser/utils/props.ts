@@ -1,3 +1,7 @@
+export const unsafeTags = [
+  'object'
+]
+
 export const unsafeAttributes = [
   'srcdoc',
   'formaction'
@@ -50,6 +54,13 @@ export const validateProp = (attribute: string, value: string) => {
 }
 
 export const validateProps = (type: string, props?: Record<string, any>) => {
+  /**
+   * If the tag is marked as unsafe, drop all props
+   */
+  if (unsafeTags.includes(type)) {
+    return {}
+  }
+
   if (!props) {
     return {}
   }
