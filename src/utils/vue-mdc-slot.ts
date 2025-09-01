@@ -35,10 +35,12 @@ export const registerMDCSlotTransformer = (resolver: Resolver) => {
           }
         }
 
-        if (context.nodeTransforms[0].name !== 'viteMDCSlot') {
+        if (context.nodeTransforms[0]?.name !== 'viteMDCSlot') {
           const index = context.nodeTransforms.findIndex(f => f.name === 'viteMDCSlot')
-          const nt = context.nodeTransforms.splice(index, 1)
-          context.nodeTransforms.unshift(nt[0])
+          if (index !== -1) {
+            const nt = context.nodeTransforms.splice(index, 1)
+            context.nodeTransforms.unshift(nt[0]!)
+          }
         }
       }
     ]

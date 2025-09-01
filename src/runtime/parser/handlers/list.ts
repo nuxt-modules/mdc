@@ -16,7 +16,8 @@ export default function list(state: State, node: List) {
     const child = results[index]
 
     if (
-      child.type === 'element'
+      child
+      && child.type === 'element'
       && child.tagName === 'li'
       && child.properties
       && Array.isArray(child.properties.className)

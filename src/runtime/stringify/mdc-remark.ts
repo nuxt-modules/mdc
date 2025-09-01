@@ -69,13 +69,13 @@ export function mdcRemark(options?: Options | undefined | null) {
         return
       }
       if (index && parent && parent.children) {
-        if (index > 0 && parent.children[index - 1].type === 'text') {
+        if (index > 0 && parent.children[index - 1]?.type === 'text') {
           const text = parent.children[index - 1] as Text
           if (!['\n', ' ', '\t'].includes(text.value.slice(-1))) {
             text.value += ' '
           }
         }
-        if (index && index < parent.children.length - 1 && parent.children[index + 1].type === 'text') {
+        if (index && index < parent.children.length - 1 && parent.children[index + 1]?.type === 'text') {
           const text = parent.children[index + 1] as Text
           if (!['\n', ' ', '\t', ',', '.'].includes(text.value.slice(0, 1))) {
             text.value = ' ' + text.value
@@ -143,7 +143,7 @@ const mdcRemarkNodeHandlers = {
     }
 
     if (own.call(state.handlers, node.tagName)) {
-      return state.handlers[node.tagName](state, node as Element, parent) || undefined
+      return state.handlers[node.tagName]!(state, node as Element, parent) || undefined
     }
 
     // Unknown literal.
