@@ -1,3 +1,8 @@
+export const unsafeAttributes = [
+  'srcDoc',
+  'srcdoc'
+]
+
 export const unsafeLinkPrefix = [
   'javascript:',
   'data:text/html',
@@ -32,7 +37,7 @@ function isAnchorLinkAllowed(value: string) {
 }
 
 export const validateProp = (attribute: string, value: string) => {
-  if (attribute.startsWith('on')) {
+  if (attribute.startsWith('on') || unsafeAttributes.includes(attribute)) {
     return false
   }
 
