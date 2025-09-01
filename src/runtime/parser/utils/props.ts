@@ -1,3 +1,12 @@
+export const unsafeTags = [
+  'object'
+]
+
+export const unsafeAttributes = [
+  'srcdoc',
+  'formaction'
+]
+
 export const unsafeLinkPrefix = [
   'javascript:',
   'data:text/html',
@@ -32,7 +41,8 @@ function isAnchorLinkAllowed(value: string) {
 }
 
 export const validateProp = (attribute: string, value: string) => {
-  if (attribute.startsWith('on')) {
+  attribute = attribute.toLowerCase()
+  if (attribute.startsWith('on') || unsafeAttributes.includes(attribute)) {
     return false
   }
 
@@ -44,6 +54,13 @@ export const validateProp = (attribute: string, value: string) => {
 }
 
 export const validateProps = (type: string, props?: Record<string, any>) => {
+  /**
+   * If the tag is marked as unsafe, drop all props
+   */
+  if (unsafeTags.includes(type)) {
+    return {}
+  }
+
   if (!props) {
     return {}
   }
