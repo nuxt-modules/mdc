@@ -106,7 +106,7 @@ export function createShikiHighlighter({
 
     if (typeof lang === 'string' && !loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
       if (bundledLangs[lang]) {
-        await shiki.loadLanguage(bundledLangs[lang])
+        await shiki.loadLanguage(bundledLangs[lang]!)
       } else {
         // eslint-disable-next-line nuxt/prefer-import-meta
         if (process.dev) {
@@ -165,9 +165,9 @@ export function createShikiHighlighter({
             if (code?.includes('\n')) {
               // Set newline for empty lines
               if (node.children.length === 0 || (
-                node.children.length === 1 && node.children[0].type === 'element'
-                && node.children[0].children.length === 1 && node.children[0].children[0].type === 'text'
-                && node.children[0].children[0].value === ''
+                node.children.length === 1 && node.children[0]!.type === 'element'
+                && node.children[0]!.children.length === 1 && node.children[0]!.children[0]!.type === 'text'
+                && node.children[0]!.children[0]!.value === ''
               )) {
                 node.children = [{
                   type: 'element',

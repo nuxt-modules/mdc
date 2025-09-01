@@ -112,7 +112,7 @@ function _flatUnwrap(vnodes: VNode | VNode[], tags: string[] = []): Array<VNode>
   }
 
   return vnodes
-    .flatMap(vnode => _flatUnwrap(unwrap(vnode, [tags[0]]), tags.slice(1)))
+    .flatMap(vnode => _flatUnwrap(unwrap(vnode, [tags[0]!]), tags.slice(1)))
     .filter(vnode => !(isText(vnode) && nodeTextContent(vnode).trim() === ''))
 }
 

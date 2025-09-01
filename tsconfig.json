@@ -1,8 +1,5 @@
 {
   "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "noUncheckedIndexedAccess": false
-  },
   "exclude": [
     "test/*",
     "node_modules/*",

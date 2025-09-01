@@ -119,7 +119,7 @@ export function compileHast(this: any, options: MDCParseOptions = {}) {
       // Include styles if excerpt contains code block
       if (excerpt.children.find(node => node.type === 'element' && node.tag === 'pre')) {
         const lastChild = body.children[body.children.length - 1]
-        if (lastChild.type === 'element' && lastChild.tag === 'style') {
+        if (lastChild && lastChild.type === 'element' && lastChild.tag === 'style') {
           excerpt.children.push(lastChild)
         }
       }

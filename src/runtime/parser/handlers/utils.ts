@@ -48,7 +48,7 @@ function parseHighlightedLines(lines?: string | null) {
     .filter(Boolean)
     .flatMap((line) => {
       const [start, end] = line.trim().split('-').map(a => Number(a.trim()))
-      return Array.from({ length: (end || start) - start + 1 }).map((_, i) => start + i)
+      return Array.from({ length: (end || start || 0) - ((start || 0)) + 1 }).map((_, i) => (start || 0) + i)
     })
   return lineArray.length ? lineArray : undefined
 }

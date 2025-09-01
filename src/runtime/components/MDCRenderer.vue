@@ -228,7 +228,7 @@ function _renderSlots(node: MDCNode, h: CreateElement, options: MDCRenderOptions
 
   const slotNodes: Record<string, { props?: Record<string, any>, children: MDCNode[] }> = children.reduce((data, node) => {
     if (!isTemplate(node)) {
-      data[DEFAULT_SLOT].children.push(node)
+      data[DEFAULT_SLOT]!.children.push(node)
       return data
     }
 
@@ -445,7 +445,7 @@ function getSlotName(node: MDCNode) {
       continue
     }
     // Get slot name
-    name = propName.split(/[:#]/, 2)[1]
+    name = propName.split(/[:#]/, 2)[1]!
     break
   }
   return name || DEFAULT_SLOT
