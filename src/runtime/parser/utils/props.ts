@@ -1,6 +1,6 @@
 export const unsafeAttributes = [
-  'srcDoc',
-  'srcdoc'
+  'srcdoc',
+  'formaction'
 ]
 
 export const unsafeLinkPrefix = [
@@ -37,6 +37,7 @@ function isAnchorLinkAllowed(value: string) {
 }
 
 export const validateProp = (attribute: string, value: string) => {
+  attribute = attribute.toLowerCase()
   if (attribute.startsWith('on') || unsafeAttributes.includes(attribute)) {
     return false
   }
