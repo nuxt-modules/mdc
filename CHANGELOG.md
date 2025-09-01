@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.17.3
+
+[compare changes](https://github.com/nuxt-modules/mdc/compare/v0.17.2...v0.17.3)
+
+### 🏡 Chore
+
+- Upgrade deps ([e65e97b](https://github.com/nuxt-modules/mdc/commit/e65e97b))
+- Upgrade deps ([fa7a21d](https://github.com/nuxt-modules/mdc/commit/fa7a21d))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+
 ## v0.17.2
 
 [compare changes](https://github.com/nuxt-modules/mdc/compare/v0.17.1...v0.17.2)
