@@ -248,17 +248,25 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/mdc'],
   mdc: {
     remarkPlugins: {
-      plugins: {
-        // Register/Configure remark plugin to extend the parser
-      }
+      // Register/Configure remark plugin to extend the parser, e.g.
+      // 'remark-math': {
+      //   src: 'remark-math',
+      //   options: {
+      //     singleDollarTextMath: true,
+      //   },
+      // },
     },
     rehypePlugins: {
-      options: {
-        // Configure rehype options to extend the parser
-      },
-      plugins: {
-        // Register/Configure rehype plugin to extend the parser
-      }
+      // Register/Configure rehype plugin to extend the parser, e.g.
+      // 'rehype-mathjax': {
+      //   src: 'rehype-mathjax',
+      //   options: {
+      //     tex: {
+      //       inlineMath: [['$', '$'], ['\\(', '\\)']],
+      //       displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      //     },
+      //   },
+      // },
     },
     headings: {
       anchorLinks: {
