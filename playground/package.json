@@ -12,6 +12,6 @@
     "@monaco-editor/loader": "^1.5.0",
     "@nuxtjs/mdc": "workspace:*",
     "@nuxtlabs/monarch-mdc": "^0.8.1",
-    "nuxt": "^4.0.3"
+    "nuxt": "^4.1.0"
   }
 }
