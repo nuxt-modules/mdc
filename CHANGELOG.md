@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.17.4
+
+[compare changes](https://github.com/nuxt-content/mdc/compare/v0.17.3...v0.17.4)
+
+### 🩹 Fixes
+
+- **docs:** Remark and rehype plugin syntax ([#416](https://github.com/nuxt-content/mdc/pull/416))
+- Use `@shikijs/core` instead of `shiki/core` for better tracing ([#421](https://github.com/nuxt-content/mdc/pull/421))
+- Merge highlight options with `defu` ([#409](https://github.com/nuxt-content/mdc/pull/409))
+
+### 🏡 Chore
+
+- Upgrade deps ([ab386cb](https://github.com/nuxt-content/mdc/commit/ab386cb))
+- Upgrade lock file ([d92ff99](https://github.com/nuxt-content/mdc/commit/d92ff99))
+- Rename repository ([d37dfc3](https://github.com/nuxt-content/mdc/commit/d37dfc3))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Toni <toni88x@gmail.com>
+
 ## v0.17.3
 
 [compare changes](https://github.com/nuxt-content/mdc/compare/v0.17.2...v0.17.3)
