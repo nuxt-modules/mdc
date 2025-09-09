@@ -53,10 +53,7 @@ export const createParseProcessor = async (inlineOptions: MDCParseOptions = {}) 
     if (inlineOptions.highlight === false) {
       delete options.rehype.plugins.highlight
     } else {
-      options.rehype.plugins.highlight.options = {
-        ...(options.rehype.plugins.highlight.options || {}),
-        ...(options.highlight || {})
-      }
+      options.rehype.plugins.highlight.options = defu({}, options.rehype.plugins.highlight.options, options.highlight || {})
     }
   }
 
