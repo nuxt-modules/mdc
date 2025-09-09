@@ -1,4 +1,4 @@
-![Nuxt MDC](https://github.com/nuxt-modules/mdc/assets/904724/ce6aa142-0820-4bcc-988c-a926cf03f0a5)
+![Nuxt MDC](https://github.com/nuxt-content/mdc/assets/904724/ce6aa142-0820-4bcc-988c-a926cf03f0a5)
 
 # Nuxt MDC
 
@@ -9,8 +9,8 @@
 
 MDC supercharges regular Markdown to write documents interacting deeply with any Vue component. MDC stands for MarkDown Components.
 
-- [✨ &nbsp;Release Notes](https://github.com/nuxt-modules/mdc/releases)
-- [🏀 &nbsp;Online Playground](https://stackblitz.com/github/nuxt-modules/mdc?file=playground%2Fapp.vue)
+- [✨ &nbsp;Release Notes](https://github.com/nuxt-content/mdc/releases)
+- [🏀 &nbsp;Online Playground](https://stackblitz.com/github/nuxt-content/mdc?file=playground%2Fapp.vue)
 - [🧩 &nbsp;VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Nuxt.mdc)
 
 ## Features
@@ -156,30 +156,30 @@ Here is the list of available prose components:
 
 | Tag | Component | Source | Description |
 | -- | -- | -- | -- |
-| `p` | `<ProseP>` | [ProseP.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseP.vue) | Paragraph |
-| `h1` | `<ProseH1>` | [ProseH1.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH1.vue) | Heading 1 |
-| `h2` | `<ProseH2>` | [ProseH2.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH2.vue) | Heading 2 |
-| `h3` | `<ProseH3>` | [ProseH3.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH3.vue) | Heading 3 |
-| `h4` | `<ProseH4>` | [ProseH4.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH4.vue) | Heading 4 |
-| `h5` | `<ProseH5>` | [ProseH5.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH5.vue) | Heading 5 |
-| `h6` | `<ProseH6>` | [ProseH6.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseH6.vue) | Heading 6 |
-| `ul` | `<ProseUl>` | [ProseUl.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseUl.vue) | Unordered List |
-| `ol` | `<ProseOl>` | [ProseOl.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseOl.vue) | Ordered List |
-| `li` | `<ProseLi>` | [ProseLi.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseLi.vue) | List Item |
-| `blockquote` | `<ProseBlockquote>` | [ProseBlockquote.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseBlockquote.vue) | Blockquote |
-| `hr` | `<ProseHr>` | [ProseHr.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseHr.vue) | Horizontal Rule |
-| `pre` | `<ProsePre>` | [ProsePre.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProsePre.vue) | Preformatted Text |
-| `code` | `<ProseCode>` | [ProseCode.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseCode.vue) | Code Block |
-| `table` | `<ProseTable>` | [ProseTable.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseTable.vue) | Table |
-| `thead` | `<ProseThead>` | [ProseThead.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseThead.vue) | Table Head |
-| `tbody` | `<ProseTbody>` | [ProseTbody.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseTbody.vue) | Table Body |
-| `tr` | `<ProseTr>` | [ProseTr.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseTr.vue) | Table Row |
-| `th` | `<ProseTh>` | [ProseTh.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseTh.vue) | Table Header |
-| `td` | `<ProseTd>` | [ProseTd.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseTd.vue) | Table Data |
-| `a` | `<ProseA>` | [ProseA.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseA.vue) | Anchor Link |
-| `img` | `<ProseImg>` | [ProseImg.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseImg.vue) | Image |
-| `em` | `<ProseEm>` | [ProseEm.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseEm.vue) | Emphasis |
-| `strong` | `<ProseStrong>` | [ProseStrong.vue](https://github.com/nuxt-modules/mdc/blob/main/src/runtime/components/prose/ProseStrong.vue) | Strong |
+| `p` | `<ProseP>` | [ProseP.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseP.vue) | Paragraph |
+| `h1` | `<ProseH1>` | [ProseH1.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH1.vue) | Heading 1 |
+| `h2` | `<ProseH2>` | [ProseH2.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH2.vue) | Heading 2 |
+| `h3` | `<ProseH3>` | [ProseH3.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH3.vue) | Heading 3 |
+| `h4` | `<ProseH4>` | [ProseH4.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH4.vue) | Heading 4 |
+| `h5` | `<ProseH5>` | [ProseH5.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH5.vue) | Heading 5 |
+| `h6` | `<ProseH6>` | [ProseH6.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseH6.vue) | Heading 6 |
+| `ul` | `<ProseUl>` | [ProseUl.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseUl.vue) | Unordered List |
+| `ol` | `<ProseOl>` | [ProseOl.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseOl.vue) | Ordered List |
+| `li` | `<ProseLi>` | [ProseLi.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseLi.vue) | List Item |
+| `blockquote` | `<ProseBlockquote>` | [ProseBlockquote.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseBlockquote.vue) | Blockquote |
+| `hr` | `<ProseHr>` | [ProseHr.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseHr.vue) | Horizontal Rule |
+| `pre` | `<ProsePre>` | [ProsePre.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProsePre.vue) | Preformatted Text |
+| `code` | `<ProseCode>` | [ProseCode.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseCode.vue) | Code Block |
+| `table` | `<ProseTable>` | [ProseTable.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseTable.vue) | Table |
+| `thead` | `<ProseThead>` | [ProseThead.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseThead.vue) | Table Head |
+| `tbody` | `<ProseTbody>` | [ProseTbody.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseTbody.vue) | Table Body |
+| `tr` | `<ProseTr>` | [ProseTr.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseTr.vue) | Table Row |
+| `th` | `<ProseTh>` | [ProseTh.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseTh.vue) | Table Header |
+| `td` | `<ProseTd>` | [ProseTd.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseTd.vue) | Table Data |
+| `a` | `<ProseA>` | [ProseA.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseA.vue) | Anchor Link |
+| `img` | `<ProseImg>` | [ProseImg.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseImg.vue) | Image |
+| `em` | `<ProseEm>` | [ProseEm.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseEm.vue) | Emphasis |
+| `strong` | `<ProseStrong>` | [ProseStrong.vue](https://github.com/nuxt-content/mdc/blob/main/src/runtime/components/prose/ProseStrong.vue) | Strong |
 
 ## Parsing Markdown
 
@@ -224,7 +224,7 @@ const { data: ast } = await useAsyncData('markdown', () => parseMarkdown('::aler
 
 ### Options
 
-The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types/parser.ts)).
+The `parseMarkdown` helper also accepts options as the second argument to control the parser's behavior. (Checkout [`MDCParseOptions` interface↗︎](https://github.com/nuxt-content/mdc/blob/main/src/types/parser.ts)).
 
 | Name | Default | Description |
 | --  | -- | -- |
@@ -235,7 +235,7 @@ The `parseMarkdown` helper also accepts options as the second argument to contro
 | `toc.depth` | `2` | Maximum heading depth to include in the table of contents.  |
 | `toc.searchDepth` | `2` | Maximum depth of nested tags to search for heading. |
 
-Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/types/parser.ts).
+Checkout [`MDCParseOptions` types↗︎](https://github.com/nuxt-content/mdc/blob/main/src/types/parser.ts).
 
 ## Configurations
 
@@ -284,7 +284,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-modules/mdc/blob/main/src/module.ts).
+Checkout [`ModuleOptions` types↗︎](https://github.com/nuxt-content/mdc/blob/main/src/module.ts).
 
 ---
 
@@ -484,7 +484,7 @@ onBeforeMount(async () => {
 
 You can dive into this module online using StackBlitz:
 
-[![Edit @nuxtjs/mdc](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/nuxt-modules/mdc?file=playground%2Fapp.vue)
+[![Edit @nuxtjs/mdc](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/nuxt-content/mdc?file=playground%2Fapp.vue)
 
 Or locally:
 
@@ -494,7 +494,7 @@ Or locally:
 
 ## License
 
-[MIT License](https://github.com/nuxt-modules/mdc/blob/main/LICENSE)
+[MIT License](https://github.com/nuxt-content/mdc/blob/main/LICENSE)
 
 Copyright (c) NuxtLabs
 
@@ -505,8 +505,8 @@ Copyright (c) NuxtLabs
 [npm-downloads-src]: https://img.shields.io/npm/dm/@nuxtjs/mdc.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-downloads-href]: https://npmjs.com/package/@nuxtjs/mdc
 
-[license-src]: https://img.shields.io/github/license/nuxt-modules/mdc.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://github.com/nuxt-modules/mdc/blob/main/LICENSE
+[license-src]: https://img.shields.io/github/license/nuxt-content/mdc.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://github.com/nuxt-content/mdc/blob/main/LICENSE
 
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
