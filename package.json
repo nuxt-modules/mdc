@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.1.0",
+    "@shikijs/core": "^3.12.2",
     "@shikijs/langs": "^3.12.1",
     "@shikijs/themes": "^3.12.1",
     "@shikijs/transformers": "^3.12.1",

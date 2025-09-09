@@ -34,7 +34,7 @@ export function createShikiHighlighter({
   let configs: Promise<MdcConfig[]> | undefined
 
   async function _getShiki() {
-    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('shiki/core')
+    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('@shikijs/core')
     const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('@shikijs/transformers')
 
     const shiki: HighlighterCore = await createHighlighterCore({
