@@ -105,8 +105,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       remark-mdc:
-        specifier: v3.6.0
-        version: 3.6.0
+        specifier: npm:remark-mdc-edge@3.6.0-29309210.1cda4d8
+        version: remark-mdc-edge@3.6.0-29309210.1cda4d8
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -4641,8 +4641,8 @@ packages:
   remark-gfm@4.0.1:
     resolution: {integrity: sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg==}
 
-  remark-mdc@3.6.0:
-    resolution: {integrity: sha512-f+zgMYMBChoZJnpWM2AkfMwIC2sS5+vFQQdOVho58tUOh5lDP9SnZj2my8PeXBgt8MFQ+jc97vFFzWH21JXICQ==}
+  remark-mdc-edge@3.6.0-29309210.1cda4d8:
+    resolution: {integrity: sha512-S4GjWlqQFrFcSLGmrYcVs3nr9xptenz+o7ABmh1CPAN52YzO/KlMzIijlRy0DgJBramkZZETlXhl2ENHEcI2NA==}
 
   remark-parse@11.0.0:
     resolution: {integrity: sha512-FCxlKLNGknS5ba/1lmpYijMUzX2esxW5xQqjWxw2eHFfS2MSdaHVINFmhjo+qN1WhZhNimq0dZATN9pH0IDrpA==}
@@ -10885,7 +10885,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdc@3.6.0:
+  remark-mdc-edge@3.6.0-29309210.1cda4d8:
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
