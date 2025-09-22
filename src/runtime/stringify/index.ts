@@ -15,7 +15,7 @@ export function createStringifyProcessor(options: MDCStringifyOptions = {}) {
     })
     .use(mdcRemark)
     .use(gfm)
-    .use(mdc)
+    .use(mdc, options?.plugins?.remarkMDC?.options)
     .use(stringify, {
       bullet: '-',
       emphasis: '*',
