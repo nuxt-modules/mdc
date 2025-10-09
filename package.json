@@ -99,7 +99,7 @@
     "rehype-sort-attributes": "^5.0.1",
     "remark-emoji": "^5.0.2",
     "remark-gfm": "^4.0.1",
-    "remark-mdc": "v3.6.0",
+    "remark-mdc": "npm:remark-mdc-edge@3.6.0-29309210.1cda4d8",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
