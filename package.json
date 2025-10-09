@@ -1,6 +1,6 @@
 {
   "name": "@nuxtjs/mdc",
-  "version": "0.17.4",
+  "version": "0.18.0",
   "description": "Nuxt MDC module",
   "repository": "nuxt-content/mdc",
   "license": "MIT",

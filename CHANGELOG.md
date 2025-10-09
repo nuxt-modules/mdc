@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.18.0
+
+[compare changes](https://github.com/nuxt-content/mdc/compare/v0.17.4...v0.18.0)
+
+### 🩹 Fixes
+
+- Allow passing options to `remark-mdc` plugin in stringify helper ([#424](https://github.com/nuxt-content/mdc/pull/424))
+
+### 🏡 Chore
+
+- Delete .github/workflows/nuxthub.yml ([21490cc](https://github.com/nuxt-content/mdc/commit/21490cc))
+- Upgrade deps ([21fd936](https://github.com/nuxt-content/mdc/commit/21fd936))
+
+### ❤️ Contributors
+
+- Farnabaz <farnabaz@gmail.com>
+- Sébastien Chopin <seb@nuxt.com>
+
 ## v0.17.4
 
 [compare changes](https://github.com/nuxt-content/mdc/compare/v0.17.3...v0.17.4)
