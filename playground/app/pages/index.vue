@@ -2,9 +2,9 @@
 import { ref, watch, onMounted } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import type { MDCParserResult } from '@nuxtjs/mdc'
-import { stringifyMarkdown } from '../../src/runtime/stringify'
+import { stringifyMarkdown } from '../../../src/runtime/stringify'
 import { markdownFeatures, samllDemo, table } from '../utils/markdowns'
-import { parseMarkdown } from '../../src/runtime'
+import { parseMarkdown } from '../../../src/runtime'
 import { useColorMode } from '#build/imports'
 
 const examples = {
